@@ -1,0 +1,520 @@
+#send_date {
+	width: 400px;
+}
+.menu_block {
+	float: left;
+	width: 150px;
+	padding: 5px;
+}
+.item-name {
+	color : #fff;
+	background-color: #1658A8;
+}
+
+
+html,body {
+    margin:0px;
+    height:100%;
+}
+body {
+    min-height:100%;
+    height:auto !important;
+	padding				: 0px;
+	background-color	: #dddbdb;
+}
+
+#stage {
+	/*
+	top					: 32px;
+	*/
+	top					: 0px;
+	position			: absolute;
+	width				: 100%;
+	min-width			: 800px;
+	bottom				: 0px;
+	margin				: 0px;
+	background-image	: -moz-linear-gradient(top, #fdfdfd, #dddbdb);
+	background-image	: -ms-linear-gradient(top, #fdfdfd, #dddbdb);
+	background-image	: -o-linear-gradient(top, #fdfdfd, #dddbdb);
+	background-image	: -webkit-gradient(linear, center top, center bottom, from(#fdfdfd), to(#dddbdb));
+	background-image	: -webkit-linear-gradient(top, #fdfdfd, #dddbdb);
+	background-image	: linear-gradient(top, #fdfdfd, #dddbdb);
+	
+	/* For Internet Explorer 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#fdfdfd, endColorstr=#dddbdb);
+	/* For Internet Explorer 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#fdfdfd, endColorstr=#dddbdb)";
+}
+#map {
+	width				: 100%;
+	height				: 100%;
+}
+
+#btnPageList {
+	position			: absolute;
+	top					: 0px;
+	right				: 120px;
+	width				: 100px;
+}
+
+#btnLeafAdd,
+#btnLeafWebAdd
+{
+	display				: inline;
+	position			: fixed;
+	top					: 35px;
+	width				: 45px;
+	height				: 45px;
+	padding				: 0px;
+	font-weight			: normal;
+	font-size			: 10px;
+}
+
+#btnLeafAdd {
+	right				: 78px;
+}
+
+#btnLeafWebAdd {
+	right				: 20px;
+}
+
+#btnLeafAdd img,
+#btnLeafWebAdd img
+{
+	padding				: 3px;
+}
+
+.clsLeafLinkButton img,
+.clsLeafCopyButton img,
+.clsLeafEditButton img
+{
+	padding-left: 5px;
+	padding-bottom: 5px;
+
+}
+
+#divPageList {
+	position			: absolute;
+	top					: 70px;
+	left				: 20px;
+	width				: 220px;
+	height				: 300px;
+	padding				: 10px;
+	padding-top			: 5px;
+	min-width			: 200px;
+	min-height			: 100px;
+	background-color	: #F4F4F4;
+	z-index				: 990000001;
+	opacity				: 0.8;
+	filter				: alpha(opacity=80);
+	box-shadow			: 3px 3px 10px #999;
+	border				: #eee 1px solid;
+}
+
+#divPageList2 {
+	position			: absolute;
+	top					: 470px;
+	left				: 30px;
+	width				: 200px;
+	height				: 300px;
+	padding				: 10px;
+	background-color	: #ddd;
+	z-index				: 990000001;
+	opacity				: 0.8;
+	filter				: alpha(opacity=80);
+}
+
+#divPageListContainer
+{
+	position			: absolute;
+	bottom				: 10px;
+	top					: 70px;
+	left				: 10px;
+	right				: 10px;
+	background-color	: #fff;
+	padding				: 0px;
+	overflow-y			: scroll;
+	border				: solid 1px #ddd;
+	/*
+	box-shadow			: 1px 2px 3px #aaa;
+	*/
+}
+
+#lstPageList {
+	width				: 100%;
+	height				: 100%;
+	font-size			: 16px;
+}
+
+#lblPageList
+{
+	font-size			: 14px;
+	position			: absolute;
+	left				: 10px;
+	top					: 5px;
+	color				: #666;
+	cursor				: default;
+}
+
+#divLinkTarget
+{
+	position			: absolute;
+}
+
+#divLinkDelete
+{
+	position			: absolute;
+	display				: none;
+}
+
+#divLoader
+{
+	position			: absolute;
+	top					: 45%;
+	width				: 100%;
+	text-align			: center;
+	display				: none;
+}
+
+#adv
+{
+	position			: fixed;
+	left				: 50%;
+	height				: 60px;
+	width				: 468px;
+	margin-left			:-234px;
+	bottom				: 5px;
+	z-index				: 990000001;
+	display				: none;
+}
+
+#sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+#sortable li { margin: 2px 2px 2px 2px; padding: 0.4em; padding-left: 1.5em; font-size: 14px; line-height: 14px; /*height: 20px;*/ overflow: hidden;cursor: default;}
+#sortable li span { position: absolute; margin-left: -1.3em; }
+#sortable .selected { background-color: #666; color: #fff; }
+
+.clsLeafContainer
+{
+	position			: absolute;
+	min-width			: 180px;
+	min-height			: 60px;
+	opacity				: 0.9;
+	filter				: alpha(opacity=90);
+}
+
+.clsLeafGrid
+{
+	width				: 100%;
+	height				: 100%;
+	padding-left		: 10px;
+	padding-right		: 5px;
+}
+
+.clsLeafTitle
+{
+	width				: 100%;
+	height				: 22px;
+	border				: none;
+	padding				: 0px;
+	font-size			: 14px;
+	text-overflow		: ellipsis;
+}
+
+.clsLeafContent
+{
+	width				: 100%;
+	height				: 100%;
+	border				: none;
+	font-size			: 12px;
+	overflow			: hidden;
+	resize				: none;
+}
+
+.clsLeafTitleMargin
+{
+	width				: 0px;
+}
+.clsLeafCover
+{
+	width				: 100%;
+	height				: 100%;
+	position			: absolute;
+	top					: 0px;
+	background-color	: #eee;
+	opacity				: 0.1;
+	filter				: alpha(opacity=10);
+}
+
+.clsLeafColorBar
+{
+	width				: 10px;
+	height				: 100%;
+	position			: absolute;
+	top					: 0px;
+	background-color	: #666;
+}
+
+.clsLeafMainContainer
+{
+	width				: 100%;
+	height				: 100%;
+	background-color	: #fff;
+	min-width			: 180px;
+	min-height			: 60px;
+	top					: -35px;
+	position			: relative;
+}
+
+.clsLeafMenuContainer
+{
+	width				: 100%;
+	height				: 35px;
+	top					: -35px;
+	position			: relative;
+	white-space			: nowrap;
+}
+
+.clsLeafMenu
+{
+	width				: 100%;
+	height				: 35px;
+	top					: -35px;
+	display				: none;
+}
+
+.clsLeafFoldButton
+{
+	position			: absolute;
+	right				: 30px;
+	top					: 3px;
+	cursor				: pointer;
+	display				: none;
+	font-size			: 25px;
+	font-family			: Meiryo;
+	color				: #888;
+}
+
+.clsLeafDeleteButton
+{
+	position			: absolute;
+	right				: 5px;
+	top					: 3px;
+	cursor				: pointer;
+	display				: none;
+	color				: #666;
+}
+
+.clsLeafWebButton
+{
+	position			: absolute;
+	top					: 25px;
+	left				: 80px;
+	cursor				: pointer;
+}
+
+.linked
+{
+	color				: #006699;
+	text-decoration		: underline;
+}
+
+.clsLeafWebCover
+{
+	position			: absolute;
+	cursor				: pointer;
+	top					: 1px;
+	left				: 20px;
+	width				: 100px;
+	height				: 25px;
+	display				: none;
+}
+
+.clsColorPicker
+{
+	width				: 20px;
+	height				: 20px;
+}
+
+.sp-replacer
+{
+	margin-bottom		: 10px;
+}
+
+.clsLeafShowAllButton
+{
+	position			: absolute;
+	cursor				: pointer;
+	right				: 20px;
+	bottom: 2px;
+	opacity: 0.8;
+	width: 70px;
+}
+
+._jsPlumb_connector 
+{
+	opacity				: 0.5;
+	filter				: alpha(opacity=50);
+}
+
+#btnPageAdd,
+#btnPageDelete
+{
+	width				: 30px;
+	height				: 30px;
+	float				: right;
+	padding				: 5px;
+	margin-left			: 5px;
+}
+
+#btnPageAdd img,
+#btnPageDelete img
+{
+	width				: 12px;
+	height				: 12px;
+	padding				: 0px;
+}
+
+#btnPageListUp,
+#btnPageListDown
+{
+	position			: absolute;
+	top					: 160px;
+	left				: -30px;
+	width				: 20px;
+	padding-top			: 40px;
+	padding-bottom		: 40px;
+}
+
+#btnPageListUp
+{
+	top					: 60px;
+}
+
+#btnPageListClose
+{
+	position			: absolute;
+	text-align			: center;
+	top					: 0px;
+	right				: 0px;
+	width				: 30px;
+	height				: 25px;
+	cursor				: pointer;
+}
+
+#btnPageListMenu
+{
+	position			: absolute;
+	text-align			: right;
+	top					: 35px;
+	left				: 10px;
+	right				: 10px;
+	height				: 35px;
+	cursor				: pointer;
+	background-color	: #FDFDFD;
+	border				: #eee 1px solid;
+}
+
+#divPageListTitleBar
+{
+	position			: absolute;
+	width				: 100%;
+	height				: 28px;
+	background-color	: #F3F2F2;
+	top					: 0px;
+	left				: 0px;
+}
+
+#btnPageTitleEdit
+{
+	position			: absolute;
+	top					: 3px;
+	left				: 600px;
+	display				: none;
+	width				: 60px;
+}
+
+#lblNoteTitle
+{
+	font-size			: 14px;
+}
+
+#lblPageTitle
+{
+	position			: absolute;
+	top					: 10px;
+	left				: 230px;
+	height				: 30px;
+	/*
+	right				: 72px;
+	max-width			: 600px;
+	*/
+	width				: 500px;
+	padding				: 5px;
+	font-size			: 18px;
+	border-bottom		: 1px solid #97C7DF;
+	display				: none;
+}
+
+.ui-dialog
+{
+	z-index				: 990000001;
+}
+
+.ui-widget-content
+{
+	background-color	: #fff;
+}
+
+.droppable-hover
+{
+	background-color	: #ffffe0;
+}
+
+#wpadminbar
+{
+	max-height 				: 32px;
+}
+
+#showAllDialog p
+{
+	font-size: 12px;
+}
+
+#divLinkMessage
+{
+	position				: absolute;
+	top						: 5px;
+	left					: 230px;
+	font-weight				: bold;
+	-webkit-border-radius	: 5px;
+	text-align				: center;
+	color					: white;
+	background-color		: rgba(0, 0, 255, 0.5);
+	font-size				: 12px;
+	opacity					: 0.9;
+	padding-right			: 5px;
+	padding-left			: 5px;
+	display					: none;
+}
+
+.button-container
+{
+	position: fixed;
+	right: 0px;
+	bottom: 0px;
+	width: 100%;
+	background: rgba(150,150,150,0.3);
+	display: none;
+}
+
+.button-container p
+{
+	float: left;
+	padding: 12px;
+}
+
+#btnClose
+{
+    float: right;
+    padding: 5px;
+}

@@ -1,0 +1,34 @@
+.sp-preview
+{
+	width: 25px;
+	height: 25px;
+}
+
+.clsLeafFoldButton,
+.clsLeafDeleteButton
+{
+	width		: 25px;
+	height		: 25px;
+	font-size	: 32px;
+}
+
+.clsLeafFoldButton
+{
+	right		: 35px;
+	top			: 5px;
+}
+
+ul.jqtree-tree .jqtree-element
+{
+	padding: 5px;
+}
+
+ul.jqtree-tree .jqtree-toggler
+{
+	font-size: 22px;
+}
+
+#tree
+{
+	-webkit-user-select: none;
+}

@@ -1,0 +1,19 @@
+@media only screen
+    and (max-device-width:640px)
+    and (orientation:portrait)
+{
+	#note_title
+	{
+		display		: none;
+	}
+	
+	
+	.clsNoteDeleteButton
+	{
+		top			: 0px;
+		width		: 25px;
+		height		: 25px;
+	}
+}
+
+

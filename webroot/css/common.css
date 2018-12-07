@@ -1,0 +1,263 @@
+@charset "utf-8";
+/**
+ * iroha Compass Project
+ *
+ * @author        Kotaro Miura
+ * @copyright     2015-2018 iroha Soft, Inc. (http://irohasoft.jp)
+ * @link          http://irohacompass.irohasoft.jp
+ * @license       http://www.gnu.org/licenses/gpl-3.0.en.html GPL License
+ */
+
+body
+{
+	font-family: 'Apple TP', 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.header
+{
+	width				: 100%;
+	display				: inline-block;
+}
+
+.panel
+{
+	margin				: 10px;
+}
+
+@media only screen and (max-width:800px)
+{
+	.panel
+	{
+		margin				: 3px;
+		margin-bottom		: 10px;
+	}
+}
+
+#content
+{
+	text-align			: left;
+	min-height			: 600px;
+	max-width			: 1200px;
+	margin				: auto;
+}
+
+div.buttons_container
+{
+	padding				: 10px;
+	text-align			: right;
+}
+
+
+#flashMessage
+{
+/*
+*/
+	position			: absolute;
+	top					: 50px;
+	margin				: auto 25px;
+	width				: 1150px;
+	z-index				: 999999;
+}
+
+#header
+{
+}
+
+.form-signin
+{
+	max-width			: 600px;
+	margin				: 0 auto;
+	margin-top			: 60px;
+}
+
+.form-signin .form-control
+{
+	position			: relative;
+	height				: auto;
+	-webkit-box-sizing	: border-box;
+	-moz-box-sizing		: border-box;
+	box-sizing			: border-box;
+	padding				: 20px;
+	font-size			: 16px;
+}
+
+.form-signin .btn
+{
+	padding: 20px;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+
+form .required .control-label:after
+{
+	border-radius: 0.25em;
+	color: #fff;
+	display: inline;
+	font-size: 75%;
+	font-weight: 700;
+	line-height: 1;
+	padding: 0.1em 0.5em;
+	margin-left: 0.7em;
+	text-align: center;
+	vertical-align: baseline;
+	white-space: nowrap;
+	background-color: #d9534f;
+	content: '必須';
+}
+
+.note-editor .modal-body
+{
+	margin				: 20px;
+}
+.ib-navi-item
+{
+	padding				: 5px;
+	font-size			: 16px;
+}
+
+.ib-navi-item a
+{
+	color				: #fff;
+}
+
+.ib-navi-sepa
+{
+	height				: 24px;
+	border-right		: 1px solid #ccc;
+	width				: 1px;
+	margin				: 5px;
+	padding				: 0px;
+}
+
+.ib-left
+{
+	float				: left;
+}
+
+.ib-right
+{
+	float				: right;
+}
+
+.ib-logo
+{
+	font-size: 22px;
+	font-family:'Arial';
+	padding-left: 15px;
+	font-weight: bold;
+}
+
+.ib-page-title
+{
+	font-size: 24px;
+	float: left;
+}
+
+.ib-breadcrumb
+{
+	width				: 100%;
+}
+
+.breadcrumb
+{
+	padding				: 10px;
+}
+
+.ib-horizontal .input
+{
+	/*
+	width				: 200px;
+	*/
+	float				: left;
+	padding-left		: 10px;
+	padding-right		: 20px;
+	padding-top			: 0px;
+	padding-bottom		: 10px;
+}
+
+.ib-horizontal label
+{
+	float				: left;
+	text-align			: right;
+	padding-top			: 5px;
+/*
+	padding-top			: 15px;
+*/
+}
+
+.ib-horizontal .text
+{
+	width				: 160px;
+}
+
+.ib-horizontal .submit
+{
+	/*
+	padding: 12px;
+	*/
+}
+
+.ib-search-date-container
+{
+	width				: 800px;
+	height				: 60px;
+}
+
+.ib-search-date-container .date
+{
+	font-size			: 20px;
+}
+
+.well
+{
+	background-color	: #fafafa;
+	padding				: 10px;
+	margin-bottom		: 10px;
+}
+
+.ib-col-date
+{
+	width				: 160px;
+	text-align			: center;
+}
+
+.ib-col-center
+{
+	text-align			: center;
+}
+
+.ib-col-datetime,
+.ib-col-action
+{
+	width				: 160px;
+	text-align			: center;
+}
+
+/* start メニューの自動ボタン化を抑止 */
+.nav>li
+{
+	float: left;
+	display: inline-block;
+}
+.navbar-nav
+{
+	margin: 0;
+}
+.navbar-nav>li>a
+{
+	padding-top: 14.5px;
+	padding-bottom: 14.5px;
+}
+/* end */
+
+
+@media only screen and (max-width:800px)
+{
+	#flashMessage
+	{
+		width				: initial;
+		right				: 0px;
+		left				: 0px;
+	}
+}

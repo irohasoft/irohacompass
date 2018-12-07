@@ -1,0 +1,846 @@
+2018-11-15 15:31:59 Error: [MissingControllerException] Controller class UsersCoursesController could not be found.
+Exception Attributes: array (
+  'class' => 'UsersCoursesController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 15:33:25 Error: [MissingControllerException] Controller class UsersCoursesController could not be found.
+Exception Attributes: array (
+  'class' => 'UsersCoursesController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 15:33:40 Error: [MissingControllerException] Controller class UsersCoursesController could not be found.
+Exception Attributes: array (
+  'class' => 'UsersCoursesController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 15:34:07 Error: [MissingControllerException] Controller class UsersCoursesController could not be found.
+Exception Attributes: array (
+  'class' => 'UsersCoursesController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 15:34:44 Error: [MissingControllerException] Controller class UsersCoursesController could not be found.
+Exception Attributes: array (
+  'class' => 'UsersCoursesController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 15:35:07 Error: [PDOException] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'theme_id' in 'field list'
+Request URL: /irohacompass/users_themes
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(461): PDOStatement->execute(Array)
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(427): DboSource->_execute(' SELECT Theme.i...', Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(669): DboSource->execute(' SELECT Theme.i...', Array, Array)
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(612): DboSource->fetchAll(' SELECT Theme.i...', Array, Array)
+#4 [internal function]: DboSource->query(' SELECT Theme.i...', Array)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3456): call_user_func_array(Array, Array)
+#6 C:\Users\miura\Dropbox\www\irohacompass\Model\UsersTheme.php(85): Model->query(' SELECT Theme.i...', Array)
+#7 C:\Users\miura\Dropbox\www\irohacompass\Controller\UsersThemesController.php(50): UsersTheme->getThemeRecord('316')
+#8 [internal function]: UsersThemesController->index()
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(UsersThemesController), Array)
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#11 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(UsersThemesController), Object(CakeRequest))
+#12 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
+2018-11-15 16:03:07 Error: [MissingControllerException] Controller class UsersCoursesController could not be found.
+Exception Attributes: array (
+  'class' => 'UsersCoursesController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 16:03:31 Error: [MissingControllerException] Controller class ContentsProgresssController could not be found.
+Exception Attributes: array (
+  'class' => 'ContentsProgresssController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/contents_progresss/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 16:04:53 Error: [MissingControllerException] Controller class ContentsProgresssController could not be found.
+Exception Attributes: array (
+  'class' => 'ContentsProgresssController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/contents_progresss/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 16:04:58 Error: [MissingControllerException] Controller class UsersCoursesController could not be found.
+Exception Attributes: array (
+  'class' => 'UsersCoursesController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 16:05:49 Error: [MissingControllerException] Controller class ProgressesController could not be found.
+Exception Attributes: array (
+  'class' => 'ProgressesController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 16:06:30 Error: [MissingTableException] Table ib_progresses for model Progress was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_progresses',
+  'class' => 'Progress',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('progresses')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('all', Array)
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(41): Model->find('all', Array)
+#4 [internal function]: ProgressesController->index('640')
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#8 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2018-11-15 16:08:03 Error: [MissingTableException] Table ib_progresses for model Progress was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_progresses',
+  'class' => 'Progress',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('progresses')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('all', Array)
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(41): Model->find('all', Array)
+#4 [internal function]: ProgressesController->index('640')
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#8 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2018-11-15 16:16:43 Error: [MissingTableException] Table ib_contents for model Content was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_contents',
+  'class' => 'Content',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('contents')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(1387): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(2530): Model->schema()
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1754): DboSource->fields(Object(Content), 'Content', '')
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1105): DboSource->generateAssociationQuery(Object(Progress), Object(Content), 'belongsTo', 'Content', Array, Array, false)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): DboSource->read(Object(Progress), Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('all', Array)
+#7 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(41): Model->find('all', Array)
+#8 [internal function]: ProgressesController->index('640')
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#11 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#12 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
+2018-11-15 16:17:48 Error: [MissingTableException] Table ib_contents for model Content was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_contents',
+  'class' => 'Content',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('contents')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(1387): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(2530): Model->schema()
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1754): DboSource->fields(Object(Content), 'Content', '')
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1105): DboSource->generateAssociationQuery(Object(Progress), Object(Content), 'belongsTo', 'Content', Array, Array, false)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): DboSource->read(Object(Progress), Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('all', Array)
+#7 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(41): Model->find('all', Array)
+#8 [internal function]: ProgressesController->index('640')
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#11 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#12 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
+2018-11-15 16:18:49 Error: [MissingTableException] Table ib_contents for model Content was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_contents',
+  'class' => 'Content',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('contents')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(1387): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(2530): Model->schema()
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1754): DboSource->fields(Object(AppModel), 'Content', '')
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1105): DboSource->generateAssociationQuery(Object(Progress), Object(AppModel), 'belongsTo', 'Content', Array, Array, false)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): DboSource->read(Object(Progress), Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('all', Array)
+#7 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(41): Model->find('all', Array)
+#8 [internal function]: ProgressesController->index('640')
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#11 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#12 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
+2018-11-15 16:20:14 Error: [MissingTableException] Table ib_contents for model Content was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_contents',
+  'class' => 'Content',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('contents')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(1387): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(2530): Model->schema()
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1754): DboSource->fields(Object(AppModel), 'Content', '')
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1105): DboSource->generateAssociationQuery(Object(Progress), Object(AppModel), 'belongsTo', 'Content', Array, Array, false)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): DboSource->read(Object(Progress), Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('all', Array)
+#7 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(41): Model->find('all', Array)
+#8 [internal function]: ProgressesController->index('640')
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#11 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#12 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
+2018-11-15 16:21:04 Error: [PDOException] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content_id' in 'where clause'
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(461): PDOStatement->execute(Array)
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(427): DboSource->_execute('SELECT `Progres...', Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(669): DboSource->execute('SELECT `Progres...', Array, Array)
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1118): DboSource->fetchAll('SELECT `Progres...', false)
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): DboSource->read(Object(Progress), Array)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('all', Array)
+#6 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(41): Model->find('all', Array)
+#7 [internal function]: ProgressesController->index('640')
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#11 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#12 {main}
+2018-11-15 16:21:36 Error: [PDOException] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content_id' in 'where clause'
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(461): PDOStatement->execute(Array)
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(427): DboSource->_execute('SELECT `Progres...', Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(669): DboSource->execute('SELECT `Progres...', Array, Array)
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1118): DboSource->fetchAll('SELECT `Progres...', false)
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): DboSource->read(Object(Progress), Array)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('all', Array)
+#6 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(41): Model->find('all', Array)
+#7 [internal function]: ProgressesController->index('640')
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#11 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#12 {main}
+2018-11-15 16:22:20 Error: [MissingTableException] Table ib_contents for model Content was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_contents',
+  'class' => 'Content',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('contents')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('first', Array)
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(63): Model->find('first', Array)
+#4 [internal function]: ProgressesController->index('640')
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#8 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2018-11-15 16:23:00 Error: [MissingTableException] Table ib_contents for model Content was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_contents',
+  'class' => 'Content',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('contents')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('first', Array)
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(63): Model->find('first', Array)
+#4 [internal function]: ProgressesController->index('640')
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#8 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2018-11-15 16:24:47 Error: [MissingTableException] Table ib_contents for model Content was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_contents',
+  'class' => 'Content',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('contents')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('first', Array)
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(63): Model->find('first', Array)
+#4 [internal function]: ProgressesController->index('640')
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#8 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2018-11-15 16:26:01 Error: [MissingTableException] Table ib_contents for model Content was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_contents',
+  'class' => 'Content',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('contents')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('first', Array)
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(63): Model->find('first', Array)
+#4 [internal function]: ProgressesController->index('640')
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#8 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2018-11-15 16:26:34 Error: [MissingTableException] Table ib_courses for model Course was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_courses',
+  'class' => 'Course',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('courses')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(1387): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(2530): Model->schema()
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1754): DboSource->fields(Object(AppModel), 'Course', '')
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1105): DboSource->generateAssociationQuery(Object(Task), Object(AppModel), 'belongsTo', 'Course', Array, Array, false)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): DboSource->read(Object(Task), Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('first', Array)
+#7 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(63): Model->find('first', Array)
+#8 [internal function]: ProgressesController->index('640')
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#11 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#12 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
+2018-11-15 16:27:15 Error: [PDOException] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'Task.course_id' in 'on clause'
+Request URL: /irohacompass/progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(461): PDOStatement->execute(Array)
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(427): DboSource->_execute('SELECT `Task`.`...', Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(669): DboSource->execute('SELECT `Task`.`...', Array, Array)
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1118): DboSource->fetchAll('SELECT `Task`.`...', false)
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): DboSource->read(Object(Task), Array)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('first', Array)
+#6 C:\Users\miura\Dropbox\www\irohacompass\Controller\ProgressesController.php(63): Model->find('first', Array)
+#7 [internal function]: ProgressesController->index('640')
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(ProgressesController), Array)
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(ProgressesController), Object(CakeRequest))
+#11 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#12 {main}
+2018-11-15 16:31:43 Error: [MissingControllerException] Controller class ContentsController could not be found.
+Exception Attributes: array (
+  'class' => 'ContentsController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/contents/index/123
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 16:33:22 Error: [PDOException] SQLSTATE[42S02]: Base table or view not found: 1146 Table 'jaist_lss.ib_contents' doesn't exist
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(461): PDOStatement->execute(Array)
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(427): DboSource->_execute(' SELECT Theme.i...', Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(669): DboSource->execute(' SELECT Theme.i...', Array, Array)
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(612): DboSource->fetchAll(' SELECT Theme.i...', Array, Array)
+#4 [internal function]: DboSource->query(' SELECT Theme.i...', Array)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3456): call_user_func_array(Array, Array)
+#6 C:\Users\miura\Dropbox\www\irohacompass\Model\UsersTheme.php(85): Model->query(' SELECT Theme.i...', Array)
+#7 C:\Users\miura\Dropbox\www\irohacompass\Controller\UsersThemesController.php(50): UsersTheme->getThemeRecord('316')
+#8 [internal function]: UsersThemesController->index()
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(UsersThemesController), Array)
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#11 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(UsersThemesController), Object(CakeRequest))
+#12 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
+2018-11-15 17:47:21 Error: [MissingControllerException] Controller class TasksProgressesController could not be found.
+Exception Attributes: array (
+  'class' => 'TasksProgressesController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/admin/tasks_progresses/index/551
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 17:48:24 Error: [MissingControllerException] Controller class TasksProgressesController could not be found.
+Exception Attributes: array (
+  'class' => 'TasksProgressesController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/admin/tasks_progresses/index/640
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 17:48:43 Error: [MissingControllerException] Controller class TasksProgressesController could not be found.
+Exception Attributes: array (
+  'class' => 'TasksProgressesController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/admin/tasks_progresses/index/551
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-11-15 18:06:39 Error: [MissingTableException] Table ib_records_questions for model RecordsQuestion was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_records_questions',
+  'class' => 'RecordsQuestion',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('records_questio...')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(1387): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(2530): Model->schema()
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1770): DboSource->fields(Object(RecordsQuestion), 'RecordsQuestion', '')
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1269): DboSource->generateAssociationQuery(Object(Record), Object(RecordsQuestion), 'hasMany', 'RecordsQuestion', Array, Array, true)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1149): DboSource->queryAssociation(Object(Record), Object(RecordsQuestion), 'hasMany', 'RecordsQuestion', Array, Array, true, Array, 0, Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): DboSource->read(Object(Record), Array)
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('all', Array)
+#8 C:\Users\miura\Dropbox\www\irohacompass\Controller\UsersThemesController.php(76): Model->find('all', Array)
+#9 [internal function]: UsersThemesController->index()
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(UsersThemesController), Array)
+#11 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#12 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(UsersThemesController), Object(CakeRequest))
+#13 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#14 {main}
+2018-11-15 18:06:44 Error: [MissingTableException] Table ib_records_questions for model RecordsQuestion was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_records_questions',
+  'class' => 'RecordsQuestion',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('records_questio...')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(1387): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(2530): Model->schema()
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1770): DboSource->fields(Object(RecordsQuestion), 'RecordsQuestion', '')
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1269): DboSource->generateAssociationQuery(Object(Record), Object(RecordsQuestion), 'hasMany', 'RecordsQuestion', Array, Array, true)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1149): DboSource->queryAssociation(Object(Record), Object(RecordsQuestion), 'hasMany', 'RecordsQuestion', Array, Array, true, Array, 0, Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3031): DboSource->read(Object(Record), Array)
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3003): Model->_readDataSource('all', Array)
+#8 C:\Users\miura\Dropbox\www\irohacompass\Controller\UsersThemesController.php(76): Model->find('all', Array)
+#9 [internal function]: UsersThemesController->index()
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(UsersThemesController), Array)
+#11 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#12 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(UsersThemesController), Object(CakeRequest))
+#13 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#14 {main}
+2018-11-20 16:14:03 Error: Fatal Error (4): syntax error, unexpected '}' in [C:\Users\miura\Dropbox\www\irohacompass\View\Progresses\index.ctp, line 105]
+2018-11-20 16:14:03 Error: [FatalErrorException] syntax error, unexpected '}'
+Request URL: /irohacompass/progresses/index/551
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Error\ErrorHandler.php(213): ErrorHandler::handleFatalError(4, 'syntax error, u...', 'C:\Users\miura\...', 105)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', 'C:\Users\miura\...', 105, Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Core\App.php(933): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', 'C:\Users\miura\...', 105, Array)
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Core\App.php(906): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2018-11-28 19:17:02 Error: [MissingTableException] Table ib_settings for model Setting was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_settings',
+  'class' => 'Setting',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('settings')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3455): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#4 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(676): CakeEventManager->dispatch(Object(CakeEvent))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(UsersThemesController), Object(CakeRequest))
+#9 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2018-11-28 19:17:03 Error: [MissingTableException] Table ib_settings for model Setting was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_settings',
+  'class' => 'Setting',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/logs/add
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('settings')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3455): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#4 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(676): CakeEventManager->dispatch(Object(CakeEvent))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(LogsController), Object(CakeRequest))
+#9 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2018-11-28 19:17:08 Error: [MissingTableException] Table ib_settings for model Setting was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_settings',
+  'class' => 'Setting',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/logs/add
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('settings')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3455): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#4 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(676): CakeEventManager->dispatch(Object(CakeEvent))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(LogsController), Object(CakeRequest))
+#9 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2018-11-28 19:17:11 Error: Fatal Error (1): Call to undefined function file_get_tasks() in [C:\Users\miura\Dropbox\www\irohacompass\Controller\InstallController.php, line 98]
+2018-11-28 19:17:11 Error: [FatalErrorException] Call to undefined function file_get_tasks()
+Request URL: /irohacompass/install
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Error\ErrorHandler.php(213): ErrorHandler::handleFatalError(1, 'Call to undefin...', 'C:\Users\miura\...', 98)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', 'C:\Users\miura\...', 98, Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Core\App.php(933): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', 'C:\Users\miura\...', 98, Array)
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Core\App.php(906): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2018-11-28 19:17:11 Error: [MissingTableException] Table ib_settings for model Setting was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_settings',
+  'class' => 'Setting',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/logs/add
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('settings')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3455): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#4 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(676): CakeEventManager->dispatch(Object(CakeEvent))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(LogsController), Object(CakeRequest))
+#9 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2018-11-28 19:18:30 Error: [MissingTableException] Table ib_settings for model Setting was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_settings',
+  'class' => 'Setting',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/logs/add
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3653): Model->setSource('settings')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3455): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#4 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(676): CakeEventManager->dispatch(Object(CakeEvent))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(LogsController), Object(CakeRequest))
+#9 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2018-11-28 19:28:28 Error: [MissingControllerException] Controller class AdminController could not be found.
+Exception Attributes: array (
+  'class' => 'AdminController',
+  'plugin' => NULL,
+)
+Request URL: /irohacompass/admin
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2018-12-05 14:55:45 Error: [MissingConnectionException] Database connection "Mysql" is missing, or could not be created.
+Exception Attributes: array (
+  'class' => 'Mysql',
+  'message' => 'SQLSTATE[42000] [1049] Unknown database \'irohacompass\'',
+  'enabled' => true,
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(278): Mysql->connect()
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\ConnectionManager.php(105): DboSource->__construct(Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3646): ConnectionManager::getDataSource('default')
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(1162): Model->setDataSource('default')
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3673): Model->setSource('settings')
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3475): Model->getDataSource()
+#6 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#7 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#8 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(677): CakeEventManager->dispatch(Object(CakeEvent))
+#11 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#12 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(UsersThemesController), Object(CakeRequest))
+#13 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#14 {main}
+2018-12-05 14:55:46 Error: [MissingConnectionException] Database connection "Mysql" is missing, or could not be created.
+Exception Attributes: array (
+  'class' => 'Mysql',
+  'message' => 'SQLSTATE[42000] [1049] Unknown database \'irohacompass\'',
+  'enabled' => true,
+)
+Request URL: /irohacompass/logs/add
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(278): Mysql->connect()
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\ConnectionManager.php(105): DboSource->__construct(Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3646): ConnectionManager::getDataSource('default')
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(1162): Model->setDataSource('default')
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3673): Model->setSource('settings')
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3475): Model->getDataSource()
+#6 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#7 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#8 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(677): CakeEventManager->dispatch(Object(CakeEvent))
+#11 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#12 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(LogsController), Object(CakeRequest))
+#13 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#14 {main}
+2018-12-05 14:56:07 Error: [MissingTableException] Table ib_settings for model Setting was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_settings',
+  'class' => 'Setting',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/logs/add
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3673): Model->setSource('settings')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3475): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#4 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(677): CakeEventManager->dispatch(Object(CakeEvent))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(LogsController), Object(CakeRequest))
+#9 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2018-12-05 14:56:07 Error: [MissingTableException] Table ib_settings for model Setting was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_settings',
+  'class' => 'Setting',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3673): Model->setSource('settings')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3475): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#4 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(677): CakeEventManager->dispatch(Object(CakeEvent))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(UsersThemesController), Object(CakeRequest))
+#9 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2018-12-05 14:56:08 Error: [MissingTableException] Table ib_settings for model Setting was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_settings',
+  'class' => 'Setting',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/logs/add
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3673): Model->setSource('settings')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3475): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#4 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(677): CakeEventManager->dispatch(Object(CakeEvent))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(LogsController), Object(CakeRequest))
+#9 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2018-12-05 14:57:16 Error: [MissingTableException] Table ib_settings for model Setting was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_settings',
+  'class' => 'Setting',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/logs/add
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3673): Model->setSource('settings')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3475): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#4 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(677): CakeEventManager->dispatch(Object(CakeEvent))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(LogsController), Object(CakeRequest))
+#9 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2018-12-05 14:57:16 Error: [MissingTableException] Table ib_settings for model Setting was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_settings',
+  'class' => 'Setting',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3673): Model->setSource('settings')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3475): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#4 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(677): CakeEventManager->dispatch(Object(CakeEvent))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(UsersThemesController), Object(CakeRequest))
+#9 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2018-12-05 14:57:16 Error: [MissingTableException] Table ib_settings for model Setting was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_settings',
+  'class' => 'Setting',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/logs/add
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3673): Model->setSource('settings')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3475): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#4 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(677): CakeEventManager->dispatch(Object(CakeEvent))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(LogsController), Object(CakeRequest))
+#9 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2018-12-05 15:08:03 Error: [MissingTableException] Table ib_settings for model Setting was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'ib_settings',
+  'class' => 'Setting',
+  'ds' => 'default',
+)
+Request URL: /irohacompass/logs/add
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3673): Model->setSource('settings')
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3475): Model->getDataSource()
+#2 C:\Users\miura\Dropbox\www\irohacompass\Model\Setting.php(75): Model->query('SELECT setting_...')
+#3 C:\Users\miura\Dropbox\www\irohacompass\Controller\AppController.php(82): Setting->getSettings()
+#4 [internal function]: AppController->beforeFilter(Object(CakeEvent))
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Event\CakeEventManager.php(243): call_user_func(Array, Object(CakeEvent))
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(677): CakeEventManager->dispatch(Object(CakeEvent))
+#7 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(189): Controller->startupProcess()
+#8 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(LogsController), Object(CakeRequest))
+#9 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2018-12-05 15:08:13 Error: [PDOException] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'gc.course_id' in 'on clause'
+Request URL: /irohacompass/admin/groups
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(489): PDOStatement->execute(Array)
+#1 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(455): DboSource->_execute('SELECT *, Group...', Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(702): DboSource->execute('SELECT *, Group...', Array, Array)
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Datasource\DboSource.php(1213): DboSource->fetchAll('SELECT *, Group...', false)
+#4 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3040): DboSource->read(Object(Group), Array)
+#5 C:\Users\miura\Dropbox\www\cake\lib\Cake\Model\Model.php(3012): Model->_readDataSource('all', Array)
+#6 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Component\PaginatorComponent.php(212): Model->find('all', Array)
+#7 C:\Users\miura\Dropbox\www\irohacompass\Controller\GroupsController.php(38): PaginatorComponent->paginate()
+#8 [internal function]: GroupsController->admin_index()
+#9 C:\Users\miura\Dropbox\www\cake\lib\Cake\Controller\Controller.php(491): ReflectionMethod->invokeArgs(Object(GroupsController), Array)
+#10 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#11 C:\Users\miura\Dropbox\www\cake\lib\Cake\Routing\Dispatcher.php(167): Dispatcher->_invoke(Object(GroupsController), Object(CakeRequest))
+#12 C:\Users\miura\Dropbox\www\irohacompass\webroot\index.php(168): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
+2018-12-05 15:53:47 Error: Fatal Error (4): syntax error, unexpected T_DOUBLE_ARROW in [C:\Users\miura\Dropbox\www\irohacompass\View\Progresses\edit.ctp, line 154]
+2018-12-05 15:53:47 Error: [FatalErrorException] syntax error, unexpected T_DOUBLE_ARROW
+Request URL: /irohacompass/progresses/add/1
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Error\ErrorHandler.php(212): ErrorHandler::handleFatalError(4, 'syntax error, u...', 'C:\Users\miura\...', 154)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', 'C:\Users\miura\...', 154, Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Core\App.php(970): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', 'C:\Users\miura\...', 154, Array)
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Core\App.php(943): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2018-12-05 15:54:58 Error: Fatal Error (4): syntax error, unexpected T_DOUBLE_ARROW in [C:\Users\miura\Dropbox\www\irohacompass\View\Progresses\edit.ctp, line 154]
+2018-12-05 15:54:58 Error: [FatalErrorException] syntax error, unexpected T_DOUBLE_ARROW
+Request URL: /irohacompass/progresses/add/1
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Error\ErrorHandler.php(212): ErrorHandler::handleFatalError(4, 'syntax error, u...', 'C:\Users\miura\...', 154)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', 'C:\Users\miura\...', 154, Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Core\App.php(970): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', 'C:\Users\miura\...', 154, Array)
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Core\App.php(943): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2018-12-05 21:36:54 Error: Fatal Error (1): Call to undefined function file_get_tasks() in [C:\Users\miura\Dropbox\www\irohacompass\Controller\UpdateController.php, line 74]
+2018-12-05 21:36:54 Error: [FatalErrorException] Call to undefined function file_get_tasks()
+Request URL: /irohacompass/update
+Stack Trace:
+#0 C:\Users\miura\Dropbox\www\cake\lib\Cake\Error\ErrorHandler.php(212): ErrorHandler::handleFatalError(1, 'Call to undefin...', 'C:\Users\miura\...', 74)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', 'C:\Users\miura\...', 74, Array)
+#2 C:\Users\miura\Dropbox\www\cake\lib\Cake\Core\App.php(970): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', 'C:\Users\miura\...', 74, Array)
+#3 C:\Users\miura\Dropbox\www\cake\lib\Cake\Core\App.php(943): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2018-12-05 21:38:48 Error: Table 'irohacompass.ib_contents' doesn't exist
+[Error Code]42S02
+[Error Code2]1146
+[SQL]
+
+
+ALTER TABLE ib_contents CHANGE COLUMN course_id theme_id int(8)Table 'irohacompass.ib_contents' doesn't exist
+[Error Code]42S02
+[Error Code2]1146
+[SQL]
+
+
+ALTER TABLE ib_contents CHANGE COLUMN course_id theme_id int(8)
+
+2018-12-05 21:38:55 Error: Unknown column 'score' in 'ib_records'
+[Error Code]42S22
+[Error Code2]1054
+[SQL]
+ALTER TABLE ib_records CHANGE COLUMN score rate int(8)Unknown column 'score' in 'ib_records'
+[Error Code]42S22
+[Error Code2]1054
+[SQL]
+ALTER TABLE ib_records CHANGE COLUMN score rate int(8)
+
