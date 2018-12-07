@@ -9,7 +9,7 @@ http://irohacompass.irohasoft.jp/
 ## デモサイト
 http://demoib.irohasoft.com/
 
-##動作環境
+## 動作環境
 PHP : 5.4以上
 MySQL : 5.1以上
 CakePHP : 2.10.x
@@ -37,7 +37,7 @@ https://github.com/cakephp/cakephp/releases/tag/2.10.13
 画面上にインストール完了のメッセージが表示されればインストールは完了です。
 
 ## 主な機能
-###受講者側
+### 受講者側
 * 学習テーマ／学習目標の設定
 * 課題の管理
 * 進捗の登録
@@ -45,7 +45,7 @@ https://github.com/cakephp/cakephp/releases/tag/2.10.13
 * お知らせの表示
 * メール通知機能
 
-###管理者側
+### 管理者側
 * ユーザ管理
 * グループ管理
 * お知らせ管理
