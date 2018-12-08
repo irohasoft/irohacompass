@@ -24,6 +24,18 @@
 	{
 		display: block;
 	}
+	
+	table tr td
+	{
+		padding: 2px;
+		font-size: 12px;
+	}
+	
+	.col-theme,
+	.col-task
+	{
+		width:30%;
+	}
 }
 </style>
 <?php $this->end(); ?>
@@ -81,12 +93,14 @@
 			<table cellpadding="0" cellspacing="0">
 			<thead>
 			<tr>
-				<th nowrap>学習テーマ</th>
-				<th nowrap>課題</th>
+				<th nowrap class="col-theme">学習テーマ</th>
+				<th nowrap class="col-task">課題</th>
 				<th nowrap>氏名</th>
+				<!--
 				<th nowrap class="ib-col-center">進捗率</th>
 				<th nowrap class="ib-col-center">進捗率(全体)</th>
 				<th nowrap class="ib-col-center">完了</th>
+				-->
 				<th class="ib-col-center" nowrap>種別</th>
 				<th class="ib-col-datetime">更新日時</th>
 			</tr>
@@ -97,9 +111,11 @@
 					<td><a href="<?php echo Router::url(array('controller' => 'tasks', 'action' => 'index', $record['Theme']['id']));?>"><?php echo h($record['Theme']['title']); ?></a></td>
 					<td><a href="<?php echo Router::url(array('controller' => 'progresses', 'action' => 'index', $record['Task']['id']));?>"><?php echo h($record['Task']['title']); ?></a></td>
 					<td><?php echo h($record['User']['name']); ?>&nbsp;</td>
+					<!--
 					<td class="ib-col-center"><?php echo h($record['Record']['rate']); ?>&nbsp;</td>
 					<td class="ib-col-center"><?php echo h($record['Record']['theme_rate']); ?>&nbsp;</td>
 					<td nowrap class="ib-col-center"><?php echo h(Configure::read('content_status.'.$record['Record']['is_complete'])); ?>&nbsp;</td>
+					-->
 					<td nowrap class="ib-col-center"><?php echo h(Configure::read('record_type.'.$record['Record']['record_type'])); ?>&nbsp;</td>
 					<td class="ib-col-date"><?php echo h(Utils::getYMDHN($record['Record']['created'])); ?>&nbsp;</td>
 				</tr>

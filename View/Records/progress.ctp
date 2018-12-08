@@ -77,6 +77,52 @@ height: 300px;
 	min-height: 400px;
 }
 <?php }?>
+
+@media only screen and (max-width:800px)
+{
+	a
+	{
+		display: block;
+	}
+	
+	.list-group-item-text span
+	{
+		display: block;
+	}
+	
+	table tr td
+	{
+		padding: 2px;
+		font-size: 12px;
+	}
+	
+	.col-theme,
+	.col-task
+	{
+		width:30%;
+	}
+	
+	.ib-row,
+	.ib-search-date-container
+	{
+		height: initial;
+	}
+	
+	.ib-horizonta,
+	.input
+	{
+		padding: 2px;
+		float: initial;
+		width: 100%;
+	}
+	
+	.ib-horizontal label
+	{
+		float: initial;
+		text-align: initial;
+		width: 100%;
+	}
+}
 </style>
 <?php $this->end(); ?>
 <?php $this->start('script-embedded'); ?>
@@ -158,11 +204,13 @@ height: 300px;
 					<th nowrap><?php echo $this->Paginator->sort('theme_id', '学習テーマ'); ?></th>
 					<th nowrap><?php echo $this->Paginator->sort('content_id', '課題'); ?></th>
 					<th nowrap><?php echo $this->Paginator->sort('user_id', '氏名'); ?></th>
+					<!--
 					<th nowrap class="ib-col-center"><?php echo $this->Paginator->sort('rate', '進捗率'); ?></th>
 					<th nowrap class="ib-col-center"><?php echo $this->Paginator->sort('theme_rate', '進捗率(全体)'); ?></th>
 					<th nowrap class="ib-col-center"><?php echo $this->Paginator->sort('is_complete', '完了'); ?></th>
-					<th class="ib-col-center" nowrap><?php echo $this->Paginator->sort('record_type', '種別'); ?></th>
 					<th class="ib-col-center"><?php echo $this->Paginator->sort('study_sec', '学習時間'); ?></th>
+					-->
+					<th class="ib-col-center" nowrap><?php echo $this->Paginator->sort('record_type', '種別'); ?></th>
 					<th class="ib-col-datetime"><?php echo $this->Paginator->sort('created', '学習日時'); ?></th>
 				</tr>
 				</thead>
@@ -172,11 +220,13 @@ height: 300px;
 						<td><a href="<?php echo Router::url(array('controller' => 'tasks', 'action' => 'index', $record['Theme']['id']));?>"><?php echo h($record['Theme']['title']); ?></a></td>
 						<td><a href="<?php echo Router::url(array('controller' => 'progresses', 'action' => 'index', $record['Task']['id']));?>"><?php echo h($record['Task']['title']); ?></a></td>
 						<td><?php echo h($record['User']['name']); ?>&nbsp;</td>
+						<!--
 						<td class="ib-col-center"><?php echo h($record['Record']['rate']); ?>&nbsp;</td>
 						<td class="ib-col-center"><?php echo h($record['Record']['theme_rate']); ?>&nbsp;</td>
 						<td nowrap class="ib-col-center"><?php echo h(Configure::read('content_status.'.$record['Record']['is_complete'])); ?>&nbsp;</td>
-						<td nowrap class="ib-col-center"><?php echo h(Configure::read('record_type.'.$record['Record']['record_type'])); ?>&nbsp;</td>
 						<td class="ib-col-center"><?php echo h(Utils::getHNSBySec($record['Record']['study_sec'])); ?>&nbsp;</td>
+						-->
+						<td nowrap class="ib-col-center"><?php echo h(Configure::read('record_type.'.$record['Record']['record_type'])); ?>&nbsp;</td>
 						<td class="ib-col-date"><?php echo h(Utils::getYMDHN($record['Record']['created'])); ?>&nbsp;</td>
 					</tr>
 					<?php endforeach; ?>
