@@ -15,9 +15,9 @@ MySQL : 5.1以上
 CakePHP : 2.10.x
 
 ##インストール方法
-1. iroha Compass のソースをダウンロードし、解凍します。  
+1. iroha Compass のソースをダウンロードし、解凍します。
 https://github.com/irohasoft/irohacompass/releases
-* CakePHP 2.7 のソースをダウンロードし、解凍します。  
+* CakePHP 2.10 のソースをダウンロードし、解凍します。
 https://github.com/cakephp/cakephp/releases/tag/2.10.13
 * Webサーバ上の非公開ディレクトリに cake フォルダを作成し、CakePHP 2.10 のソースを全てアップロードします。
 * 公開ディレクトリに irohaBoard をアップロードします。

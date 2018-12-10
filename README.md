@@ -53,5 +53,5 @@ Make sure you have created an empty database on you MySQL server.
 ### For administrators.
 - System setting
 
-##License
+## License
 GPLv3
