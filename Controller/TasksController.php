@@ -40,8 +40,9 @@ class TasksController extends AppController
 
 	public function index($theme_id, $user_id = null)
 	{
-		$theme_id = intval($theme_id);
-		$is_user = ($this->action == 'index');
+		$theme_id	= intval($theme_id);
+		$is_user	= ($this->action == 'index');
+		$keyword	= (isset($this->request->query['keyword'])) ? $this->request->query['keyword'] : "";
 		
 		// 学習テーマの情報を取得
 		$this->loadModel('Theme');
@@ -85,6 +86,34 @@ class TasksController extends AppController
 		if($status != '')
 			$conditions['status'] = $status;
 		
+		if($keyword != "")
+		{
+			$this->loadModel('Progress');
+			
+			// キーワードを含む進捗を検索
+			$list = $this->Progress->find('all', array(
+				'conditions' => array(
+					'Task.theme_id' => $theme_id,
+					'OR' => array(
+						'Progress.title like' => '%'.$keyword.'%',
+						'Progress.body like' => '%'.$keyword.'%'
+			))));
+			
+			$task_id_list = array();
+			
+			foreach ($list as $item)
+			{
+				$task_id_list[count($task_id_list)] = $item['Task']['id'];
+			}
+			
+			// キーワードを含む課題を検索
+			$conditions['OR'] = array(
+				array('Task.title like' => '%'.$keyword.'%'),
+				array('Task.body like' => '%'.$keyword.'%'),
+				array('Task.id' => $task_id_list)
+			);
+		}
+		
 		// 完了以外の場合
 		if($status == "99")
 		{
@@ -103,7 +132,7 @@ class TasksController extends AppController
 		
 		$tasks = $this->paginate();
 		
-		$this->set(compact('theme', 'tasks', 'is_user', 'status'));
+		$this->set(compact('theme', 'tasks', 'is_user', 'status', 'keyword'));
 	}
 
 	public function view($id = null)

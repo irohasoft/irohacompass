@@ -163,8 +163,11 @@
 				'class'		=> 'form-control',
 				'onchange'	=> 'submit(this.form);'
 			));
-			//echo $this->Form->input('title',		array('label' => 'ログインID : ', 'required' => false));
-			//echo $this->Form->input('name',			array('label' => '氏名 : '  , 'required' => false, 'value'=>$name));
+			
+			echo $this->Form->input('keyword',		array('label' => 'キーワード : ', 'value' => $keyword, 'required' => false));
+		?>
+		<input type="submit" class="btn btn-info btn-add" value="検索">
+		<?php
 			echo $this->Form->end();
 		?>
 	</div>
