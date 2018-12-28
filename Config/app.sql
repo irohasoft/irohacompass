@@ -175,6 +175,8 @@ CREATE TABLE `ib_themes` (
   `learning_target` text,
   `introduction` text,
   `comment` text,
+  `page_id` int(11) DEFAULT NULL,
+  `page_image` text,
   `user_id` int(8) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

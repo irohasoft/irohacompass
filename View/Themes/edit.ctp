@@ -1,4 +1,24 @@
 <?php if(!$is_user) echo $this->element('admin_menu');?>
+<?php $this->start('script-embedded'); ?>
+<script>
+	$(document).ready(function()
+	{
+		// ノート作成ツールを開く
+		$(".btn-note").click(function(){
+			var page_id = $('#ThemePageId').val();
+			
+			if(!page_id)
+			{
+				page_id = Math.round(Math.random() * 1000000);
+				$('#ThemePageId').val(page_id);
+			}
+			
+			window.open('<?php echo Router::url(array('controller' => 'notes', 'action' => 'page'))?>/'+page_id, '_note', 'width=1000,height=700,resizable=yes');
+			return false;
+		});
+	});
+</script>
+<?php $this->end(); ?>
 <div class="groups form">
 <?php
 	$controller = ($is_user) ? 'users_themes' : 'themes';
@@ -25,6 +45,12 @@
 				));
 				*/
 				echo $this->Form->input('introduction',	array('label' => __('学習目標')));
+				
+				if(Configure::read('use_irohanote'))
+					Utils::writeFormGroup('ノート', '<button class="btn btn-info btn-note">iroha Note</button> ※ 創造技法を用いて獲得した知識、アイデアをまとめます');
+				
+				echo $this->Form->text('page_id');
+				
 				//echo $this->Form->input('comment',			array('label' => __('備考')));
 			?>
 			<div class="form-group">

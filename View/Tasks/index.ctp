@@ -113,6 +113,11 @@
 				$("#introduction").before(html);
 			}
 		});
+		
+		function openNote(page_id)
+		{
+			window.open('<?php echo Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false))?>/'+page_id, '_note', 'width=1000,height=700,resizable=yes');
+		}
 	</script>
 <?php $this->end(); ?>
 <div class="tasks index">
@@ -141,6 +146,9 @@
 		<?php if($theme['Theme']['introduction']!='') {?>
 		<?php echo $this->Form->hidden('introduction', array('value' => $theme['Theme']['introduction'], 'id' => 'introduction'));?>
 		<?php }?>
+		<div>
+			<?php echo Utils::getNoteLink($theme['Theme']['page_id'], $theme['Theme']['page_image'], $this->Html);?>
+		</div>
 		<div>
 			<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?php echo Router::url(array('controller' => 'themes', 'action' => 'edit', $theme['Theme']['id'])) ?>'">編集</button>
 		</div>
