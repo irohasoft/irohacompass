@@ -49,7 +49,7 @@
 				if(Configure::read('use_irohanote'))
 					Utils::writeFormGroup('ノート', '<button class="btn btn-info btn-note">iroha Note</button> ※ 創造技法を用いて獲得した知識、アイデアをまとめます');
 				
-				echo $this->Form->text('page_id');
+				echo $this->Form->hidden('page_id');
 				
 				//echo $this->Form->input('comment',			array('label' => __('備考')));
 			?>
