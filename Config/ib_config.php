@@ -108,6 +108,7 @@ $config['demo_mode'] = false;
 // デモユーザのログインIDとパスワード
 $config['demo_login_id'] = "demo001";
 $config['demo_password'] = "pass";
+$config['demo_target_date'] = "2018/12/17";
 
 // フォームのスタイル(BoostCake)の基本設定
 $config['form_defaults'] = array(

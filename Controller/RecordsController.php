@@ -128,14 +128,6 @@ class RecordsController extends AppController
 		$this->Theme = new Theme();
 		$this->User = new User();
 		
-		// 進捗チャート用の情報を取得
-		$labels		= array();
-		
-		for($i=0; $i<14; $i++ )
-		{
-			$labels[count($labels)] = date('m/d', strtotime(($i-13).' day'));
-		}
-		
 		// ユーザIDが指定されていない、もしくは管理者以外の場合、自身の進捗データを取得
 		if(
 			(!$user_id)||
@@ -147,6 +139,8 @@ class RecordsController extends AppController
 		}
 		
 		
+		// 進捗チャート用の情報を取得
+		$labels			= $this->Record->getDateLabels();
 		$login_data		= $this->Record->getLoginData($user_id, $labels);
 		$progress_data	= $this->Record->getProgressData($user_id, $labels);
 		$themes		= $this->Theme->find('list', array('conditions' => array('Theme.id' => $theme_ids)));

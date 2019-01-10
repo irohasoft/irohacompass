@@ -171,14 +171,17 @@ class Record extends AppModel
 SELECT DATE(created) as created, COUNT(*) as cnt
   FROM ib_logs
  WHERE user_id = :user_id
-   AND created > :target_date
+   AND created > :start_date
 #   AND log_type = 'user_logined'
  GROUP BY DATE(created)
  ORDER BY DATE(created)
 EOF;
+		// 集計開始日を指定（デモモードの場合、設定ファイルの日付を設定）
+		$start_date = Configure::read('demo_mode') ? Configure::read('demo_target_date') : date('Y-m-d', strtotime('-13 day'));
+		
 		$params = array(
-			'user_id' => $user_id,
-			'target_date' => date('Y-m-d', strtotime('-13 day'))
+			'user_id'		=> $user_id,
+			'start_date'	=> $start_date,
 		);
 		
 		$data = $this->query($sql, $params);
@@ -194,7 +197,9 @@ EOF;
 			
 			foreach ($data as $item)
 			{
-				if($item[0]['created'] == date('Y-m-d', strtotime(($i-13).' day')))
+				$target_date = Configure::read('demo_mode') ? date('Y-m-d', strtotime(($i).' day', strtotime(Configure::read('demo_target_date')))) : date('Y-m-d', strtotime(($i-13).' day'));
+				
+				if($item[0]['created'] == $target_date)
 					$ret_data[$index] = $item[0]['cnt'];
 			}
 		}
@@ -209,13 +214,16 @@ EOF;
 SELECT DATE(created) as created, COUNT(*) as cnt
   FROM ib_records
  WHERE user_id = :user_id
-   AND created > :target_date
+   AND created > :start_date
  GROUP BY DATE(created)
  ORDER BY DATE(created)
 EOF;
+		// 集計開始日を指定（デモモードの場合、設定ファイルの日付を設定）
+		$start_date = Configure::read('demo_mode') ? Configure::read('demo_target_date') : date('Y-m-d', strtotime('-13 day'));
+		
 		$params = array(
 			'user_id'		=> $user_id,
-			'target_date'	=> date('Y-m-d', strtotime('-13 day')),
+			'start_date'	=> $start_date,
 		);
 		
 		$data = $this->query($sql, $params);
@@ -231,12 +239,29 @@ EOF;
 			
 			foreach ($data as $item)
 			{
-				if($item[0]['created'] == date('Y-m-d', strtotime(($i-13).' day')))
+				$target_date = Configure::read('demo_mode') ? date('Y-m-d', strtotime(($i).' day', strtotime(Configure::read('demo_target_date')))) : date('Y-m-d', strtotime(($i-13).' day'));
+				
+				if($item[0]['created'] == $target_date)
 					$ret_data[$index] = $item[0]['cnt'];
 			}
 		}
 		
 		//debug($ret_data);
 		return $ret_data;
+	}
+
+	public function getDateLabels()
+	{
+		$labels		= array();
+		
+		for($i=0; $i<14; $i++ )
+		{
+			// 日付ラベルを指定（デモモードの場合、設定ファイルの日付を基に計算）
+			$target_date = Configure::read('demo_mode') ? date('m/d', strtotime(($i).' day', strtotime(Configure::read('demo_target_date')))) : date('m/d', strtotime(($i-13).' day'));
+			
+			$labels[count($labels)] = $target_date;
+		}
+		
+		return $labels;
 	}
 }

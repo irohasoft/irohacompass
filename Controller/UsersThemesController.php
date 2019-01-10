@@ -78,14 +78,8 @@ class UsersThemesController extends AppController
 		//debug($records);
 		
 		// 進捗チャート用の情報を取得
-		$labels		= array();
-		
-		for($i=0; $i<14; $i++ )
-		{
-			$labels[count($labels)] = date('m/d', strtotime(($i-13).' day'));
-		}
-		
 		$user_id		= $this->Session->read('Auth.User.id');
+		$labels			= $this->Record->getDateLabels();
 		$login_data		= $this->Record->getLoginData($user_id, $labels);
 		$progress_data	= $this->Record->getProgressData($user_id, $labels);
 		
