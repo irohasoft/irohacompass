@@ -257,7 +257,7 @@ $(document).ready(function(){
 	{
 		$(parent.document).find('#fraIrohaNote').addClass('irohanote-fullscreen');
 		$(parent.document).find('#irohanote-frame-' + _page_id).addClass('irohanote-fullscreen');
-		$(parent.document).find('budy').addClass('no-scroll');
+		$(parent.document).find('body').addClass('no-scroll');
 		$("#btnFullscreen").hide();
 		$("#btnFullscreenExit").show();
 	});
@@ -267,7 +267,7 @@ $(document).ready(function(){
 	{
 		$(parent.document).find('#fraIrohaNote').removeClass('irohanote-fullscreen');
 		$(parent.document).find('#irohanote-frame-' + _page_id).removeClass('irohanote-fullscreen');
-		$(parent.document).find('budy').removeClass('no-scroll');
+		$(parent.document).find('body').removeClass('no-scroll');
 		$("#btnFullscreenExit").hide();
 		$("#btnFullscreen").show();
 	});

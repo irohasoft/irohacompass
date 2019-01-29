@@ -28,7 +28,7 @@ class NotesController extends AppController
 		'Paginator',
 		'Security' => array(
 			'csrfUseOnce' => false,
-			'unlockedActions' => array('leaf_control', 'link_control', 'update_image')
+			'unlockedActions' => array('leaf_control', 'link_control')
 		),
 		'Session',
 		'RequestHandler',
@@ -53,7 +53,6 @@ class NotesController extends AppController
 		$notes = $this->Note->find('all', $options);
 		
 		$xmlArray = array('root' => array('note' => array()));
-		//debug($xmlArray);
 		
 		$list = array();
 		
@@ -64,30 +63,6 @@ class NotesController extends AppController
 		
 		$xmlArray['root']['note'] = $list;
 		
-		//debug($xmlArray);
-		/*
-		$xmlArray = array(
-		    'root' => array(
-		        'note' => array(
-		            array(
-		                'note_id' => '119'
-		            ),
-		            array(
-		                'Invoice' => array(
-		                    'InvoiceNumber' => 'INV-0085'
-		                ),
-		                'Account' => array(
-		                    'Code' => '260'
-		                ),
-		                'Date' => '1969-12-31T17:00:00',
-		                'Amount' => '132'
-		            )
-		        )
-		    )
-		);
-		*/
-		
-		//debug($xmlArray);
 		$xmlObject = Xml::fromArray($xmlArray, array('format' => 'tags')); // Xml::build() を使うこともできます
 		$xmlString = $xmlObject->asXML();
 		
@@ -293,38 +268,6 @@ class NotesController extends AppController
 				$this->Link->deleteAll(array('Link.leaf_id2' => $this->data['leaf_id']));
 				break;
 		}
-		
-		$xmlArray = array('root' => array('result' => array()));
-		$xmlArray['root']['result'] = array('error_code' => '0');
-		
-		$xmlObject = Xml::fromArray($xmlArray, array('format' => 'tags'));
-		$xmlString = $xmlObject->asXML();
-		
-		$this->response->type('xml');
-
-		header('Task-Type: text/xml');
-		echo $xmlString;
-	}
-
-	public function update_image()
-	{
-		$this->layout = '';
-		$this->autoRender = FALSE;
-		
-		//debug($this->data);
-		$page_id    = $this->data['page_id'];
-		$page_image = $this->data['page_image'];
-		
-		$this->loadModel('Progress');
-		$data = $this->Progress->find('first', array(
-			'conditions' => array(
-				'Progress.page_id' => $this->data['page_id']
-			)
-		));
-		
-		$data['Progress']['page_image'] = $page_image;
-		$this->Progress->save($data);
-		
 		
 		$xmlArray = array('root' => array('result' => array()));
 		$xmlArray['root']['result'] = array('error_code' => '0');

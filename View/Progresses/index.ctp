@@ -1,62 +1,62 @@
 <?php if(!$is_user) echo $this->element('admin_menu');?>
 <?php $this->start('css-embedded'); ?>
-	<style type='text/css'>
-		.td-reader
-		{
-			width:200px;
-			text-overflow:ellipsis;
-			overflow:hidden;
-			white-space:nowrap;
-		}
-		
-		table
-		{
-			table-layout:fixed;
-		}
-		
-		#sortable-table tbody
-		{
-			cursor: move;
-		}
-		
-		.progress-text,
-		.correct-text
-		{
-			padding: 10px;
-			border-radius	: 6px;
-			margin-bottom: 10px;
-			word-wrap: break-word;
-		}
-		
-		.panel-heading
-		{
-			min-height: 36px;
-		}
-	</style>
+<style type='text/css'>
+	.td-reader
+	{
+		width:200px;
+		text-overflow:ellipsis;
+		overflow:hidden;
+		white-space:nowrap;
+	}
+
+	table
+	{
+		table-layout:fixed;
+	}
+
+	#sortable-table tbody
+	{
+		cursor: move;
+	}
+
+	.progress-text,
+	.correct-text
+	{
+		padding: 10px;
+		border-radius	: 6px;
+		margin-bottom: 10px;
+		word-wrap: break-word;
+	}
+
+	.panel-heading
+	{
+		min-height: 36px;
+	}
+</style>
 <?php $this->end(); ?>
 <?php $this->start('css-embedded'); ?>
-	<script>
-		$(function(){
-			var html = marked($('#content_body').val(),
+<script>
+	$(function(){
+		var html = marked($('#content_body').val(),
+		{
+			breaks: true,
+			sanitize: true
+		});
+		
+		$("#content_body").before(html);
+		
+		$('.progress').each(function(index)
+		{
+			var html = marked($(this).val(),
 			{
 				breaks: true,
 				sanitize: true
 			});
 			
-			$("#content_body").before(html);
-			
-			$('.progress').each(function(index)
-			{
-				var html = marked($(this).val(),
-				{
-					breaks: true,
-					sanitize: true
-				});
-				
-				$(this).before(html);
-			});
+			$(this).before(html);
 		});
-	</script>
+	});
+</script>
 <?php $this->end(); ?>
 
 <div class="progresses index">
@@ -77,9 +77,6 @@
 			<big>
 			<?php echo $this->Form->hidden('content_body', array('value' => $content['Task']['body']));?>
 			</big>
-			<div>
-				<?php echo Utils::getNoteLink($content['Task']['page_id'], $content['Task']['page_image'], $this->Html);?>
-			</div>
 			<div>
 				<?php 
 				if(Configure::read('demo_mode'))
@@ -132,11 +129,23 @@
 			<?php }?>
 			<div class="progress-text bg-warning">
 				<h4><?php echo h($progress['Progress']['title']); ?></h4>
-				<?php echo $this->Form->hidden('progress_'.$progress['Progress']['id'], array('value' => $progress['Progress']['body'], 'class' => 'progress'));?>
-
-				<div>
-					<?php echo Utils::getNoteLink($progress['Progress']['page_id'], $progress['Progress']['page_image'], $this->Html);?>
-				</div>
+				<?php 
+				$content_type = $progress['Progress']['content_type'];
+				
+				switch($content_type)
+				{
+					case 'text':
+						echo h($progress['Progress']['body']);
+						break;
+					case '':
+					case 'markdown':
+						echo $this->Form->hidden('progress_'.$progress['Progress']['id'], array('value' => $progress['Progress']['body'], 'class' => 'progress'));
+						break;
+					case 'irohanote':
+						echo Utils::getNoteLink($progress['Progress']['page_id'], $this->Html);
+						break;
+				}
+				?>
 				<div>
 					<?php
 						if(Configure::read('demo_mode'))

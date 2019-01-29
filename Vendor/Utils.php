@@ -65,37 +65,26 @@ class Utils
 		return $link;
 	}
 
-	public static function getNoteLink($page_id, $page_image, $helper)
+	public static function getNoteLink($page_id, $helper)
 	{
 		$link = '';
-		
-		debug($page_id);
 		
 		if(!$page_id)
 			return '';
 		
 		$url = FULL_BASE_URL.'/notes/page/'.$page_id;
 		
-		if(!$page_image)
-		{
-			$tag = 
-				"<iframe id='irohanote-frame-%s' width='100%%' height='400' src='%s/%s'></iframe>";
-			
-			$tag = sprintf(
-				$tag,
-				$page_id,
-				Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false)),
-				$page_id
-			);
-			
-			return $tag;
-		}
+		$tag = 
+			"<iframe id='irohanote-frame-%s' width='100%%' height='400' src='%s/%s'></iframe>";
 		
-		$image = '<img src="'.$page_image.'">';
+		$tag = sprintf(
+			$tag,
+			$page_id,
+			Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false)),
+			$page_id
+		);
 		
-		$link = '<br>'.$helper->link($image, $url, array('target'=>'_blank', 'irohanote' => $name));
-		
-		return $image;
+		return $tag;
 	}
 
 	public static function writeFormGroup($label, $value, $is_bold = false, $block_class = '')

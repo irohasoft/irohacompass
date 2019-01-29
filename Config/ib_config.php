@@ -30,9 +30,6 @@ $config['progress_type_enq']	= array(
 	'text'		=> '記述式'
 );
 
-$config['record_result'] = array('-1' => '', '1' => '合格', '0' => '不合格');
-$config['record_complete'] = array('1' => '完了', '0' => '未完了');
-
 $config['record_type'] = array(
 	'0'					=> '',
 	'theme_add'			=> '学習テーマ追加',
@@ -105,7 +102,7 @@ $config['close_on_select'] = true;
 $config['use_upload_image'] = true;
 
 // iroha Note を使用する
-$config['use_irohanote']	= false;
+$config['use_irohanote']	= true;
 
 
 // デモモード (true ; 設定する, false : 設定しない)

@@ -7,7 +7,7 @@
 	{
 	    width: 200px;
 	}
-	
+
 	#ProgressOptionList option
 	{
 		border-top:    2px double #ccc;
@@ -23,14 +23,14 @@
 		margin:6px;
 		padding: 5px;
 	}
-	
+
 	input[name="data[Progress][image]"]
 	{
 		display:inline-block;
 		width:85%;
 		margin-right:10px;
 	}
-	
+
 	.row-body,
 	.row-irohanote,
 	.row-markdown,
@@ -38,7 +38,7 @@
 	{
 		display: none;
 	}
-	
+
 	.content-type-text .row-body,
 	.content-type-markdown .row-markdown,
 	.content-type-markdown .row-body,
@@ -68,7 +68,7 @@
 		// 動的な行の表示
 		render();
 	});
-	
+
 	function setURL(url, file_name)
 	{
 		$('.form-control-upload').val(url);
@@ -76,7 +76,7 @@
 		if(file_name)
 			$('.form-control-filename').val(file_name);
 	}
-	
+
 	function setProgressType(element)
 	{
 		$('.row-progress-type input[type="radio"]').each(function(){
@@ -85,7 +85,7 @@
 		
 		$('.panel-body').addClass('progress-type-' + $(element).val());
 	}
-	
+
 	function setContentType(element)
 	{
 		$('.row-content-type input[type="radio"]').each(function(){
@@ -119,7 +119,7 @@
 				$('.row-body textarea').val('');
 		}
 	}
-	
+
 	function render()
 	{
 		var element = $($('.row-progress-type input[type="radio"]:checked'));

@@ -24,8 +24,7 @@
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/common.js?rnd=20130905"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/jquery-ui-1.9.2.min.js"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/jquery.jsPlumb-1.5.2.js"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/html2canvas.min.js"></script>
+	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/jquery.jsPlumb-1.5.2-min.js"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/spectrum.js"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/css_touch.js"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.note.js?20150401"></script>

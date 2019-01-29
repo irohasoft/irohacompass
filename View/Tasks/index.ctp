@@ -147,7 +147,7 @@
 		<?php echo $this->Form->hidden('introduction', array('value' => $theme['Theme']['introduction'], 'id' => 'introduction'));?>
 		<?php }?>
 		<div>
-			<?php echo Utils::getNoteLink($theme['Theme']['page_id'], $theme['Theme']['page_image'], $this->Html);?>
+			<?php echo Utils::getNoteLink($theme['Theme']['page_id'], $this->Html);?>
 		</div>
 		<div>
 			<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?php echo Router::url(array('controller' => 'themes', 'action' => 'edit', $theme['Theme']['id'])) ?>'">編集</button>

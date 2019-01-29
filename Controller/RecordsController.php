@@ -223,7 +223,7 @@ class RecordsController extends AppController
 			
 			$rows = $this->Record->find('all', $options);
 			
-			$header = array("学習テーマ", "コンテンツ", "氏名", "得点", "合格点", "結果", "完了", "理解度", "学習時間", "学習日時");
+			$header = array("学習テーマ", "コンテンツ", "氏名", "得点", "合格点", "結果", "理解度", "学習時間", "学習日時");
 			
 			mb_convert_variables("SJIS-WIN", "UTF-8", $header);
 			fputcsv($fp, $header);
@@ -236,7 +236,6 @@ class RecordsController extends AppController
 					$row['User']['name'], 
 					$row['Record']['rate'], 
 					$row['Record']['theme_rate'], 
-					Configure::read('record_complete.'.$row['Record']['is_complete']), 
 					Utils::getHNSBySec($row['Record']['study_sec']), 
 					Utils::getYMDHN($row['Record']['created']),
 				);
