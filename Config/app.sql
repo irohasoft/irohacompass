@@ -28,6 +28,7 @@ CREATE TABLE `ib_progresses` (
   `user_id` int(11) DEFAULT NULL,
   `progress_type` varchar(20) DEFAULT NULL,
   `title` varchar(200) NOT NULL DEFAULT '',
+  `content_type` varchar(20) DEFAULT NULL,
   `body` text NOT NULL,
   `rate` int(11) DEFAULT NULL,
   `file` varchar(200) DEFAULT NULL,

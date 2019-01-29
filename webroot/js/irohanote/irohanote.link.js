@@ -17,6 +17,7 @@ function LeafLinkManager()
 	this.linkMode    = false;
 	this.linkSource  = null;
 	this.linkNavi    = null;
+	this.isReadOnly  = false;
 
 	this.deleteTargetLink = null;
 	this.deleteTarget = null;
@@ -204,6 +205,12 @@ function LeafLink(link_id, link_from, link_to)
 		_linkManager.linkParam
 	);
 	
+	_linkManager.linkList[this.con.getId()] = this;
+	
+	// 表示モードの場合
+	if(_linkManager.isReadOnly)
+		return;
+	
 	this.con.bind("click", function(con, evt) {
 		evt.stopPropagation();
 		
@@ -216,8 +223,6 @@ function LeafLink(link_id, link_from, link_to)
 		_linkManager.deleteTargetLink = _linkManager.linkList[con.getId()];
 		_linkManager.deleteTargetLink.select(evt);
 	});
-	
-	_linkManager.linkList[this.con.getId()] = this;
 }
 
 LeafLink.prototype.remove = function ()

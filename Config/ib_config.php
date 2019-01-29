@@ -11,12 +11,18 @@
 $config['group_status']		= array('1' => '公開', '0' => '非公開');
 $config['theme_status']		= array('1' => '有効', '0' => '無効');
 
-$config['progress_type']		= array(
+$config['progress_type']			= array(
 	'progress'	=> '進捗',
 	'comment'	=> 'コメント',
 	'idea'		=> 'アイデア・メモ',
 	'question'	=> '質問',
 	'answer'	=> '回答',
+);
+
+$config['content_type']	= array(
+	'text'		=> 'テキスト',
+	'markdown'	=> 'Markdown',
+	'irohanote'	=> 'iroha Note',
 );
 
 $config['progress_type_enq']	= array(
@@ -103,6 +109,7 @@ $config['use_irohanote']	= false;
 
 
 // デモモード (true ; 設定する, false : 設定しない)
+//$config['demo_mode'] = true;
 $config['demo_mode'] = false;
 
 // デモユーザのログインIDとパスワード

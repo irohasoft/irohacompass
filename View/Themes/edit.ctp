@@ -1,22 +1,46 @@
 <?php if(!$is_user) echo $this->element('admin_menu');?>
+<?php $this->start('css-embedded'); ?>
+<style type='text/css'>
+
+</style>
+<?php $this->end(); ?>
 <?php $this->start('script-embedded'); ?>
 <script>
 	$(document).ready(function()
 	{
-		// ノート作成ツールを開く
-		$(".btn-note").click(function(){
-			var page_id = $('#ThemePageId').val();
+		// カードが存在しない場合、ページIDを削除
+		$("form").submit(function(){
+			var cnt = document.getElementById('fraIrohaNote').contentWindow.getLeafCount();
 			
-			if(!page_id)
-			{
-				page_id = Math.round(Math.random() * 1000000);
-				$('#ThemePageId').val(page_id);
-			}
-			
-			window.open('<?php echo Router::url(array('controller' => 'notes', 'action' => 'page'))?>/'+page_id, '_note', 'width=1000,height=700,resizable=yes');
-			return false;
+			if(cnt==0)
+				$('.row-page-id').val('');
 		});
+		
+		// ページIDの設定
+		setPageID();
 	});
+	
+	function setURL(url, file_name)
+	{
+		$('.form-control-upload').val(url);
+		
+		if(file_name)
+			$('.form-control-filename').val(file_name);
+	}
+	
+	function setPageID()
+	{
+		// ページ番号が設定されていない場合、ページ番号を生成
+		var page_id = $('.row-page-id').val();
+		
+		if(!page_id)
+		{
+			page_id = Math.round(Math.random() * 1000000);
+			$('.row-page-id').val(page_id);
+		}
+		
+		document.getElementById("fraIrohaNote").src = '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page'))?>/' + page_id + '/edit';
+	}
 </script>
 <?php $this->end(); ?>
 <div class="groups form">
@@ -33,23 +57,22 @@
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('title',	array('label' => __('学習テーマ名')));
-				/*
-				echo $this->Form->input('opened', array(
-					'type' => 'datetime',
-					'dateFormat' => 'YMD',
-					'monthNames' => false,
-					'timeFormat' => '24',
-					'separator' => ' - ',
-					'label'=> '公開日時',
-					'style' => 'width:initial; display: inline;'
-				));
-				*/
-				echo $this->Form->input('introduction',	array('label' => __('学習目標')));
+				echo $this->Form->input('introduction',		array(
+					'label' => __('学習目標'),
+					'div' => 'form-group row-body',
+					)
+				);
+				Utils::writeFormGroup('', '※ <a href="https://ja.wikipedia.org/wiki/Markdown" target="_blank">Markdown 形式</a> で記述可能です。', false, 'row-markdown');
 				
 				if(Configure::read('use_irohanote'))
-					Utils::writeFormGroup('ノート', '<button class="btn btn-info btn-note">iroha Note</button> ※ 創造技法を用いて獲得した知識、アイデアをまとめます');
+				{
+					Utils::writeFormGroup('マップ', 
+						'<iframe id="fraIrohaNote" width="100%" height="400"></iframe>',
+						false, 'row-irohanote'
+					);
+				}
 				
-				echo $this->Form->hidden('page_id');
+				echo $this->Form->hidden('page_id', array('class' => 'form-group row-page-id'));
 				
 				//echo $this->Form->input('comment',			array('label' => __('備考')));
 			?>

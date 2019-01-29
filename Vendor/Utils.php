@@ -78,7 +78,17 @@ class Utils
 		
 		if(!$page_image)
 		{
-			return '<span class="glyphicon glyphicon-edit text-primary"></span><a href="javascript:openNote('.$page_id.')"><b>ノート</b></a>';
+			$tag = 
+				"<iframe id='irohanote-frame-%s' width='100%%' height='400' src='%s/%s'></iframe>";
+			
+			$tag = sprintf(
+				$tag,
+				$page_id,
+				Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false)),
+				$page_id
+			);
+			
+			return $tag;
 		}
 		
 		$image = '<img src="'.$page_image.'">';
@@ -88,10 +98,10 @@ class Utils
 		return $image;
 	}
 
-	public static function writeFormGroup($label, $value, $is_bold = false)
+	public static function writeFormGroup($label, $value, $is_bold = false, $block_class = '')
 	{
 		$value = $is_bold ? '<h5>'.$value.'</h5>' : $value;
-		echo '<div class="form-group">';
+		echo '<div class="form-group '.$block_class.'">';
 		echo '  <label for="UserRegistNo" class="col col-md-3 col-sm-4 control-label">'.$label.'</label>';
 		echo '  <div class="col col-md-9 col-sm-8">'.$value.'</div>';
 		echo '</div>';

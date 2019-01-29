@@ -19,6 +19,9 @@ var _linkManager = new LeafLinkManager();
 var _pageManager = new PageManager();
 var _noteManager = new NoteManager();
 
+_leafManager.isReadOnly = _isReadOnly;
+_linkManager.isReadOnly = _isReadOnly;
+
 // -------------------------------------------------
 // 初期処理
 // -------------------------------------------------
@@ -249,16 +252,24 @@ $(document).ready(function(){
 		_pageManager.selectFirst();
 	});
 	
-	$("#btnClose").click(function()
+	// 全画面
+	$("#btnFullscreen").click(function()
 	{
-		$(".button-container p").text("現在画面イメージを作成中です...");
-		$('#btnClose').hide();
-		
-		sendScreenshot({
-			complete	: function(){
-				window.close();
-			}
-		});
+		$(parent.document).find('#fraIrohaNote').addClass('irohanote-fullscreen');
+		$(parent.document).find('#irohanote-frame-' + _page_id).addClass('irohanote-fullscreen');
+		$(parent.document).find('budy').addClass('no-scroll');
+		$("#btnFullscreen").hide();
+		$("#btnFullscreenExit").show();
+	});
+	
+	// 全画面解除
+	$("#btnFullscreenExit").click(function()
+	{
+		$(parent.document).find('#fraIrohaNote').removeClass('irohanote-fullscreen');
+		$(parent.document).find('#irohanote-frame-' + _page_id).removeClass('irohanote-fullscreen');
+		$(parent.document).find('budy').removeClass('no-scroll');
+		$("#btnFullscreenExit").hide();
+		$("#btnFullscreen").show();
 	});
 	
 	$(window).resize(function(){
@@ -267,7 +278,15 @@ $(document).ready(function(){
 
 	_leafManager.loadData({
 		display		: true,
-		page_id		: _page_id
+		page_id		: _page_id,
+		complete	: function()
+		{
+			if(_isReadOnly)
+			{
+				$("#btnLeafAdd").hide();
+				$("#btnLeafWebAdd").hide();
+			}
+		}
 	});
 
 });
@@ -320,45 +339,8 @@ function renderPageOpenDialog()
 	}
 }
 
-function sendScreenshot(params)
+
+function getLeafCount()
 {
-	html2canvas(
-		document.querySelector("#stage"), {
-			logging: true,
-            profile: true,
-            useCORS: true}).then(function(canvas) {
-			//canvas.width  = canvas.width  * 0.5;
-			//canvas.height = canvas.height * 0.5;
-			
-			var base64 = canvas.toDataURL('image/png');
-			
-			var data = {
-				page_id 	: _page_id,
-				page_image	: base64,
-			};
-			
-			$.ajax({
-				url		: API_BASE_URL + 'update_image' + API_EXTENSION,
-				type	: 'post',
-				dataType: 'xml',
-				data    : data,
-				timeout	: TIMEOUT_MS,
-				success	:
-					// XMLデータを取得
-					function(xml,status)
-					{
-						if(status!='success')
-							return;
-						
-						if(params.complete)
-							params.complete();
-					},
-				error:
-					// エラー
-					function(data)
-					{
-						alert('error');
-					}
-			});
-	});
+	return Object.keys(_leafManager.leafList).length;
 }

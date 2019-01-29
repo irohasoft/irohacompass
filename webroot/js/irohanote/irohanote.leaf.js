@@ -17,6 +17,7 @@ function LeafManager($data)
 	this.newLeaf     = null;
 	this.max_height  = 0;
 	this.max_width   = 0;
+	this.isReadOnly  = false;
 }
 
 LeafManager.prototype.loadData = function (params)
@@ -59,7 +60,7 @@ LeafManager.prototype.loadData = function (params)
 					_leafManager.displayItems();
 
 				if(params.complete)
-					params.complete(data, xml);
+					params.complete();
 
 				$(".jqtree-element").droppable({
 					accept		: '.clsLeafContainer',
@@ -496,6 +497,19 @@ Leaf.prototype.display = function ()
 	this.clsLeafTitleMargin		= $( "#leaf_" + this.leaf_id + " .clsLeafTitleMargin");
 	this.clsColorPicker			= $( "#leaf_" + this.leaf_id + " .clsColorPicker");
 	this.displayCount           = 0;
+	this.clsLeafColorBar.css('background-color', this.leaf_color);
+	
+	if(parseInt(this.leaf_kind)!=LEAF_KIND_WEB)
+		this.clsLeafContainer.resizable();
+	
+	if(this.isFold)
+		this.fold(false);
+
+	_leafManager.leafList[PREFIX_LEAF + this.leaf_id] = this;
+	
+	// 表示モードの場合、ここで終了
+	if(_leafManager.isReadOnly)
+		return;
 	
 	var t = this;
 	
@@ -561,9 +575,6 @@ Leaf.prototype.display = function ()
 		
 		_leafManager.renderBackground();
 	});
-	
-	if(parseInt(this.leaf_kind)!=LEAF_KIND_WEB)
-		this.clsLeafContainer.resizable();
 	
 	this.clsLeafContainer.bind('resizestop', {leaf: this}, function (e) {
 		var leaf = e.data.leaf;
@@ -702,7 +713,7 @@ Leaf.prototype.display = function ()
 		{
 			e.data.leaf.remove();
 			e.data.leaf.clsLeafContainer.remove();
-			_leafManager.leafList[e.data.leaf.id] = null;
+			delete _leafManager.leafList[e.data.leaf.leaf_name];
 		}
 	});
 	
@@ -732,13 +743,6 @@ Leaf.prototype.display = function ()
 
 		_leafManager.refreshAllColorPickers(rgb);
 	});
-
-	this.clsLeafColorBar.css('background-color', this.leaf_color);
-	
-	if(this.isFold)
-		this.fold(false);
-
-	_leafManager.leafList[PREFIX_LEAF + this.leaf_id] = this;
 }
 
 Leaf.prototype.setColorPiclor = function ()
@@ -1036,6 +1040,7 @@ Leaf.prototype.setEditMode = function (isEditMode)
 	{
 		this.clsLeafCover.hide();
 		this.clsBottomRow.show();
+		this.clsLeafSaveButton.show();
 		this.clsLeafTitle.css("border", "1px solid");
 		this.clsLeafContent.css("border", "1px solid");
 		this.clsLeafContainer.draggable("disable");
@@ -1048,6 +1053,7 @@ Leaf.prototype.setEditMode = function (isEditMode)
 	{
 		this.clsLeafCover.show();
 		this.clsBottomRow.hide();
+		this.clsLeafSaveButton.hide();
 		this.clsLeafTitle.css("border", "none");
 		this.clsLeafContent.css("border", "none");
 		this.clsLeafContainer.draggable("enable");

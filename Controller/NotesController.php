@@ -103,10 +103,10 @@ class NotesController extends AppController
 	 *
 	 * @return void
 	 */
-	public function page($page_id)
+	public function page($page_id, $mode = 'readonly')
 	{
 		$this->layout = '';
-		$this->set(compact('page_id'));
+		$this->set(compact('page_id', 'mode'));
 	}
 
 	public function leaf_list($page_id)

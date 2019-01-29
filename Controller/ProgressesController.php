@@ -307,6 +307,9 @@ class ProgressesController extends AppController
 				'put'
 		)))
 		{
+			if(Configure::read('demo_mode'))
+				return;
+			
 			if ($id == null)
 			{
 				$this->request->data['Progress']['user_id'] = $this->Session->read('Auth.User.id');

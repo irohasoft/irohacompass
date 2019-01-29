@@ -56,11 +56,6 @@
 				$(this).before(html);
 			});
 		});
-
-		function openNote(page_id)
-		{
-			window.open('<?php echo Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false))?>/'+page_id, '_note', 'width=1000,height=700,resizable=yes');
-		}
 	</script>
 <?php $this->end(); ?>
 
@@ -86,7 +81,16 @@
 				<?php echo Utils::getNoteLink($content['Task']['page_id'], $content['Task']['page_image'], $this->Html);?>
 			</div>
 			<div>
-				<?php echo Utils::getDownloadLink($content['Task']['file'], $content['Task']['file_name'], $this->Html);?>
+				<?php 
+				if(Configure::read('demo_mode'))
+				{
+					echo Utils::getDownloadLink('javascript:alert(\'デモモードの為、ダウンロードできません。\');', $content['Task']['file_name'], $this->Html);
+				}
+				else
+				{
+					echo Utils::getDownloadLink($content['Task']['file'], $content['Task']['file_name'], $this->Html);
+				}
+				?>
 			</div>
 			<div>
 				<br>
@@ -134,7 +138,16 @@
 					<?php echo Utils::getNoteLink($progress['Progress']['page_id'], $progress['Progress']['page_image'], $this->Html);?>
 				</div>
 				<div>
-					<?php echo Utils::getDownloadLink($progress['Progress']['file'], $progress['Progress']['file_name'], $this->Html);?>
+					<?php
+						if(Configure::read('demo_mode'))
+						{
+							echo Utils::getDownloadLink('javascript:alert(\'デモモードの為、ダウンロードできません。\');', $progress['Progress']['file_name'], $this->Html);
+						}
+						else
+						{
+							echo Utils::getDownloadLink($progress['Progress']['file'], $progress['Progress']['file_name'], $this->Html);
+						}
+					?>
 				</div>
 			</div>
 			<div>

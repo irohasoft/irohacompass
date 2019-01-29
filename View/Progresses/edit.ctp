@@ -30,6 +30,23 @@
 		width:85%;
 		margin-right:10px;
 	}
+	
+	.row-body,
+	.row-irohanote,
+	.row-markdown,
+	.row-progress
+	{
+		display: none;
+	}
+	
+	.content-type-text .row-body,
+	.content-type-markdown .row-markdown,
+	.content-type-markdown .row-body,
+	.content-type-irohanote .row-irohanote,
+	.progress-type-progress .row-progress
+	{
+		display: block;
+	}
 </style>
 <?php $this->end(); ?>
 <?php $this->start('script-embedded'); ?>
@@ -39,29 +56,16 @@
 	$(document).ready(function()
 	{
 		$url = $('.form-control-upload');
-
+		
 		$url.after('<input id="btnUpload" type="button" value="アップロード">');
-
+		
+		// 添付ファイルアップロードボタン
 		$("#btnUpload").click(function(){
 			window.open('<?php echo Router::url(array('controller' => 'tasks', 'action' => 'upload'))?>/file', '_upload', 'width=650,height=500,resizable=no');
 			return false;
 		});
 		
-		// ノート作成ツールを開く
-		$(".btn-note").click(function(){
-			var page_id = $('#ProgressPageId').val();
-			
-			if(!page_id)
-			{
-				page_id = Math.round(Math.random() * 1000000);
-				$('#ProgressPageId').val(page_id);
-			}
-			
-			window.open('<?php echo Router::url(array('controller' => 'notes', 'action' => 'page'))?>/'+page_id, '_note', 'width=1000,height=700,resizable=yes');
-			return false;
-		});
-		
-		
+		// 動的な行の表示
 		render();
 	});
 	
@@ -72,19 +76,57 @@
 		if(file_name)
 			$('.form-control-filename').val(file_name);
 	}
-
-	function render()
+	
+	function setProgressType(element)
 	{
-		if($('#ProgressProgressTypeProgress:checked').val())
+		$('.row-progress-type input[type="radio"]').each(function(){
+			$('.panel-body').removeClass('progress-type-' + $(this).val());
+		});
+		
+		$('.panel-body').addClass('progress-type-' + $(element).val());
+	}
+	
+	function setContentType(element)
+	{
+		$('.row-content-type input[type="radio"]').each(function(){
+			$('.panel-body').removeClass('content-type-' + $(this).val());
+		});
+		
+		$('.panel-body').addClass('content-type-' + $(element).val());
+		
+		if($(element).val()=='irohanote')
 		{
-			//$('label[for="ProgressBody"]').text('進捗内容');
-			$('.row-progress').show();
+			// ページ番号が設定されていない場合、ページ番号を生成
+			var page_id = $('.row-page-id').val();
+			
+			if(!page_id)
+			{
+				page_id = Math.round(Math.random() * 1000000);
+				$('.row-page-id').val(page_id);
+			}
+			
+			document.getElementById("fraIrohaNote").src = '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page'))?>/' + page_id + '/edit';
+			
+			
+			// 内容にダミーの文字列を設定
+			if(!$('.row-body textarea').val())
+				$('.row-body textarea').val('dummy');
 		}
 		else
 		{
-			//$('label[for="ProgressBody"]').text('コメント内容');
-			$('.row-progress').hide();
+			// ダミーの文字列をクリア
+			if($('.row-body textarea').val()=='dummy')
+				$('.row-body textarea').val('');
 		}
+	}
+	
+	function render()
+	{
+		var element = $($('.row-progress-type input[type="radio"]:checked'));
+		setProgressType(element);
+		
+		element = $($('.row-content-type input[type="radio"]:checked'));
+		setContentType(element);
 	}
 </script>
 <?php $this->end(); ?>
@@ -131,17 +173,40 @@
 					'class' => false,
 					'options' => Configure::read('progress_type'),
 					'default' => 'progress',
-					'onchange' => 'render()'
+					'div' => 'form-group row-progress-type',
+					'onchange' => 'setProgressType(this)',
 					)
 				);
-				echo $this->Form->input('body',		array('label' => __('内容')));
+				echo $this->Form->input('content_type',	array(
+					'type' => 'radio',
+					'before' => '<label class="col col-md-3 col-sm-4 control-label">進捗の入力形式</label>',
+					'separator'=>"　", 
+					'legend' => false,
+					'class' => false,
+					'options' => Configure::read('content_type'),
+					'default' => 'markdown',
+					'div' => 'form-group row-content-type',
+					'onchange' => 'setContentType(this)',
+					)
+				);
+				echo $this->Form->input('body',		array(
+					'label' => __('内容'),
+					'div' => 'form-group row-body',
+					)
+				);
 				
-				Utils::writeFormGroup('', '※ <a href="https://ja.wikipedia.org/wiki/Markdown" target="_blank">Markdown 形式</a> で記述可能です。');
 				
 				if(Configure::read('use_irohanote'))
-					Utils::writeFormGroup('ノート', '<button class="btn btn-info btn-note">iroha Note</button> ※ 創造技法を用いて獲得した知識、アイデアをまとめます');
+				{
+					Utils::writeFormGroup('内容', 
+						'<iframe id="fraIrohaNote" width="100%" height="400"></iframe>',
+						false, 'row-irohanote'
+					);
+				}
 				
-				echo $this->Form->hidden('page_id');
+				Utils::writeFormGroup('', '※ <a href="https://ja.wikipedia.org/wiki/Markdown" target="_blank">Markdown 形式</a> で記述可能です。', false, 'row-markdown');
+				
+				echo $this->Form->hidden('page_id', array('class' => 'form-group row-page-id'));
 				
 				echo $this->Form->input('file',		array('label' => __('添付ファイル'), 'class' => 'form-control form-control-upload'));
 				echo $this->Form->input('rate',		array(

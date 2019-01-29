@@ -17,8 +17,9 @@
 	var THEME_ROOT_PATH	= '<?php echo $this->Html->webroot;?>';
 	var API_BASE_URL	= '<?php echo $this->Html->webroot;?>notes/';
 	var API_EXTENSION	= '';
-	var _page_id = '<?php echo $page_id;?>';
-
+	var _page_id    = '<?php echo $page_id;?>';
+	var _isReadOnly = <?php echo ($mode=='edit') ? 'false' : 'true';?>;
+	
 	</script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/common.js?rnd=20130905"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/jquery-1.9.1.min.js"></script>
@@ -52,6 +53,8 @@
 		<input type="button" id="btnSearch"  value="検索">
 	</div>
 </div>
+<button id="btnFullscreen"><img src="<?php echo $this->Html->webroot;?>css/irohanote/images/fullscreen.png"></button>
+<button id="btnFullscreenExit"><img src="<?php echo $this->Html->webroot;?>css/irohanote/images/fullscreen_exit.png"></button>
 <div id="sidr">
 	<ul>
 		<li><span id="btnPageShare" title="選択されているページを公開・共有します">公開設定</span></li>
@@ -61,7 +64,7 @@
 	</ul>
 </div>
 <div id="stage">
-	<img src="<?php echo $this->Html->webroot;?>css/irohanote/images/irohanotecloud.png">
+	<img id="imgLogo" src="<?php echo $this->Html->webroot;?>css/irohanote/images/irohanotecloud.png">
 	<span id="lblPageTitle"></span>
 	<span id="btnPageTitleEdit" class="ai-button">編集</span>
 	<div id="map">

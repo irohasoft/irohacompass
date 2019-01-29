@@ -27,6 +27,7 @@ $(function (event)
 	$('.btn-add').prop('disabled', false);
 	$('.btn[value="ログイン"]').prop('disabled', false);
 	
+	/*
 	if(location.href.indexOf('demoib.irohasoft.com') > 0)
 	{
 		if(location.href.indexOf('admin') > 0)
@@ -42,5 +43,6 @@ $(function (event)
 			$("#UserPassword").val("pass");
 		}
 	}
+	*/
 });
 

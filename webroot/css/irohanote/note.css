@@ -72,7 +72,10 @@ body {
 {
 	display				: inline;
 	position			: fixed;
+	/*
 	top					: 35px;
+	*/
+	top					: 15px;
 	width				: 45px;
 	height				: 45px;
 	padding				: 0px;
@@ -92,6 +95,11 @@ body {
 #btnLeafWebAdd img
 {
 	padding				: 3px;
+}
+
+#imgLogo
+{
+	display				: none;
 }
 
 .clsLeafLinkButton img,
@@ -360,6 +368,11 @@ body {
 	width: 70px;
 }
 
+.clsLeafSaveButton
+{
+	display				: none;
+}
+
 ._jsPlumb_connector 
 {
 	opacity				: 0.5;
@@ -527,4 +540,21 @@ body {
 {
     float: right;
     padding: 5px;
+}
+
+#btnFullscreen
+{
+	position				: fixed;
+	top						: 0px;
+	left					: 0px;
+	z-index					: 9999;
+}
+
+#btnFullscreenExit
+{
+	position				: fixed;
+	display					: none;
+	top						: 0px;
+	left					: 0px;
+	z-index					: 9999;
 }
