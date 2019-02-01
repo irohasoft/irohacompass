@@ -56,8 +56,8 @@
 			<?php echo $this->Form->create('Theme', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title',	array('label' => __('学習テーマ名')));
-				echo $this->Form->input('introduction',		array(
+				echo $this->Form->input('title', array('label' => __('学習テーマ名')));
+				echo $this->Form->input('learning_target',	array(
 					'label' => __('学習目標'),
 					'div' => 'form-group row-body',
 					)

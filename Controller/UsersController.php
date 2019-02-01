@@ -32,7 +32,8 @@ class UsersController extends AppController
 			'Auth' => array(
 					'allowedActions' => array(
 							'index',
-							'login'
+							'login',
+							'logout'
 					)
 			)
 	);
@@ -346,29 +347,6 @@ class UsersController extends AppController
 
 	public function admin_login()
 	{
-		// 初期アカウント作成確認
-		$options = array(
-			'conditions' => array(
-					'User.role' => 'admin'
-			)
-		);
-
-		$data = $this->User->find('first', $options);
-
-		if(!$data)
-		{
-			// 管理者アカウントが存在しない場合、管理者アカウントを作成
-			$data = array(
-				'username' => 'root',
-				'password' => 'irohacompass',
-				'name' => 'root',
-				'role' => 'admin',
-				'email' => 'info@example.com'
-			);
-
-			$this->User->save($data);
-		}
-
 		$this->login();
 	}
 

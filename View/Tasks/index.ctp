@@ -101,16 +101,16 @@
 	<script>
 		//var _markedRenderer = new marked.Renderer;
 		$(function(){
-			if($("#introduction"))
+			if($("#learning_target"))
 			{
-				var html = marked($('#introduction').val(),
+				var html = marked($('#learning_target').val(),
 				{
 	//				renderer: _markedRenderer,
 					breaks: true,
 					sanitize: true
 				});
 				
-				$("#introduction").before(html);
+				$("#learning_target").before(html);
 			}
 		});
 		
@@ -143,8 +143,8 @@
 	<div class="panel-heading"><?php echo h($theme['Theme']['title']); ?></div>
 	<div class="panel-body">
 	<div class="well">
-		<?php if($theme['Theme']['introduction']!='') {?>
-		<?php echo $this->Form->hidden('introduction', array('value' => $theme['Theme']['introduction'], 'id' => 'introduction'));?>
+		<?php if($theme['Theme']['learning_target']!='') {?>
+		<?php echo $this->Form->hidden('learning_target', array('value' => $theme['Theme']['learning_target'], 'id' => 'learning_target'));?>
 		<?php }?>
 		<div>
 			<?php echo Utils::getNoteLink($theme['Theme']['page_id'], $this->Html);?>

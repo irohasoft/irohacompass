@@ -23,6 +23,7 @@ class GroupsController extends AppController
 	public function admin_index()
 	{
 		$this->Group->recursive = 0;
+		$this->Group->virtualFields['theme_title'] = 'GroupTheme.theme_title'; // 外部結合テーブルのフィールドによるソート用
 		
 		$this->Paginator->settings = array(
 			'fields' => array('*', 'GroupTheme.theme_title'),

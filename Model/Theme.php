@@ -40,7 +40,7 @@ class Theme extends AppModel
 					// 'update' operations
 										)
 			),
-			'introduction' => array(
+			'learning_target' => array(
 					'notBlank' => array(
 							'rule' => array(
 									'notBlank'
