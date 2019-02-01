@@ -247,20 +247,6 @@ class ProgressesController extends AppController
 		$this->set(compact('content', 'progresses'));
 	}
 
-	public function view($id = null)
-	{
-		if (! $this->Progress->exists($id))
-		{
-			throw new NotFoundException(__('Invalid tasks progress'));
-		}
-		$options = array(
-				'conditions' => array(
-						'Progress.' . $this->Progress->primaryKey => $id
-				)
-		);
-		$this->set('progress', $this->Progress->find('first', $options));
-	}
-
 	public function add($task_id)
 	{
 		$this->edit($task_id);

@@ -284,21 +284,6 @@ class RecordsController extends AppController
 		}
 	}
 
-	public function view($id = null)
-	{
-		if (! $this->Record->exists($id))
-		{
-			throw new NotFoundException(__('Invalid record'));
-		}
-		
-		$options = array(
-			'conditions' => array(
-				'Record.' . $this->Record->primaryKey => $id
-			)
-		);
-		$this->set('record', $this->Record->find('first', $options));
-	}
-
 	public function add($task_id, $is_complete, $study_sec, $kind)
 	{
 		// コンテンツ情報を取得
