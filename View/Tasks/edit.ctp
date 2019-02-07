@@ -153,7 +153,7 @@ $rate_list = array(
 				
 				echo $this->Form->hidden('page_id', array('class' => 'form-group row-page-id'));
 				
-				echo $this->Form->input('file',		array('label' => __('添付ファイル')));
+				echo $this->Form->input('file',		array('label' => __('添付ファイル'), 'class' => 'form-control form-control-upload'));
 				echo $this->Form->input('rate',		array(
 					'label' => '進捗率', 
 					'options'=>$rate_list, 
