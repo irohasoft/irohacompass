@@ -87,6 +87,8 @@
 				{
 					echo Utils::getDownloadLink($content['Task']['file'], $content['Task']['file_name'], $this->Html);
 				}
+				
+				echo Utils::getNoteLink($content['Task']['page_id'], $this->Html);
 				?>
 			</div>
 			<div>
