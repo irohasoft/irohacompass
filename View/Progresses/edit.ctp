@@ -53,6 +53,9 @@
 <?php echo $this->Html->script('summernote.min.js');?>
 <?php echo $this->Html->script('lang/summernote-ja-JP.js');?>
 <script>
+	var URL_UPLOAD	= '<?php echo Router::url(array('controller' => 'tasks', 'action' => 'upload', 'admin' => false))?>/file';
+	var URL_NOTE	= '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false))?>/';
+	
 	$(document).ready(function()
 	{
 		$url = $('.form-control-upload');
@@ -61,7 +64,7 @@
 		
 		// 添付ファイルアップロードボタン
 		$("#btnUpload").click(function(){
-			window.open('<?php echo Router::url(array('controller' => 'tasks', 'action' => 'upload'))?>/file', '_upload', 'width=650,height=500,resizable=no');
+			window.open(URL_UPLOAD, '_upload', 'width=650,height=500,resizable=no');
 			return false;
 		});
 		
@@ -105,7 +108,7 @@
 				$('.row-page-id').val(page_id);
 			}
 			
-			document.getElementById("fraIrohaNote").src = '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page'))?>/' + page_id + '/edit';
+			document.getElementById("fraIrohaNote").src = URL_NOTE + page_id + '/edit';
 			
 			
 			// 内容にダミーの文字列を設定

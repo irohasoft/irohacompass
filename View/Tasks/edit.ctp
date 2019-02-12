@@ -24,6 +24,8 @@
 <script>
 	//$('input[name="data[Task][kind]"]:radio').val(['text']);
 	var _editor;
+	var URL_UPLOAD	= '<?php echo Router::url(array('controller' => 'tasks', 'action' => 'upload', 'admin' => false))?>/file';
+	var URL_NOTE	= '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false))?>/';
 	
 	$(document).ready(function()
 	{
@@ -32,7 +34,7 @@
 		$url.after('<input id="btnUpload" type="button" value="アップロード">');
 
 		$("#btnUpload").click(function(){
-			window.open('<?php echo Router::url(array('controller' => 'tasks', 'action' => 'upload'))?>/file', '_upload', 'width=650,height=500,resizable=no');
+			window.open(URL_UPLOAD, '_upload', 'width=650,height=500,resizable=no');
 			return false;
 		});
 
@@ -67,7 +69,7 @@
 			$('.row-page-id').val(page_id);
 		}
 		
-		document.getElementById("fraIrohaNote").src = '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page'))?>/' + page_id + '/edit';
+		document.getElementById("fraIrohaNote").src = URL_NOTE + page_id + '/edit';
 	}
 </script>
 <?php $this->end(); ?>

@@ -6,6 +6,8 @@
 <?php $this->end(); ?>
 <?php $this->start('script-embedded'); ?>
 <script>
+	var URL_NOTE	= '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false))?>/';
+	
 	$(document).ready(function()
 	{
 		// カードが存在しない場合、ページIDを削除
@@ -39,7 +41,7 @@
 			$('.row-page-id').val(page_id);
 		}
 		
-		document.getElementById("fraIrohaNote").src = '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page'))?>/' + page_id + '/edit';
+		document.getElementById("fraIrohaNote").src = URL_NOTE + page_id + '/edit';
 	}
 </script>
 <?php $this->end(); ?>
