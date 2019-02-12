@@ -10,8 +10,8 @@
 	<meta name="viewport" content="width=device-width,user-scalable=1, minimal-ui" />
 	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/jquery-ui-1.10.3.custom.css">
 	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/spectrum.css">
-	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/common.css?20180530">
-	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/note.css?20180530">
+	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/common.css?20190210">
+	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/note.css?20190210">
 	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/note_mobile.css">
 	<script>
 	var THEME_ROOT_PATH	= '<?php echo $this->Html->webroot;?>';
@@ -21,17 +21,17 @@
 	var _isReadOnly = <?php echo ($mode=='edit') ? 'false' : 'true';?>;
 	
 	</script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/common.js?rnd=20130905"></script>
+	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/common.js?20190210"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/jquery-ui-1.9.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/jquery.jsPlumb-1.5.2-min.js"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/spectrum.js"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/css_touch.js"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.note.js?20150401"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.page.js?20150401"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.leaf.js?20180530"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.link.js?20150401"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/note.js?20131101"></script>
+	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.note.js?20190210"></script>
+	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.page.js?20190210"></script>
+	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.leaf.js?20190210"></script>
+	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.link.js?20190210"></script>
+	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/note.js?20190210"></script>
 </head>
 <body>
 <div id="ai-navi">
