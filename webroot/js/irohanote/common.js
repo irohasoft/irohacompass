@@ -107,13 +107,15 @@ function isPC()
 
 function getWebPageTitle(target_url, callback)
 {
-	var url = API_BASE_URL + 'webpage.php?url=' + target_url;
+	var url = API_BASE_URL + 'webpage';
+	var data = new Object();
+	data['url'] = target_url;
 	
 	$.ajax({
 		url		: url,
-		type	: 'get',
+		type	: 'post',
 		dataType: 'xml',
-		data    : null,
+		data    : data,
 		cache   : false,
 		timeout	: 3000,
 		success	:

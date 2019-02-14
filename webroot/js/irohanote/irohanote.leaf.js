@@ -166,6 +166,8 @@ LeafManager.prototype.add = function (params)
 			params.url, 
 			function(url, title)
 			{
+				leaf.leaf_title = title;
+				
 				var data = {
 					cmd				: "add",
 					leaf_id			: leaf.leaf_id,
@@ -185,9 +187,8 @@ LeafManager.prototype.add = function (params)
 				leaf.sendData({
 					data		: data, 
 					complete	: function(){
-						leaf.leaf_title = title;
 						//leaf.leaf_content = url;
-					leaf.display();
+						leaf.display();
 					}
 				});
 
@@ -509,7 +510,13 @@ Leaf.prototype.display = function ()
 	
 	// 表示モードの場合、ここで終了
 	if(_leafManager.isReadOnly)
+	{
+		this.clsLeafWebButton.bind('click', {leaf: this}, function(e)
+		{
+			window.open(e.data.leaf.getURL());
+		});
 		return;
+	}
 	
 	var t = this;
 	

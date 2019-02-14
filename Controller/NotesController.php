@@ -28,7 +28,7 @@ class NotesController extends AppController
 		'Paginator',
 		'Security' => array(
 			'csrfUseOnce' => false,
-			'unlockedActions' => array('leaf_control', 'link_control')
+			'unlockedActions' => array('leaf_control', 'link_control', 'webpage')
 		),
 		'Session',
 		'RequestHandler',
@@ -82,6 +82,34 @@ class NotesController extends AppController
 	{
 		$this->layout = '';
 		$this->set(compact('page_id', 'mode'));
+	}
+
+	public function webpage()
+	{
+		$this->layout = '';
+		$this->autoRender = FALSE;
+		$page_title = '';
+		
+		$url = $this->data['url'];
+		//$url = 'https://www.washingtontimes.com/';
+		$str = @file_get_contents($url);
+		
+		// Webページからタイトルを取得
+		if(strlen($str)>0){
+			preg_match("/\<title\>(.*)\<\/title\>/", $str, $title);
+			$page_title = $title[1];
+		}
+
+		$xmlArray = array('root' => array('result' => array(), 'title' => $page_title));
+		$xmlArray['root']['result'] = array('error_code' => '0');
+		
+		$xmlObject = Xml::fromArray($xmlArray, array('format' => 'tags'));
+		$xmlString = $xmlObject->asXML();
+		$this->response->type('xml');
+
+		header('Task-Type: text/xml');
+
+		echo $xmlString;
 	}
 
 	public function leaf_list($page_id)
