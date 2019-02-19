@@ -17,21 +17,24 @@
 	
 	<title><?php echo h($this->Session->read('Setting.title')); ?></title>
 	<meta name="application-name" content="iroha Compass">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<?php
-		if(
-			($this->params['admin']!=1)||
-			($this->params['action']=='admin_login')
-		)
-		{
+		// 管理画面フラグ
+		$is_admin_page = (($this->params['admin']==1)&&($this->params['action']!='admin_login'));
+		
+		// 受講者向け画面及び、管理システムのログイン画面のみ viewport を設定（スマートフォン対応）
+		if(!$is_admin_page)
 			echo '<meta name="viewport" content="width=device-width,initial-scale=1">';
-		}
 		
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css('cake.generic');
 		echo $this->Html->css('jquery-ui');
 		echo $this->Html->css('bootstrap.min');
-		echo $this->Html->css('common');
+		echo $this->Html->css('common.css');
+		
+		if($is_admin_page)
+			echo $this->Html->css('admin.css');
 
 		echo $this->Html->script('jquery-1.9.1.min.js');
 		echo $this->Html->script('jquery-ui-1.9.2.min.js');
@@ -47,9 +50,9 @@
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
+		echo $this->fetch('css-embedded');
+		echo $this->fetch('script-embedded');
 	?>
-	<?php echo $this -> fetch( 'css-embedded' ); ?>
-	<?php echo $this -> fetch( 'script-embedded' ); ?>
 	<script>
 	var _controller	= '<?php echo $this->params['controller'] ?>';
 	var _action		= '<?php echo $this->params['action'] ?>';
@@ -58,9 +61,10 @@
 	
 	$(document).ready(function()
 	{
+		// 一定時間経過後、メッセージを閉じる
 		setTimeout(function() {
 			$('#flashMessage').fadeOut("slow");
-		}, 1200);
+		}, 1500);
 		
 		
 		setInterval('_addSec()', 1000);
@@ -132,7 +136,7 @@
 	<style>
 		.ib-theme-color
 		{
-			background-color	: <?php echo $this->Session->read('Setting.color')?>;
+			background-color	: <?php echo h($this->Session->read('Setting.color')); ?>;
 			color				: white;
 		}
 		
@@ -149,13 +153,13 @@
 			<a href="<?php echo $this->Html->url('/')?>"><?php echo h($this->Session->read('Setting.title')); ?></a>
 		</div>
 <?php
-		if($loginedUser)
+		if(@$loginedUser)
 		{
-			echo '<div class="ib-navi-item ib-right">'.$this->Html->link('ログアウト', $logoutURL).'</div>';
+			echo '<div class="ib-navi-item ib-right">'.$this->Html->link(__('ログアウト'), $logoutURL).'</div>';
 			echo '<div class="ib-navi-sepa ib-right"></div>';
 			echo '<div class="ib-navi-item ib-right">'.$this->Html->link(__('設定'), array('controller' => 'users', 'action' => 'setting')).'</div>';
 			echo '<div class="ib-navi-sepa ib-right"></div>';
-			echo '<div class="ib-navi-item ib-right">ようこそ '.h($loginedUser["name"]).' さん </div>';
+			echo '<div class="ib-navi-item ib-right">'.__('ようこそ ').h($loginedUser["name"]).' さん </div>';
 		}
 ?>
 	</div>
@@ -174,6 +178,10 @@
 	
 	<div class="footer ib-theme-color text-center">
 		<?php echo h($this->Session->read('Setting.copyright')); ?>
+	</div>
+	
+	<div class="irohasoft">
+		Powered by <a href="https://irohacompass.irohasoft.jp/">iroha Compass</a>
 	</div>
 	
 	<?php echo $this->element('sql_dump'); ?>
