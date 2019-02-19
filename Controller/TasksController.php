@@ -91,7 +91,7 @@ class TasksController extends AppController
 			$this->loadModel('Progress');
 			
 			// キーワードを含む進捗を検索
-			$list = $this->Progress->find('all', array(
+			$progress_list = $this->Progress->find('all', array(
 				'conditions' => array(
 					'Task.theme_id' => $theme_id,
 					'OR' => array(
@@ -101,16 +101,24 @@ class TasksController extends AppController
 			
 			$task_id_list = array();
 			
-			foreach ($list as $item)
+			foreach ($progress_list as $item)
 			{
 				$task_id_list[count($task_id_list)] = $item['Task']['id'];
 			}
+			
+			// キーワードを含むカードを検索
+			$this->loadModel('Leaf');
+			$list = $this->Leaf->getTaskIdByKeyword($keyword, $theme_id);
+			
+			$task_id_list = array_merge($task_id_list, $list);
+			
+			//debug($task_id_list);
 			
 			// キーワードを含む課題を検索
 			$conditions['OR'] = array(
 				array('Task.title like' => '%'.$keyword.'%'),
 				array('Task.body like' => '%'.$keyword.'%'),
-				array('Task.id' => $task_id_list)
+				array('Task.id' => $task_id_list),
 			);
 		}
 		
