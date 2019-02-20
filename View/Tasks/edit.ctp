@@ -120,7 +120,7 @@ $rate_list = array(
 				
 				echo $this->Form->input('status',	array(
 					'type' => 'radio',
-					'before' => '<label class="col col-md-3 control-label">状態</label>',
+					'before' => '<label class="col col-md-3 control-label">ステータス</label>',
 					'separator'=>"　", 
 					'disabled'=>false, 
 					'legend' => false,

@@ -309,13 +309,18 @@ class ProgressesController extends AppController
 			{
 				$progress_type = $this->request->data['Progress']['progress_type'];
 				$record_type   = $is_add ? $progress_type : $progress_type.'_update';
+				$task_status   = $this->request->data['Progress']['status'];
 				
-				// 課題の進捗率の更新
+				// 課題の進捗率を更新（種別が進捗の場合のみ）
 				if($progress_type=='progress')
 				{
 					$this->loadModel('Task');
 					$this->Task->updateRate($task_id);
 				}
+				
+				// 課題のステータスを更新
+				$this->Task->id = $task_id;
+				$this->Task->saveField('status', $task_status);
 				
 				// 学習履歴を追加
 				$kind = $is_add ? 5 : 6;

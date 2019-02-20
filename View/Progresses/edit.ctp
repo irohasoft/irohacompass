@@ -212,6 +212,19 @@
 				echo $this->Form->hidden('page_id', array('class' => 'form-group row-page-id'));
 				
 				echo $this->Form->input('file',		array('label' => __('添付ファイル'), 'class' => 'form-control form-control-upload'));
+
+				echo $this->Form->input('status',	array(
+					'type' => 'radio',
+					'before' => '<label class="col col-md-3 control-label">課題のステータス</label>',
+					'separator'=>"　", 
+					'disabled'=>false, 
+					'legend' => false,
+					'class' => false,
+					'value' => $content['Task']['status'],
+					'options' => Configure::read('task_status')
+					)
+				);
+				
 				echo $this->Form->input('rate',		array(
 					'label' => '進捗率', 
 					'options'=>$rate_list, 
