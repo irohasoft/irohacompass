@@ -170,7 +170,7 @@
 				echo $this->Form->input('title',	array('label' => __('タイトル')));
 				echo $this->Form->input('progress_type',	array(
 					'type' => 'radio',
-					'before' => '<label class="col col-md-3 col-sm-4 control-label">種別</label>',
+					'before' => '<label class="col col-sm-3 control-label">種別</label>',
 					'separator'=>"　", 
 					'legend' => false,
 					'class' => false,
@@ -182,7 +182,7 @@
 				);
 				echo $this->Form->input('content_type',	array(
 					'type' => 'radio',
-					'before' => '<label class="col col-md-3 col-sm-4 control-label">進捗の入力形式</label>',
+					'before' => '<label class="col col-sm-3 control-label">進捗の入力形式</label>',
 					'separator'=>"　", 
 					'legend' => false,
 					'class' => false,
@@ -215,7 +215,7 @@
 
 				echo $this->Form->input('status',	array(
 					'type' => 'radio',
-					'before' => '<label class="col col-md-3 control-label">課題のステータス</label>',
+					'before' => '<label class="col col-sm-3 control-label">課題のステータス</label>',
 					'separator'=>"　", 
 					'disabled'=>false, 
 					'legend' => false,
@@ -235,10 +235,10 @@
 				echo $this->Form->hidden('file_name', array('class' => 'form-control-filename'));
 			?>
 			<div class="form-group">
-				<div class="col col-md-9 col-md-offset-3">
+				<div class="col col-sm-9 col-sm-offset-3">
 					<p><input name="is_mail" type="checkbox" style="margin-right: 5px;"> メール通知 ※学習テーマの関係者に更新が発生した旨をメールで通知します</p>
 				</div>
-				<div class="col col-md-9 col-md-offset-3">
+				<div class="col col-sm-9 col-sm-offset-3">
 					<?php echo $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
 				</div>
 			</div>

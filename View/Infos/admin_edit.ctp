@@ -19,32 +19,11 @@
 				echo $this->Form->input('id');
 				echo $this->Form->input('title',	array('label' => __('タイトル')));
 				echo $this->Form->input('body',		array('label' => __('本文')));
-				/*
-				echo $this->Form->input('opened', array(
-					'type' => 'date',
-					'dateFormat' => 'YMD',
-					'monthNames' => false,
-					'timeFormat' => '24',
-					'separator' => ' / ',
-					'label'=> '公開開始日 : ',
-					'style' => 'width:initial; display: inline;'
-				));
-
-				echo $this->Form->input('closed', array(
-					'type' => 'date',
-					'dateFormat' => 'YMD',
-					'monthNames' => false,
-					'timeFormat' => '24',
-					'separator' => ' / ',
-					'label'=> '公開終了日 : ',
-					'style' => 'width:initial; display: inline;'
-				));
-				*/
 				echo $this->Form->input('Group',	array('label' => '対象グループ',	'size' => 20));
 
 			?>
 			<div class="form-group">
-				<div class="col col-md-9 col-md-offset-3">
+				<div class="col col-sm-9 col-sm-offset-3">
 					<?php echo $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
 				</div>
 			</div>

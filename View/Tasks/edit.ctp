@@ -108,7 +108,7 @@ $rate_list = array(
 				
 				echo $this->Form->input('priority',	array(
 					'type' => 'radio',
-					'before' => '<label class="col col-md-3 control-label">優先度</label>',
+					'before' => '<label class="col col-sm-3 control-label">優先度</label>',
 					'separator'=>"　", 
 					'disabled'=>false, 
 					'legend' => false,
@@ -120,7 +120,7 @@ $rate_list = array(
 				
 				echo $this->Form->input('status',	array(
 					'type' => 'radio',
-					'before' => '<label class="col col-md-3 control-label">ステータス</label>',
+					'before' => '<label class="col col-sm-3 control-label">ステータス</label>',
 					'separator'=>"　", 
 					'disabled'=>false, 
 					'legend' => false,
@@ -164,7 +164,7 @@ $rate_list = array(
 				echo $this->Form->hidden('file_name', array('class' => 'form-control-filename'));
 			?>
 			<div class="form-group">
-				<div class="col col-md-9 col-md-offset-3">
+				<div class="col col-sm-9 col-sm-offset-3">
 					<?php echo $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
 				</div>
 			</div>

@@ -18,7 +18,7 @@
 				*/
 			?>
 			<div class="form-group">
-				<div class="col-sm-offset-3 col col-md-9 col-sm-8">
+				<div class="col col-sm-9 col-sm-offset-3">
 					<?php echo $this->Form->end(array('label' => __('保存'), 'class' => 'btn btn-primary')); ?>
 				</div>
 			</div>
