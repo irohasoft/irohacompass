@@ -232,11 +232,33 @@
 					'value' => $content['Task']['rate'],
 					'div' => 'form-group row-progress',
 				));
+				
+				
+				Configure::read('emotion_icons');
+				$emotion_icons = array();
+				
+				foreach(Configure::read('emotion_icons') as $key => $value)
+				{
+					$emotion_icons[$key] = $this->Html->image($value, array('width' => 60));
+				}
+				
+				echo $this->Form->input('emotion_icon',	array(
+					'type' => 'radio',
+					'before' => '<label class="col col-sm-3 control-label">感情</label><div>　※ 現在の感情を選択してください</div>',
+					'after' => '',
+					'separator'=>"　", 
+					'legend' => false,
+					'class' => false,
+					'options' => $emotion_icons,
+					'default' => 'normal'
+					)
+				);
+				
 				echo $this->Form->hidden('file_name', array('class' => 'form-control-filename'));
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">
-					<p><input name="is_mail" type="checkbox" style="margin-right: 5px;"> メール通知 ※学習テーマの関係者に更新が発生した旨をメールで通知します</p>
+					<p> ※ 学習テーマの関係者に更新が発生した旨を通知します<br><input name="is_mail" type="checkbox" style="margin-right: 5px;"> メール通知</p>
 				</div>
 				<div class="col col-sm-9 col-sm-offset-3">
 					<?php echo $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>

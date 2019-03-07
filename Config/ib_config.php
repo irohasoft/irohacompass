@@ -148,6 +148,12 @@ $config['theme_colors']   = array(
 	'#7d7d7d' => 'gray'
 );
 
+$config['emotion_icons']   = array(
+	'positive-2' => 'positive-2.png',
+	'positive-1' => 'positive-1.png',
+	'normal'     => 'normal.png',
+	'negative'   => 'negative.png',
+);
 
 // メール関連の設定
 $config['mail_title']	= '[iroha Compass] 進捗の更新';
