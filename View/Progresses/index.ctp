@@ -32,6 +32,21 @@
 	{
 		min-height: 36px;
 	}
+	
+	.smile-icon
+	{
+		margin-left	: 20px;
+		cursor		: pointer;
+		
+	}
+	
+	.name_display
+	{
+		display: initial;
+		padding: 10px;
+		color: #337ab7;
+		font-size: 12px;
+	}
 </style>
 <?php $this->end(); ?>
 <?php $this->start('css-embedded'); ?>
@@ -56,6 +71,39 @@
 			$(this).before(html);
 		});
 	});
+	
+	function smile(progress_id)
+	{
+		
+		$.ajax({
+			url: "<?php echo Router::url(array('action' => 'smile')) ?>",
+			type: "POST",
+			data: {
+				progress_id	: progress_id
+			},
+			dataType: "text",
+			success : function(response){
+				//通信成功時の処理
+				var icon = $('.smile-icon-'+progress_id)[0];
+				
+				//alert(response);
+				if(icon.src.indexOf('smile-on.png') > 0)
+				{
+					icon.src = icon.src.replace('on.png', 'off.png');
+				}
+				else
+				{
+					icon.src = icon.src.replace('off.png', 'on.png');
+				}
+			},
+			error: function(){
+				//通信失敗時の処理
+				//alert('通信失敗');
+			}
+		});
+		
+		return;
+	}
 </script>
 <?php $this->end(); ?>
 
@@ -170,6 +218,17 @@
 					__('[%s] を削除してもよろしいですか?', $progress['Progress']['title'])
 			); 
 			echo $this->Form->hidden('id', array('id'=>'', 'class'=>'target_id', 'value'=>$progress['Progress']['id']));
+			
+			$image_file = ($progress['is_smiled']) ? 'smile-on.png' : 'smile-off.png';
+			
+			echo $this->Html->image($image_file, array(
+				'width'		=> 40, 
+				'class'		=>'smile-icon smile-icon-'.$progress['Progress']['id'], 
+				'onclick'	=>'smile('.$progress['Progress']['id'].');',
+				'title'		=>'スマイルする', 
+			));
+			
+			echo '<div class="name_display">'.$progress['name_display'].'</div>';
 			?>
 			</div>
 		</div>

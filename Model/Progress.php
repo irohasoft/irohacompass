@@ -117,6 +117,22 @@ class Progress extends AppModel
 			)
 	);
 
+	public $hasMany = array(
+			'Smile' => array(
+					'className' => 'Smile',
+					'foreignKey' => 'progress_id',
+					'dependent' => false,
+					'conditions' => '',
+					'fields' => '',
+					'order' => '',
+					'limit' => '',
+					'offset' => '',
+					'exclusive' => '',
+					'finderQuery' => '',
+					'counterQuery' => ''
+			)
+	);
+
 	public function setOrder($id_list)
 	{
 		for($i=0; $i< count($id_list); $i++)

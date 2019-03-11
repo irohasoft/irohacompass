@@ -32,7 +32,7 @@ class ProgressesController extends AppController
 
 	public function index($task_id, $record_id = null)
 	{
-		$this->Progress->recursive = 0;
+		//$this->Progress->recursive = 0;
 		$progresses = $this->Progress->find('all', array(
 			'conditions' => array(
 				'task_id' => $task_id
@@ -66,11 +66,43 @@ class ProgressesController extends AppController
 		$is_admin  = ($this->action == 'admin_record');
 		$is_user   = ($this->action == 'index');
 		
-		$this->set('content',			$content);
-		$this->set('progresses',	$progresses);
-		$this->set('is_record',			$is_record);
-		$this->set('is_admin',			$is_admin);
-		$this->set('is_user',			$is_user);
+		$this->loadModel('User');
+		
+		for($i=0; $i < count($progresses); $i++)
+		{
+			$smiled_ids   = array(); // スマイルした人のID（自分以外）
+			
+			$smiles = $progresses[$i]['Smile'];
+			
+			$is_smiled = false;
+			
+			for($j=0; $j < count($smiles); $j++)
+			{
+				// 自分自身がスマイルしたかどうか
+				if($smiles[$j]['user_id']==$this->Session->read('Auth.User.id'))
+				{
+					$is_smiled = true;
+				}
+				else
+				{
+					array_push($smiled_ids, $smiles[$j]['user_id']);
+				}
+			}
+			
+			$this->User->recursive = 0;
+			$user = $this->User->find('first', array(
+				'fields' => array("GROUP_CONCAT(User.name SEPARATOR ', ') as name_display"),
+				'conditions'	=> array(
+					'User.id'	=> $smiled_ids
+				),
+			));
+			// スマイルした名前を表示
+			$progresses[$i]['name_display']	= $user[0]['name_display'];
+			// 自分自身がスマイルしたかどうか
+			$progresses[$i]['is_smiled']	= $is_smiled;
+		}
+		
+		$this->set(compact('content', 'progresses', 'is_record', 'is_admin', 'is_user'));
 	}
 
 	public function index_enq($task_id, $record_id = null)
@@ -187,10 +219,7 @@ class ProgressesController extends AppController
 		$is_admin  = (($this->action == 'admin_record_enq') || ($this->action == 'admin_record_enq_each'));
 		//debug($is_record);
 		
-		$this->set('content'          , $content);
-		$this->set('progresses', $progresses);
-		$this->set('is_record',         $is_record);
-		$this->set('is_admin',          $is_admin);
+		$this->set(compact('content', 'progresses', 'is_record', 'is_admin'));
 	}
 
 	public function record($id, $record_id)
@@ -560,6 +589,41 @@ class ProgressesController extends AppController
 		if($this->request->is('ajax'))
 		{
 			$this->Progress->setOrder($this->data['id_list']);
+			return "OK";
+		}
+	}
+
+	public function admin_smile()
+	{
+		$this->smile();
+	}
+
+	public function smile()
+	{
+		$this->autoRender = FALSE;
+		if($this->request->is('ajax'))
+		{
+			$data = array(
+				'progress_id'	=> $this->data['progress_id'],
+				'user_id'		=> $this->Session->read('Auth.User.id'),
+			);
+			
+			$this->loadModel('Smile');
+			
+			$smile = $this->Smile->find('first', array(
+				'conditions' => $data
+			));
+			
+			if($smile)
+			{
+				$this->Smile->delete($smile['Smile']['id']);
+			}
+			else
+			{
+				$this->Smile->create();
+				$this->Smile->save($data);
+			}
+			
 			return "OK";
 		}
 	}
