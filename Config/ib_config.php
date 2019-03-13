@@ -104,6 +104,8 @@ $config['use_upload_image'] = true;
 // iroha Note を使用する
 $config['use_irohanote']	= true;
 
+// 感情アイコンを使用する
+$config['use_emotion_icon']	= true;
 
 // デモモード (true ; 設定する, false : 設定しない)
 //$config['demo_mode'] = true;

@@ -172,11 +172,14 @@
 			</div>
 		</div>
 		<div class="panel-body">
-			<?php if($progress['Progress']['progress_type']=='progress') { ?>
 			<div class="text-left">
-				進捗率 : <?php echo h($progress['Progress']['rate']); ?>%
-			</div>
+			<?php if($progress['Progress']['progress_type']=='progress') { ?>
+				進捗率 : <?php echo h($progress['Progress']['rate']); ?>% &nbsp;&nbsp;
 			<?php }?>
+			<?php if(Configure::read('use_emotion_icon')) { ?>
+				感情 : <?php echo $this->Html->image($progress['Progress']['emotion_icon'].'.png', array('width' => 30)); ?>
+			<?php }?>
+			</div>
 			<div class="progress-text bg-warning">
 				<h4><?php echo h($progress['Progress']['title']); ?></h4>
 				<?php 
