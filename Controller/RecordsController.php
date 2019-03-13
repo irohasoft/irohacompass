@@ -100,6 +100,9 @@ class RecordsController extends AppController
 			$this->request->query['to_date'] : 
 				array('year' => date('Y'), 'month' => date('m'), 'day' => date('d'));
 		
+		if(Configure::read('demo_mode'))
+			$from_date = explode("/", Configure::read('demo_target_date'));
+		
 		// 学習日付による絞り込み
 		$conditions['Record.created BETWEEN ? AND ?'] = array(
 			implode("/", $from_date), 
@@ -143,7 +146,7 @@ class RecordsController extends AppController
 		$labels			= $this->Record->getDateLabels();
 		$login_data		= $this->Record->getLoginData($user_id, $labels);
 		$progress_data	= $this->Record->getProgressData($user_id, $labels);
-		$themes		= $this->Theme->find('list', array('conditions' => array('Theme.id' => $theme_ids)));
+		$themes			= $this->Theme->find('list', array('conditions' => array('Theme.id' => $theme_ids)));
 		
 		$this->set(compact('labels', 'login_data', 'progress_data', 'themes', 'theme_id', 'contenttitle', 'from_date', 'to_date', 'is_popup'));
 	}
