@@ -4,10 +4,10 @@ iroha Compass とは自律学習支援システムです。
 学習者一人ひとりの主体的で深い学びを支援します。
 
 ## 公式サイト
-http://irohacompass.irohasoft.jp/
+https://irohacompass.irohasoft.jp/
 
 ## デモサイト
-http://demoib.irohasoft.com/
+https://demoic.irohasoft.com/
 
 ## 動作環境
 PHP : 5.4以上
