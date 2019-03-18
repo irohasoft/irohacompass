@@ -10,9 +10,9 @@ https://irohacompass.irohasoft.jp/
 https://demoic.irohasoft.com/
 
 ## 動作環境
-PHP : 5.4以上
-MySQL : 5.1以上
-CakePHP : 2.10.x
+* PHP : 5.4以上
+* MySQL : 5.1以上
+* CakePHP : 2.10.x
 
 ##インストール方法
 1. iroha Compass のソースをダウンロードし、解凍します。
