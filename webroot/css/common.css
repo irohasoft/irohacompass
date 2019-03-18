@@ -285,6 +285,19 @@ form .required .control-label:after
 	overflow: hidden;
 }
 
+.irohasoft
+{
+	font-size: 10px;
+	color: #aaa;
+	text-align: center;
+}
+
+.irohasoft a
+{
+	color: #9ab;
+	display: initial;
+}
+
 @media only screen and (max-width:800px)
 {
 	#flashMessage
