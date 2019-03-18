@@ -14,7 +14,7 @@ https://demoic.irohasoft.com/
 * MySQL : 5.1以上
 * CakePHP : 2.10.x
 
-##インストール方法
+## インストール方法
 1. iroha Compass のソースをダウンロードし、解凍します。
 https://github.com/irohasoft/irohacompass/releases
 * CakePHP 2.10 のソースをダウンロードし、解凍します。
