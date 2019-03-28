@@ -168,24 +168,23 @@ class ProgressesController extends AppController
 		$this->Task->id = $task_id;
 		$this->Task->saveField('status', $task_status);
 		
+		// 課題情報を取得
+		$task = $this->Task->find('first', array(
+			'conditions' => array(
+				'Task.id' => $task_id
+			)
+		));
+		
 		// 学習履歴を追加
-		$kind = $is_add ? 5 : 6;
 		$this->loadModel('Record');
 		
 		$this->Record->addRecord(array(
 			'user_id'		=> $this->Session->read('Auth.User.id'),
-			'theme_id'		=> $content['Theme']['id'],
+			'theme_id'		=> $task['Theme']['id'],
 			'task_id'		=> $task_id,
 			'study_sec'		=> $this->request->data['study_sec'],
 			'emotion_icon'	=> $emotion_icon,
-			'record_type'	=> $kind,
-		));
-		
-		// 
-		$content = $this->Task->find('first', array(
-			'conditions' => array(
-				'Task.id' => $task_id
-			)
+			'record_type'	=> $record_type,
 		));
 		
 		// 課題の更新日時を更新
@@ -193,7 +192,7 @@ class ProgressesController extends AppController
 		$this->Task->saveField('modified', date(DATE_ATOM));
 		
 		// 学習テーマの更新日時を更新
-		$this->Task->Theme->id = $content['Theme']['id'];
+		$this->Task->Theme->id = $task['Theme']['id'];
 		$this->Task->Theme->saveField('modified', date(DATE_ATOM));
 		
 		if(@$this->request->data['is_mail']=='on')
@@ -201,7 +200,7 @@ class ProgressesController extends AppController
 			$this->loadModel('UsersTheme');
 			
 			// 学習テーマに紐づくユーザのメールアドレスを取得
-			$list = $this->UsersTheme->getMailList($this->Session->read('Auth.User.id'), $content['Theme']['id']);
+			$list = $this->UsersTheme->getMailList($this->Session->read('Auth.User.id'), $task['Theme']['id']);
 			
 			$admin_from	= Configure :: read('admin_from');
 			$mail_title	= Configure :: read('mail_title');
@@ -209,8 +208,8 @@ class ProgressesController extends AppController
 			
 			$params = array(
 				'name'			=> $this->Session->read('Auth.User.name'),
-				'theme_title'	=> $content['Theme']['title'],
-				'content_title'	=> $content['Task']['title'],
+				'theme_title'	=> $task['Theme']['title'],
+				'content_title'	=> $task['Task']['title'],
 				'record_type'	=> Configure::read('record_type.'.$record_type),
 				'url'			=> $url,
 			);
