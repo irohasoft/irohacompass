@@ -4,78 +4,79 @@
 	/* 進捗一覧用 */
 	.td-reader
 	{
-		width:200px;
-		text-overflow:ellipsis;
-		overflow:hidden;
-		white-space:nowrap;
+		width			: 200px;
+		text-overflow	: ellipsis;
+		overflow		: hidden;
+		white-space		: nowrap;
 	}
 
 	table
 	{
-		table-layout:fixed;
+		table-layout	: fixed;
 	}
 
 	#sortable-table tbody
 	{
-		cursor: move;
+		cursor			: move;
 	}
 
 	.progress-text,
 	.correct-text
 	{
-		padding: 10px;
+		padding			: 10px;
 		border-radius	: 6px;
-		margin-bottom: 10px;
-		word-wrap: break-word;
+		margin-bottom	: 10px;
+		word-wrap		: break-word;
 	}
 
 	.panel-heading
 	{
-		min-height: 36px;
+		min-height		: 36px;
 	}
 	
 	.smile-icon
 	{
-		margin-left	: 20px;
-		cursor		: pointer;
+		margin-left		: 10px;
+		cursor			: pointer;
 		
 	}
 	
 	.name_display
 	{
-		display: initial;
-		padding: 10px;
-		color: #337ab7;
-		font-size: 12px;
+		display			: initial;
+		padding			: 10px;
+		color			: #337ab7;
+		font-size		: 12px;
+	}
+	
+	.btn-edit
+	{
+		margin-right	: 10px;
 	}
 
 	/* 進捗編集用 */
 	#ProgressOptionList
 	{
-	    width: 200px;
+		width			: 200px;
 	}
 
 	#ProgressOptionList option
 	{
-		border-top:    2px double #ccc;
-		border-right:  2px double #aaa;
-		border-bottom: 2px double #aaa;
-		border-left:   2px double #ccc;
-		/*
-		background-color: #fff;
-		font-family: Verdana, Geneva, sans-serif;
-		*/
-		color: #444455;
-		width: 160px;
-		margin:6px;
-		padding: 5px;
+		border-top		: 2px double #ccc;
+		border-right	: 2px double #aaa;
+		border-bottom	: 2px double #aaa;
+		border-left		: 2px double #ccc;
+		color			: #444455;
+		width			: 160px;
+		margin			: 6px;
+		padding			: 5px;
 	}
 
 	input[name="data[Progress][image]"]
 	{
-		display:inline-block;
-		width:85%;
-		margin-right:10px;
+		display			: inline-block;
+		width			: 85%;
+		margin-right	: 10px;
 	}
 
 	.row-body,
@@ -83,7 +84,7 @@
 	.row-markdown,
 	.row-progress
 	{
-		display: none;
+		display			: none;
 	}
 
 	.content-type-text .row-body,
@@ -92,7 +93,7 @@
 	.content-type-irohanote .row-irohanote,
 	.progress-type-progress .row-progress
 	{
-		display: block;
+		display			: block;
 	}
 </style>
 <?php $this->end(); ?>
@@ -341,15 +342,25 @@
 				</div>
 			</div>
 			<div>
-			<button type="button" class="btn btn-success" onclick="location.href='<?php echo Router::url(array('action' => 'index', $progress['Task']['id'], $progress['Progress']['id'])) ?>#edit'">編集</button>
-			<?php
-			echo $this->Form->postLink(__('削除'), 
-					array('action' => 'delete', $progress['Progress']['id']), 
-					array('class'=>'btn btn-danger'), 
-					__('[%s] を削除してもよろしいですか?', $progress['Progress']['title'])
-			); 
-			echo $this->Form->hidden('id', array('id'=>'', 'class'=>'target_id', 'value'=>$progress['Progress']['id']));
 			
+			<?php
+			// 自分の進捗のみ編集、削除可能とする
+			if($progress['User']['id']==$loginedUser['id'])
+			{
+				echo $this->Form->button('編集', array(
+					'class'		=> 'btn btn-success btn-edit',
+					'onclick'	=> "location.href='".Router::url(array('action' => 'index', $progress['Task']['id'], $progress['Progress']['id']))."#edit'",
+				));
+				
+				echo $this->Form->postLink(__('削除'), 
+						array('action' => 'delete', $progress['Progress']['id']), 
+						array('class'=>'btn btn-danger'), 
+						__('[%s] を削除してもよろしいですか?', $progress['Progress']['title'])
+				); 
+				echo $this->Form->hidden('id', array('id'=>'', 'class'=>'target_id', 'value'=>$progress['Progress']['id']));
+			}
+			
+			// スマイル機能
 			$image_file = ($progress['is_smiled']) ? 'smile-on.png' : 'smile-off.png';
 			
 			echo $this->Html->image($image_file, array(
@@ -358,7 +369,6 @@
 				'onclick'	=>'smile('.$progress['Progress']['id'].');',
 				'title'		=>'スマイルする', 
 			));
-			
 			echo '<div class="name_display">'.$progress['name_display'].'</div>';
 			?>
 			</div>
