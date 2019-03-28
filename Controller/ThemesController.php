@@ -69,7 +69,9 @@ class ThemesController extends AppController
 			throw new NotFoundException(__('Invalid theme'));
 		}
 		
+		// 追加フラグ
 		$is_add  = (($this->action == 'admin_add')||($this->action == 'add'));
+		// ユーザフラグ
 		$is_user = (($this->action == 'add')||($this->action == 'edit'));
 		
 		if ($this->request->is(array(
@@ -90,13 +92,13 @@ class ThemesController extends AppController
 				$id = ($id == null) ? $this->Theme->getLastInsertID() : $id;
 				
 				$this->loadModel('Record');
-				$this->Record->addRecord(
-					$this->Session->read('Auth.User.id'),
-					$id,
-					0,
-					$record_type,
-					$this->request->data['study_sec'] //study_sec
-				);
+				$this->Record->addRecord(array(
+					'user_id'		=> $this->Session->read('Auth.User.id'),
+					'theme_id'		=> $id,
+					'task_id'		=> 0,
+					'study_sec'		=> $this->request->data['study_sec'],
+					'record_type'	=> $record_type,
+				));
 				
 				// 新規追加の場合、学習テーマとユーザの紐づけを追加
 				if($is_add)
@@ -106,6 +108,7 @@ class ThemesController extends AppController
 				
 				$this->Flash->success(__('学習テーマが保存されました'));
 				
+				// ユーザの場合、課題一覧へ遷移
 				if($is_user)
 				{
 					return $this->redirect(array(

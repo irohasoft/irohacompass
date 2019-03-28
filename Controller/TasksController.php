@@ -343,6 +343,7 @@ class TasksController extends AppController
 				$record_type = $is_add ? 'task_add' : 'task_update';
 				$id = ($task_id == null) ? $this->Task->getLastInsertID() : $task_id;
 				$this->loadModel('Record');
+				/*
 				$this->Record->addRecord(
 					$this->Session->read('Auth.User.id'),
 					$theme_id,
@@ -350,7 +351,14 @@ class TasksController extends AppController
 					$record_type, 
 					$this->request->data['study_sec'] //study_sec
 				);
-
+				*/
+				$this->Record->addRecord(array(
+					'user_id'		=> $this->Session->read('Auth.User.id'),
+					'theme_id'		=> $theme_id,
+					'task_id'		=> $id,
+					'study_sec'		=> $this->request->data['study_sec'],
+					'record_type'	=> $record_type,
+				));
 				// 学習テーマの更新日時を更新
 				$this->Task->Theme->id = $theme_id;
 				$this->Task->Theme->saveField('modified', date(DATE_ATOM));

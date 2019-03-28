@@ -118,7 +118,12 @@ class Record extends AppModel
 			)
 	);
 
-	public function addRecord($user_id, $theme_id, $task_id, $record_type, $study_sec)
+	/**
+	 * 学習テーマ、課題、進捗の追加、更新履歴を追加
+	 *
+	 * @param array record 更新履歴(ユーザID, テーマID, 課題ID, 進捗ID, 感情アイコン, 課題進捗率, 履歴種別)
+	 */
+	public function addRecord($record)
 	{
 		$status = null;
 		$this->create();
@@ -128,34 +133,35 @@ class Record extends AppModel
 		// 学習テーマの進捗率（全課題の平均）
 		$sql = "SELECT AVG(rate) as theme_avg FROM ib_tasks WHERE user_id = :user_id AND theme_id = :theme_id";
 		$params = array(
-			'user_id'   => $user_id,
-			'theme_id' => $theme_id
+			'user_id'	=> $record['user_id'],
+			'theme_id'	=> $record['theme_id']
 		);
 		$data = $this->query($sql, $params);
 		$theme_rate = $data[0][0]["theme_avg"];
 		
 		// 課題の進捗率、ステータス
-		if($task_id > 0)
+		if($record['task_id'] > 0)
 		{
 			$sql = "SELECT ifnull(rate, 0) as task_rate, status FROM ib_tasks WHERE id = :task_id";
 			$params = array(
-				'task_id' => $task_id
+				'task_id' => $record['task_id']
 			);
 			$data = $this->query($sql, $params);
 			debug($data);
 			
-			$task_rate  = $data[0][0]["task_rate"];
-			$status        = $data[0]['ib_tasks']["status"];
+			$task_rate	= $data[0][0]["task_rate"];
+			$status		= $data[0]['ib_tasks']["status"];
 		}
 		
 		$data = array(
-			'user_id'		=> $user_id,
-			'theme_id'		=> $theme_id,
-			'task_id'		=> $task_id,
-			'study_sec'		=> $study_sec,
+			'user_id'		=> $record['user_id'],
+			'theme_id'		=> $record['theme_id'],
+			'task_id'		=> $record['task_id'],
+			'study_sec'		=> $record['study_sec'],
 			'rate'			=> $task_rate,
+			'emotion_icon'	=> $record['emotion_icon'],
 			'theme_rate'	=> $theme_rate,
-			'record_type'	=> $record_type,
+			'record_type'	=> $record['record_type'],
 			'is_complete'	=> $status
 		);
 		
@@ -163,7 +169,6 @@ class Record extends AppModel
 		
 		return $this->save($data);
 	}
-
 
 	public function getLoginData($user_id, $date_list)
 	{

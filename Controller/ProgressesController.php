@@ -30,7 +30,7 @@ class ProgressesController extends AppController
 		),
 	);
 
-	public function index($task_id, $record_id = null)
+	public function index($task_id, $progress_id = null)
 	{
 		//$this->Progress->recursive = 0;
 		$progresses = $this->Progress->find('all', array(
@@ -102,7 +102,131 @@ class ProgressesController extends AppController
 			$progresses[$i]['is_smiled']	= $is_smiled;
 		}
 		
-		$this->set(compact('content', 'progresses', 'is_record', 'is_admin', 'is_user'));
+		$is_add  = ($progress_id==null);
+		
+		if ($this->request->is(array(
+				'post',
+				'put'
+		)))
+		{
+			if(Configure::read('demo_mode'))
+				return;
+			
+			if ($progress_id == null)
+			{
+				$this->request->data['Progress']['user_id'] = $this->Session->read('Auth.User.id');
+				$this->request->data['Progress']['task_id'] = $task_id;
+			}
+			
+			if (! $this->Progress->validates())
+				return;
+			
+			if ($this->Progress->save($this->request->data))
+			{
+				$this->__save_record($task_id, $progress_id);
+
+				$this->Flash->success(__('進捗を保存しました'));
+				return $this->redirect(array(
+					'controller' => 'progresses',
+					'action' => 'index',
+					$task_id
+				));
+			}
+			else
+			{
+				$this->Flash->error(__('The tasks progress could not be saved. Please, try again.'));
+			}
+		}
+		else
+		{
+			$options = array( 'conditions' => array(
+				'Progress.' . $this->Progress->primaryKey => $progress_id
+			));
+			
+			$this->request->data = $this->Progress->find('first', $options);
+		}
+		
+		$this->set(compact('content', 'progresses', 'is_record', 'is_admin', 'is_add', 'is_user'));
+	}
+	
+	private function __save_record($task_id, $progress_id)
+	{
+		$is_add			= ($progress_id==null);
+		$progress_type	= $this->request->data['Progress']['progress_type'];
+		$record_type	= $is_add ? $progress_type : $progress_type.'_update';
+		$task_status	= $this->request->data['Progress']['status'];
+		$emotion_icon	= $this->request->data['Progress']['emotion_icon'];
+		
+		// 課題の進捗率を更新（種別が進捗の場合のみ）
+		if($progress_type=='progress')
+		{
+			$this->loadModel('Task');
+			$this->Task->updateRate($task_id);
+		}
+		
+		// 課題のステータスを更新
+		$this->Task->id = $task_id;
+		$this->Task->saveField('status', $task_status);
+		
+		// 学習履歴を追加
+		$kind = $is_add ? 5 : 6;
+		$this->loadModel('Record');
+		
+		$this->Record->addRecord(array(
+			'user_id'		=> $this->Session->read('Auth.User.id'),
+			'theme_id'		=> $content['Theme']['id'],
+			'task_id'		=> $task_id,
+			'study_sec'		=> $this->request->data['study_sec'],
+			'emotion_icon'	=> $emotion_icon,
+			'record_type'	=> $kind,
+		));
+		
+		// 
+		$content = $this->Task->find('first', array(
+			'conditions' => array(
+				'Task.id' => $task_id
+			)
+		));
+		
+		// 課題の更新日時を更新
+		$this->Task->id = $task_id;
+		$this->Task->saveField('modified', date(DATE_ATOM));
+		
+		// 学習テーマの更新日時を更新
+		$this->Task->Theme->id = $content['Theme']['id'];
+		$this->Task->Theme->saveField('modified', date(DATE_ATOM));
+		
+		if(@$this->request->data['is_mail']=='on')
+		{
+			$this->loadModel('UsersTheme');
+			
+			// 学習テーマに紐づくユーザのメールアドレスを取得
+			$list = $this->UsersTheme->getMailList($this->Session->read('Auth.User.id'), $content['Theme']['id']);
+			
+			$admin_from	= Configure :: read('admin_from');
+			$mail_title	= Configure :: read('mail_title');
+			$url = Router::url(array('controller' => 'users', 'action' => 'login'), true);
+			
+			$params = array(
+				'name'			=> $this->Session->read('Auth.User.name'),
+				'theme_title'	=> $content['Theme']['title'],
+				'content_title'	=> $content['Task']['title'],
+				'record_type'	=> Configure::read('record_type.'.$record_type),
+				'url'			=> $url,
+			);
+			
+			// メールの送信
+			foreach ($list as $item)
+			{
+				$mail = new CakeEmail();
+				$mail->from($admin_from);
+				$mail->to($item);
+				$mail->subject($mail_title);
+				$mail->template('update');
+				$mail->viewVars($params);
+				$mail->send();
+			}
+		}
 	}
 
 	public function index_enq($task_id, $record_id = null)
@@ -246,9 +370,9 @@ class ProgressesController extends AppController
 		$this->render('index_enq');
 	}
 
-	public function admin_index($id)
+	public function admin_index($task_id, $progress_id = null)
 	{
-		$this->index($id);
+		$this->index($task_id, $progress_id);
 		$this->render('index');
 	}
 
@@ -276,161 +400,10 @@ class ProgressesController extends AppController
 		$this->set(compact('content', 'progresses'));
 	}
 
-	public function add($task_id)
-	{
-		$this->edit($task_id);
-		$this->render('edit');
-	}
-
-	public function admin_add($task_id)
-	{
-		$this->edit($task_id);
-		$this->render('edit');
-	}
-
 	public function admin_add_enq($task_id)
 	{
 		$this->admin_edit_enq($task_id);
 		$this->render('admin_edit_enq');
-	}
-
-	public function admin_edit($task_id, $id = null)
-	{
-		$this->edit($task_id, $id);
-		$this->render('edit');
-	}
-
-	public function edit($task_id, $id = null)
-	{
-		$task_id = intval($task_id);
-		
-		$is_edit = (($this->action == 'admin_edit')||($this->action == 'edit'));
-		$is_add  = (($this->action == 'admin_add')||($this->action == 'add'));
-		$is_user = (($this->action == 'add')||($this->action == 'edit'));
-		
-		// コンテンツ情報を取得
-		$this->loadModel('Task');
-		
-		$content = $this->Task->find('first', array(
-			'conditions' => array(
-				'Task.id' => $task_id
-			)
-		));
-		
-		if ($this->request->is(array(
-				'post',
-				'put'
-		)))
-		{
-			if(Configure::read('demo_mode'))
-				return;
-			
-			if ($id == null)
-			{
-				$this->request->data['Progress']['user_id'] = $this->Session->read('Auth.User.id');
-				$this->request->data['Progress']['task_id'] = $task_id;
-			}
-			
-			if (! $this->Progress->validates())
-				return;
-			
-			if ($this->Progress->save($this->request->data))
-			{
-				$progress_type = $this->request->data['Progress']['progress_type'];
-				$record_type   = $is_add ? $progress_type : $progress_type.'_update';
-				$task_status   = $this->request->data['Progress']['status'];
-				
-				// 課題の進捗率を更新（種別が進捗の場合のみ）
-				if($progress_type=='progress')
-				{
-					$this->loadModel('Task');
-					$this->Task->updateRate($task_id);
-				}
-				
-				// 課題のステータスを更新
-				$this->Task->id = $task_id;
-				$this->Task->saveField('status', $task_status);
-				
-				// 学習履歴を追加
-				$kind = $is_add ? 5 : 6;
-				$this->loadModel('Record');
-				$this->Record->addRecord(
-					$this->Session->read('Auth.User.id'),
-					$content['Theme']['id'],
-					$task_id, // task_id
-					$record_type,
-					$this->request->data['study_sec'] //study_sec
-				);
-				
-				// 
-				$content = $this->Task->find('first', array(
-					'conditions' => array(
-						'Task.id' => $task_id
-					)
-				));
-				
-				// 課題の更新日時を更新
-				$this->Task->id = $task_id;
-				$this->Task->saveField('modified', date(DATE_ATOM));
-				
-				// 学習テーマの更新日時を更新
-				$this->Task->Theme->id = $content['Theme']['id'];
-				$this->Task->Theme->saveField('modified', date(DATE_ATOM));
-				
-				if(@$this->request->data['is_mail']=='on')
-				{
-					$this->loadModel('UsersTheme');
-					
-					// 学習テーマに紐づくユーザのメールアドレスを取得
-					$list = $this->UsersTheme->getMailList($this->Session->read('Auth.User.id'), $content['Theme']['id']);
-					
-					$admin_from	= Configure :: read('admin_from');
-					$mail_title	= Configure :: read('mail_title');
-					$url = Router::url(array('controller' => 'users', 'action' => 'login'), true);
-					
-					$params = array(
-						'name'			=> $this->Session->read('Auth.User.name'),
-						'theme_title'	=> $content['Theme']['title'],
-						'content_title'	=> $content['Task']['title'],
-						'record_type'	=> Configure::read('record_type.'.$record_type),
-						'url'			=> $url,
-					);
-					
-					// メールの送信
-					foreach ($list as $item)
-					{
-						$mail = new CakeEmail();
-						$mail->from($admin_from);
-						$mail->to($item);
-						$mail->subject($mail_title);
-						$mail->template('update');
-						$mail->viewVars($params);
-						$mail->send();
-					}
-				}
-
-				$this->Flash->success(__('進捗を保存しました'));
-				return $this->redirect(array(
-					'controller' => 'progresses',
-					'action' => 'index',
-					$task_id
-				));
-			}
-			else
-			{
-				$this->Flash->error(__('The tasks progress could not be saved. Please, try again.'));
-			}
-		}
-		else
-		{
-			$options = array( 'conditions' => array(
-				'Progress.' . $this->Progress->primaryKey => $id
-			));
-			
-			$this->request->data = $this->Progress->find('first', $options);
-		}
-		
-		$this->set(compact('content', 'is_add', 'is_user'));
 	}
 
 	public function admin_edit_enq($task_id, $id = null)

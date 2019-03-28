@@ -340,6 +340,7 @@ class RecordsController extends AppController
 			'task_id'		=> $task_id,
 			'theme_rate'	=> $record['theme_rate'],
 			'rate'			=> $record['rate'],
+			'emotion_icon'	=> $record['emotion_icon'],
 			'is_passed'		=> $record['is_passed'],
 			'study_sec'		=> $record['study_sec'],
 			'is_complete'	=> 1
