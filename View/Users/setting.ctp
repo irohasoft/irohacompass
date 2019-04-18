@@ -1,5 +1,5 @@
-<?php //echo $this->element('menu');?>
-	<ol class="breadcrumb">
+<div class="users-setting">
+	<div class="breadcrumb">
 <?php
 	$this->Html->addCrumb('HOME', array(
 		'controller' => 'users_themes',
@@ -7,8 +7,7 @@
 	));
 	echo $this->Html->getCrumbs(' / ');
 ?>
-	</ol>
-<div class="users form">
+	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			設定
@@ -17,14 +16,15 @@
 			<?php
 				echo $this->Form->create('User', Configure::read('form_defaults'));
 				echo $this->Form->input('User.new_password', array(
-					'label' => 'パスワード',
+					'label' => '新しいパスワード',
 					'type' => 'password',
-					'autocomplete' => 'off'
+					'autocomplete' => 'new-password'
 				));
+				
 				echo $this->Form->input('User.new_password2', array(
-					'label' => 'パスワード (確認用)',
+					'label' => '新しいパスワード (確認用)',
 					'type' => 'password',
-					'autocomplete' => 'off'
+					'autocomplete' => 'new-password'
 				));
 			?>
 			<div class="form-group">

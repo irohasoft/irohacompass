@@ -24,15 +24,6 @@ body
 	margin				: 10px;
 }
 
-@media only screen and (max-width:800px)
-{
-	.panel
-	{
-		margin				: 3px;
-		margin-bottom		: 10px;
-	}
-}
-
 #content
 {
 	text-align			: left;
@@ -55,7 +46,8 @@ div.buttons_container
 	position			: absolute;
 	top					: 50px;
 	margin				: auto 25px;
-	width				: 1150px;
+	width				: 95%;
+	max-width			: 1150px;
 	z-index				: 999999;
 }
 
@@ -91,19 +83,19 @@ div.buttons_container
 
 form .required .control-label:after
 {
-	border-radius: 0.25em;
-	color: #fff;
-	display: inline;
-	font-size: 75%;
-	font-weight: 700;
-	line-height: 1;
-	padding: 0.1em 0.5em;
-	margin-left: 0.7em;
-	text-align: center;
-	vertical-align: baseline;
-	white-space: nowrap;
-	background-color: #d9534f;
-	content: '必須';
+	border-radius		: 0.25em;
+	color				: #fff;
+	display				: inline;
+	font-size			: 75%;
+	font-weight			: 700;
+	line-height			: 1;
+	padding				: 0.1em 0.5em;
+	margin-left			: 0.7em;
+	text-align			: center;
+	vertical-align		: baseline;
+	white-space			: nowrap;
+	background-color	: #d9534f;
+	content				: '必須';
 }
 
 .note-editor .modal-body
@@ -142,16 +134,16 @@ form .required .control-label:after
 
 .ib-logo
 {
-	font-size: 22px;
-	font-family:'Arial';
-	padding-left: 15px;
-	font-weight: bold;
+	font-size			: 22px;
+	font-family			:'Arial';
+	padding-left		: 15px;
+	font-weight			: bold;
 }
 
 .ib-page-title
 {
-	font-size: 24px;
-	float: left;
+	font-size			: 24px;
+	float				: left;
 }
 
 .ib-breadcrumb
@@ -166,9 +158,6 @@ form .required .control-label:after
 
 .ib-horizontal .input
 {
-	/*
-	width				: 200px;
-	*/
 	float				: left;
 	padding-left		: 10px;
 	padding-right		: 20px;
@@ -181,21 +170,11 @@ form .required .control-label:after
 	float				: left;
 	text-align			: right;
 	padding-top			: 5px;
-/*
-	padding-top			: 15px;
-*/
 }
 
 .ib-horizontal .text
 {
 	width				: 160px;
-}
-
-.ib-horizontal .submit
-{
-	/*
-	padding: 12px;
-	*/
 }
 
 .ib-search-date-container
@@ -234,6 +213,18 @@ form .required .control-label:after
 	text-align			: center;
 }
 
+.ib-table-csv
+{
+	width				: 90%;
+}
+
+.ib-table-csv th
+{
+	border				: 1px solid;
+	min-width			: 100px;
+	padding				: 5px;
+}
+
 /* start メニューの自動ボタン化を抑止 */
 .nav>li
 {
@@ -251,13 +242,171 @@ form .required .control-label:after
 }
 /* end */
 
+.irohasoft
+{
+	font-size			: 10px;
+	color				: #aaa;
+	text-align			: center;
+}
 
+.irohasoft a
+{
+	color				: #9ab;
+	display				: initial;
+}
+
+#sortable-table tbody
+{
+	cursor				: move;
+}
+
+.content-label
+{
+	font-size			: 22px;
+	padding-bottom		: 0px;
+}
+
+.btn-rest
+{
+	float: right;
+}
+
+.status-closed
+{
+	color				: #666;
+	font-size			: 12px;
+}
+
+.users-login #remember_me
+{
+	margin-left			: 10px;
+}
+
+/* 進捗一覧用 */
+.progresses-index .td-reader
+{
+	width			: 200px;
+	text-overflow	: ellipsis;
+	overflow		: hidden;
+	white-space		: nowrap;
+}
+
+.progresses-index table
+{
+	table-layout	: fixed;
+}
+
+.progresses-index #sortable-table tbody
+{
+	cursor			: move;
+}
+
+.progresses-index .progress-text,
+.progresses-index .correct-text
+{
+	padding			: 10px;
+	border-radius	: 6px;
+	margin-bottom	: 10px;
+	word-wrap		: break-word;
+}
+
+.progresses-index .panel-heading
+{
+	min-height		: 36px;
+}
+
+.progresses-index .smile-icon
+{
+	margin-left		: 10px;
+	cursor			: pointer;
+	
+}
+
+.progresses-index .name_display
+{
+	display			: initial;
+	padding			: 10px;
+	color			: #337ab7;
+	font-size		: 12px;
+}
+
+.progresses-index .btn-edit
+{
+	margin-right	: 10px;
+}
+
+/* 進捗編集用 */
+.progresses-index #ProgressOptionList
+{
+	width			: 200px;
+}
+
+.progresses-index #ProgressOptionList option
+{
+	border-top		: 2px double #ccc;
+	border-right	: 2px double #aaa;
+	border-bottom	: 2px double #aaa;
+	border-left		: 2px double #ccc;
+	color			: #444455;
+	width			: 160px;
+	margin			: 6px;
+	padding			: 5px;
+}
+
+.progresses-index input[name="data[Progress][image]"]
+{
+	display			: inline-block;
+	width			: 85%;
+	margin-right	: 10px;
+}
+
+.progresses-index .row-body,
+.progresses-index .row-irohanote,
+.progresses-index .row-markdown,
+.progresses-index .row-progress
+{
+	display			: none;
+}
+
+.progresses-index .content-type-text .row-body,
+.progresses-index .content-type-markdown .row-markdown,
+.progresses-index .content-type-markdown .row-body,
+.progresses-index .content-type-irohanote .row-irohanote,
+.progresses-index .progress-type-progress .row-progress
+{
+	display			: block;
+}
+
+/* 課題一覧 */
+.tasks-index .task-label
+{
+	font-size		: 22px;
+	padding-bottom	: 0px;
+}
+
+.tasks-edit input[name="data[Task][url]"]
+{
+	display			:inline-block;
+	margin-right	:10px;
+}
+
+.tasks-edit label span
+{
+	font-weight		: normal;
+}
+
+.tasks-edit .date
+{
+	width			: 100px;
+}
+
+/* iroha Note */
 .row-irohanote .btn-cancel-fullscreen
 {
-	display: none;
-	position: fixed;
-	top: 0px;
-	right: 0px;
+	display			: none;
+	position		: fixed;
+	top				: 0px;
+	right			: 0px;
 }
 
 .irohanote-fullscreen .btn-cancel-fullscreen
@@ -267,37 +416,25 @@ form .required .control-label:after
 
 .irohanote-fullscreen
 {
-	position: fixed;
-	z-index: 9999;
-	left: 0px;
-	top: 0px;
-	width: 100%;
-	height: 100%;
+	position		: fixed;
+	z-index			: 9999;
+	left			: 0px;
+	top				: 0px;
+	width			: 100%;
+	height			: 100%;
 }
 
 .row-irohanote .btn-fullscreen
 {
-	float: right;
+	float			: right;
 }
 
 .no-scroll
 {
-	overflow: hidden;
+	overflow		: hidden;
 }
 
-.irohasoft
-{
-	font-size: 10px;
-	color: #aaa;
-	text-align: center;
-}
-
-.irohasoft a
-{
-	color: #9ab;
-	display: initial;
-}
-
+/* スマートフォン用 */
 @media only screen and (max-width:800px)
 {
 	#flashMessage
@@ -305,5 +442,86 @@ form .required .control-label:after
 		width				: initial;
 		right				: 0px;
 		left				: 0px;
+	}
+
+	.panel
+	{
+		margin				: 3px;
+		margin-bottom		: 10px;
+	}
+
+	.list-group-item-text span
+	{
+		display				: block;
+	}
+
+	/* 課題一覧 */
+	.tasks-index .responsive-table
+	{
+		display: block;
+	}
+
+	.tasks-index .responsive-table thead
+	{
+		display: none;
+	}
+
+	.tasks-index .responsive-table tbody
+	{
+		display: block;
+	}
+
+	.tasks-index .responsive-table tbody tr
+	{
+		display: block;
+		margin-bottom: 1.5em;
+	}
+
+	.tasks-index .responsive-table tbody th,
+	.tasks-index .responsive-table tbody td
+	{
+		display: list-item;
+		list-style: none;
+		border: none;
+	}
+
+	.tasks-index .responsive-table tbody th
+	{
+		margin-bottom: 5px;
+		list-style-type: none;
+		color: #fff;
+		background: #000;
+	}
+
+	.tasks-index .responsive-table tbody td
+	{
+		margin-left: 10px;
+		padding: 0;
+	}
+
+	.tasks-index .responsive-table a
+	{
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	.tasks-index .responsive-table tbody td:before { width: 100px; display: inline-block;}
+	.tasks-index .responsive-table tbody td:nth-of-type(2):before { width: 100px; display: inline-block; content: "種別 : ";}
+	.tasks-index .responsive-table tbody td:nth-of-type(3):before { content: "進捗率 : "; }
+	.tasks-index .responsive-table tbody td:nth-of-type(4):before { content: "優先度 : "; }
+	.tasks-index .responsive-table tbody td:nth-of-type(5):before { content: "期日 : "; }
+	.tasks-index .responsive-table tbody td:nth-of-type(6):before { content: "作成日時 : "; }
+	.tasks-index .responsive-table tbody td:nth-of-type(7):before { content: "更新日時 : "; }
+	
+	.tasks-index .ib-col-center,
+	.tasks-index .ib-col-date
+	{
+		text-align: left;
+		width:100%;
+	}
+	
+	.tasks-index .text-center
+	{
+		text-align: left;
 	}
 }

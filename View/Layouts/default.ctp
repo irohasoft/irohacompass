@@ -19,7 +19,7 @@
 	<meta name="application-name" content="iroha Compass">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<?php
-		// 管理画面フラグ
+		// 管理画面フラグ（ログイン画面は例外とする）
 		$is_admin_page = (($this->params['admin']==1)&&($this->params['action']!='admin_login'));
 		
 		// 受講者向け画面及び、管理システムのログイン画面のみ viewport を設定（スマートフォン対応）
@@ -31,10 +31,11 @@
 		echo $this->Html->css('cake.generic');
 		echo $this->Html->css('jquery-ui');
 		echo $this->Html->css('bootstrap.min');
-		echo $this->Html->css('common.css');
+		echo $this->Html->css('common.css?20190401');
 		
+		// 管理画面用CSS
 		if($is_admin_page)
-			echo $this->Html->css('admin.css');
+			echo $this->Html->css('admin.css?20190401');
 
 		// カスタマイズ用CSS
 		echo $this->Html->css('custom.css?20190401');
@@ -44,9 +45,13 @@
 		echo $this->Html->script('bootstrap.min.js');
 		echo $this->Html->script('moment.js');
 		echo $this->Html->script('marked.min.js');
-		echo $this->Html->script('common.js?20181004');
+		echo $this->Html->script('common.js?20190401');
 		
-		// デモモード用JavaScript
+		// 管理画面用スクリプト
+		if($is_admin_page)
+			echo $this->Html->script('admin.js?20190401');
+		
+		// デモモード用スクリプト
 		if(Configure::read('demo_mode'))
 			echo $this->Html->script('demo.js');
 		
@@ -60,84 +65,11 @@
 		echo $this->fetch('script-embedded');
 	?>
 	<script>
-	var _controller	= '<?php echo $this->params['controller'] ?>';
-	var _action		= '<?php echo $this->params['action'] ?>';
-	var _params		= '<?php echo join(',', $this->params['pass']) ?>';
+	var _controller		= '<?php echo $this->params['controller'] ?>';
+	var _action			= '<?php echo $this->params['action'] ?>';
+	var _params			= '<?php echo join(',', $this->params['pass']) ?>';
 	var _sec		= 0;
-	
-	$(document).ready(function()
-	{
-		// 一定時間経過後、メッセージを閉じる
-		setTimeout(function() {
-			$('#flashMessage').fadeOut("slow");
-		}, 1500);
-		
-		
-		setInterval('_addSec()', 1000);
-		
-		$.ajax({
-			url: "<?php echo Router::url(array('controller' => 'logs', 'action' => 'add')) ?>",
-			type: "POST",
-			data: {
-				log_type	: 'view', 
-				log_content	: '', 
-				controller	: _controller,
-				action		: _action,
-				params		: _params
-			},
-			dataType: "text",
-			success : function(response){
-				//通信成功時の処理
-				//alert(response);
-			},
-			error: function(){
-				//通信失敗時の処理
-				//alert('通信失敗');
-			}
-		});
-	});
-
-	$(window).on('beforeunload', function(event)
-	{
-		$.ajax({
-			url: "<?php echo Router::url(array('controller' => 'logs', 'action' => 'add')) ?>",
-			type: "POST",
-			data: {
-				log_type	: 'move', 
-				log_content	: '', 
-				controller	: _controller,
-				action		: _action,
-				params		: _params,
-				sec			: _sec
-			},
-			dataType: "text",
-			success : function(response){
-				//通信成功時の処理
-				//alert(response);
-			},
-			error: function(){
-				//通信失敗時の処理
-				//alert('通信失敗');
-			}
-		});
-		
-		return;
-	});
-	
-	function _addSec()
-	{
-		_sec++;
-		
-		var $target = $('input[name="study_sec"]');
-		
-		if($target);
-		{
-			var sec = parseInt($target.val());
-			sec++;
-			$target.val(sec);
-		}
-	}
-
+	var URL_LOGS_ADD	= '<?php echo Router::url(array('controller' => 'logs', 'action' => 'add')) ?>';
 	</script>
 	<style>
 		.ib-theme-color
@@ -158,16 +90,13 @@
 		<div class="ib-logo ib-left">
 			<a href="<?php echo $this->Html->url('/')?>"><?php echo h($this->Session->read('Setting.title')); ?></a>
 		</div>
-<?php
-		if(@$loginedUser)
-		{
-			echo '<div class="ib-navi-item ib-right">'.$this->Html->link(__('ログアウト'), $logoutURL).'</div>';
-			echo '<div class="ib-navi-sepa ib-right"></div>';
-			echo '<div class="ib-navi-item ib-right">'.$this->Html->link(__('設定'), array('controller' => 'users', 'action' => 'setting')).'</div>';
-			echo '<div class="ib-navi-sepa ib-right"></div>';
-			echo '<div class="ib-navi-item ib-right">'.__('ようこそ ').h($loginedUser["name"]).' さん </div>';
-		}
-?>
+		<?php if(@$loginedUser) {?>
+		<div class="ib-navi-item ib-right"><?php echo $this->Html->link(__('ログアウト'), $logoutURL); ?></div>
+		<div class="ib-navi-sepa ib-right"></div>
+		<div class="ib-navi-item ib-right"><?php echo $this->Html->link(__('設定'), array('controller' => 'users', 'action' => 'setting')); ?></div>
+		<div class="ib-navi-sepa ib-right"></div>
+		<div class="ib-navi-item ib-right"><?php echo __('ようこそ ').h($loginedUser["name"]); ?> さん </div>
+		<?php }?>
 	</div>
 	
 	<div id="container">
@@ -182,7 +111,7 @@
 		</div>
 	</div>
 	
-	<div class="footer ib-theme-color text-center">
+	<div class="ib-theme-color text-center">
 		<?php echo h($this->Session->read('Setting.copyright')); ?>
 	</div>
 	

@@ -15,15 +15,7 @@
 		location.replace('https://'+window.location.host+window.location.pathname);
 	}
 <?php $this->Html->scriptEnd(); ?>
-<?php $this->start('css-embedded'); ?>
-	<style type='text/css'>
-		#remember_me
-		{
-			margin-left	: 10px;
-		}
-	</style>
-<?php $this->end(); ?>
-<div class="users form">
+<div class="users-login">
 	<div class="panel panel-info form-signin">
 		<div class="panel-heading">
 			学習者ログイン

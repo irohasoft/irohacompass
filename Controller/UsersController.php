@@ -38,29 +38,25 @@ class UsersController extends AppController
 			)
 	);
 
-	public function beforeFilter()
-	{
-		parent::beforeFilter();
-		// ユーザー自身による登録とログアウトを許可する
-		$this->Auth->allow('add', 'logout');
-	}
-
+	/**
+	 * ホーム画面（受講コース一覧）へリダイレクト
+	 */
 	public function index()
 	{
 		$this->redirect("/users_themes");
 	}
 
-	public function setting()
-	{
-		$this->admin_setting();
-	}
-
-	public function admin_delete($id = null)
+	/**
+	 * ユーザの削除
+	 *
+	 * @param int $user_id 削除するユーザのID
+	 */
+	public function admin_delete($user_id = null)
 	{
 		if(Configure::read('demo_mode'))
 			return;
 		
-		$this->User->id = $id;
+		$this->User->id = $user_id;
 		if (! $this->User->exists())
 		{
 			throw new NotFoundException(__('Invalid user'));
@@ -79,12 +75,34 @@ class UsersController extends AppController
 		));
 	}
 
+	/**
+	 * ユーザの学習履歴のクリア
+	 *
+	 * @param int $user_id 学習履歴をクリアするユーザのID
+	 */
+	public function admin_clear($user_id)
+	{
+		$this->request->allowMethod('post', 'delete');
+		$this->User->deleteUserRecords($user_id);
+		$this->Flash->success(__('学習履歴を削除しました'));
+		return $this->redirect(array(
+			'action' => 'edit',
+			$user_id
+		));
+	}
+
+	/**
+	 * ログアウト
+	 */
 	public function logout()
 	{
 		$this->Cookie->delete('Auth');
 		$this->redirect($this->Auth->logout());
 	}
 
+	/**
+	 * ログイン
+	 */
 	public function login()
 	{
 		$username = "";
@@ -151,105 +169,95 @@ class UsersController extends AppController
 		$this->set(compact('username', 'password'));
 	}
 
+	/**
+	 * ユーザを追加（編集画面へ）
+	 */
 	public function admin_add()
 	{
 		$this->admin_edit();
 		$this->render('admin_edit');
 	}
 
-	// 検索対象のフィルタ設定
-	/*
-	 * public $filterArgs = array( array('name' => 'name', 'type' => 'value',
-	 * 'field' => 'User.name'), array('name' => 'name', 'type' => 'like',
-	 * 'field' => 'User.username'), array('name' => 'username', 'type' => 'like',
-	 * 'field' => 'Task.title') );
+	/**
+	 * ユーザ一覧を表示
 	 */
 	public function admin_index()
 	{
-		if(
-			($this->Session->read('Auth.User.role') != 'admin') &&
-			($this->Session->read('Auth.User.role') != 'manager')
-		)
-			$this->redirect("/admin/themes");
-
-		// 検索条件設定
+		// SearchPluginの呼び出し
 		$this->Prg->commonProcess();
 		
+		// Model の filterArgs に定義した内容にしたがって検索条件を作成
 		$conditions = $this->User->parseCriteria($this->Prg->parsedParams());
 		
-		// クラスが指定されている場合、選択中のクラスに設定
+		// 選択中のグループをセッションから取得
 		if(isset($this->request->query['group_id']))
 			$this->Session->write('Iroha.group_id', intval($this->request->query['group_id']));
 		
+		// GETパラメータから検索条件を抽出
 		$group_id	= (isset($this->request->query['group_id'])) ? $this->request->query['group_id'] : $this->Session->read('Iroha.group_id');
-		$username	= (isset($this->request->query['username'])) ? $this->request->query['username'] : "";
-		$name		= (isset($this->request->query['name']))     ? $this->request->query['name'] : "";
 		
-		$conditions = array();
+		// 独自の検索条件を追加（指定したグループに所属するユーザを検索）
 		if($group_id != "")
 			$conditions['User.id'] = $this->Group->getUserIdByGroupID($group_id);
 		
-		if($username != "")
-			$conditions['User.username like'] = '%'.$username.'%';
-		
-		if($name != "")
-			$conditions['User.name like'] = '%'.$name.'%';
+		//$this->User->virtualFields['group_title']  = 'group_title';		// 外部結合テーブルのフィールドによるソート用
+		//$this->User->virtualFields['course_title'] = 'course_title';		// 外部結合テーブルのフィールドによるソート用
 		
 		$this->paginate = array(
 			'User' => array(
-				'fields' => array('*', 'UserGroup.group_title', 'UserTheme.theme_title'),
+				'fields' => array('*',
+					// 所属グループ一覧 ※パフォーマンス改善
+					'(SELECT group_concat(g.title order by g.id SEPARATOR \', \') as group_title  FROM ib_users_groups  ug INNER JOIN ib_groups  g ON g.id = ug.group_id  WHERE ug.user_id = User.id) as group_title',
+					// 受講コース一覧   ※パフォーマンス改善
+					'(SELECT group_concat(c.title order by c.id SEPARATOR \', \') as theme_title FROM ib_users_themes uc INNER JOIN ib_themes c ON c.id = uc.theme_id WHERE uc.user_id = User.id) as theme_title',
+				),
 				'conditions' => $conditions,
 				'limit' => 20,
 				'order' => 'created desc',
+/*
 				'joins' => array(
+					// 受講コースをカンマ区切りで取得
+					array('type' => 'LEFT OUTER', 'alias' => 'UserCourse',
+							'table' => '(SELECT uc.user_id, group_concat(c.title order by c.id SEPARATOR \', \') as course_title FROM ib_users_courses uc INNER JOIN ib_courses c ON c.id = uc.course_id  GROUP BY uc.user_id)',
+							'conditions' => 'User.id = UserCourse.user_id'),
+					// 所属グループをカンマ区切りで取得
 					array('type' => 'LEFT OUTER', 'alias' => 'UserGroup',
 							'table' => '(SELECT ug.user_id, group_concat(g.title order by g.id SEPARATOR \', \') as group_title FROM ib_users_groups ug INNER JOIN ib_groups g ON g.id = ug.group_id GROUP BY ug.user_id)',
-							'conditions' => 'User.id = UserGroup.user_id'),
-					array('type' => 'LEFT OUTER', 'alias' => 'UserTheme',
-							'table' => '(SELECT uc.user_id, group_concat(c.title order by c.id SEPARATOR \', \') as theme_title FROM ib_users_themes uc INNER JOIN ib_themes c ON c.id = uc.theme_id  GROUP BY uc.user_id)',
-							'conditions' => 'User.id = UserTheme.user_id')
-				))
-		);
+							'conditions' => 'User.id = UserGroup.user_id')
+				)
+*/
+		));
 
+		// ユーザ一覧を取得
 		try
 		{
-			$result = $this->paginate();
+			$users = $this->paginate();
 		}
 		catch (Exception $e)
 		{
 			// 指定したページが存在しなかった場合（主に検索条件変更時に発生）、1ページ目を設定
 			$this->request->params['named']['page']=1;
-			$result = $this->paginate();
+			$users = $this->paginate();
 		}
 
-		// 独自カラムの場合、自動でソートされないため、個別の実装が必要
-		if (isset($this->request->named['sort']) && $this->request->named['sort'] == 'UserGroup.group_title')
-		{
-			$result = Set::sort($result, '/UserGroup/group_title', $this->request->named['direction']);
-		}
+		// グループ一覧を取得
+		$groups = $this->Group->find('list');
 
-		if (isset($this->request->named['sort']) && $this->request->named['sort'] == 'UserTheme.theme_title')
-		{
-			$result = Set::sort($result, '/UserTheme/theme_title', $this->request->named['direction']);
-		}
-
-		$this->Group = new Group();
-		$this->set('groups',   $this->Group->find('list'));
-		$this->set('users',    $result);
-		$this->set('group_id', $group_id);
-		$this->set('name',     $name);
-
-		//debug($this->Paginator->paginate());
+		$this->set(compact('groups', 'users', 'group_id'));
 	}
 
-	public function admin_edit($id = null)
+	/**
+	 * ユーザ情報編集
+	 * @param int $user_id 編集対象のユーザのID
+	 */
+	public function admin_edit($user_id = null)
 	{
-		if ($this->action == 'admin_edit' && ! $this->User->exists($id))
+		if ($this->action == 'admin_edit' && ! $this->User->exists($user_id))
 		{
 			throw new NotFoundException(__('Invalid user'));
 		}
 		
-		$username = "";
+		$username = '';
 		
 		if ($this->request->is(array(
 				'post',
@@ -281,7 +289,7 @@ class UsersController extends AppController
 		{
 			$options = array(
 				'conditions' => array(
-					'User.' . $this->User->primaryKey => $id
+					'User.' . $this->User->primaryKey => $user_id
 				)
 			);
 			$this->request->data = $this->User->find('first', $options);
@@ -298,7 +306,10 @@ class UsersController extends AppController
 		$this->set(compact('themes', 'groups', 'username'));
 	}
 
-	public function admin_setting()
+	/**
+	 * パスワード変更
+	 */
+	public function setting()
 	{
 		if ($this->request->is(array(
 				'post',
@@ -345,11 +356,25 @@ class UsersController extends AppController
 		}
 	}
 
+	/**
+	 * パスワード変更
+	 */
+	public function admin_setting()
+	{
+		$this->setting();
+	}
+
+	/**
+	 * ログイン
+	 */
 	public function admin_login()
 	{
 		$this->login();
 	}
 
+	/**
+	 * ログアウト
+	 */
 	public function admin_logout()
 	{
 		$this->logout();

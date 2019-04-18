@@ -7,7 +7,7 @@
 		$('#ThemeTheme').select2({placeholder: "利用する学習テーマを選択して下さい。(複数選択可)", closeOnSelect: <?php echo (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
 	});
 <?php $this->Html->scriptEnd(); ?>
-<div class="groups form">
+<div class="admin-groups-edit">
 <?php echo $this->Html->link(__('<< 戻る'), array('action' => 'index'))?>
 	<div class="panel panel-default">
 		<div class="panel-heading">

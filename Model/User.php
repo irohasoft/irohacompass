@@ -21,6 +21,7 @@ App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
  */
 class User extends AppModel
 {
+	public $order = "User.name"; 
 
 	public $validate = array(
 		'username' => array(
@@ -35,24 +36,26 @@ class User extends AppModel
 				array(
 						'rule' => array(
 								'between',
-								2,
+								4,
 								32
 						),
-						'message' => 'ログインIDは5文字以上32文字以内で入力して下さい'
+						'message' => 'ログインIDは4文字以上32文字以内で入力して下さい'
 				)
 		),
 		'name' => array(
 			'notBlank' => array(
 				'rule' => array(
 						'notBlank'
-				)
+				),
+				'message' => '氏名が入力されていません'
 			)
 		),
 		'role' => array(
 			'notBlank' => array(
 				'rule' => array(
 						'notBlank'
-				)
+				),
+				'message' => '権限が指定されていません'
 			)
 		),
 		'password' => array(
@@ -81,7 +84,6 @@ class User extends AppModel
 								4,
 								32
 						),
-						'required' => false,
 						'message' => 'パスワードは4文字以上32文字以内で入力して下さい',
 						'allowEmpty' => true
 				)
@@ -154,19 +156,6 @@ class User extends AppModel
 	 		)
 	);
 
-	/*
-	function checkCompare($valid_field1, $valid_field2)
-	{
-		$fieldname = key($valid_field1);
-
-		if ($this->data[$this->name][$fieldname] === $this->data[$this->name][$valid_field2])
-		{
-			return true;
-		}
-		return false;
-	}
-	*/
-
 	public function beforeSave($options = array())
 	{
 		if (isset($this->data[$this->alias]['password']))
@@ -176,27 +165,45 @@ class User extends AppModel
 		return true;
 	}
 
-	// 検索用
+	/**
+	 * 検索用
+	 */
 	public $actsAs = array(
 			'Search.Searchable'
 	);
 
 	public $filterArgs = array(
-			'username' => array(
-					'type' => 'like',
-					'field' => 'User.name'
-			),
-			'themetitle' => array(
-					'type' => 'like',
-					'field' => 'Theme.title'
-			),
-			'contenttitle' => array(
-					'type' => 'like',
-					'field' => 'Task.title'
-			),
-			'active' => array(
-					'type' => 'value'
-			)
+		'username' => array(
+			'type' => 'like',
+			'field' => 'User.username'
+		),
+		'name' => array(
+			'type' => 'like',
+			'field' => 'User.name'
+		),
+		'theme_id' => array(
+			'type' => 'like',
+			'field' => 'theme_id'
+		),
 	);
 
+	/**
+	 * 学習履歴の削除
+	 * 
+	 * @param int array $user_id 学習履歴を削除するユーザのID
+	 */
+	public function deleteUserRecords($user_id)
+	{
+		$sql = 'DELETE FROM ib_records_questions WHERE record_id IN (SELECT id FROM ib_records WHERE user_id = :user_id)';
+		
+		$params = array(
+			'user_id' => $user_id,
+		);
+		
+		$this->query($sql, $params);
+		
+		App::import('Model', 'Record');
+		$this->Record = new Record();
+		$this->Record->deleteAll(array('Record.user_id' => $user_id), false);
+	}
 }

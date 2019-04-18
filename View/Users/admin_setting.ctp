@@ -1,5 +1,5 @@
 <?php echo $this->element('admin_menu');?>
-<div class="users form">
+<div class="admin-users-setting">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			設定
@@ -8,14 +8,14 @@
 			<?php
 				echo $this->Form->create('User', Configure::read('form_defaults'));
 				echo $this->Form->input('User.new_password', array(
-					'label' => 'パスワード',
+					'label' => '新しいパスワード',
 					'type' => 'password',
-					'autocomplete' => 'off'
+					'autocomplete' => 'new-password'
 				));
 				echo $this->Form->input('User.new_password2', array(
-					'label' => 'パスワード (確認用)',
+					'label' => '新しいパスワード (確認用)',
 					'type' => 'password',
-					'autocomplete' => 'off'
+					'autocomplete' => 'new-password'
 				));
 			?>
 			<div class="form-group">

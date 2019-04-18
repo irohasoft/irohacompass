@@ -1,9 +1,5 @@
 <?php echo $this->element('admin_menu');?>
-<?php $this->start('script-embedded'); ?>
-	<script>
-	</script>
-<?php $this->end(); ?>
-<div class="themes index">
+<div class="admin-themes-index">
 	<div class="ib-page-title"><?php echo __('学習テーマ一覧'); ?></div>
 	<div class="buttons_container">
 		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'add')) ?>'">+ 追加</button>

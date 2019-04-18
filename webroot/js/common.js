@@ -8,6 +8,80 @@
  */
  
 
+$(document).ready(function()
+{
+	// 一定時間経過後、メッセージを閉じる
+	setTimeout(function() {
+		$('#flashMessage').fadeOut("slow");
+	}, 1500);
+	
+	
+	setInterval('_addSec()', 1000);
+	
+	$.ajax({
+		url: URL_LOGS_ADD,
+		type: "POST",
+		data: {
+			log_type	: 'view', 
+			log_content	: '', 
+			controller	: _controller,
+			action		: _action,
+			params		: _params
+		},
+		dataType: "text",
+		success : function(response){
+			//通信成功時の処理
+			//alert(response);
+		},
+		error: function(){
+			//通信失敗時の処理
+			//alert('通信失敗');
+		}
+	});
+});
+
+$(window).on('beforeunload', function(event)
+{
+	$.ajax({
+		url: URL_LOGS_ADD,
+		type: "POST",
+		data: {
+			log_type	: 'move', 
+			log_content	: '', 
+			controller	: _controller,
+			action		: _action,
+			params		: _params,
+			sec			: _sec
+		},
+		dataType: "text",
+		success : function(response){
+			//通信成功時の処理
+			//alert(response);
+		},
+		error: function(){
+			//通信失敗時の処理
+			//alert('通信失敗');
+		}
+	});
+	
+	return;
+});
+
+function _addSec()
+{
+	_sec++;
+	
+	var $target = $('input[name="study_sec"]');
+	
+	if($target);
+	{
+		var sec = parseInt($target.val());
+		sec++;
+		$target.val(sec);
+	}
+}
+
+
 function CommonUtility() {}
 
 // リッチテキストエディタの設定
@@ -30,13 +104,23 @@ CommonUtility.prototype.setRichTextEditor = function (selector, use_upload_image
 					contentType: false,
 					processData: false,
 					success: function(url) {
-						$(selector).summernote('insertImage', JSON.parse(url)[0], 'image');
+						if(url)
+						{
+							$(selector).summernote('insertImage', JSON.parse(url)[0], 'image');
+						}
+						else
+						{
+							alert('画像のアップロードに失敗しました');
+						}
+					},
+					error: function(url) {
+						alert('通信中にエラーが発生しました');
 					}
 				});
 			},
 			onImageUploadError: function(e)
 			{
-				alert('画像のアップロードに失敗しました');
+				alert('指定されたファイルはアップロードできません');
 			}
 		}
 	});

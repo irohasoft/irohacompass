@@ -1,103 +1,5 @@
 <?php if(!$is_user) echo $this->element('admin_menu');?>
-<?php $this->start('css-embedded'); ?>
-<style type='text/css'>
-	/* 進捗一覧用 */
-	.td-reader
-	{
-		width			: 200px;
-		text-overflow	: ellipsis;
-		overflow		: hidden;
-		white-space		: nowrap;
-	}
-
-	table
-	{
-		table-layout	: fixed;
-	}
-
-	#sortable-table tbody
-	{
-		cursor			: move;
-	}
-
-	.progress-text,
-	.correct-text
-	{
-		padding			: 10px;
-		border-radius	: 6px;
-		margin-bottom	: 10px;
-		word-wrap		: break-word;
-	}
-
-	.panel-heading
-	{
-		min-height		: 36px;
-	}
-	
-	.smile-icon
-	{
-		margin-left		: 10px;
-		cursor			: pointer;
-		
-	}
-	
-	.name_display
-	{
-		display			: initial;
-		padding			: 10px;
-		color			: #337ab7;
-		font-size		: 12px;
-	}
-	
-	.btn-edit
-	{
-		margin-right	: 10px;
-	}
-
-	/* 進捗編集用 */
-	#ProgressOptionList
-	{
-		width			: 200px;
-	}
-
-	#ProgressOptionList option
-	{
-		border-top		: 2px double #ccc;
-		border-right	: 2px double #aaa;
-		border-bottom	: 2px double #aaa;
-		border-left		: 2px double #ccc;
-		color			: #444455;
-		width			: 160px;
-		margin			: 6px;
-		padding			: 5px;
-	}
-
-	input[name="data[Progress][image]"]
-	{
-		display			: inline-block;
-		width			: 85%;
-		margin-right	: 10px;
-	}
-
-	.row-body,
-	.row-irohanote,
-	.row-markdown,
-	.row-progress
-	{
-		display			: none;
-	}
-
-	.content-type-text .row-body,
-	.content-type-markdown .row-markdown,
-	.content-type-markdown .row-body,
-	.content-type-irohanote .row-irohanote,
-	.progress-type-progress .row-progress
-	{
-		display			: block;
-	}
-</style>
-<?php $this->end(); ?>
-<?php $this->start('css-embedded'); ?>
+<?php $this->start('script-embedded'); ?>
 <script>
 	var URL_UPLOAD	= '<?php echo Router::url(array('controller' => 'tasks', 'action' => 'upload', 'admin' => false))?>/file';
 	var URL_NOTE	= '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false))?>/';
@@ -235,7 +137,7 @@
 </script>
 <?php $this->end(); ?>
 
-<div class="progresses index">
+<div class="progresses-index">
 	<div class="ib-breadcrumb">
 	<?php
 		$controller = ($is_user) ? 'users_themes' : 'themes';

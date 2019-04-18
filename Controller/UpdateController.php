@@ -28,6 +28,9 @@ class UpdateController extends AppController
 		)
 	);
 	
+	/**
+	 * アップデート
+	 */
 	function index()
 	{
 		try
@@ -35,8 +38,17 @@ class UpdateController extends AppController
 			App::import('Model','ConnectionManager');
 
 			$this->db   = ConnectionManager::getDataSource('default');
-			$this->path = APP.DS.'Config'.DS.'update.sql';
-			$err_statements = $this->__executeSQLScript();
+
+			// パッケージアップデート用クエリ
+			$this->path = APP.'Config'.DS.'Schema'.DS.'update.sql';
+			$err_update = $this->__executeSQLScript();
+			
+			// カスタマイズ用クエリ
+			$this->path = APP.'Custom'.DS.'Config'.DS.'custom.sql';
+			$err_custom = $this->__executeSQLScript();
+			
+			$err_statements = array_merge($err_update, $err_custom);
+			
 			
 			if(count($err_statements) > 0)
 			{
@@ -62,6 +74,9 @@ class UpdateController extends AppController
 		}
 	}
 	
+	/**
+	 * アップデートエラーメッセージを表示
+	 */
 	function error()
 	{
 		$this->set('loginURL', "/users/login/");
@@ -69,6 +84,9 @@ class UpdateController extends AppController
 		$this->set('body', $this->err_msg);
 	}
 	
+	/**
+	 * update.sql のクエリを実行
+	 */
 	private function __executeSQLScript()
 	{
 		$statements = file_get_contents($this->path);

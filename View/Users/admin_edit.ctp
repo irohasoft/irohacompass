@@ -6,21 +6,23 @@
 		$('#GroupGroup').select2({placeholder:   "所属するグループを選択して下さい。(複数選択可)", closeOnSelect: <?php echo (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
 		$('#ThemeTheme').select2({placeholder: "利用する学習テーマを選択して下さい。(複数選択可)", closeOnSelect: <?php echo (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
 		// パスワードの自動復元を防止
-		setTimeout('$("#UserNewPassword").val("");',100);
+		setTimeout('$("#UserNewPassword").val("");', 500);
 	});
 <?php $this->Html->scriptEnd(); ?>
-<div class="users form">
+<div class="admin-users-edit">
 <?php echo $this->Html->link(__('<< 戻る'), array('action' => 'index'))?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<?php echo ($this->action == 'admin_edit') ? __('編集') :  __('新規ユーザ'); ?>
+			<?php echo ($this->request->data) ? __('編集') :  __('新規ユーザ'); ?>
 		</div>
 		<div class="panel-body">
 			<?php echo $this->Form->create('User', Configure::read('form_defaults')); ?>
 			<?php
+				$password_label = ($this->request->data) ? __('新しいパスワード') : __('パスワード');
+				
 				echo $this->Form->input('id');
 				echo $this->Form->input('username',				array('label' => 'ログインID'));
-				echo $this->Form->input('User.new_password',	array('label' => 'パスワード', 'type' => 'password', 'autocomplete' => 'off'));
+				echo $this->Form->input('User.new_password',	array('label' => $password_label, 'type' => 'password', 'autocomplete' => 'new-password'));
 				echo $this->Form->input('name',					array('label' => '氏名'));
 				
 				// root アカウント、もしくは admin 権限以外の場合、権限変更を許可しない

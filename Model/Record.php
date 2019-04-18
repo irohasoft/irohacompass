@@ -147,7 +147,7 @@ class Record extends AppModel
 				'task_id' => $record['task_id']
 			);
 			$data = $this->query($sql, $params);
-			debug($data);
+			//debug($data);
 			
 			$task_rate	= $data[0][0]["task_rate"];
 			$status		= $data[0]['ib_tasks']["status"];

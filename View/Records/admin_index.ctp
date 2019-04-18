@@ -1,79 +1,4 @@
 <?php echo $this->element('admin_menu');?>
-<?php $this->start('css-embedded'); ?>
-<style type='text/css'>
-#RecordFromDateYear,
-#RecordToDateYear
-{
-	width		: 100px;
-}
-
-#RecordFromDateMonth,
-#RecordToDateMonth,
-#RecordFromDateDay,
-#RecordToDateDay
-{
-	width		: 80px;
-}
-
-#RecordThemeId
-{
-	max-width	: 200px;
-}
-
-#RecordGroupId
-{
-	max-width	: 150px;
-}
-
-#RecordUserId
-{
-	max-width	: 120px;
-}
-
-input[type='text'], textarea,
-.form-control, 
-label
-{
-	font-size	: 12px;
-	font-weight	: normal;
-	height		: 30px;
-	padding		: 4px;
-}
-
-.ib-search-buttons
-{
-	float		: right;
-}
-
-.ib-search-buttons .btn
-{
-	margin-right: 10px;
-}
-
-table tr td
-{
-	padding		: 5px;
-}
-
-.ib-row
-{
-	width: 100%;
-	height: 40px;
-}
-
-.modal-dialog
-{
-min-width:  800px;
-}
-
-.modal-frame
-{
-	width: 100%;
-	border: none;
-	height: 500px;
-}
-</style>
-<?php $this->end(); ?>
 <?php $this->start('script-embedded'); ?>
 <script>
 	function openRecord(theme_id, user_id)
@@ -110,7 +35,7 @@ min-width:  800px;
 	}
 </script>
 <?php $this->end(); ?>
-<div class="records index">
+<div class="admin-records-index">
 	<div class="ib-page-title"><?php echo __('進捗一覧'); ?></div>
 	<div class="ib-horizontal">
 		<?php
@@ -163,8 +88,8 @@ min-width:  800px;
 	<thead>
 	<tr>
 		<th nowrap><?php echo $this->Paginator->sort('theme_id', '学習テーマ'); ?></th>
-		<th nowrap><?php echo $this->Paginator->sort('content_id', '課題'); ?></th>
-		<th nowrap><?php echo $this->Paginator->sort('user_id', '氏名'); ?></th>
+		<th nowrap><?php echo $this->Paginator->sort('task_id', '課題'); ?></th>
+		<th nowrap><?php echo $this->Paginator->sort('User.name', '氏名'); ?></th>
 		<th nowrap class="ib-col-center"><?php echo $this->Paginator->sort('rate', '進捗率'); ?></th>
 		<th nowrap class="ib-col-center"><?php echo $this->Paginator->sort('theme_rate', '進捗率(全体)'); ?></th>
 		<th nowrap class="ib-col-center"><?php echo $this->Paginator->sort('is_complete', '完了'); ?></th>

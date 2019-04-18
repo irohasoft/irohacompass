@@ -31,10 +31,9 @@ class InstallController extends AppController
 			)
 	);
 	
-	function beforeFilter()
-	{
-	}
-	
+	/**
+	 * インストール
+	 */
 	function index()
 	{
 		try
@@ -48,6 +47,50 @@ class InstallController extends AppController
 			$sql = "SHOW TABLES FROM `".$cdd->default['database']."` LIKE 'ib_users'";
 			$data = $this->db->query($sql);
 			
+			// apache_get_modules が存在する場合のみ、Apache のモジュールチェックを行う
+			if (function_exists('apache_get_modules'))
+			{
+				// mod_rewrite 存在チェック
+				if(!$this->__apache_module_loaded('mod_rewrite'))
+				{
+					// エラー出力
+					$this->err_msg = 'Apache モジュール mod_rewrite がロードされていません';
+					$this->error();
+					$this->render('error');
+					return;
+				}
+				
+				// mod_headers 存在チェック
+				if(!$this->__apache_module_loaded('mod_headers'))
+				{
+					// エラー出力
+					$this->err_msg = 'Apache モジュール mod_headers がロードされていません';
+					$this->error();
+					$this->render('error');
+					return;
+				}
+			}
+			
+			// mbstring 存在チェック
+			if(!extension_loaded('mbstring'))
+			{
+				// エラー出力
+				$this->err_msg = 'PHP モジュール mbstring がロードされていません';
+				$this->error();
+				$this->render('error');
+				return;
+			}
+			
+			// pdo_mysql 存在チェック
+			if(!extension_loaded('pdo_mysql'))
+			{
+				// エラー出力
+				$this->err_msg = 'PHP モジュール pdo_mysql がロードされていません';
+				$this->error();
+				$this->render('error');
+				return;
+			}
+			
 			// ユーザテーブルが存在する場合、インストール済みと判断
 			if (count($data) > 0)
 			{
@@ -56,7 +99,7 @@ class InstallController extends AppController
 			else
 			{
 				// 各種テーブルの作成
-				$this->path = APP.DS.'Config'.DS.'app.sql';
+				$this->path = APP.'Config'.DS.'Schema'.DS.'app.sql';
 				$err_statements = $this->__executeSQLScript();
 				
 				// クエリ実行中にエラーが発生した場合、ログファイルにエラー内容を記録
@@ -69,7 +112,7 @@ class InstallController extends AppController
 						$err .= $err."\n";
 					}
 					
-					// デバッグログ
+					// エラー出力
 					$this->log($err);
 					$this->error();
 					$this->render('error');
@@ -93,18 +136,27 @@ class InstallController extends AppController
 		}
 	}
 	
+	/**
+	 * インストール済みメッセージを表示
+	 */
 	function installed()
 	{
 		$this->set('loginURL', "/users/login/");
 		$this->set('loginedUser', $this->Auth->user());
 	}
 	
+	/**
+	 * インストール完了メッセージを表示
+	 */
 	function complete()
 	{
 		$this->set('loginURL', "/users/login/");
 		$this->set('loginedUser', $this->Auth->user());
 	}
 	
+	/**
+	 * インストールエラーメッセージを表示
+	 */
 	function error()
 	{
 		$this->set('loginURL', "/users/login/");
@@ -112,13 +164,9 @@ class InstallController extends AppController
 		$this->set('body', $this->err_msg);
 	}
 	
-	private function __createTables()
-	{
-		App::import('Model','ConnectionManager');
-		$this->db   = ConnectionManager::getDataSource('default');
-		return (count($err_statements) == 0);
-	}
-	
+	/**
+	 * app.sql のクエリの実行
+	 */
 	private function __executeSQLScript()
 	{
 		$statements = file_get_contents($this->path);
@@ -152,6 +200,9 @@ class InstallController extends AppController
 		return $err_statements;
 	}
 	
+	/**
+	 * rootアカウントの作成
+	 */
 	private function __createRootAccount()
 	{
 		// 管理者アカウントの存在確認
@@ -178,6 +229,19 @@ class InstallController extends AppController
 
 			$this->User->save($data);
 		}
+	}
+	
+	private function __apache_module_loaded($module_name)
+	{
+		$modules = apache_get_modules();
+		
+		foreach($modules as $module)
+		{
+			if($module == $module_name)
+				return true;
+		}
+		
+		return false;
 	}
 }
 ?>

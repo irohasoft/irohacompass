@@ -20,6 +20,9 @@ class GroupsController extends AppController
 		),
 	);
 
+	/**
+	 * グループ一覧を表示
+	 */
 	public function admin_index()
 	{
 		$this->Group->recursive = 0;
@@ -39,15 +42,22 @@ class GroupsController extends AppController
 		$this->set('groups', $this->Paginator->paginate());
 	}
 
+	/**
+	 * グループの追加
+	 */
 	public function admin_add()
 	{
 		$this->admin_edit();
 		$this->render('admin_edit');
 	}
 
-	public function admin_edit($id = null)
+	/**
+	 * グループの編集
+	 * @param int $group_id 編集するグループのID
+	 */
+	public function admin_edit($group_id = null)
 	{
-		if ($this->action == 'edit' && ! $this->Group->exists($id))
+		if ($this->action == 'edit' && ! $this->Group->exists($group_id))
 		{
 			throw new NotFoundException(__('Invalid group'));
 		}
@@ -72,7 +82,7 @@ class GroupsController extends AppController
 		{
 			$options = array(
 					'conditions' => array(
-							'Group.' . $this->Group->primaryKey => $id
+					'Group.' . $this->Group->primaryKey => $group_id
 					)
 			);
 			$this->request->data = $this->Group->find('first', $options);
@@ -84,9 +94,13 @@ class GroupsController extends AppController
 		$this->set(compact('themes', 'users'));
 	}
 
-	public function admin_delete($id = null)
+	/**
+	 * グループの削除
+	 * @param int $group_id 削除するグループのID
+	 */
+	public function admin_delete($group_id = null)
 	{
-		$this->Group->id = $id;
+		$this->Group->id = $group_id;
 		if (! $this->Group->exists())
 		{
 			throw new NotFoundException(__('Invalid group'));

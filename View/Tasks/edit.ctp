@@ -1,22 +1,6 @@
 <?php if(!$is_user) echo $this->element('admin_menu');?>
 <?php $this->start('css-embedded'); ?>
 <?php echo $this->Html->css('summernote.css');?>
-<style type='text/css'>
-	input[name="data[Task][url]"]
-	{
-		display:inline-block;
-		margin-right:10px;
-	}
-	label span
-	{
-		font-weight: normal;
-	}
-	
-	.date
-	{
-		width		: 100px;
-	}
-</style>
 <?php $this->end(); ?>
 <?php $this->start('script-embedded'); ?>
 <?php echo $this->Html->script('summernote.min.js');?>
@@ -88,7 +72,7 @@ $rate_list = array(
 	'100' => '100%',
 );
 ?>
-<div class="tasks form">
+<div class="tasks-edit">
 	<?php
 		$controller = ($is_user) ? 'users_themes' : 'themes';
 		

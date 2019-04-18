@@ -77,12 +77,26 @@ class Info extends AppModel
 	 		)
 	);
 	
+	/**
+	 * お知らせ一覧を取得（エイリアス）
+	 * 
+	 * @param int $user_id ユーザID
+	 * @param int $limit 取得件数
+	 * @return array お知らせ一覧
+	 */
 	public function getInfos($user_id, $limit = null)
 	{
 		$infos = $this->find('all', $this->getInfoOption($user_id, $limit));
 		return $infos;
 	}
 	
+	/**
+	 * お知らせ一覧を取得
+	 * 
+	 * @param int $user_id ユーザID
+	 * @param int $limit 取得件数
+	 * @return array お知らせ一覧
+	 */
 	public function getInfoOption($user_id, $limit = null)
 	{
 		App::import('Model', 'UsersGroup');
@@ -94,7 +108,7 @@ class Info extends AppModel
 			)
 		));
 		
-		// �������g����������O���[�v��ID�̔z����쐬
+		// 自分自身が所属するグループのIDの配列を作成
 		$group_id_list = array();
 		
 		foreach ($groups as $group)
@@ -103,7 +117,7 @@ class Info extends AppModel
 		}
 		
 		$option = array(
-			'fields' => array('*', 'InfoGroup.group_id'),
+			'fields' => array('Info.id', 'Info.title', 'Info.created'),
 			'conditions' => array('OR' => array(
 				array('InfoGroup.group_id' => null), 
 				array('InfoGroup.group_id' => $group_id_list)
@@ -116,7 +130,7 @@ class Info extends AppModel
 					'conditions' => 'Info.id = InfoGroup.info_id'
 				),
 			),
-			'group' => array('Info.id'),
+			'group' => array('Info.id', 'Info.title', 'Info.created'),
 			'order' => array('Info.created' => 'desc'),
 		);
 		

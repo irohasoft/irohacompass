@@ -15,7 +15,7 @@
 		location.replace('https://'+window.location.host+window.location.pathname);
 	}
 <?php $this->Html->scriptEnd(); ?>
-<div class="users form">
+<div class="admin-users-login">
 	<div class="panel panel-default form-signin">
 		<div class="panel-heading">
 			管理者ログイン
