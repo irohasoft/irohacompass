@@ -277,7 +277,7 @@
 	<div class="ib-page-title"><?php echo __('進捗一覧'); ?></div>
 	
 	<div class="buttons_container">
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'index', $content['Task']['id'])) ?>#edit'">+ 追加</button>
+		<button type="button" class="btn btn-primary btn-add" onclick="$('html, body').animate({scrollTop: ($(document).height()-1050)},800);">+ 追加</button>
 	</div>
 	
 	<?php if(count($progresses) > 0) {?>
@@ -473,7 +473,7 @@
 				
 				foreach(Configure::read('emotion_icons') as $key => $value)
 				{
-					$emotion_icons[$key] = $this->Html->image($value, array('width' => 60));
+					$emotion_icons[$key] = $this->Html->image($value, array('width' => 40));
 				}
 				
 				if(Configure::read('use_emotion_icon'))
@@ -486,7 +486,6 @@
 						'legend' => false,
 						'class' => false,
 						'options' => $emotion_icons,
-						'default' => 'normal'
 						)
 					);
 				}
