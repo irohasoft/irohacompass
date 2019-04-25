@@ -82,8 +82,9 @@ class ThemesController extends AppController
 			if(Configure::read('demo_mode'))
 				return;
 			
-			// 作成者を設定
-			$this->request->data['Theme']['user_id'] = $this->Session->read('Auth.User.id');
+			// 所有者が指定されていない場合のみ、ログインユーザを所有者に設定
+			if(!$this->request->data['Theme']['user_id'])
+				$this->request->data['Theme']['user_id'] = $this->Session->read('Auth.User.id');
 			
 			if ($this->Theme->save($this->request->data))
 			{
