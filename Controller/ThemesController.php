@@ -139,7 +139,8 @@ class ThemesController extends AppController
 			$this->request->data = $this->Theme->find('first', $options);
 		}
 		
-		$this->set(compact('is_user'));
+		$users = $this->Theme->User->find('list');
+		$this->set(compact('is_user', 'users'));
 	}
 
 	public function admin_delete($id = null)

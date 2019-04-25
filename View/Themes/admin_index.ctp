@@ -9,7 +9,7 @@
 	<thead>
 	<tr>
 		<th><?php echo $this->Paginator->sort('Theme.title', __('学習テーマ名')); ?></th>
-		<th class="ib-col-datetime"><?php echo $this->Paginator->sort('User.name', __('作成者')); ?></th>
+		<th class="ib-col-datetime"><?php echo $this->Paginator->sort('User.name', __('所有者')); ?></th>
 		<th class="ib-col-datetime"><?php echo $this->Paginator->sort('Theme.created', __('作成日時')); ?></th>
 		<th class="ib-col-datetime"><?php echo $this->Paginator->sort('Theme.modified', __('更新日時')); ?></th>
 		<th class="ib-col-action"><?php echo __('Actions'); ?></th>

@@ -1,9 +1,4 @@
 <?php if(!$is_user) echo $this->element('admin_menu');?>
-<?php $this->start('css-embedded'); ?>
-<style type='text/css'>
-
-</style>
-<?php $this->end(); ?>
 <?php $this->start('script-embedded'); ?>
 <script>
 	var URL_NOTE	= '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false))?>/';
@@ -64,6 +59,14 @@
 					'div' => 'form-group row-body',
 					)
 				);
+				
+				if(!$is_user)
+				{
+					echo $this->Form->input('user_id', array(
+						'label' => '所有者',
+					));
+				}
+				
 				Utils::writeFormGroup('', '※ <a href="https://ja.wikipedia.org/wiki/Markdown" target="_blank">Markdown 形式</a> で記述可能です。', false, 'row-markdown');
 				
 				if(Configure::read('use_irohanote'))
