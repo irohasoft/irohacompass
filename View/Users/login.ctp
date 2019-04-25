@@ -1,20 +1,3 @@
-<?php $this->Html->scriptStart(array('inline' => false)); ?>
-	switch(window.location.host)
-	{
-		case 'yuizono.irohasoft.com':
-		{
-			is_target = true;
-		}
-	}
-	
-	if (
-		(is_target)&&
-		(document.location.protocol==="http:")
-	)
-	{
-		location.replace('https://'+window.location.host+window.location.pathname);
-	}
-<?php $this->Html->scriptEnd(); ?>
 <div class="users-login">
 	<div class="panel panel-info form-signin">
 		<div class="panel-heading">

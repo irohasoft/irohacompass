@@ -7,8 +7,6 @@
  * @link          http://irohacompass.irohasoft.jp
  * @license       http://www.gnu.org/licenses/gpl-3.0.en.html GPL License
  */
-
-//$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
 ?>
 <!DOCTYPE html>
 <html>
@@ -68,7 +66,7 @@
 	var _controller		= '<?php echo $this->params['controller'] ?>';
 	var _action			= '<?php echo $this->params['action'] ?>';
 	var _params			= '<?php echo join(',', $this->params['pass']) ?>';
-	var _sec		= 0;
+	var _sec			= 0;
 	var URL_LOGS_ADD	= '<?php echo Router::url(array('controller' => 'logs', 'action' => 'add')) ?>';
 	</script>
 	<style>

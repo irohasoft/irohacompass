@@ -107,6 +107,9 @@ $config['use_irohanote']	= true;
 // 感情アイコンを使用する
 $config['use_emotion_icon']	= false;
 
+// スマイル機能を使用する
+$config['use_smile']		= false;
+
 // デモモード (true ; 設定する, false : 設定しない)
 //$config['demo_mode'] = true;
 $config['demo_mode'] = false;

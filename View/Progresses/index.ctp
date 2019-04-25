@@ -263,15 +263,18 @@
 			}
 			
 			// スマイル機能
-			$image_file = ($progress['is_smiled']) ? 'smile-on.png' : 'smile-off.png';
-			
-			echo $this->Html->image($image_file, array(
-				'width'		=> 40, 
-				'class'		=>'smile-icon smile-icon-'.$progress['Progress']['id'], 
-				'onclick'	=>'smile('.$progress['Progress']['id'].');',
-				'title'		=>'スマイルする', 
-			));
-			echo '<div class="name_display">'.$progress['name_display'].'</div>';
+			if(Configure::read('use_smile'))
+			{
+				$image_file = ($progress['is_smiled']) ? 'smile-on.png' : 'smile-off.png';
+				
+				echo $this->Html->image($image_file, array(
+					'width'		=> 40, 
+					'class'		=>'smile-icon smile-icon-'.$progress['Progress']['id'], 
+					'onclick'	=>'smile('.$progress['Progress']['id'].');',
+					'title'		=>'スマイルする', 
+				));
+				echo '<div class="name_display">'.$progress['name_display'].'</div>';
+			}
 			?>
 			</div>
 		</div>
