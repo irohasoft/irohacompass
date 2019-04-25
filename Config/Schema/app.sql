@@ -291,6 +291,20 @@ CREATE TABLE `ib_groups` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- ----------------------------
+-- Table structure for ib_smiles
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ib_smiles` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `user_id` int(8) NOT NULL DEFAULT '0',
+  `progress_id` int(8) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_smiles_user_progress` (`user_id`,`progress_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 -- ----------------------------
 -- Table structure for ib_links
 -- ----------------------------
