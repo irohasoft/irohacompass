@@ -159,7 +159,7 @@ class Record extends AppModel
 			'task_id'		=> $record['task_id'],
 			'study_sec'		=> $record['study_sec'],
 			'rate'			=> $task_rate,
-			'emotion_icon'	=> $record['emotion_icon'],
+			'emotion_icon'	=> @$record['emotion_icon'],
 			'theme_rate'	=> $theme_rate,
 			'record_type'	=> $record['record_type'],
 			'is_complete'	=> $status
