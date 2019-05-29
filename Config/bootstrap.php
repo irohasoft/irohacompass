@@ -125,6 +125,8 @@ CakeLog::config('error', array(
 Configure::load("ib_config");
 
 // カスタマイズ用設定ファイルをロード
-Configure::config('default', new PhpReader(APP.'Custom'.DS.'Config'.DS));
-Configure::load("config");
-
+if(file_exists(APP.'Custom'.DS.'Config'.DS.'config.php'))
+{
+	Configure::config('default', new PhpReader(APP.'Custom'.DS.'Config'.DS));
+	Configure::load("config");
+}
