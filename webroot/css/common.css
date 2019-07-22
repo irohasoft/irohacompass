@@ -434,6 +434,14 @@ form .required .control-label:after
 	overflow		: hidden;
 }
 
+.install-index p.msg,
+.install-installed p.msg,
+.install-complete p.msg,
+.install-error p.msg
+{
+	margin:10px;
+}
+
 /* スマートフォン用 */
 @media only screen and (max-width:800px)
 {
