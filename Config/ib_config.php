@@ -102,7 +102,13 @@ $config['close_on_select'] = true;
 $config['use_upload_image'] = true;
 
 // iroha Note を使用する
-$config['use_irohanote']	= true;
+$config['use_irohanote']	= false;
+
+// iroha Note を使用しない場合、選択肢からも削除
+if(!$config['use_irohanote'])
+{
+	unset($config['content_type']['irohanote']);
+}
 
 // 感情アイコンを使用する
 $config['use_emotion_icon']	= false;
@@ -115,9 +121,9 @@ $config['use_smile']		= false;
 $config['demo_mode'] = false;
 
 // デモユーザのログインIDとパスワード
-$config['demo_login_id'] = "demo001";
-$config['demo_password'] = "pass";
-$config['demo_target_date'] = "2018/12/17";
+$config['demo_login_id']	= "demo001";
+$config['demo_password']	= "pass";
+$config['demo_target_date']	= "2018/12/17";
 
 // フォームのスタイル(BoostCake)の基本設定
 $config['form_defaults'] = array(
