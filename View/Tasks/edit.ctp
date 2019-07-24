@@ -132,7 +132,7 @@ $rate_list = array(
 				
 				if(Configure::read('use_irohanote'))
 				{
-					Utils::writeFormGroup('マップ', 
+					Utils::writeFormGroup('アイデアマップ', 
 						'<iframe id="fraIrohaNote" width="100%" height="400"></iframe>'.
 						false, 'row-irohanote');
 				}
