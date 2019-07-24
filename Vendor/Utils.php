@@ -72,6 +72,9 @@ class Utils
 		if(!$page_id)
 			return '';
 		
+		if(!Configure::read('use_irohanote'))
+			return '';
+		
 		$url = FULL_BASE_URL.'/notes/page/'.$page_id;
 		
 		$tag = 
