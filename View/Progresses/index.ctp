@@ -191,7 +191,7 @@
 		<a href="#">　▼ ページの下へ</a>　
 	</span>
 	並べ替え：
-	<span class="sort-item"><?php echo $this->Paginator->sort('created', '作成日時'); ?></span>
+	<span class="sort-item"><?php echo $this->Paginator->sort('created', '作成日時', array('direction' => 'desc')); ?></span>
 	<?php }?>
 	
 	<?php foreach ($progresses as $progress): ?>
