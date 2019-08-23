@@ -179,13 +179,19 @@
 	<div class="ib-page-title"><?php echo __('進捗一覧'); ?></div>
 	
 	<div class="buttons_container">
+		<?php if($is_add) {?>
 		<button type="button" class="btn btn-primary btn-add" onclick="$('html, body').animate({scrollTop: ($(document).height()-1050)},800);">+ 追加</button>
+		<?php } else {?>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'index', $content['Task']['id']));?>#edit'">+ 追加</button>
+		<?php }?>
 	</div>
 	
 	<?php if(count($progresses) > 0) {?>
-	<div onclick="$('html, body').animate({scrollTop: $(document).height()},800);">
-	<a href="#">　▼ ページの下へ</a>
-	</div>
+	<span onclick="$('html, body').animate({scrollTop: $(document).height()},800);">
+		<a href="#">　▼ ページの下へ</a>　
+	</span>
+	並べ替え：
+	<span class="sort-item"><?php echo $this->Paginator->sort('created', '作成日時'); ?></span>
 	<?php }?>
 	
 	<?php foreach ($progresses as $progress): ?>
@@ -249,9 +255,12 @@
 			// 自分の進捗のみ編集、削除可能とする
 			if($progress['User']['id']==$loginedUser['id'])
 			{
+				$sort_key	= ($this->request->params['named']) ? 'sort:'.$this->request->params['named']['sort'] : '';
+				$direction	= ($this->request->params['named']) ? 'direction:'.$this->request->params['named']['direction'] : '';
+				
 				echo $this->Form->button('編集', array(
 					'class'		=> 'btn btn-success btn-edit',
-					'onclick'	=> "location.href='".Router::url(array('action' => 'index', $progress['Task']['id'], $progress['Progress']['id']))."#edit'",
+					'onclick'	=> "location.href='".Router::url(array('action' => 'index', $progress['Task']['id'], $progress['Progress']['id'], $sort_key, $direction))."#edit'",
 				));
 				
 				echo $this->Form->postLink(__('削除'), 
@@ -285,9 +294,9 @@
 	<?php 
 	?>
 	<a name="edit"></a>
-	<div class="panel panel-default">
+	<div class="panel <?php echo ($is_add) ? 'panel-default' :  'panel-danger'; ?>">
 		<div class="panel-heading">
-			<?php echo (!$is_add) ? __('編集') :  __('新規'); ?>
+			<?php echo (!$is_add) ? __('編集') :  __('新規追加'); ?>
 		</div>
 		<div class="panel-body">
 			<?php echo $this->Form->create('Progress', Configure::read('form_defaults')); ?>

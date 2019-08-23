@@ -33,12 +33,26 @@ class ProgressesController extends AppController
 	public function index($task_id, $progress_id = null)
 	{
 		//$this->Progress->recursive = 0;
+		/*
 		$progresses = $this->Progress->find('all', array(
 			'conditions' => array(
 				'task_id' => $task_id
 			),
 			'order' => array('Progress.created' => 'asc')
 		));
+		*/
+		
+		$this->Paginator->settings = array(
+			'limit' => 100,
+			'order' => 'Progress.modified asc',
+			'conditions' => array(
+				'task_id' => $task_id
+			),
+		);
+		
+		//debug($this->request->params);
+		
+		$progresses = $this->paginate();
 		
 		// 管理者以外の場合、コンテンツの閲覧権限の確認
 		if($this->Session->read('Auth.User.role') != 'admin')

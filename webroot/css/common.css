@@ -442,6 +442,16 @@ form .required .control-label:after
 	margin:10px;
 }
 
+.sort-item a.asc:after
+{
+	content			: ' ▼';
+}
+
+.sort-item a.desc:after
+{
+	content			: ' ▲';
+}
+
 /* スマートフォン用 */
 @media only screen and (max-width:800px)
 {
