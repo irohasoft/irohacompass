@@ -109,9 +109,11 @@ class ProgressesController extends AppController
 				'conditions'	=> array(
 					'User.id'	=> $smiled_ids
 				),
+				'group' => array('User.id')
 			));
+			
 			// スマイルした名前を表示
-			$progresses[$i]['name_display']	= $user[0]['name_display'];
+			$progresses[$i]['name_display']	= @$user[0]['name_display'];
 			// 自分自身がスマイルしたかどうか
 			$progresses[$i]['is_smiled']	= $is_smiled;
 		}
@@ -203,11 +205,11 @@ class ProgressesController extends AppController
 		
 		// 課題の更新日時を更新
 		$this->Task->id = $task_id;
-		$this->Task->saveField('modified', date(DATE_ATOM));
+		$this->Task->saveField('modified', date(date('Y-m-d H:i:s')));
 		
 		// 学習テーマの更新日時を更新
 		$this->Task->Theme->id = $task['Theme']['id'];
-		$this->Task->Theme->saveField('modified', date(DATE_ATOM));
+		$this->Task->Theme->saveField('modified', date(date('Y-m-d H:i:s')));
 		
 		if(@$this->request->data['is_mail']=='on')
 		{

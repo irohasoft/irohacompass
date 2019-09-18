@@ -54,7 +54,7 @@ class LogsController extends AppController {
 			{
 				$this->loadModel('User');
 				$this->User->id = $this->Auth->user('id');
-				$this->User->saveField('last_accessed', date(DATE_ATOM));
+				$this->User->saveField('last_accessed', date(date('Y-m-d H:i:s')));
 			}
 			
 			return "OK";

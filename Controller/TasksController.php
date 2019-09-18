@@ -361,7 +361,7 @@ class TasksController extends AppController
 				));
 				// 学習テーマの更新日時を更新
 				$this->Task->Theme->id = $theme_id;
-				$this->Task->Theme->saveField('modified', date(DATE_ATOM));
+				$this->Task->Theme->saveField('modified', date(date('Y-m-d H:i:s')));
 				
 				$this->Flash->success(__('課題内容が保存されました'));
 				
