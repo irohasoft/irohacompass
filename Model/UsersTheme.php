@@ -88,14 +88,10 @@ EOF;
 	}
 
 
-	public function getMailList($user_id, $theme_id)
+	public function getMailList($theme_id)
 	{
 		$sql = <<<EOF
-SELECT email
-  FROM ib_users
- WHERE role = 'admin' AND LENGTH(email) > 5
-UNION
-SELECT u.email as email
+SELECT u.email as email, u.role as role
   FROM ib_users_themes uc
  INNER JOIN ib_themes c ON uc.theme_id = c.id
  INNER JOIN ib_users u ON uc.user_id = u.id
@@ -108,7 +104,9 @@ EOF;
 		
 		for($i=0; $i< count($data); $i++)
 		{
-			$list[$i] = $data[$i][0]['email'];
+			$list[$i] = array();
+			$list[$i]['role']  = $data[$i]['u']['role'];
+			$list[$i]['email'] = $data[$i]['u']['email'];
 		}
 		
 		return $list;

@@ -211,35 +211,40 @@ class ProgressesController extends AppController
 		$this->Task->Theme->id = $task['Theme']['id'];
 		$this->Task->Theme->saveField('modified', date(date('Y-m-d H:i:s')));
 		
+		// メール通知がオンの場合
 		if(@$this->request->data['is_mail']=='on')
 		{
 			$this->loadModel('UsersTheme');
 			
 			// 学習テーマに紐づくユーザのメールアドレスを取得
-			$list = $this->UsersTheme->getMailList($this->Session->read('Auth.User.id'), $task['Theme']['id']);
+			$list = $this->UsersTheme->getMailList($task['Theme']['id']);
 			
 			$admin_from	= Configure :: read('admin_from');
 			$mail_title	= Configure :: read('mail_title');
-			$url = Router::url(array('controller' => 'users', 'action' => 'login'), true);
 			
-			$params = array(
-				'name'			=> $this->Session->read('Auth.User.name'),
-				'theme_title'	=> $task['Theme']['title'],
-				'content_title'	=> $task['Task']['title'],
-				'record_type'	=> Configure::read('record_type.'.$record_type),
-				'url'			=> $url,
-			);
-			
-			// メールの送信
 			foreach ($list as $item)
 			{
+				// 管理者か学習者かによってURLを変更
+				$url = Router::url(array('controller' => 'progresses', 'action' => 'index', $task_id, 'admin' => ($item['role']=='admin')), true);
+				
+				$params = array(
+					'name'			=> $this->Session->read('Auth.User.name'),
+					'theme_title'	=> $task['Theme']['title'],
+					'content_title'	=> $task['Task']['title'],
+					'record_type'	=> Configure::read('record_type.'.$record_type),
+					'url'			=> $url,
+				);
+				
+				// メールの送信
 				$mail = new CakeEmail();
 				$mail->from($admin_from);
-				$mail->to($item);
+				$mail->to($item['email']);
 				$mail->subject($mail_title);
 				$mail->template('update');
 				$mail->viewVars($params);
 				$mail->send();
+				
+				$this->writeLog('mail_sent', $item['email'], 'progresses', 'index', $task_id);
 			}
 		}
 	}
