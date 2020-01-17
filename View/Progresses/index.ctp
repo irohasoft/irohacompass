@@ -405,10 +405,22 @@
 				}
 				
 				echo $this->Form->hidden('file_name', array('class' => 'form-control-filename'));
+				
+				
+				// メール通知対象リスト
+				$mail_target = '';
+				
+				foreach($mail_list as $item)
+				{
+					if($mail_target!='')
+						$mail_target .= ', ';
+					
+					$mail_target .= str_replace(',', '', $item['name']);
+				}
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">
-					<p> ※ 学習テーマの関係者に更新が発生した旨を通知します<br><input name="is_mail" type="checkbox">&nbsp;メール通知</p>
+					<p> ※ 学習テーマの所有者・関係者・管理者 (<?php echo $mail_target; ?>) に更新が発生した旨を通知します<br><input name="is_mail" type="checkbox">&nbsp;メール通知</p>
 				</div>
 				<div class="col col-sm-9 col-sm-offset-3">
 					<?php echo $this->Form->submit(($is_add) ? __('追加') :  __('保存'), Configure::read('form_submit_defaults')); ?>

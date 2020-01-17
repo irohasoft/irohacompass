@@ -162,7 +162,13 @@ class ProgressesController extends AppController
 			$this->request->data = $this->Progress->find('first', $options);
 		}
 		
-		$this->set(compact('content', 'progresses', 'is_record', 'is_admin', 'is_add', 'is_user'));
+		
+		// 学習テーマに紐づくユーザを取得
+		$this->loadModel('UsersTheme');
+		$mail_list = $this->UsersTheme->getMailList($content['Theme']['id']);
+		//debug($list);
+		
+		$this->set(compact('content', 'progresses', 'mail_list', 'is_record', 'is_admin', 'is_add', 'is_user'));
 	}
 	
 	private function __save_record($task_id, $progress_id)
@@ -228,12 +234,15 @@ class ProgressesController extends AppController
 				$url = Router::url(array('controller' => 'progresses', 'action' => 'index', $task_id, 'admin' => ($item['role']=='admin')), true);
 				
 				$params = array(
-					'name'			=> $this->Session->read('Auth.User.name'),
+					'name'			=> $item['name'],
 					'theme_title'	=> $task['Theme']['title'],
 					'content_title'	=> $task['Task']['title'],
 					'record_type'	=> Configure::read('record_type.'.$record_type),
 					'url'			=> $url,
+					'updater'		=> $this->Auth->user('name'),
 				);
+				
+				//debug($params);
 				
 				// メールの送信
 				$mail = new CakeEmail();

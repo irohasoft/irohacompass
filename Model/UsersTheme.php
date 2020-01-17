@@ -91,7 +91,19 @@ EOF;
 	public function getMailList($theme_id)
 	{
 		$sql = <<<EOF
-SELECT u.email as email, u.role as role
+#学習テーマの所有者
+SELECT u.email, u.name, u.role
+  FROM ib_themes t
+ INNER JOIN ib_users u ON t.user_id = u.id
+ WHERE t.id = :theme_id AND LENGTH(u.email) > 5
+UNION
+#管理者
+SELECT email, name, role
+  FROM ib_users
+ WHERE role = 'admin' AND LENGTH(email) > 5
+UNION
+#学習テーマの関係者
+SELECT u.email as email, u.name as name, u.role as role
   FROM ib_users_themes uc
  INNER JOIN ib_themes c ON uc.theme_id = c.id
  INNER JOIN ib_users u ON uc.user_id = u.id
@@ -100,15 +112,13 @@ EOF;
 		$params = array('theme_id' => $theme_id);
 		$data = $this->query($sql, $params);
 		
+		//debug($data);
 		$list = array();
 		
 		for($i=0; $i< count($data); $i++)
 		{
-			$list[$i] = array();
-			$list[$i]['role']  = $data[$i]['u']['role'];
-			$list[$i]['email'] = $data[$i]['u']['email'];
+			$list[$i] = $data[$i][0];
 		}
-		
 		return $list;
 	}
 

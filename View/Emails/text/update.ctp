@@ -6,6 +6,7 @@
 学習テーマ : <?php echo $theme_title."\n"; ?>
 課題       : <?php echo $content_title."\n"; ?>
 種別       : <?php echo $record_type."\n"; ?>
+更新者     : <?php echo $updater."\n"; ?>
 
 以下のURLをクリックして、内容をご確認ください。
 <?php echo $url."\n"; ?>
