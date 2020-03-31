@@ -142,28 +142,56 @@ table tr td
 	<?php }?>
 	
 	<div class="panel panel-info">
-	<div class="panel-heading"><span data-localize='learning_theme'>学習テーマ一覧</span></div>
-	<div class="buttons_container">
-		<button class="btn btn-warning" onclick="location.href='<?php echo Router::url(array('controller' => 'ideas')) ?>'"><span data-localize='add_idea_memo'>+ アイデア・メモ</span></button>
-		<button class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('controller' => 'themes', 'action' => 'add')) ?>'"><span data-localize='add_learning_theme'>+ 学習テーマを追加</span></button>
-	</div>
-	<div class="panel-body">
-		<ul class="list-group">
-		<?php foreach ($themes as $theme): ?>
-		<?php //debug($theme)?>
-			<a href="<?php echo Router::url(array('controller' => 'tasks', 'action' => 'index', $theme['Theme']['id']));?>" class="list-group-item">
-				<?php if($theme[0]['left_cnt']!=0){?>
-				<button type="button" class="btn btn-danger btn-rest">残り <span class="badge"><?php echo h($theme[0]['left_cnt']); ?></span></button>
-				<?php }?>
-				<h4 class="list-group-item-heading"><?php echo h($theme['Theme']['title']);?></h4>
-				<p class="list-group-item-text">
-					<span>学習開始日: <?php echo h($theme[0]['first_date']); ?></span>
-					<span>最終学習日: <?php echo h($theme[0]['last_date']); ?></span>
-				</p>
-			</a>
-		<?php endforeach; ?>
-		<?php echo $no_record;?>
-		</ul>
-	</div>
+		<div class="panel-heading"><span data-localize='learning_theme'>学習テーマ一覧</span></div>
+		<div class="buttons_container">
+			<button class="btn btn-warning" onclick="location.href='<?php echo Router::url(array('controller' => 'ideas')) ?>'"><span data-localize='add_idea_memo'>+ アイデア・メモ</span></button>
+			<button class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('controller' => 'themes', 'action' => 'add')) ?>'"><span data-localize='add_learning_theme'>+ 学習テーマを追加</span></button>
+		</div>
+		<div class="panel-body">
+			<div class="theme-list" data-localize='my_learning_themes'>所有しているテーマ</div>
+			<ul class="list-group">
+			<?php
+			foreach ($themes as $theme)
+			{
+				if ($theme['Theme']['user_id']==$loginedUser['id']) { ?>
+				<a href="<?php echo Router::url(array('controller' => 'tasks', 'action' => 'index', $theme['Theme']['id']));?>" class="list-group-item">
+					<?php if($theme[0]['left_cnt']!=0){?>
+					<button type="button" class="btn btn-danger btn-rest">残り <span class="badge"><?php echo h($theme[0]['left_cnt']); ?></span></button>
+					<?php }?>
+					<h4 class="list-group-item-heading"><?php echo h($theme['Theme']['title']);?></h4>
+					<p class="list-group-item-text">
+						<span>学習開始日: <?php echo h($theme[0]['first_date']); ?></span>
+						<span>最終学習日: <?php echo h($theme[0]['last_date']); ?></span>
+					</p>
+				</a>
+			<?php
+				}
+			}
+			?>
+			</ul>
+			
+			<div class="theme-list" data-localize='other_learning_themes'>それ以外のテーマ</div>
+			<ul class="list-group">
+			<?php
+			foreach ($themes as $theme)
+			{
+				if ($theme['Theme']['user_id']!=$loginedUser['id']) { ?>
+				<a href="<?php echo Router::url(array('controller' => 'tasks', 'action' => 'index', $theme['Theme']['id']));?>" class="list-group-item">
+					<?php if($theme[0]['left_cnt']!=0){?>
+					<button type="button" class="btn btn-danger btn-rest">残り <span class="badge"><?php echo h($theme[0]['left_cnt']); ?></span></button>
+					<?php }?>
+					<h4 class="list-group-item-heading"><?php echo h($theme['Theme']['title']);?></h4>
+					<p class="list-group-item-text">
+						<span>学習開始日: <?php echo h($theme[0]['first_date']); ?></span>
+						<span>最終学習日: <?php echo h($theme[0]['last_date']); ?></span>
+					</p>
+				</a>
+			<?php
+				}
+			}
+			?>
+			</ul>
+			<?php echo $no_record;?>
+		</div>
 	</div>
 </div>
