@@ -47,15 +47,15 @@
 	<?php echo $this->Html->link(__('<< 戻る'), array('controller' => $controller, 'action' => 'index', @$this->params['pass'][0]))?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<?php echo (($this->action == 'admin_edit')||($this->action == 'edit')) ? __('編集') :  __('新規学習テーマ'); ?>
+			<?php echo (($this->action == 'admin_edit')||($this->action == 'edit')) ? "<span data-localize='edit'>編集</span>" :  __('新規学習テーマ'); ?>
 		</div>
 		<div class="panel-body">
 			<?php echo $this->Form->create('Theme', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title', array('label' => __('学習テーマ名')));
+				echo $this->Form->input('title', array('label' => __('学習テーマ名 / Title')));
 				echo $this->Form->input('learning_target',	array(
-					'label' => __('学習目標'),
+					'label' => __('学習目標 / Goal'),
 					'div' => 'form-group row-body',
 					)
 				);
@@ -71,7 +71,7 @@
 				
 				if(Configure::read('use_irohanote'))
 				{
-					Utils::writeFormGroup('アイデアマップ', 
+					Utils::writeFormGroup('<span data-localize="ideamap">アイデアマップ</span>', 
 						'<iframe id="fraIrohaNote" width="100%" height="400"></iframe>',
 						false, 'row-irohanote'
 					);

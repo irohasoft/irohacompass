@@ -4,6 +4,7 @@ ALTER TABLE ib_themes ADD COLUMN page_id int AFTER sort_no;
 ALTER TABLE ib_progresses ADD COLUMN content_type varchar(20) AFTER title;
 ALTER TABLE ib_progresses ADD COLUMN emotion_icon varchar(20) AFTER rate;
 ALTER TABLE ib_records ADD COLUMN emotion_icon varchar(20) AFTER rate;
+ALTER TABLE ib_users ADD COLUMN lang varchar(20) NOT NULL DEFAULT 'jp' AFTER role;
 
 UPDATE ib_themes SET learning_target = introduction WHERE learning_target IS NULL;
 

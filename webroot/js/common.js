@@ -38,6 +38,9 @@ $(document).ready(function()
 			//alert('通信失敗');
 		}
 	});
+	
+	if(G_LANG=='en')
+		$("[data-localize]").localize(G_WEBROOT + "locales/app", { language: "en" });
 });
 
 $(window).on('beforeunload', function(event)
@@ -135,7 +138,7 @@ CommonUtility.prototype.createProgressChart = function (labels, access_data, pro
 		labels: labels,
 		datasets: [{
 			type: 'line',
-			label: 'アクセス回数',
+			label: 'アクセス回数 / Access Count',
 			borderColor: window.chartColors.blue,
 			borderWidth: 2,
 			fill: false,
@@ -143,7 +146,7 @@ CommonUtility.prototype.createProgressChart = function (labels, access_data, pro
 				yAxisID: "y-axis-1",
 		}, {
 			type: 'bar',
-			label: '進捗更新回数',
+			label: '進捗更新回数 / Update Count',
 			backgroundColor: window.chartColors.green,
 			data: progress_data,
 				yAxisID: "y-axis-2",

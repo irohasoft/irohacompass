@@ -13,10 +13,13 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => true,
-		'host' => 'localhost',
+		//'host' => 'localhost',
+		//'host' => 'localhost:3307',
 		'login' => 'root',
 		'password' => '',
+		//'database' => 'ic_test',
 		'database' => 'irohacompass',
+		//'password' => 'irohairoha1',
 		'prefix' => 'ib_',
 		'encoding' => 'utf8'
 	);

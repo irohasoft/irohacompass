@@ -10,19 +10,19 @@
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			設定
+			<span data-localize="setting">設定</span>
 		</div>
 		<div class="panel-body">
 			<?php
 				echo $this->Form->create('User', Configure::read('form_defaults'));
 				echo $this->Form->input('User.new_password', array(
-					'label' => '新しいパスワード',
+					'label' => '<span data-localize="new_password">新しいパスワード</span>',
 					'type' => 'password',
 					'autocomplete' => 'new-password'
 				));
 				
 				echo $this->Form->input('User.new_password2', array(
-					'label' => '新しいパスワード (確認用)',
+					'label' => '<span data-localize="new_password">新しいパスワード (確認用)</span>',
 					'type' => 'password',
 					'autocomplete' => 'new-password'
 				));

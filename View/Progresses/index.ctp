@@ -29,7 +29,7 @@
 		
 		// 添付ファイルアップロードボタンを追加
 		$url = $('.form-control-upload');
-		$url.after('<input id="btnUpload" type="button" value="アップロード">');
+		$url.after('<button id="btnUpload"><span data-localize="upload">Upload</span></button>');
 		
 		// アップロード画面の呼び出し
 		$("#btnUpload").click(function(){
@@ -150,7 +150,7 @@
 	?>
 	</div>
 	<div class="panel panel-info">
-		<div class="panel-heading"><b>課題</b></div>
+		<div class="panel-heading"><b><span data-localize="task">課題</span></b></div>
 		<div class="panel-body">
 			<big>
 			<?php echo $this->Form->hidden('content_body', array('value' => $content['Task']['body']));?>
@@ -171,18 +171,18 @@
 			</div>
 			<div>
 				<br>
-				<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?php echo Router::url(array('controller' => 'tasks', 'action' => 'edit', $content['Theme']['id'], $content['Task']['id'])) ?>'">編集</button>
+				<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?php echo Router::url(array('controller' => 'tasks', 'action' => 'edit', $content['Theme']['id'], $content['Task']['id'])) ?>'"><span data-localize="edit">編集</span></button>
 			</div>
 		</div>
 	</div>
 
-	<div class="ib-page-title"><?php echo __('進捗一覧'); ?></div>
+	<div class="ib-page-title"><span data-localize="progress_list">進捗一覧</span></div>
 	
 	<div class="buttons_container">
 		<?php if($is_add) {?>
-		<button type="button" class="btn btn-primary btn-add" onclick="$('html, body').animate({scrollTop: ($(document).height()-1050)},800);">+ 追加</button>
+		<button type="button" class="btn btn-primary btn-add" onclick="$('html, body').animate({scrollTop: ($(document).height()-1050)},800);"><span data-localize="add">+ 追加</span></button>
 		<?php } else {?>
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'index', $content['Task']['id']));?>#edit'">+ 追加</button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'index', $content['Task']['id']));?>#edit'"><span data-localize="add">+ 追加</span></button>
 		<?php }?>
 	</div>
 	
@@ -258,14 +258,14 @@
 				$sort_key	= ($this->request->params['named']) ? 'sort:'.$this->request->params['named']['sort'] : '';
 				$direction	= ($this->request->params['named']) ? 'direction:'.$this->request->params['named']['direction'] : '';
 				
-				echo $this->Form->button('編集', array(
+				echo $this->Form->button('<span data-localize="edit">編集</span>', array(
 					'class'		=> 'btn btn-success btn-edit',
 					'onclick'	=> "location.href='".Router::url(array('action' => 'index', $progress['Task']['id'], $progress['Progress']['id'], $sort_key, $direction))."#edit'",
 				));
 				
 				echo $this->Form->postLink(__('削除'), 
 						array('action' => 'delete', $progress['Progress']['id']), 
-						array('class'=>'btn btn-danger'), 
+						array('class'=>'btn btn-danger','data-localize' => 'delete'), 
 						__('[%s] を削除してもよろしいですか?', $progress['Progress']['title'])
 				); 
 				echo $this->Form->hidden('id', array('id'=>'', 'class'=>'target_id', 'value'=>$progress['Progress']['id']));
@@ -296,16 +296,16 @@
 	<a name="edit"></a>
 	<div class="panel <?php echo ($is_add) ? 'panel-default' :  'panel-danger'; ?>">
 		<div class="panel-heading">
-			<?php echo (!$is_add) ? __('編集') :  __('新規追加'); ?>
+			<?php echo (!$is_add) ? '<span data-localize="edit">編集</span>' :  '<span data-localize="add">新規追加</span>'; ?>
 		</div>
 		<div class="panel-body">
 			<?php echo $this->Form->create('Progress', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title',	array('label' => __('タイトル')));
+				echo $this->Form->input('title',	array('label' => "<span data-localize='title'>タイトル</span>"));
 				echo $this->Form->input('progress_type',	array(
 					'type' => 'radio',
-					'before' => '<label class="col col-sm-3 control-label">種別</label>',
+					'before' => '<label class="col col-sm-3 control-label"><span data-localize="kind">種別</span></label>',
 					'separator'=>"　", 
 					'legend' => false,
 					'class' => false,
@@ -317,7 +317,7 @@
 				);
 				echo $this->Form->input('content_type',	array(
 					'type' => 'radio',
-					'before' => '<label class="col col-sm-3 control-label">進捗の入力形式</label>',
+					'before' => '<label class="col col-sm-3 control-label"><span data-localize="content_type">進捗の入力形式</span></label>',
 					'separator'=>"　", 
 					'legend' => false,
 					'class' => false,
@@ -328,7 +328,7 @@
 					)
 				);
 				echo $this->Form->input('body',		array(
-					'label' => __('内容'),
+					'label' =>  '<span data-localize="content">内容</span>',
 					'div' => 'form-group row-body',
 					)
 				);
@@ -336,7 +336,7 @@
 				
 				if(Configure::read('use_irohanote'))
 				{
-					Utils::writeFormGroup('内容', 
+					Utils::writeFormGroup('<span data-localize="content">内容</span>', 
 						'<iframe id="fraIrohaNote" width="100%" height="400"></iframe>',
 						false, 'row-irohanote'
 					);
@@ -346,11 +346,11 @@
 				
 				echo $this->Form->hidden('page_id', array('class' => 'form-group row-page-id'));
 				
-				echo $this->Form->input('file',		array('label' => __('添付ファイル'), 'class' => 'form-control form-control-upload'));
+				echo $this->Form->input('file',		array('label' => '<span data-localize="attachment">添付ファイル</span>', 'class' => 'form-control form-control-upload'));
 
 				echo $this->Form->input('status',	array(
 					'type' => 'radio',
-					'before' => '<label class="col col-sm-3 control-label">課題のステータス</label>',
+					'before' => '<label class="col col-sm-3 control-label"><span data-localize="status">課題のステータス</span></label>',
 					'separator'=>"　", 
 					'disabled'=>false, 
 					'legend' => false,
@@ -375,7 +375,7 @@
 				);
 				
 				echo $this->Form->input('rate',		array(
-					'label' => '進捗率', 
+					'label' => '<span data-localize="progress_rate">進捗率</span>', 
 					'options'=>$rate_list, 
 					'class' => 'form-control',
 					'value' => $content['Task']['rate'],
@@ -420,7 +420,7 @@
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">
-					<p> ※ 学習テーマの所有者・関係者・管理者 (<?php echo $mail_target; ?>) に更新が発生した旨を通知します<br><input name="is_mail" type="checkbox">&nbsp;メール通知</p>
+					<p> ※ 学習テーマの所有者・関係者・管理者 (<?php echo $mail_target; ?>) に更新が発生した旨を通知します<br><input name="is_mail" type="checkbox">&nbsp;<span data-localize="email_notification">メール通知</span></p>
 				</div>
 				<div class="col col-sm-9 col-sm-offset-3">
 					<?php echo $this->Form->submit(($is_add) ? __('追加') :  __('保存'), Configure::read('form_submit_defaults')); ?>

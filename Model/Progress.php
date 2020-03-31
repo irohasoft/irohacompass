@@ -77,7 +77,7 @@ class Progress extends AppModel
 					// 'update' operations
 										)
 			),
-			'option_list' => array(
+			'emotion_icon' => array(
 					'notBlank' => array(
 							'rule' => array(
 									'notBlank'

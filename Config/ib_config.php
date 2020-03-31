@@ -30,6 +30,11 @@ $config['progress_type_enq']	= array(
 	'text'		=> '記述式'
 );
 
+$config['lang']	= array(
+	'jp'		=> '日本語',
+	'en'		=> '英語'
+);
+
 $config['record_type'] = array(
 	'0'					=> '',
 	'theme_add'			=> '学習テーマ追加',
@@ -102,7 +107,7 @@ $config['close_on_select'] = true;
 $config['use_upload_image'] = true;
 
 // iroha Note を使用する
-$config['use_irohanote']	= false;
+$config['use_irohanote']	= true;
 
 // iroha Note を使用しない場合、選択肢からも削除
 if(!$config['use_irohanote'])
@@ -140,9 +145,9 @@ $config['form_defaults'] = array(
 
 $config['form_submit_defaults'] = array(
 	'div' => false,
-	'class' => 'btn btn-primary'
+	'class' => 'btn btn-primary',
+	'data-localize' => 'save'
 );
-
 
 $config['theme_colors'] = array(
 	'#337ab7' => 'default',

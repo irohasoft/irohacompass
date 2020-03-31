@@ -29,7 +29,7 @@
 		echo $this->Html->css('cake.generic');
 		echo $this->Html->css('jquery-ui');
 		echo $this->Html->css('bootstrap.min');
-		echo $this->Html->css('common.css?20190401');
+		echo $this->Html->css('common.css?20200308');
 		
 		// 管理画面用CSS
 		if($is_admin_page)
@@ -40,10 +40,11 @@
 		
 		echo $this->Html->script('jquery-1.9.1.min.js');
 		echo $this->Html->script('jquery-ui-1.9.2.min.js');
+		echo $this->Html->script('jquery.localize.min.js');
 		echo $this->Html->script('bootstrap.min.js');
 		echo $this->Html->script('moment.js');
 		echo $this->Html->script('marked.min.js');
-		echo $this->Html->script('common.js?20190401');
+		echo $this->Html->script('common.js?20200308');
 		
 		// 管理画面用スクリプト
 		if($is_admin_page)
@@ -67,7 +68,10 @@
 	var _action			= '<?php echo $this->params['action'] ?>';
 	var _params			= '<?php echo join(',', $this->params['pass']) ?>';
 	var _sec			= 0;
+	var G_WEBROOT		= '<?php echo $this->Html->webroot;?>';
+	var G_LANG			= '<?php echo @$loginedUser['lang'];?>';
 	var URL_LOGS_ADD	= '<?php echo Router::url(array('controller' => 'logs', 'action' => 'add')) ?>';
+	
 	</script>
 	<style>
 		.ib-theme-color
@@ -89,9 +93,11 @@
 			<a href="<?php echo $this->Html->url('/')?>"><?php echo h($this->Session->read('Setting.title')); ?></a>
 		</div>
 		<?php if(@$loginedUser) {?>
-		<div class="ib-navi-item ib-right"><?php echo $this->Html->link(__('ログアウト'), $logoutURL); ?></div>
+		<div class="ib-navi-item ib-right"><?php echo $this->Html->link('<span data-localize="logout">ログアウト</span>', $logoutURL, array('escape' => false)); ?></div>
 		<div class="ib-navi-sepa ib-right"></div>
-		<div class="ib-navi-item ib-right"><?php echo $this->Html->link(__('設定'), array('controller' => 'users', 'action' => 'setting')); ?></div>
+		<div class="ib-navi-item ib-right"><?php echo $this->Html->link('<span data-localize="setting">設定</span>', array('controller' => 'users', 'action' => 'setting'), array('escape' => false)); ?></div>
+		<div class="ib-navi-sepa ib-right"></div>
+		<div class="ib-navi-item ib-right navi-item-idea"><?php echo $this->Html->link('<span data-localize="idea">アイデア</span>', array('controller' => 'ideas'), array('escape' => false)); ?></div>
 		<div class="ib-navi-sepa ib-right"></div>
 		<div class="ib-navi-item ib-right"><?php echo __('ようこそ ').h($loginedUser["name"]); ?> さん </div>
 		<?php }?>

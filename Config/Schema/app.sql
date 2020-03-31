@@ -193,6 +193,7 @@ CREATE TABLE `ib_users` (
   `password` varchar(200) NOT NULL DEFAULT '',
   `name` varchar(50) NOT NULL DEFAULT '',
   `role` varchar(20) NOT NULL DEFAULT '',
+  `lang` varchar(20) NOT NULL DEFAULT 'jp',
   `email` varchar(50) NOT NULL DEFAULT '',
   `comment` text,
   `last_logined` datetime DEFAULT NULL,

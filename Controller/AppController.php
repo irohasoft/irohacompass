@@ -163,6 +163,29 @@ class AppController extends Controller
 			// $this->layout = 'login'; //レイアウトを切り替える。
 			// AuthComponent::$sessionKey = "Auth.User";
 		}
+		
+		$user = $this->Auth->user();
+		
+		if($user['lang']=='en')
+		{
+			Configure::write('progress_type', array(
+				'progress'	=> 'Progress',
+				'comment'	=> 'Comment',
+				'idea'		=> 'Idea, Memo',
+				'question'	=> 'Question',
+				'answer'	=> 'Answer',
+			));
+			Configure::write('task_status', array(
+				'1' => 'Waiting',
+				'2' => 'Working',
+				'3' => 'Completed'
+			));
+			Configure::write('task_priority', array(
+				'1' => 'High',
+				'2' => 'Middle',
+				'3' => 'Low'
+			));
+		}
 	}
 
 	public function beforeRender()

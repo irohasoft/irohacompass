@@ -9,13 +9,13 @@
 ?>
 	</div>
 	<div class="panel panel-success">
-		<div class="panel-heading"><?php echo __('お知らせ一覧'); ?></div>
+		<div class="panel-heading"><span data-localize='information'><?php echo __('お知らせ一覧'); ?></span></div>
 		<div class="panel-body">
 			<table cellpadding="0" cellspacing="0">
 			<thead>
 			<tr>
-				<th><?php echo $this->Paginator->sort('opend',   __('日付')); ?></th>
-				<th><?php echo $this->Paginator->sort('title',   __('タイトル')); ?></th>
+				<th><span data-localize='date'><?php echo $this->Paginator->sort('opend',   __('日付')); ?></span></th>
+				<th><span data-localize='title'><?php echo $this->Paginator->sort('title',   __('タイトル')); ?></span></th>
 			</tr>
 			</thead>
 			<tbody>

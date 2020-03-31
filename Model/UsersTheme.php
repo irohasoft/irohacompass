@@ -56,7 +56,7 @@ class UsersTheme extends AppModel
 	public function getThemeRecord($user_id)
 	{
 		$sql = <<<EOF
- SELECT Theme.id, Theme.title, DATE_FORMAT(Theme.created, '%Y/%m/%d') as first_date, DATE_FORMAT(Theme.modified, '%Y/%m/%d') as last_date,
+ SELECT Theme.id, Theme.title, Theme.user_id, DATE_FORMAT(Theme.created, '%Y/%m/%d') as first_date, DATE_FORMAT(Theme.modified, '%Y/%m/%d') as last_date,
        (ifnull(content_cnt, 0) - ifnull(study_cnt, 0) ) as left_cnt
    FROM ib_themes Theme
    LEFT OUTER JOIN
@@ -72,8 +72,8 @@ class UsersTheme extends AppModel
 		   FROM ib_tasks
 		  GROUP BY theme_id) TaskCount
      ON TaskCount.theme_id   = Theme.id
-  WHERE id IN (SELECT theme_id FROM ib_users_groups ug INNER JOIN ib_groups_themes gc ON ug.group_id = gc.group_id WHERE user_id = :user_id)
-     OR id IN (SELECT theme_id FROM ib_users_themes WHERE user_id = :user_id)
+  WHERE Theme.id IN (SELECT theme_id FROM ib_users_groups ug INNER JOIN ib_groups_themes gc ON ug.group_id = gc.group_id WHERE user_id = :user_id)
+     OR Theme.id IN (SELECT theme_id FROM ib_users_themes WHERE user_id = :user_id)
   ORDER BY Theme.modified desc
 EOF;
 		// debug($user_id);

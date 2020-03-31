@@ -39,6 +39,16 @@
 					)
 				);
 				
+				echo $this->Form->input('lang',	array(
+					'type' => 'radio',
+					'before' => '<label class="col col-sm-3 control-label">言語</label>',
+					'separator'=>"　", 
+					'legend' => false,
+					'class' => false,
+					'options' => Configure::read('lang')
+					)
+				);
+				
 				echo $this->Form->input('email',				array('label' => 'メールアドレス'));
 				echo $this->Form->input('comment',				array('label' => '備考'));
 				echo $this->Form->input('Group',				array('label' => '所属グループ',	'size' => 20));

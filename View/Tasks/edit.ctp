@@ -15,7 +15,7 @@
 	{
 		$url = $('.form-control-upload');
 
-		$url.after('<input id="btnUpload" type="button" value="アップロード">');
+		$url.after('<button id="btnUpload"><span data-localize="upload">Upload</span></button>');
 
 		$("#btnUpload").click(function(){
 			window.open(URL_UPLOAD, '_upload', 'width=650,height=500,resizable=no');
@@ -82,17 +82,17 @@ $rate_list = array(
 	?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<?php echo (($this->action == 'admin_edit')||($this->action == 'edit')) ? __('編集') :  __('新規課題'); ?>
+			<?php echo (($this->action == 'admin_edit')||($this->action == 'edit')) ? '<span data-localize="edit">編集</span>' :  '<span data-localize="add">新規課題</span>'; ?>
 		</div>
 		<div class="panel-body">
 			<?php echo $this->Form->create('Task', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title',	array('label' => '課題タイトル'));
+				echo $this->Form->input('title',	array('label' => '<span data-localize="title">課題タイトル</span>'));
 				
 				echo $this->Form->input('priority',	array(
 					'type' => 'radio',
-					'before' => '<label class="col col-sm-3 control-label">優先度</label>',
+					'before' => '<label class="col col-sm-3 control-label"><span data-localize="priority">優先度</span></label>',
 					'separator'=>"　", 
 					'disabled'=>false, 
 					'legend' => false,
@@ -104,7 +104,7 @@ $rate_list = array(
 				
 				echo $this->Form->input('status',	array(
 					'type' => 'radio',
-					'before' => '<label class="col col-sm-3 control-label">ステータス</label>',
+					'before' => '<label class="col col-sm-3 control-label"><span data-localize="status">ステータス</span></label>',
 					'separator'=>"　", 
 					'disabled'=>false, 
 					'legend' => false,
@@ -114,7 +114,7 @@ $rate_list = array(
 					)
 				);
 				
-				echo $this->Form->input('body',		array('label' => '課題の内容'));
+				echo $this->Form->input('body',		array('label' => '<span data-localize="content">課題の内容</span>'));
 				Utils::writeFormGroup('', '※ <a href="https://ja.wikipedia.org/wiki/Markdown" target="_blank">Markdown 形式</a> で記述可能です。');
 				
 				echo $this->Form->input('deadline', array(
@@ -124,7 +124,7 @@ $rate_list = array(
 					'minYear' => date('Y') - 4,
 					'maxYear' => date('Y') + 4,
 					'separator' => ' / ',
-					'label'=> '期日',
+					'label'=> '<span data-localize="deadline">期日</span>',
 					'class'=>'form-control date',
 					'style' => 'display: inline;',
 					'value' => $deadline,
@@ -132,16 +132,16 @@ $rate_list = array(
 				
 				if(Configure::read('use_irohanote'))
 				{
-					Utils::writeFormGroup('アイデアマップ', 
+					Utils::writeFormGroup('<span data-localize="ideamap">アイデアマップ</span>', 
 						'<iframe id="fraIrohaNote" width="100%" height="400"></iframe>'.
 						false, 'row-irohanote');
 				}
 				
 				echo $this->Form->hidden('page_id', array('class' => 'form-group row-page-id'));
 				
-				echo $this->Form->input('file',		array('label' => __('添付ファイル'), 'class' => 'form-control form-control-upload'));
+				echo $this->Form->input('file',		array('label' => '<span data-localize="attachment">添付ファイル</span>', 'class' => 'form-control form-control-upload'));
 				echo $this->Form->input('rate',		array(
-					'label' => '進捗率', 
+					'label' => '<span data-localize="progress_rate">進捗率</span>', 
 					'options'=>$rate_list, 
 					'class' => 'form-control',
 				));

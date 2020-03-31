@@ -51,7 +51,7 @@
 			'action' => 'index'
 		));
 	}
-
+	
 	echo $this->Html->getCrumbs(' / ');
 	//debug($tasks);
 
@@ -59,7 +59,7 @@
 	</div>
 
 	<div class="panel panel-info">
-	<div class="panel-heading"><?php echo h($theme['Theme']['title']); ?></div>
+	<div class="panel-heading lead"><?php echo h($theme['Theme']['title']); ?></div>
 	<div class="panel-body">
 	<div class="well">
 		<?php if($theme['Theme']['learning_target']!='') {?>
@@ -69,11 +69,11 @@
 			<?php echo Utils::getNoteLink($theme['Theme']['page_id'], $this->Html);?>
 		</div>
 		<div>
-			<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?php echo Router::url(array('controller' => 'themes', 'action' => 'edit', $theme['Theme']['id'])) ?>'">編集</button>
+			<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?php echo Router::url(array('controller' => 'themes', 'action' => 'edit', $theme['Theme']['id'])) ?>'"><span data-localize='edit'>編集</span></button>
 		</div>
 	</div>
 	<div class="buttons_container">
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'add', $theme['Theme']['id'])) ?>'">+ 課題を追加</button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'add', $theme['Theme']['id'])) ?>'"><span data-localize='add_task'>+ 課題を追加</span></button>
 	</div>
 	<div class="ib-horizontal">
 		<?php
@@ -82,7 +82,7 @@
 			
 			echo $this->Form->create('Task');
 			echo $this->Form->input('status', array(
-				'label'		=> 'ステータス : ', 
+				'label'		=> '<span data-localize="status">ステータス</span> : ', 
 				'options'	=> $status_list, 
 				'selected'	=> $status, 
 				'empty'		=> '全て', 
@@ -91,9 +91,9 @@
 				'onchange'	=> 'submit(this.form);'
 			));
 			
-			echo $this->Form->input('keyword',		array('label' => 'キーワード : ', 'value' => $keyword, 'required' => false));
+			echo $this->Form->input('keyword',		array('label' => '<span data-localize="keyword">キーワード</span> : ', 'value' => $keyword, 'required' => false));
 		?>
-		<input type="submit" class="btn btn-info btn-add" value="検索">
+		<button class="btn btn-info btn-add"><span data-localize="search">検索</span></button>
 		<?php
 			echo $this->Form->end();
 		?>
@@ -101,13 +101,13 @@
 	<table class="responsive-table">
 		<thead>
 			<tr>
-				<th nowrap><?php echo $this->Paginator->sort('title',			'課題名'); ?></th>
-				<th class="text-center" nowrap><?php echo $this->Paginator->sort('status',			'状態'); ?></th>
-				<th class="text-center" nowrap><?php echo $this->Paginator->sort('rate',			'進捗率'); ?></th>
-				<th class="text-center" nowrap><?php echo $this->Paginator->sort('priority',		'優先度'); ?></th>
-				<th class="text-center" nowrap><?php echo $this->Paginator->sort('deadline',		'期日'); ?></th>
-				<th class="ib-col-date" nowrap><?php echo $this->Paginator->sort('created',	'作成日時'); ?></th>
-				<th class="ib-col-date" nowrap><?php echo $this->Paginator->sort('modified',	'更新日時'); ?></th>
+				<th nowrap><span data-localize='task'><?php echo $this->Paginator->sort('title',			'課題名'); ?></span></th>
+				<th class="text-center" nowrap><span data-localize='status'><?php echo $this->Paginator->sort('status',			'状態'); ?></span></th>
+				<th class="text-center" nowrap><span data-localize='progress_rate'><?php echo $this->Paginator->sort('rate',	'進捗率'); ?></span></th>
+				<th class="text-center" nowrap><span data-localize='priority'><?php echo $this->Paginator->sort('priority',		'優先度'); ?></span></th>
+				<th class="text-center" nowrap><span data-localize='deadline'><?php echo $this->Paginator->sort('deadline',		'期日'); ?></span></th>
+				<th class="ib-col-date" nowrap><span data-localize='created_date'><?php echo $this->Paginator->sort('created',	'作成日時'); ?></span></th>
+				<th class="ib-col-date" nowrap><span data-localize='updated_date'><?php echo $this->Paginator->sort('modified',	'更新日時'); ?></span></th>
 				<th class="actions text-center" nowrap><?php echo __('Actions'); ?></th>
 			</tr>
 		</thead>
@@ -127,11 +127,11 @@
 				<td class="ib-col-date" nowrap><?php echo Utils::getYMDHN($task['Task']['created']); ?>&nbsp;</td>
 				<td class="ib-col-date" nowrap><?php echo Utils::getYMDHN($task['Task']['modified']); ?>&nbsp;</td>
 				<td class="ib-col-action">
-					<button type="button" class="btn btn-success" onclick="location.href='<?php echo Router::url(array('action' => 'edit', $theme['Theme']['id'], $task['Task']['id'])) ?>'">編集</button>
+					<button type="button" class="btn btn-success" onclick="location.href='<?php echo Router::url(array('action' => 'edit', $theme['Theme']['id'], $task['Task']['id'])) ?>'"><span data-localize='edit'>編集</span></button>
 					<?php
 						echo $this->Form->postLink(__('削除'),
 							array('action' => 'delete', $task['Task']['id']),
-							array('class'=>'btn btn-danger'),
+							array('class'=>'btn btn-danger', 'data-localize' => 'delete'),
 							__('[%s] を削除してもよろしいですか?', $task['Task']['title'])
 						);
 					?>
