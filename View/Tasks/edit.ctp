@@ -18,7 +18,11 @@
 		$url.after('<button id="btnUpload"><span data-localize="upload">Upload</span></button>');
 
 		$("#btnUpload").click(function(){
-			window.open(URL_UPLOAD, '_upload', 'width=650,height=500,resizable=no');
+			//window.open(URL_UPLOAD, '_upload', 'width=650,height=500,resizable=no');
+			//ファイルアップロードダイアログの iframe にURLを設定
+			$("#uploadFrame").attr("src", URL_UPLOAD);
+			//ファイルアップロードダイアログを表示
+			$('#uploadDialog').modal('show');
 			return false;
 		});
 
@@ -40,6 +44,13 @@
 		
 		if(file_name)
 			$('.form-control-filename').val(file_name);
+
+		$('#uploadDialog').modal('hide');
+	}
+	
+	function closeDialog(url, file_name)
+	{
+		$('#uploadDialog').modal('hide');
 	}
 	
 	function setPageID()
@@ -156,4 +167,17 @@ $rate_list = array(
 			<?php echo $this->Form->end(); ?>
 		</div>
 	</div>
+</div>
+
+<!--ファイルアップロードダイアログ-->
+<div class="modal fade" id="uploadDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-id='1'>
+	<div class="modal-dialog">
+		<div class="modal-content" style="width:660px;">
+			<div class="modal-body" id='modal-body_1'>
+				<iframe id="uploadFrame" width="100%" style="height: 440px;" scrolling="no" frameborder="no"></iframe>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
 </div>

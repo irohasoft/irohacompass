@@ -436,6 +436,20 @@ class TasksController extends AppController
 		$fileUpload->setExtension($upload_extensions);
 		$fileUpload->setMaxSize($upload_maxsize);
 		
+		$upload_max_filesize = $fileUpload->getBytes(ini_get('upload_max_filesize'));
+		$post_max_size		 = $fileUpload->getBytes(ini_get('post_max_size'));
+		
+		// upload_max_filesize が設定サイズより小さい場合、upload_max_filesize を優先する
+		if($upload_max_filesize < $upload_maxsize)
+			$upload_maxsize	= $upload_max_filesize;
+		
+		// post_max_size が設定サイズより小さい場合、post_max_size を優先する
+		if($post_max_size < $upload_maxsize)
+			$upload_maxsize	= $post_max_size;
+		
+		$fileUpload->setExtension($upload_extensions);
+		$fileUpload->setMaxSize($upload_maxsize);
+		
 		$original_file_name = '';
 		
 		if ($this->request->is('post') || $this->request->is('put'))
@@ -443,34 +457,60 @@ class TasksController extends AppController
 			if(Configure::read('demo_mode'))
 				return;
 			
-			$fileUpload->readFile( $this->request->data['Task']['file'] );						//	ファイルの読み込み
-			
-			$original_file_name = $this->request->data['Task']['file']['name'];
-			
-			$new_name = date("YmdHis").$fileUpload->getExtension( $fileUpload->get_file_name() );	//	ファイル名：YYYYMMDDHHNNSS形式＋"既存の拡張子"
-			
-			$user_id    = intval($this->Session->read('Auth.User.id'));
-			$upload_dir = WWW_ROOT.DS."uploads".DS.$user_id;
-			
-			if(!file_exists($upload_dir))
-				mkdir($upload_dir, 0755);
+			//debug($this->request->data);
+			// ファイルの読み込み
+			$fileUpload->readFile( $this->request->data['Task']['file'] );
 
-			$file_path = $upload_dir.DS.$new_name;													//	ファイル格納フォルダ
-			$file_url = $this->webroot.'uploads/'.$user_id.'/'.$new_name;
-
-			$result = $fileUpload->saveFile( $file_path );											//	ファイルの保存
-
-			if($result)																				//	結果によってメッセージを設定
+			$error_code = 0;
+			
+			// エラーチェック（互換性維持のためメソッドが存在する場合のみ）
+			if(method_exists($fileUpload, 'checkFile'))
+				$error_code = $fileUpload->checkFile();
+			
+			if($error_code > 0)
 			{
-				$this->Flash->success('ファイルのアップロードが完了いたしました');
-				$mode = 'complete';
-
-				//$url = G_ROOT_URL."/../uploads/".$new_name;										//	アップロードしたファイルのURL
+				$mode = 'error';
+				
+				// 拡張子エラー
+				if($error_code == 1001)
+					$this->Flash->error('アップロードされたファイルの形式は許可されていません');
+				
+				// ファイルサイズエラー
+				if(($error_code == 1002)||($error_code == 1003))
+				{
+					$size = $this->request->data['Task']['file']['size'];
+					$this->Flash->error('アップデートされたファイルサイズ（'.$size.'）は許可されていません');
+				}
 			}
 			else
 			{
-				$this->Flash->error('ファイルのアップロードに失敗しました');
-				$mode = 'error';
+				$original_file_name = $this->request->data['Task']['file']['name'];
+				
+				$new_name = date("YmdHis").$fileUpload->getExtension( $fileUpload->get_file_name() );	//	ファイル名：YYYYMMDDHHNNSS形式＋"既存の拡張子"
+				
+				$user_id    = intval($this->Session->read('Auth.User.id'));
+				$upload_dir = WWW_ROOT.DS."uploads".DS.$user_id;
+				
+				if(!file_exists($upload_dir))
+					mkdir($upload_dir, 0755);
+
+				$file_path = $upload_dir.DS.$new_name;													//	ファイル格納フォルダ
+				$file_url = $this->webroot.'uploads/'.$user_id.'/'.$new_name;
+
+				$result = $fileUpload->saveFile( $file_path );											//	ファイルの保存
+
+				if($result)																				//	結果によってメッセージを設定
+				{
+					$this->Flash->success('ファイルのアップロードが完了いたしました');
+					$mode = 'complete';
+
+					//$url = G_ROOT_URL."/../uploads/".$new_name;										//	アップロードしたファイルのURL
+				}
+				else
+				{
+					$this->Flash->error('ファイルのアップロードに失敗しました');
+					$mode = 'error';
+				}
 			}
 		}
 

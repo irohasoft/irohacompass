@@ -36,6 +36,8 @@
 <?php echo $this->Html->script('summernote.min.js');?>
 <?php echo $this->Html->script('lang/summernote-ja-JP.js');?>
 <script>
+	var URL_UPLOAD	= '<?php echo Router::url(array('controller' => 'contents', 'action' => 'upload'))?>/image';
+
 	$(document).ready(function()
 	{
 		init();
@@ -111,7 +113,11 @@
 		
 		$url.after('<input id="btnUpload" type="button" value="アップロード">');
 		$("#btnUpload").click(function(){
-			window.open('<?php echo Router::url(array('controller' => 'tasks', 'action' => 'upload'))?>/image', '_upload', 'width=650,height=500,resizable=no');
+			//window.open('<?php echo Router::url(array('controller' => 'tasks', 'action' => 'upload'))?>/image', '_upload', 'width=650,height=500,resizable=no');
+			//ファイルアップロードダイアログの iframe にURLを設定
+			$("#uploadFrame").attr("src", URL_UPLOAD);
+			//ファイルアップロードダイアログを表示
+			$('#uploadDialog').modal('show');
 			return false;
 		});
 		
@@ -140,24 +146,21 @@
 		update_options();
 	}
 
-	function setURL(url)
+	function setURL(url, file_name)
 	{
-		$('input[name="data[Progress][image]"]').val(url);
+		$('.form-control-upload').val(url);
+		
+		if(file_name)
+			$('.form-control-filename').val(file_name);
+
+		$('#uploadDialog').modal('hide');
 	}
 	
-	function render()
+	function closeDialog(url, file_name)
 	{
-		if($('#ProgressQuestionTypeSingle:checked').val())
-		{
-			$('#ProgressOptions').val('');
-			$('.row-options').show();
-		}
-		else
-		{
-			$('#ProgressOptions').val('none');
-			$('.row-options').hide();
-		}
+		$('#uploadDialog').modal('hide');
 	}
+
 </script>
 <?php $this->end(); ?>
 	<div class="ib-breadcrumb">
@@ -218,4 +221,17 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<!--ファイルアップロードダイアログ-->
+<div class="modal fade" id="uploadDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-id='1'>
+	<div class="modal-dialog">
+		<div class="modal-content" style="width:660px;">
+			<div class="modal-body" id='modal-body_1'>
+				<iframe id="uploadFrame" width="100%" style="height: 440px;" scrolling="no" frameborder="no"></iframe>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
 </div>
