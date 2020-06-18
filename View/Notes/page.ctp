@@ -44,7 +44,7 @@
 	<div class="ai-navi-sepa ai-right"></div>
 	-->
 	<div id="btnMenu" class="ai-navi-item ai-right ai-navi-sidr" title="">
-		<img src="<?php echo $this->Html->webroot;?>css/irohanote/images/menu_48_48.png" width="15">
+		<img src="<?php echo $this->Html->webroot;?>images/menu_48_48.png" width="15">
 	</div>
 	<div class="ai-navi-sepa ai-right"></div>
 	<div id="note_search" class="ai-navi-item ai-right" style="width:160px;padding:4px;border:0;">
@@ -52,8 +52,8 @@
 		<input type="button" id="btnSearch"  value="検索">
 	</div>
 </div>
-<button id="btnFullscreen"><img src="<?php echo $this->Html->webroot;?>css/irohanote/images/fullscreen.png"></button>
-<button id="btnFullscreenExit"><img src="<?php echo $this->Html->webroot;?>css/irohanote/images/fullscreen_exit.png"></button>
+<button id="btnFullscreen"><img src="<?php echo $this->Html->webroot;?>images/fullscreen.png"></button>
+<button id="btnFullscreenExit"><img src="<?php echo $this->Html->webroot;?>images/fullscreen_exit.png"></button>
 <div id="sidr">
 	<ul>
 		<li><span id="btnPageShare" title="選択されているページを公開・共有します">公開設定</span></li>
@@ -63,28 +63,28 @@
 	</ul>
 </div>
 <div id="stage">
-	<img id="imgLogo" src="<?php echo $this->Html->webroot;?>css/irohanote/images/irohanotecloud.png">
+	<img id="imgLogo" src="<?php echo $this->Html->webroot;?>images/irohanotecloud.png">
 	<span id="lblPageTitle"></span>
 	<span id="btnPageTitleEdit" class="ai-button">編集</span>
 	<div id="map">
 	</div>
 	<span id="btnLeafAdd" class="ai-button" title="画面上に新規カードリーフが追加されます">
-		<img src="<?php echo $this->Html->webroot;?>css/irohanote/images/icon_add_card.gif">
+		<img src="<?php echo $this->Html->webroot;?>images/icon_add_card.gif">
 		<div class='ai-button-title'>カード</div>
 	</span>
 	<span id="btnLeafWebAdd" class="ai-button" title="画面上に新規Webリーフが追加されます">
-		<img src="<?php echo $this->Html->webroot;?>css/irohanote/images/icon_add_web.gif">
+		<img src="<?php echo $this->Html->webroot;?>images/icon_add_web.gif">
 		<div class='ai-button-title'>Web</div>
 	</span>
 	<div id="divLinkMessage">リンク先のリーフを選択してください。キャンセルする場合には何もないところをクリック（タッチ）してください。</div>
 	<div id="divLinkTarget"></div>
-	<div id="divLinkDelete"><span id="btnLinkDelete" class="ai-button"><img src="<?php echo $this->Html->webroot;?>css/irohanote/images/btnTrash.png"/>削除</span></div>
+	<div id="divLinkDelete"><span id="btnLinkDelete" class="ai-button"><img src="<?php echo $this->Html->webroot;?>images/btnTrash.png"/>削除</span></div>
 	<div class="button-container">
 		<p>画面イメージ保存のため、閉じるボタンを使用して閉じてください。</p>
 		<button id="btnClose" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">閉じる</span></button>
 	</div>
 </div>
-<div id="divLoader"><img src="<?php echo $this->Html->webroot;?>css/irohanote/images/loader_icon.gif"></div>
+<div id="divLoader"><img src="<?php echo $this->Html->webroot;?>images/loader_icon.gif"></div>
 <div id="pageShareDialog" style="display:none;" title="公開設定">
 	<p>
 		<br>

@@ -442,7 +442,12 @@ PageManager.prototype.getNodeById = function(page_id)
 
 PageManager.prototype.getSelectedNode = function(page_id)
 {
-	var node = $("#tree").tree('getSelectedNode');
+	//var node = $("#tree").tree('getSelectedNode');
+
+	var node = {
+		id : _page_id
+	};
+
 	return node;
 }
 

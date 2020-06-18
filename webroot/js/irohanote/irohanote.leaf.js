@@ -27,7 +27,7 @@ LeafManager.prototype.loadData = function (params)
 {
 	var data = {
 		note_id			: _note_id,
-		page_id			: _page_id
+		page_id			: params.page_id
 	};
 	
 	var url  = API_BASE_URL + 'leaf_list' + API_EXTENSION;
@@ -142,7 +142,7 @@ LeafManager.prototype.displayItems = function ()
 	this.renderBackground();
 
 	_linkManager.loadData({
-		page_id	: _page_id,
+		page_id	: _pageManager.getSelectedNode().id,
 		display : true
 	});
 	
@@ -187,8 +187,7 @@ LeafManager.prototype.add = function (params)
 					leaf_width		: leaf.leaf_width,
 					leaf_height		: leaf.leaf_height,
 					leaf_color		: leaf.leaf_color,
-					//page_id			: _pageManager.getSelectedNode().id
-					page_id			: _page_id
+					page_id			: _pageManager.getSelectedNode().id
 				};
 				
 
@@ -216,8 +215,7 @@ LeafManager.prototype.add = function (params)
 			leaf_width		: leaf.leaf_width,
 			leaf_height		: leaf.leaf_height,
 			leaf_color		: leaf.leaf_color,
-			//page_id			: _pageManager.getSelectedNode().id
-			page_id			: _page_id
+			page_id			: _pageManager.getSelectedNode().id
 		};
 		
 		leaf.sendData({
@@ -261,7 +259,7 @@ LeafManager.prototype.copy = function (original_leaf)
 		leaf_height		: leaf.leaf_height,
 		leaf_color		: leaf.leaf_color,
 		fold			: (leaf.isFold) ? "1" : "0",
-//		page_id			: _pageManager.getSelectedNode().id
+		page_id			: _pageManager.getSelectedNode().id
 	};
 	
 	this.newLeaf = leaf;
@@ -433,9 +431,9 @@ Leaf.prototype.display = function ()
 					"<div class='clsLeafMenuContainer'>" +
 					"  <div class='clsLeafMenu'>" +
 					"    <input class='clsColorPicker' type='text' >" +
-					"    <span class='clsLeafLinkButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnLink.png'/></span>" +
-					"    <span class='clsLeafCopyButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnCopy.png'/></span>" +
-					"    <span class='clsLeafEditButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnEdit.png'/></span>" +
+					"    <span class='clsLeafLinkButton ai-button'><img src='" + ROOT_PATH + "images/btnLink.png'/></span>" +
+					"    <span class='clsLeafCopyButton ai-button'><img src='" + ROOT_PATH + "images/btnCopy.png'/></span>" +
+					"    <span class='clsLeafEditButton ai-button'><img src='" + ROOT_PATH + "images/btnEdit.png'/></span>" +
 					"  </div>" + 
 					"</div>" + 
 					"<div class='clsLeafMainContainer'>" +
@@ -450,7 +448,7 @@ Leaf.prototype.display = function ()
 					"  </tr>" + 
 					"  <tr class='clsBottomRow' height='20'>" + 
 					"    <td colspan='2' align='right'>" + 
-					"      <span class='clsLeafSaveButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnSave.png'/>保存</span>" +
+					"      <span class='clsLeafSaveButton ai-button'><img src='" + ROOT_PATH + "images/btnSave.png'/>保存</span>" +
 					"    </td>" + 
 					"  </tr>" + 
 					"" + 
@@ -479,9 +477,9 @@ Leaf.prototype.display = function ()
 					"<div class='clsLeafMenuContainer'>" +
 					"  <div class='clsLeafMenu'>" +
 					"    <input class='clsColorPicker' type='text' >" +
-					"    <span class='clsLeafLinkButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnLink.png'/></span>" +
-					"    <span class='clsLeafCopyButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnCopy.png'/></span>" +
-					"    <span class='clsLeafEditButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnEdit.png'/></span>" +
+					"    <span class='clsLeafLinkButton ai-button'><img src='" + ROOT_PATH + "images/btnLink.png'/></span>" +
+					"    <span class='clsLeafCopyButton ai-button'><img src='" + ROOT_PATH + "images/btnCopy.png'/></span>" +
+					"    <span class='clsLeafEditButton ai-button'><img src='" + ROOT_PATH + "images/btnEdit.png'/></span>" +
 					"  </div>" + 
 					"</div>" + 
 					"<div class='clsLeafMainContainer'>" +
@@ -497,13 +495,13 @@ Leaf.prototype.display = function ()
 					"    </td>" + 
 					"  </tr>" + 
 					"  <tr class='clsBottomRow' height='20'>" + 
-					"    <td colspan='2' align='right'><span class='clsLeafSaveButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnSave.png'/>保存</span></td>" + 
+					"    <td colspan='2' align='right'><span class='clsLeafSaveButton ai-button'><img src='" + ROOT_PATH + "images/btnSave.png'/>保存</span></td>" + 
 					"  </tr>" + 
 					"  </table>" + 
 					"  <div class='clsLeafColorBar'></div>" + 
 					"  <div class='clsLeafCover' title='" + this.leaf_title + "'></div>" + 
 					"  <div class='clsLeafWebButton'>" +
-					"    <img src='" + ROOT_PATH + "css/irohanote/images/icon_list_web.png' title='" + this.leaf_content + "' border=0></div>" + 
+					"    <img src='" + ROOT_PATH + "images/icon_list_web.png' title='" + this.leaf_content + "' border=0></div>" + 
 					"  <div class='clsLeafFoldButton'>▲</div>" + 
 					"  <div class='clsLeafDeleteButton ai-close'></div>" + 
 					"  <a href='" + this.leaf_content + "' target='_blank'><div class='clsLeafWebCover'></div></a>" + 
@@ -1191,8 +1189,7 @@ Leaf.prototype.linkTo = function (targetLeaf)
 		leaf_id			: this.leaf_id,
 		leaf_id2		: targetLeaf.leaf_id,
 		note_id			: _note_id,
-		page_id			: _page_id,
-//		page_id			: _pageManager.getSelectedNode().id
+		page_id			: _pageManager.getSelectedNode().id
 	};
 	
 	_linkManager.sendData({
