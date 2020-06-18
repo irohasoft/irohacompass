@@ -431,7 +431,7 @@
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">
-					<p> ※ 学習テーマの所有者・関係者・管理者 (<?php echo $mail_target; ?>) に更新が発生した旨を通知します<br><input name="is_mail" type="checkbox">&nbsp;<span data-localize="email_notification">メール通知</span></p>
+					<p> ※ 学習テーマの所有者・関係者・管理者<!-- (<?php echo $mail_target; ?>) -->に更新が発生した旨を通知します<br><input name="is_mail" type="checkbox">&nbsp;<span data-localize="email_notification">メール通知</span></p>
 				</div>
 				<div class="col col-sm-9 col-sm-offset-3">
 					<?php echo $this->Form->submit(($is_add) ? __('追加') :  __('保存'), Configure::read('form_submit_defaults')); ?>
