@@ -22,7 +22,7 @@ $config['progress_type']			= array(
 $config['content_type']	= array(
 	'text'		=> 'テキスト',
 	'markdown'	=> 'Markdown',
-	'irohanote'	=> 'iroha Note',
+	'irohanote'	=> 'アイデアマップ',
 );
 
 $config['progress_type_enq']	= array(
