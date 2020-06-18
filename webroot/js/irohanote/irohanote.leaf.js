@@ -261,7 +261,7 @@ LeafManager.prototype.copy = function (original_leaf)
 		leaf_height		: leaf.leaf_height,
 		leaf_color		: leaf.leaf_color,
 		fold			: (leaf.isFold) ? "1" : "0",
-		page_id			: _pageManager.getSelectedNode().id
+//		page_id			: _pageManager.getSelectedNode().id
 	};
 	
 	this.newLeaf = leaf;
@@ -470,8 +470,8 @@ Leaf.prototype.display = function ()
 		case LEAF_KIND_WEB:
 			$("#map").append(
 				"<div id='leaf_" + this.leaf_id + "' class='clsLeafContainer draggable resizable ui-widget-content ui-draggable' style='" +
-					"width  : " + 180  + "px;" +
-					"height : " + 60 + "px;" +
+					"width  : " + this.leaf_width  + "px;" +
+					"height : " + this.leaf_height + "px;" +
 					"left   : " + this.leaf_left   + "px;" +
 					"top    : " + this.leaf_top    + "px;" +
 					"z-index : " + zIndex +
