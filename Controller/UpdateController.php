@@ -103,6 +103,10 @@ class UpdateController extends AppController
 				}
 				catch (Exception $e)
 				{
+					// レコード重複追加エラー
+					if($e->errorInfo[0]=='23000')
+						continue;
+					
 					// カラム重複追加エラー
 					if($e->errorInfo[0]=='42S21')
 						continue;
@@ -124,4 +128,3 @@ class UpdateController extends AppController
 		return $err_statements;
 	}
 }
-?>
