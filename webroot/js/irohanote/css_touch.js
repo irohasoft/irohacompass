@@ -1,5 +1,5 @@
 /**
- * iroha Compass Project
+ * iroha Note Project
  *
  * @author        Kotaro Miura
  * @copyright     2015-2018 iroha Soft, Inc. (http://irohasoft.jp)
@@ -14,5 +14,5 @@ if (
 	(navigator.userAgent.indexOf('Android') > 0)
 )
 {
-	document.write('<link rel="stylesheet" href="' + THEME_ROOT_PATH + '/css/note_touch.css">');
+	document.write('<link rel="stylesheet" href="' + ROOT_PATH + '/css/note_touch.css">');
 }

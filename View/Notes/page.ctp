@@ -14,8 +14,8 @@
 	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/note.css?20190210">
 	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/note_mobile.css">
 	<script>
-	var THEME_ROOT_PATH	= '<?php echo $this->Html->webroot;?>';
-	var API_BASE_URL	= '<?php echo $this->Html->webroot;?>notes/';
+	var ROOT_PATH		= '<?php echo $this->Html->webroot;?>';
+	var API_BASE_URL	= '<?php echo $this->Html->webroot;?>apis/';
 	var API_EXTENSION	= '';
 	var _page_id    = '<?php echo $page_id;?>';
 	var _isReadOnly = <?php echo ($mode=='edit') ? 'false' : 'true';?>;

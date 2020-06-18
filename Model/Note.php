@@ -52,4 +52,27 @@ class Note extends AppModel
 					'order' => ''
 			),
 	);
+	public function getUserIDList($note_id)
+	{
+		$sql = <<<EOF
+SELECT id FROM ib_users
+EOF;
+
+
+		$params = array(
+//			'note_id' => $note_id,
+		);
+		
+		$data = $this->query($sql, $params);
+		
+		$user_id_list =  array();
+		
+		//debug($data);
+		foreach ($data as $item)
+		{
+			$user_id_list[] = $item['ib_users']['id'];
+		}
+		
+		return $user_id_list;
+	}
 }

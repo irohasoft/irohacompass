@@ -1,5 +1,5 @@
 /**
- * iroha Compass Project
+ * iroha Note Project
  *
  * @author        Kotaro Miura
  * @copyright     2015-2018 iroha Soft, Inc. (http://irohasoft.jp)
@@ -344,7 +344,7 @@ Note.prototype.display = function ()
 		'      <div class="clsNoteMenu">' + 
 		'        <input class="clsColorPicker" type="text" >' +
 		'        <span class="ai-button clsNoteEditButton" title="ノートのタイトルを編集します">' +
-		'            <img src="' + THEME_ROOT_PATH + '/images/btnEdit.png"/>編集' +
+		'            <span class="glyphicon glyphicon-check"></span> 編集' +
 		'        </span>' + 
 		'      </div>' + 
 		'      <div class="clsNoteDelete">' + 
@@ -444,7 +444,7 @@ Note.prototype.display = function ()
 
 	this.clsNoteOpenButton.bind(eventName, {note: this}, function (evt)
 	{
-		var url = "note?note_id=" + evt.data.note.note_id;
+		var url = ROOT_PATH + "notes/note/" + evt.data.note.note_id;
 
 		//if(evt.data.note.is_cloud)
 		//	url += "&is_cloud=true"

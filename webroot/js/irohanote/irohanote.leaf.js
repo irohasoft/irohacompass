@@ -1,5 +1,5 @@
 /**
- * iroha Compass Project
+ * iroha Note Project
  *
  * @author        Kotaro Miura
  * @copyright     2015-2018 iroha Soft, Inc. (http://irohasoft.jp)
@@ -17,12 +17,20 @@ function LeafManager($data)
 	this.newLeaf     = null;
 	this.max_height  = 0;
 	this.max_width   = 0;
+	this.LEAF_WIDTH  = 210;
+	this.drag_start_top = 0;		// ドラッグ開始位置
+	this.drag_start_left = 0;		// ドラッグ開始位置
 	this.isReadOnly  = false;
 }
 
 LeafManager.prototype.loadData = function (params)
 {
-	var url  = API_BASE_URL + 'leaf_list/' + _page_id;
+	var data = {
+		note_id			: _note_id,
+		page_id			: _page_id
+	};
+	
+	var url  = API_BASE_URL + 'leaf_list' + API_EXTENSION;
 	
 	$("#divLoader").show();
 	//alert(url);
@@ -30,7 +38,7 @@ LeafManager.prototype.loadData = function (params)
 		url		: url,
 		type	: 'get',
 		dataType: 'xml',
-		//data    : data,
+		data    : data,
 		timeout	: TIMEOUT_MS,
 		success	:
 			// XMLデータを取得
@@ -60,7 +68,7 @@ LeafManager.prototype.loadData = function (params)
 					_leafManager.displayItems();
 
 				if(params.complete)
-					params.complete();
+					params.complete(data, xml);
 
 				$(".jqtree-element").droppable({
 					accept		: '.clsLeafContainer',
@@ -239,6 +247,7 @@ LeafManager.prototype.copy = function (original_leaf)
 	leaf.leaf_width		= original_leaf.leaf_width;
 	leaf.leaf_height	= original_leaf.leaf_height;
 	leaf.leaf_color		= original_leaf.leaf_color;
+	leaf.isFold			= original_leaf.isFold;
 	
 	var data = {
 		cmd				: "add",
@@ -251,6 +260,7 @@ LeafManager.prototype.copy = function (original_leaf)
 		leaf_width		: leaf.leaf_width,
 		leaf_height		: leaf.leaf_height,
 		leaf_color		: leaf.leaf_color,
+		fold			: (leaf.isFold) ? "1" : "0",
 		page_id			: _pageManager.getSelectedNode().id
 	};
 	
@@ -322,6 +332,34 @@ LeafManager.prototype.getKey = function (page_id)
 {
 	return LS_PREFIX + "page_" + page_id;
 }
+
+
+LeafManager.prototype.clearSelection = function ()
+{
+	for (var leaf_id in this.leafList)
+	{
+		if(this.leafList[leaf_id])
+		{
+			this.leafList[leaf_id].unselect();
+		}
+	}
+}
+
+LeafManager.prototype.isMultSelect = function ()
+{
+	var cnt = 0;
+	
+	for (var leaf_id in this.leafList)
+	{
+		if(this.leafList[leaf_id].isSelect())
+		{
+			cnt++;
+		}
+	}
+	
+	return (cnt > 1);
+}
+
 
 // -------------------------------------------------
 // リーフクラス
@@ -395,9 +433,9 @@ Leaf.prototype.display = function ()
 					"<div class='clsLeafMenuContainer'>" +
 					"  <div class='clsLeafMenu'>" +
 					"    <input class='clsColorPicker' type='text' >" +
-					"    <span class='clsLeafLinkButton ai-button'><img src='" + THEME_ROOT_PATH + "css/irohanote/images/btnLink.png'/></span>" +
-					"    <span class='clsLeafCopyButton ai-button'><img src='" + THEME_ROOT_PATH + "css/irohanote/images/btnCopy.png'/></span>" +
-					"    <span class='clsLeafEditButton ai-button'><img src='" + THEME_ROOT_PATH + "css/irohanote/images/btnEdit.png'/></span>" +
+					"    <span class='clsLeafLinkButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnLink.png'/></span>" +
+					"    <span class='clsLeafCopyButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnCopy.png'/></span>" +
+					"    <span class='clsLeafEditButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnEdit.png'/></span>" +
 					"  </div>" + 
 					"</div>" + 
 					"<div class='clsLeafMainContainer'>" +
@@ -412,7 +450,7 @@ Leaf.prototype.display = function ()
 					"  </tr>" + 
 					"  <tr class='clsBottomRow' height='20'>" + 
 					"    <td colspan='2' align='right'>" + 
-					"      <span class='clsLeafSaveButton ai-button'><img src='" + THEME_ROOT_PATH + "css/irohanote/images/btnSave.png'/>保存</span>" +
+					"      <span class='clsLeafSaveButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnSave.png'/>保存</span>" +
 					"    </td>" + 
 					"  </tr>" + 
 					"" + 
@@ -441,9 +479,9 @@ Leaf.prototype.display = function ()
 					"<div class='clsLeafMenuContainer'>" +
 					"  <div class='clsLeafMenu'>" +
 					"    <input class='clsColorPicker' type='text' >" +
-					"    <span class='clsLeafLinkButton ai-button'><img src='" + THEME_ROOT_PATH + "css/irohanote/images/btnLink.png'/></span>" +
-					"    <span class='clsLeafCopyButton ai-button'><img src='" + THEME_ROOT_PATH + "css/irohanote/images/btnCopy.png'/></span>" +
-					"    <span class='clsLeafEditButton ai-button'><img src='" + THEME_ROOT_PATH + "css/irohanote/images/btnEdit.png'/></span>" +
+					"    <span class='clsLeafLinkButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnLink.png'/></span>" +
+					"    <span class='clsLeafCopyButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnCopy.png'/></span>" +
+					"    <span class='clsLeafEditButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnEdit.png'/></span>" +
 					"  </div>" + 
 					"</div>" + 
 					"<div class='clsLeafMainContainer'>" +
@@ -459,13 +497,13 @@ Leaf.prototype.display = function ()
 					"    </td>" + 
 					"  </tr>" + 
 					"  <tr class='clsBottomRow' height='20'>" + 
-					"    <td colspan='2' align='right'><span class='clsLeafSaveButton ai-button'><img src='" + THEME_ROOT_PATH + "css/irohanote/images/btnSave.png'/>保存</span></td>" + 
+					"    <td colspan='2' align='right'><span class='clsLeafSaveButton ai-button'><img src='" + ROOT_PATH + "css/irohanote/images/btnSave.png'/>保存</span></td>" + 
 					"  </tr>" + 
 					"  </table>" + 
 					"  <div class='clsLeafColorBar'></div>" + 
 					"  <div class='clsLeafCover' title='" + this.leaf_title + "'></div>" + 
 					"  <div class='clsLeafWebButton'>" +
-					"    <img src='" + THEME_ROOT_PATH + "css/irohanote/images/icon_list_web.png' title='" + this.leaf_content + "' border=0></div>" + 
+					"    <img src='" + ROOT_PATH + "css/irohanote/images/icon_list_web.png' title='" + this.leaf_content + "' border=0></div>" + 
 					"  <div class='clsLeafFoldButton'>▲</div>" + 
 					"  <div class='clsLeafDeleteButton ai-close'></div>" + 
 					"  <a href='" + this.leaf_content + "' target='_blank'><div class='clsLeafWebCover'></div></a>" + 
@@ -548,6 +586,12 @@ Leaf.prototype.display = function ()
 		var leaf = e.data.leaf;
 		var zIndex = getId();
 		
+		// 他のリーフの選択状態を解除し、指定されたリーフを選択
+		if((!e.shiftKey)&&(!e.ctrlKey)&&(!leaf.isSelect()))
+			_leafManager.clearSelection();
+		
+		leaf.select();
+		
 		// 表示順を更新
 		$(this).css({ zIndex: zIndex });
 		leaf.updateZOrder();
@@ -560,28 +604,54 @@ Leaf.prototype.display = function ()
 	});
 	
 	this.clsLeafContainer.draggable({
-		drag: function()
+		start: function(event, ui) // ドラッグ開始
+		{
+			_leafManager.drag_start_top = this.offsetTop;
+			_leafManager.drag_start_left = this.offsetLeft;
+			console.log('start : ' + this.offsetTop + ', ' + this.offsetLeft);
+		},
+		drag: function(event, ui) // ドラッグ中
 		{
 			var leaf = _leafManager.leafList[this.id];
+			var diff_top  = _leafManager.drag_start_top  - this.offsetTop;
+			var diff_left = _leafManager.drag_start_left - this.offsetLeft;
 			
 			leaf.leaf_top  = this.offsetTop;
 			leaf.leaf_left = this.offsetLeft;
-			//alert();
+			
+			if(_leafManager.isMultSelect())
+			{
+				for (var leaf_id in _leafManager.leafList)
+				{
+					if(_leafManager.leafList[leaf_id].isSelect())
+					{
+						var new_top  = _leafManager.leafList[leaf_id].leaf_top  - diff_top;
+						var new_left = _leafManager.leafList[leaf_id].leaf_left - diff_left;
+						
+						_leafManager.leafList[leaf_id].clsLeafContainer.offset({ top: new_top, left: new_left });
+					}
+				}
+			}
+			
+			//console.log('diff : ' + diff_top + ', ' + diff_left);
+			//top.alert();
+		},
+		stop: function(event, ui) // ドラッグ修了
+		{
+			for (var leaf_id in _leafManager.leafList)
+			{
+				var leaf = _leafManager.leafList[leaf_id];
+				
+				if(leaf.isSelect())
+					leaf.updateLocation();
+			}
+			
+			_leafManager.renderBackground();
 		}
 	});
 	
-	this.clsLeafContainer.bind('dragstop', {leaf: this}, function (e) {
-		var leaf = e.data.leaf;
-		
-		if(!leaf.isFold)
-		{
-			leaf.leaf_width  = e.currentTarget.clientWidth;
-			leaf.leaf_height = e.currentTarget.clientHeight;
-		}
-		leaf.updateLocation();
-		
-		_leafManager.renderBackground();
-	});
+	if(parseInt(this.leaf_kind)!=LEAF_KIND_WEB)
+		this.clsLeafContainer.resizable();
 	
 	this.clsLeafContainer.bind('resizestop', {leaf: this}, function (e) {
 		var leaf = e.data.leaf;
@@ -623,7 +693,7 @@ Leaf.prototype.display = function ()
 			
 			if(_linkManager.linkSource.leaf_id==e.data.leaf.leaf_id)
 			{
-				alert("同じリーフにはリンクできません");
+				top.alert("同じリーフにはリンクできません");
 				return;
 			}
 			else
@@ -716,7 +786,7 @@ Leaf.prototype.display = function ()
 	
 	this.clsLeafDeleteButton.bind(eventName, {leaf: this}, function(e)
 	{
-		if(confirm("削除してもよろしいですか？"))
+		if(top.confirm("削除してもよろしいですか？"))
 		{
 			e.data.leaf.remove();
 			e.data.leaf.clsLeafContainer.remove();
@@ -946,6 +1016,9 @@ Leaf.prototype.renderShowAllButton = function ()
 
 Leaf.prototype.updateLocation = function ()
 {
+	this.leaf_top  = this.clsLeafContainer.offset().top;
+	this.leaf_left = this.clsLeafContainer.offset().left;
+	
 	var data = {
 		cmd				: "move",
 		leaf_top		: this.leaf_top,
@@ -1133,6 +1206,22 @@ Leaf.prototype.linkTo = function (targetLeaf)
 		}
 	});
 	_linkManager.linkMode = false;
+}
+
+
+Leaf.prototype.select = function ()
+{
+	this.clsLeafContainer.addClass('ai-selected');
+}
+
+Leaf.prototype.unselect = function ()
+{
+	this.clsLeafContainer.removeClass('ai-selected');
+}
+
+Leaf.prototype.isSelect = function ()
+{
+	return this.clsLeafContainer.hasClass('ai-selected');
 }
 
 // HTMLエンコードされているURLを復元

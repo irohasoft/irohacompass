@@ -1,5 +1,5 @@
 /**
- * iroha Compass Project
+ * iroha Note Project
  *
  * @author        Kotaro Miura
  * @copyright     2015-2018 iroha Soft, Inc. (http://irohasoft.jp)

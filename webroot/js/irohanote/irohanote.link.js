@@ -1,5 +1,5 @@
 /**
- * iroha Compass Project
+ * iroha Note Project
  *
  * @author        Kotaro Miura
  * @copyright     2015-2018 iroha Soft, Inc. (http://irohasoft.jp)
@@ -59,11 +59,16 @@ function LeafLinkManager()
 
 LeafLinkManager.prototype.loadData = function (params)
 {
+	var data = {
+		note_id			: _note_id,
+			page_id		: params.page_id
+	};
+	
 	$.ajax({
-		url		: API_BASE_URL + 'link_list/' + _page_id,
+		url		: API_BASE_URL + 'link_list' + API_EXTENSION,
 		type	: 'get',
 		dataType: 'xml',
-//		data    : data,
+		data    : data,
 		timeout	: TIMEOUT_MS,
 		success	:
 			// XMLデータを取得

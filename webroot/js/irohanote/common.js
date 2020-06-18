@@ -1,5 +1,5 @@
 /**
- * iroha Compass Project
+ * iroha Note Project
  *
  * @author        Kotaro Miura
  * @copyright     2015-2018 iroha Soft, Inc. (http://irohasoft.jp)
@@ -153,7 +153,7 @@ function getWebPageTitle(target_url, callback)
 
 function getTreeByList( list, parent_id )
 {
-	var tree  = new Array;
+	var tree  = new Array();
 
 	if(!parent_id)
 		parent_id = 0;
@@ -300,19 +300,17 @@ IrohaUtility.prototype.isTablet = function ()
 
 IrohaUtility.prototype.isPC = function ()
 {
-	var ua = window.navigator.userAgent.toLowerCase();
-
-	if(
-		(ua.indexOf('iphone') > 0) ||
-		(ua.indexOf('ipad') > 0) ||
-		(ua.indexOf('ipod') > 0) ||
-		(ua.indexOf('android') > 0)
+	if (
+		('createTouch' in document)|| 
+		('ontouchstart' in document)
 	)
 	{
 		return false;
 	}
-
-	return true;
+	else
+	{
+		return true;
+	}
 }
 
 IrohaUtility.prototype.isIE = function ()

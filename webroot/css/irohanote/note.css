@@ -1,6 +1,6 @@
 @charset "utf-8";
 /**
- * iroha Compass Project
+ * iroha Note Project
  *
  * @author        Kotaro Miura
  * @copyright     2015-2018 iroha Soft, Inc. (http://irohasoft.jp)
@@ -417,10 +417,10 @@ body {
 {
 	position			: absolute;
 	text-align			: center;
-	top					: 0px;
-	right				: 0px;
-	width				: 30px;
-	height				: 25px;
+	top					: 5px;
+	right				: 5px;
+	width				: 16px;
+	height				: 20px;
 	cursor				: pointer;
 }
 
@@ -518,6 +518,11 @@ body {
 	padding-right			: 5px;
 	padding-left			: 5px;
 	display					: none;
+}
+
+div.ai-selected
+{
+	box-shadow				: 1px 1px 1px 1px #aaa;
 }
 
 .button-container

@@ -1,5 +1,5 @@
 /**
- * iroha Compass Project
+ * iroha Note Project
  *
  * @author        Kotaro Miura
  * @copyright     2015-2018 iroha Soft, Inc. (http://irohasoft.jp)
@@ -14,10 +14,10 @@ var _note_id     = "";
 //var _page_id     = "";
 var _isLocalMode = true;
 
+var _noteManager = new NoteManager();
+var _pageManager = new PageManager();
 var _leafManager = new LeafManager();
 var _linkManager = new LeafLinkManager();
-var _pageManager = new PageManager();
-var _noteManager = new NoteManager();
 
 _leafManager.isReadOnly = _isReadOnly;
 _linkManager.isReadOnly = _isReadOnly;
@@ -38,7 +38,7 @@ $(document).ready(function(){
 		autoOpen: false,
 		width: 380,
 		height: 280,
-		zIndex: 990000000,
+		zIndex: 990000001,
 		modal: true,
 		dialogClass: 'no-title-dialog',
 		buttons: [
@@ -55,13 +55,13 @@ $(document).ready(function(){
 					
 					if(url=="")
 					{
-						alert("URLを入力して下さい");
+						top.alert("URLを入力して下さい");
 						return;
 					}
 					
 					if(!Util.isURL(url))
 					{
-						alert("正しいURLを入力して下さい");
+						top.alert("正しいURLを入力して下さい");
 						return;
 					}
 					
@@ -81,7 +81,7 @@ $(document).ready(function(){
 		autoOpen: false,
 		width: 500,
 		height: 500,
-		zIndex: 990000000,
+		zIndex: 990000001,
 		modal: true,
 		buttons: [
 			{
@@ -92,6 +92,7 @@ $(document).ready(function(){
 			}
 		]
 	});
+
 
 	$("#btnLeafAdd").click(function()
 	{
@@ -197,14 +198,18 @@ $(document).ready(function(){
 		_linkManager.linkMode = false;
 		
 		// 全てのリーフの編集状態を解除
-		for (var leaf in _leafManager.leafList)
+		for (var leaf_id in _leafManager.leafList)
 		{
-			if(_leafManager.leafList[leaf])
+			var leaf = _leafManager.leafList[leaf_id];
+			
+			if(leaf)
 			{
-				if(_leafManager.leafList[leaf].isEdit)
+				leaf.unselect();
+				
+				if(leaf.isEdit)
 				{
-					_leafManager.leafList[leaf].setEditMode(false);
-					_leafManager.leafList[leaf].update();
+					leaf.setEditMode(false);
+					leaf.update();
 				}
 			}
 		}
@@ -316,7 +321,7 @@ function renderPageOpenDialog()
 //				'<a name="fb_share" id="lnkPageShare" type="button" share_url="' + url + '">シェア</a>' + 
 //				'<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>　' +
 				'<a href="#" onclick="showFBShare(' + "'" + url + "'" + ');">' +
-				'<img src="' + THEME_ROOT_PATH + '/images/fb_share.png"></a>　' +
+				'<img src="' + ROOT_PATH + '/images/fb_share.png"></a>　' +
 				"<script>function showFBShare(url){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url)+'&t='+encodeURIComponent(document.title),null,'width=550px,height=350px');return false;}</script>"+
 				'<a href="https://twitter.com/share" class="twitter-share-button" data-url="' + url + '" data-lang="ja" data-count="none">ツイート</a>' +
 				"<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>"
