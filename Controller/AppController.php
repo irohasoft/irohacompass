@@ -185,6 +185,11 @@ class AppController extends Controller
 				'2' => 'Middle',
 				'3' => 'Low'
 			));
+			Configure::write('content_type', array(
+				'text'		=> 'Text',
+				'markdown'	=> 'Markdown',
+				'irohanote'	=> 'Idea Map',
+			));
 		}
 	}
 

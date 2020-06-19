@@ -54,6 +54,29 @@ class Leaf extends AppModel
 	);
 
 
+	public function deleteLeaf($user_id, $leaf_id)
+	{
+		// リーフの削除
+		$sql = 'DELETE FROM ib_leafs WHERE user_id = :user_id AND leaf_id = :leaf_id';
+		
+		$params = array(
+			'user_id' => $user_id,
+			'leaf_id' => $leaf_id,
+		);
+		
+		$this->query($sql, $params);
+		
+		// リンクの削除
+		$sql = 'DELETE FROM ib_links WHERE user_id = :user_id AND (leaf_id = :leaf_id OR leaf_id2 = :leaf_id)';
+		
+		$params = array(
+			'user_id' => $user_id,
+			'leaf_id' => $leaf_id,
+		);
+		
+		$this->query($sql, $params);
+	}
+
 	// 指定したキーワードを含むカードが所属する課題ID一覧を取得（キーワード検索用）
 	public function getTaskIdByKeyword($keyword, $theme_id)
 	{

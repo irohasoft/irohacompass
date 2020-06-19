@@ -76,6 +76,43 @@ $(document).ready(function(){
 		]
 	});
 	
+	// 画像リーフダイアログ
+	$("#imageLeafDialog").dialog({
+		autoOpen: false,
+		width: 380,
+		height: 280,
+		zIndex: 990000000,
+		modal: true,
+		dialogClass: 'no-title-dialog',
+		buttons: [
+			{
+				text: "キャンセル",
+				click: function() {
+					$(this).dialog( "close" );
+				}
+			},
+			{
+				text: "登録",
+				click: function() {
+					var url = $("#txtImageLeafURL").val();
+					
+					if(url=="")
+					{
+						alert("URLを入力して下さい");
+						return;
+					}
+					
+					_leafManager.add({
+						leaf_kind	: LEAF_KIND_IMAGE,
+						url			: url
+					});
+
+					$(this).dialog( "close" );
+				}
+			}
+		]
+	});
+	
 	// 全表示ダイアログ
 	$("#showAllDialog").dialog({
 		autoOpen: false,
@@ -105,6 +142,19 @@ $(document).ready(function(){
 	{
 		$("#txtWebLeafURL").val("")
 		$("#webLeafDialog").dialog( "open" );
+	});
+	
+	$("#btnLeafImageAdd").click(function()
+	{
+		$("#txtImageLeafURL").val("");
+		$("#imageLeafDialog").dialog( "open" );
+	});
+	
+	$("#btnGroupAdd").click(function()
+	{
+		_leafManager.add({
+			leaf_kind	: LEAF_KIND_GROUP
+		});
 	});
 	
 	$("#btnLinkDelete").click(function()
@@ -288,12 +338,15 @@ $(document).ready(function(){
 		{
 			if(_isReadOnly)
 			{
-				$("#btnLeafAdd").hide();
-				$("#btnLeafWebAdd").hide();
+				$(".stage-button-block").hide();
 			}
 		}
 	});
 
+	if(LANG=='en')
+		$("[data-localize]").localize(ROOT_PATH + "locales/app", { language: "en" });
+
+	setUploader()
 });
 
 function openPage(page_id)
@@ -349,3 +402,45 @@ function getLeafCount()
 {
 	return Object.keys(_leafManager.leafList).length;
 }
+
+function setUploader()
+{
+	$(document).on('change', 'input[name="file"]', function()
+	{
+		var $file = $('input[name="file"]');
+		
+		var formData = new FormData();
+		
+		if (!$file.val())
+			return;
+		
+		formData.append( 'file', $file.prop("files")[0] );
+		formData.append( 'dir', $file.val());
+		
+		var postData = {
+			type : "POST",
+			dataType : "text",
+			data : formData,
+			processData : false,
+			contentType : false
+		};
+		
+		$.ajax(
+			ROOT_PATH + 'tasks/upload_image', 
+			postData).done( function(text)
+			{
+				if(!JSON.parse(text)[0])
+				{
+					alert('画像のアップロードに失敗しました');
+					return;
+				}
+				
+				$('#txtImageLeafURL').val(JSON.parse(text)[0]);
+				$('.image-preview').children().remove();
+				$('.image-preview').append('<img src="' + JSON.parse(text)[0] + '">');
+				console.log(text);
+			}
+		);
+	});
+}
+

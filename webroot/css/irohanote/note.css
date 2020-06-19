@@ -67,14 +67,13 @@ body {
 	width				: 100px;
 }
 
+/*
 #btnLeafAdd,
-#btnLeafWebAdd
+#btnLeafWebAdd,
+#btnGroupAdd
 {
 	display				: inline;
 	position			: fixed;
-	/*
-	top					: 35px;
-	*/
 	top					: 15px;
 	width				: 45px;
 	height				: 45px;
@@ -83,18 +82,63 @@ body {
 	font-size			: 10px;
 }
 
+#btnLeafAdd img,
+#btnLeafWebAdd img,
+#btnGroupAdd img
+{
+	padding				: 3px;
+}
+
 #btnLeafAdd {
-	right				: 78px;
+	right				: 130px;
 }
 
 #btnLeafWebAdd {
-	right				: 20px;
+	right				: 75px;
 }
 
-#btnLeafAdd img,
-#btnLeafWebAdd img
+#btnGroupAdd {
+	right				: 20px;
+}
+*/
+
+.stage-button-block
+{
+	display				: inline;
+	position			: fixed;
+	top					: 15px;
+	right				: 15px;
+}
+
+.stage-button-block .ai-button
+{
+	/*
+	top					: 35px;
+	*/
+	width				: 45px;
+	height				: 45px;
+	padding				: 0px;
+	font-weight			: normal;
+}
+
+.stage-button-block img
+{
+	top					: 0px;
+	padding				: 3px;
+}
+
+
+.stage-button-block .ai-button
 {
 	padding				: 3px;
+	margin-left			: 5px;
+}
+
+.stage-button-block .ai-button-title
+{
+	padding-bottom		: 0px;
+	width				: 40px;
+	font-size			: 9px;
 }
 
 #imgLogo
@@ -368,6 +412,13 @@ body {
 	width: 70px;
 }
 
+.clsLeafSave
+{
+	right				: 30px;
+	position			: absolute;
+	top					: 3px;
+}
+
 .clsLeafSaveButton
 {
 	display				: none;
@@ -562,4 +613,59 @@ div.ai-selected
 	top						: 0px;
 	left					: 0px;
 	z-index					: 9999;
+}
+
+
+.clsGroupContainer
+{
+	position			: absolute;
+	min-width			: 180px;
+	min-height			: 60px;
+	opacity				: 0.9;
+	filter				: alpha(opacity=90);
+	border				: 5px solid;
+	border-radius		: 10px;
+}
+
+.clsGroupContainer .clsLeafTitle
+{
+	font-size			: 22px;
+	position			: relative;
+	top					: -30px;
+	background			: none;
+}
+
+
+.clsGroupContainer .clsLeafMenuContainer
+{
+	top					: -65px;
+}
+
+.clsGroupContainer .clsLeafMainContainer
+{
+	background			: none;
+}
+
+
+.image-preview img
+{
+	max-width			: 100%;
+	max-height			: 100px;
+}
+
+.clsLeafImage
+{
+	position			: absolute;
+	top					: 25px;
+	left				: 10px;
+	width				: calc(100% - 20px);
+	height				: calc(100% - 40px);
+	background-size		: contain;
+	background-repeat	: no-repeat;
+}
+
+.clsLeafImage img
+{
+	max-width			: 100%;
+	max-height			: 100%;
 }

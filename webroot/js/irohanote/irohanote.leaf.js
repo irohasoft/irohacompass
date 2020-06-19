@@ -409,6 +409,16 @@ Leaf.prototype.init = function (leaf_kind)
 			this.leaf_height	= 60;
 			this.leaf_color		= "#66CC66";
 			break;
+		case LEAF_KIND_IMAGE:
+			this.leaf_width		= 240;
+			this.leaf_height	= 105;
+			this.leaf_color		= "#FF9900";
+			break;
+		case LEAF_KIND_GROUP:
+			this.leaf_width		= 380;
+			this.leaf_height	= 260;
+			this.leaf_color		= "#666666";
+			break;
 	}
 	this.isEdit			= false;
 }
@@ -509,6 +519,75 @@ Leaf.prototype.display = function ()
 				"</div>"
 			);
 			break;
+		case LEAF_KIND_IMAGE:
+			$("#map").append(
+				"<div id='leaf_" + this.leaf_id + "' class='clsLeafContainer draggable resizable ui-widget-content ui-draggable' style='" +
+					"width  : " + this.leaf_width  + "px;" +
+					"height : " + this.leaf_height + "px;" +
+					"left   : " + this.leaf_left   + "px;" +
+					"top    : " + this.leaf_top    + "px;" +
+					"z-index : " + zIndex +
+					"'>" + 
+					"<div class='clsLeafMenuContainer'>" +
+					"  <div class='clsLeafMenu'>" +
+					"    <input class='clsColorPicker' type='text' >" +
+					"    <span class='clsLeafLinkButton ai-button'><img src='" + ROOT_PATH + "images/btnLink.png'/></span>" +
+					"    <span class='clsLeafCopyButton ai-button'><img src='" + ROOT_PATH + "images/btnCopy.png'/></span>" +
+					"    <span class='clsLeafEditButton ai-button'><img src='" + ROOT_PATH + "images/btnEdit.png'/></span>" +
+					"  </div>" + 
+					"</div>" + 
+					"<div class='clsLeafMainContainer'>" +
+					"  <table class='clsLeafGrid'>" + 
+					"  <tr height='22'>" + 
+					"    <td rowspan='3' width='0px'></td>" + 
+					"    <td><input type='text' placeholder='(non title)' value='" + this.leaf_title + "' class='clsLeafTitle'></td>" + 
+					"    <td class='clsLeafTitleMargin'></td>" + 
+					"  </tr>" + 
+					"  <tr height='32' height='100%'>" + 
+					"    <td colspan='2' valign='top' align='center'>" +
+					"      <textarea placeholder='(none)' class='clsLeafContent' style='display:none;'>" + this.leaf_content + "</textarea>" +
+					"    </td>" + 
+					"  </tr>" + 
+					"  <tr class='clsBottomRow' height='20'>" + 
+					"    <td colspan='2' align='right'><span class='clsLeafSaveButton ai-button'><img src='" + ROOT_PATH + "images/btnSave.png'/>保存</span></td>" + 
+					"  </tr>" + 
+					"  </table>" + 
+					"  <div class='clsLeafColorBar'></div>" + 
+					"  <div class='clsLeafCover' title='" + this.leaf_title + "'></div>" + 
+					"  <div class='clsLeafImage'  style='background-image:url(" + this.leaf_content + ")'></div>" +
+					"  <div class='clsLeafFoldButton'>▲</div>" + 
+					"  <div class='clsLeafDeleteButton ai-close'></div>" + 
+					"  <a href='" + this.leaf_content + "' target='_blank'><div class='clsLeafWebCover'></div></a>" + 
+					"</div>" + 
+				"</div>"
+			);
+			break;
+		case LEAF_KIND_GROUP:
+			$("#map").append(
+				"<div id='leaf_" + this.leaf_id + "' class='clsGroupContainer draggable resizable ui-draggable' style='" +
+					"width  : " + this.leaf_width  + "px;" +
+					"height : " + this.leaf_height + "px;" +
+					"left   : " + this.leaf_left   + "px;" +
+					"top    : " + this.leaf_top    + "px;" +
+					"'>" + 
+					"<div class='clsLeafMenuContainer'>" +
+					"  <div class='clsLeafMenu'>" +
+					"    <input class='clsColorPicker' type='text' >" +
+//					"    <span class='clsLeafLinkButton ai-button'><img src='" + ROOT_PATH + "images/btnLink.png'/></span>" +
+					"    <span class='clsLeafEditButton ai-button'><img src='" + ROOT_PATH + "images/btnEdit.png'/></span>" +
+					"  </div>" + 
+					"</div>" + 
+					"<div class='clsLeafMainContainer'>" +
+					"  <input type='text' placeholder='(non title)' value='" + this.leaf_title + "' class='clsLeafTitle'>" + 
+					"  <div class='clsLeafCover' title='" + this.leaf_title + "'></div>" + 
+					"  <div class='clsLeafDeleteButton ai-close'></div>" + 
+					"  <div class='clsLeafSave'>" + 
+					"    <span class='clsLeafSaveButton ai-button'><img src='" + ROOT_PATH + "images/btnSave.png'/>保存</span>" + 
+					"  </div>" + 
+					"</div>" + 
+				"</div>"
+			);
+			break;
 	}
 	
 	this.leaf_name				= "leaf_" + this.leaf_id;
@@ -536,6 +615,9 @@ Leaf.prototype.display = function ()
 	this.displayCount           = 0;
 	this.clsLeafColorBar.css('background-color', this.leaf_color);
 	
+	if(this.leaf_kind==LEAF_KIND_GROUP)
+		this.clsLeafContainer.css('border-color', this.leaf_color);
+	
 	if(parseInt(this.leaf_kind)!=LEAF_KIND_WEB)
 		this.clsLeafContainer.resizable();
 	
@@ -551,6 +633,10 @@ Leaf.prototype.display = function ()
 		{
 			window.open(e.data.leaf.getURL());
 		});
+		
+		if(parseInt(this.leaf_kind)!=LEAF_KIND_WEB)
+			this.clsLeafContainer.resizable('disable');
+		
 		return;
 	}
 	
@@ -590,6 +676,10 @@ Leaf.prototype.display = function ()
 		
 		leaf.select();
 		
+		// グループの場合、表示順を更新しない
+		if(leaf.leaf_kind==LEAF_KIND_GROUP)
+			return;
+
 		// 表示順を更新
 		$(this).css({ zIndex: zIndex });
 		leaf.updateZOrder();
@@ -813,7 +903,11 @@ Leaf.prototype.display = function ()
 		var rgb  = color.toHexString();
 
 		leaf.leaf_color = color.toHexString();
-		leaf.clsLeafColorBar.css('background-color', color.toHexString());
+		leaf.clsLeafColorBar.css('background-color', leaf.leaf_color);
+		
+		if(leaf.leaf_kind==LEAF_KIND_GROUP)
+			leaf.clsLeafContainer.css('border-color', leaf.leaf_color);
+		
 		leaf.updateColor();
 
 		_leafManager.refreshAllColorPickers(rgb);

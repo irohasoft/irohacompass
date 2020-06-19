@@ -14,6 +14,8 @@ var PREFIX_LEAF      = "leaf_";
 var PREFIX_PAGE      = "page_";
 var LEAF_KIND_CARD   = 2;
 var LEAF_KIND_WEB    = 3;
+var LEAF_KIND_IMAGE  = 4;
+var LEAF_KIND_GROUP  = 5;
 
 var LS_PREFIX        = "irohanote_";
 var LS_RECENT_COLOR  = "irohanote_recent_color";

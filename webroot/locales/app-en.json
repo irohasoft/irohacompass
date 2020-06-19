@@ -47,11 +47,9 @@
   "content": "Content",
   "email_notification": "Email Notification",
   "confirm": "Confirm",
-  "confirm": "Confirm",
-  "confirm": "Confirm",
-  "confirm": "Confirm",
-  "confirm": "Confirm",
-  "confirm": "Confirm",
+  "text": "Text",
+  "image": "Image",
+  "group": "Group",
   "msg_select_irohanote_data_file": "Please select your irohanote data file",
   "msg_confirm_delete_note": "Do you delete [{0}] note?"
 }

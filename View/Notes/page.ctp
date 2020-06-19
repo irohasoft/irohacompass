@@ -17,13 +17,15 @@
 	var ROOT_PATH		= '<?php echo $this->Html->webroot;?>';
 	var API_BASE_URL	= '<?php echo $this->Html->webroot;?>apis/';
 	var API_EXTENSION	= '';
+	var LANG			= '<?php echo @$loginedUser['lang'];?>';
+	
 	var _page_id    = '<?php echo $page_id;?>';
 	var _isReadOnly = <?php echo ($mode=='edit') ? 'false' : 'true';?>;
-	
 	</script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/common.js?20190210"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/jquery-ui-1.9.2.min.js"></script>
+	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/jquery.localize.min.js"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/jquery.jsPlumb-1.5.2-min.js"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/spectrum.js"></script>
 	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/css_touch.js"></script>
@@ -68,14 +70,26 @@
 	<span id="btnPageTitleEdit" class="ai-button">編集</span>
 	<div id="map">
 	</div>
-	<span id="btnLeafAdd" class="ai-button" title="画面上に新規カードリーフが追加されます">
-		<img src="<?php echo $this->Html->webroot;?>images/icon_add_card.gif">
-		<div class='ai-button-title'>カード</div>
-	</span>
-	<span id="btnLeafWebAdd" class="ai-button" title="画面上に新規Webリーフが追加されます">
-		<img src="<?php echo $this->Html->webroot;?>images/icon_add_web.gif">
-		<div class='ai-button-title'>Web</div>
-	</span>
+	<div class="stage-button-block">
+		<span id="btnLeafAdd" class="ai-button" title="画面上に新規テキストが追加されます">
+			<img src="<?php echo $this->Html->webroot;?>images/icon_add_card.gif">
+			<div class='ai-button-title' data-localize="text">テキスト</div>
+		</span>
+		<span id="btnLeafWebAdd" class="ai-button" title="画面上に新規Webカードが追加されます">
+			<img src="<?php echo $this->Html->webroot;?>images/icon_add_web.gif">
+			<div class='ai-button-title' data-localize="web">Web</div>
+		</span>
+		<!--
+		<span id="btnLeafImageAdd" class="ai-button" title="画面上に新規画像カードが追加されます">
+			<img src="<?php echo $this->Html->webroot;?>images/icon_add_web.gif">
+			<div class='ai-button-title' data-localize="image">画像</div>
+		</span>
+		-->
+		<span id="btnGroupAdd" class="ai-button" title="画面上に新規グループが追加されます">
+			<img src="<?php echo $this->Html->webroot;?>images/icon_add_group.gif">
+			<div class='ai-button-title' data-localize="group">グループ</div>
+		</span>
+	</div>
 	<div id="divLinkMessage">リンク先のリーフを選択してください。キャンセルする場合には何もないところをクリック（タッチ）してください。</div>
 	<div id="divLinkTarget"></div>
 	<div id="divLinkDelete"><span id="btnLinkDelete" class="ai-button"><img src="<?php echo $this->Html->webroot;?>images/btnTrash.png"/>削除</span></div>
