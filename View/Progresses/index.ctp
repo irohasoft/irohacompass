@@ -62,7 +62,7 @@
 		});
 
 		// メール通知用
-		$('#ProgressUser').select2({placeholder:   "メール通知するユーザを選択して下さい。(複数選択可)", closeOnSelect: <?php echo (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
+		$('#ProgressUser').select2({placeholder:   "メール通知するユーザを選択して下さい。(複数選択可／次回以降は自動で選択されます)", closeOnSelect: <?php echo (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
 		$('#ProgressUser').val(CommonUtil.getLocalStorage(LS_KEY_EMAIL_USER)).change();
 		
 		// 進捗編集画面の再描画
