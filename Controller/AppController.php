@@ -210,7 +210,7 @@ class AppController extends Controller
 			'action'		=> $action,
 			'params'		=> $params,
 			'sec'			=> $sec,
-			'user_id'		=> $this->Session->read('Auth.User.id'),
+			'user_id'		=> $this->Auth->user('id'),
 			'user_ip'		=> $_SERVER['REMOTE_ADDR'],
 			'user_agent'	=> $_SERVER['HTTP_USER_AGENT']
 		);

@@ -66,7 +66,7 @@ class RecordsController extends AppController
 		
 		// アクセス可能な学習テーマ一覧を取得
 		$this->loadModel('UsersTheme');
-		$themes = $this->UsersTheme->getThemeRecord( $this->Session->read('Auth.User.id') );
+		$themes = $this->UsersTheme->getThemeRecord( $this->Auth->user('id') );
 		$theme_ids = array();
 		
 		foreach ($themes as $theme)
@@ -138,7 +138,7 @@ class RecordsController extends AppController
 		)
 		{
 			$is_popup = false;
-			$user_id = $this->Session->read('Auth.User.id');
+			$user_id = $this->Auth->user('id');
 		}
 		
 		
@@ -299,7 +299,7 @@ class RecordsController extends AppController
 		
 		$this->Record->create();
 		$data = array(
-			'user_id'		=> $this->Session->read('Auth.User.id'),
+			'user_id'		=> $this->Auth->user('id'),
 			'theme_id'		=> $content['Theme']['id'],
 			'task_id'		=> $task_id,
 			'study_sec' 	=> $study_sec,
@@ -335,7 +335,7 @@ class RecordsController extends AppController
 		
 		$data = array(
 //				'group_id' => $this->Session->read('Auth.User.Group.id'),
-			'user_id'		=> $this->Session->read('Auth.User.id'),
+			'user_id'		=> $this->Auth->user('id'),
 			'theme_id'		=> $content['Theme']['id'],
 			'task_id'		=> $task_id,
 			'theme_rate'	=> $record['theme_rate'],

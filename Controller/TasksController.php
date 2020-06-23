@@ -56,7 +56,7 @@ class TasksController extends AppController
 		if($is_user)
 		{
 			// 学習テーマの閲覧権限の確認
-			if(! $this->Theme->hasRight($this->Session->read('Auth.User.id'), $theme_id))
+			if(! $this->Theme->hasRight($this->Auth->user('id'), $theme_id))
 			{
 				throw new NotFoundException(__('Invalid access'));
 			}
@@ -165,7 +165,7 @@ class TasksController extends AppController
 		// コンテンツの閲覧権限の確認
 		$this->loadModel('Theme');
 		
-		if(! $this->Theme->hasRight($this->Session->read('Auth.User.id'), $task['Task']['theme_id']))
+		if(! $this->Theme->hasRight($this->Auth->user('id'), $task['Task']['theme_id']))
 		{
 			throw new NotFoundException(__('Invalid access'));
 		}
@@ -333,7 +333,7 @@ class TasksController extends AppController
 			
 			if($is_add)
 			{
-				$this->request->data['Task']['user_id'] = $this->Session->read('Auth.User.id');
+				$this->request->data['Task']['user_id'] = $this->Auth->user('id');
 				$this->request->data['Task']['theme_id'] = $theme_id;
 			}
 			
@@ -345,7 +345,7 @@ class TasksController extends AppController
 				$this->loadModel('Record');
 				/*
 				$this->Record->addRecord(
-					$this->Session->read('Auth.User.id'),
+					$this->Auth->user('id'),
 					$theme_id,
 					$id, // task_id
 					$record_type, 
@@ -353,7 +353,7 @@ class TasksController extends AppController
 				);
 				*/
 				$this->Record->addRecord(array(
-					'user_id'		=> $this->Session->read('Auth.User.id'),
+					'user_id'		=> $this->Auth->user('id'),
 					'theme_id'		=> $theme_id,
 					'task_id'		=> $id,
 					'study_sec'		=> $this->request->data['study_sec'],
@@ -488,7 +488,7 @@ class TasksController extends AppController
 				
 				$new_name = date("YmdHis").$fileUpload->getExtension( $fileUpload->get_file_name() );	//	ファイル名：YYYYMMDDHHNNSS形式＋"既存の拡張子"
 				
-				$user_id    = intval($this->Session->read('Auth.User.id'));
+				$user_id    = intval($this->Auth->user('id'));
 				$upload_dir = WWW_ROOT.DS."uploads".DS.$user_id;
 				
 				if(!file_exists($upload_dir))
@@ -541,7 +541,7 @@ class TasksController extends AppController
 			
 			$new_name = date("YmdHis").$fileUpload->getExtension( $fileUpload->get_file_name() );	//	ファイル名：YYYYMMDDHHNNSS形式＋"既存の拡張子"
 
-			$user_id    = intval($this->Session->read('Auth.User.id'));
+			$user_id    = intval($this->Auth->user('id'));
 			$upload_dir = WWW_ROOT.DS."uploads".DS.$user_id;
 			
 			if(!file_exists($upload_dir))

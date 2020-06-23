@@ -57,12 +57,12 @@ class ProgressesController extends AppController
 		$progresses = $this->paginate();
 		
 		// 管理者以外の場合、コンテンツの閲覧権限の確認
-		if($this->Session->read('Auth.User.role') != 'admin')
+		if($this->Auth->user('role') != 'admin')
 		{
 			
 			if(count($progresses) > 0)
 			{
-				if(! $this->Theme->hasRight($this->Session->read('Auth.User.id'), $progresses[0]['Task']['theme_id']))
+				if(! $this->Theme->hasRight($this->Auth->user('id'), $progresses[0]['Task']['theme_id']))
 				{
 					throw new NotFoundException(__('Invalid access'));
 				}
@@ -94,7 +94,7 @@ class ProgressesController extends AppController
 			for($j=0; $j < count($smiles); $j++)
 			{
 				// 自分自身がスマイルしたかどうか
-				if($smiles[$j]['user_id']==$this->Session->read('Auth.User.id'))
+				if($smiles[$j]['user_id']==$this->Auth->user('id'))
 				{
 					$is_smiled = true;
 				}
@@ -131,7 +131,7 @@ class ProgressesController extends AppController
 			
 			if ($progress_id == null)
 			{
-				$this->request->data['Progress']['user_id'] = $this->Session->read('Auth.User.id');
+				$this->request->data['Progress']['user_id'] = $this->Auth->user('id');
 				$this->request->data['Progress']['task_id'] = $task_id;
 			}
 			
@@ -205,7 +205,7 @@ class ProgressesController extends AppController
 		$this->loadModel('Record');
 		
 		$this->Record->addRecord(array(
-			'user_id'		=> $this->Session->read('Auth.User.id'),
+			'user_id'		=> $this->Auth->user('id'),
 			'theme_id'		=> $task['Theme']['id'],
 			'task_id'		=> $task_id,
 			'study_sec'		=> $this->request->data['study_sec'],
@@ -284,15 +284,15 @@ class ProgressesController extends AppController
 		
 		// 管理者以外の場合、コンテンツの閲覧権限の確認
 		if(
-			($this->Session->read('Auth.User.role') != 'admin')&&
-			($this->Session->read('Auth.User.role') != 'manager')
+			($this->Auth->user('role') != 'admin')&&
+			($this->Auth->user('role') != 'manager')
 		)
 		{
 			$this->loadModel('Theme');
 			
 			if(count($progresses) > 0)
 			{
-				if(! $this->Theme->hasRight($this->Session->read('Auth.User.id'), $progresses[0]['Task']['theme_id']))
+				if(! $this->Theme->hasRight($this->Auth->user('id'), $progresses[0]['Task']['theme_id']))
 				{
 					throw new NotFoundException(__('Invalid access'));
 				}
@@ -349,7 +349,7 @@ class ProgressesController extends AppController
 			
 			//debug($this->Record);
 			$data = array(
-				'user_id'		=> $this->Session->read('Auth.User.id'),
+				'user_id'		=> $this->Auth->user('id'),
 				'theme_id'		=> 0,
 				'task_id'	=> $task_id,
 				'study_sec'		=> $record['study_sec'],
@@ -474,7 +474,7 @@ class ProgressesController extends AppController
 		{
 			if ($id == null)
 			{
-				$this->request->data['Progress']['user_id'] = $this->Session->read('Auth.User.id');
+				$this->request->data['Progress']['user_id'] = $this->Auth->user('id');
 				$this->request->data['Progress']['task_id'] = $task_id;
 			}
 			
@@ -621,7 +621,7 @@ class ProgressesController extends AppController
 		{
 			$data = array(
 				'progress_id'	=> $this->data['progress_id'],
-				'user_id'		=> $this->Session->read('Auth.User.id'),
+				'user_id'		=> $this->Auth->user('id'),
 			);
 			
 			$this->loadModel('Smile');
