@@ -52,12 +52,13 @@ class ProgressesController extends AppController
 		
 		//debug($this->request->params);
 		
+		$this->loadModel('Theme');
+		
 		$progresses = $this->paginate();
 		
 		// 管理者以外の場合、コンテンツの閲覧権限の確認
 		if($this->Session->read('Auth.User.role') != 'admin')
 		{
-			$this->loadModel('Theme');
 			
 			if(count($progresses) > 0)
 			{
@@ -165,10 +166,13 @@ class ProgressesController extends AppController
 		
 		// 学習テーマに紐づくユーザを取得
 		$this->loadModel('UsersTheme');
-		$mail_list = $this->UsersTheme->getMailList($content['Theme']['id']);
+		//$mail_list = $this->UsersTheme->getMailList($content['Theme']['id']);
 		//debug($list);
 		
-		$this->set(compact('content', 'progresses', 'mail_list', 'is_record', 'is_admin', 'is_add', 'is_user'));
+		// メール通知用
+		$users = $this->User->find('list');
+		
+		$this->set(compact('content', 'progresses', 'mail_list', 'is_record', 'is_admin', 'is_add', 'is_user', 'users'));
 	}
 	
 	private function __save_record($task_id, $progress_id)
@@ -177,7 +181,7 @@ class ProgressesController extends AppController
 		$progress_type	= $this->request->data['Progress']['progress_type'];
 		$record_type	= $is_add ? $progress_type : $progress_type.'_update';
 		$task_status	= $this->request->data['Progress']['status'];
-		$emotion_icon	= $this->request->data['Progress']['emotion_icon'];
+		$emotion_icon	= @$this->request->data['Progress']['emotion_icon'];
 		
 		// 課題の進捗率を更新（種別が進捗の場合のみ）
 		if($progress_type=='progress')
@@ -217,24 +221,36 @@ class ProgressesController extends AppController
 		$this->Task->Theme->id = $task['Theme']['id'];
 		$this->Task->Theme->saveField('modified', date(date('Y-m-d H:i:s')));
 		
+		
+
 		// メール通知がオンの場合
 		if(@$this->request->data['is_mail']=='on')
 		{
 			$this->loadModel('UsersTheme');
 			
 			// 学習テーマに紐づくユーザのメールアドレスを取得
-			$list = $this->UsersTheme->getMailList($task['Theme']['id']);
+			//$list = $this->UsersTheme->getMailList($task['Theme']['id']);
+			
+			// メール通知リスト
+			$users = $this->User->find('all', array(
+				'conditions' => array(
+					'User.id' => $this->request->data['Progress']['User']
+				),
+			));
 			
 			$admin_from	= Configure :: read('admin_from');
 			$mail_title	= Configure :: read('mail_title');
 			
-			foreach ($list as $item)
+			foreach ($users as $user)
 			{
+				if(strlen($user['User']['email']) < 6)
+					continue;
+				
 				// 管理者か学習者かによってURLを変更
-				$url = Router::url(array('controller' => 'progresses', 'action' => 'index', $task_id, 'admin' => ($item['role']=='admin')), true);
+				$url = Router::url(array('controller' => 'progresses', 'action' => 'index', $task_id, 'admin' => ($user['User']['role']=='admin')), true);
 				
 				$params = array(
-					'name'			=> $item['name'],
+					'name'			=> $user['User']['name'],
 					'theme_title'	=> $task['Theme']['title'],
 					'content_title'	=> $task['Task']['title'],
 					'record_type'	=> Configure::read('record_type.'.$record_type),
@@ -242,18 +258,16 @@ class ProgressesController extends AppController
 					'updater'		=> $this->Auth->user('name'),
 				);
 				
-				//debug($params);
-				
 				// メールの送信
 				$mail = new CakeEmail();
 				$mail->from($admin_from);
-				$mail->to($item['email']);
+				$mail->to($user['User']['email']);
 				$mail->subject($mail_title);
 				$mail->template('update');
 				$mail->viewVars($params);
 				$mail->send();
 				
-				$this->writeLog('mail_sent', $item['email'], 'progresses', 'index', $task_id);
+				$this->writeLog('mail_sent', $user['User']['email'], 'progresses', 'index', $task_id);
 			}
 		}
 	}

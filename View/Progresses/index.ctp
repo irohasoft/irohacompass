@@ -1,8 +1,11 @@
 <?php if(!$is_user) echo $this->element('admin_menu');?>
+<?php echo $this->Html->css( 'select2.min.css');?>
+<?php echo $this->Html->script( 'select2.min.js');?>
 <?php $this->start('script-embedded'); ?>
 <script>
 	var URL_UPLOAD	= '<?php echo Router::url(array('controller' => 'tasks', 'action' => 'upload', 'admin' => false))?>/file';
 	var URL_NOTE	= '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false))?>/';
+	var LS_KEY_EMAIL_USER = 'ic-email-user-<?php echo $content['Theme']['id']; ?>';
 	
 	/* 進捗一覧用 */
 	$(function(){
@@ -40,6 +43,27 @@
 			$('#uploadDialog').modal('show');
 			return false;
 		});
+		
+
+		// メール通知する場合、メール通知先の入力をチェック
+		$('#ProgressIndexForm').submit(function()
+		{
+			if($('input[name="is_mail"]:checked').length==0)
+				return true;
+			
+			if($('#ProgressUser').val()==null)
+			{
+				alert('メール通知するユーザを選択してください\n次回以降は自動で選択されます');
+				return false;
+			}
+			
+			CommonUtil.setLocalStorage(LS_KEY_EMAIL_USER, $('#ProgressUser').val());
+			return true;
+		});
+
+		// メール通知用
+		$('#ProgressUser').select2({placeholder:   "メール通知するユーザを選択して下さい。(複数選択可)", closeOnSelect: <?php echo (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
+		$('#ProgressUser').val(CommonUtil.getLocalStorage(LS_KEY_EMAIL_USER)).change();
 		
 		// 進捗編集画面の再描画
 		renderEditForm();
@@ -419,6 +443,7 @@
 				
 				
 				// メール通知対象リスト
+				/*
 				$mail_target = '';
 				
 				foreach($mail_list as $item)
@@ -428,11 +453,13 @@
 					
 					$mail_target .= str_replace(',', '', $item['name']);
 				}
+				*/
 			?>
 			<div class="form-group">
-				<div class="col col-sm-9 col-sm-offset-3">
-					<p> ※ 学習テーマの所有者・関係者・管理者<!-- (<?php echo $mail_target; ?>) -->に更新が発生した旨を通知します<br><input name="is_mail" type="checkbox">&nbsp;<span data-localize="email_notification">メール通知</span></p>
-				</div>
+				
+			</div>
+			<?php echo $this->Form->input('User',		array('label' => __('　'), 'size' => 20, 'multiple' => true, 'before' => '<div class="col col-sm-9 col-sm-offset-3"><input name="is_mail" type="checkbox">&nbsp;<span data-localize="email_notification">メール通知</span></div>'));?>
+			<div class="form-group add-progress">
 				<div class="col col-sm-9 col-sm-offset-3">
 					<?php echo $this->Form->submit(($is_add) ? __('追加') :  __('保存'), Configure::read('form_submit_defaults')); ?>
 				</div>

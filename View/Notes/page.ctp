@@ -124,6 +124,16 @@
 		<textarea id="txtWebLeafURL" style="width:100%;height:50px;"></textarea>
 	</p>
 </div>
+<div id="imageLeafDialog" style="display:none;" title="Web リーフ">
+	<p>
+		<input type="text" id="txt-image-title" placeholder="タイトル">
+	</p>
+	<p>
+		<input type="file" name="file" class="form-control">
+		<input type="hidden" id="txtImageLeafURL">
+	</p>
+	<div class='image-preview'></div>
+</div>
 <div id="showAllDialog" style="display:none;" title="全文表示">
 	<p>
 	</p>

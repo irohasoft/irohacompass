@@ -198,5 +198,35 @@ CommonUtility.prototype.createProgressChart = function (labels, access_data, pro
 	});
 }
 
+CommonUtility.prototype.setLocalStorage = function(key, data)
+{
+	try
+	{
+		localStorage[key] = JSON.stringify(data);
+	}
+	catch (e)
+	{
+		console.log(e);
+	}
+}
+
+CommonUtility.prototype.getLocalStorage = function(key)
+{
+	var result = new Array();
+	try
+	{
+		if(localStorage[key])
+			result = JSON.parse(localStorage[key])
+
+		return result;
+	}
+	catch (e)
+	{
+		console.log(e);
+		return result;
+	}
+}
+
+
 var CommonUtil = new CommonUtility();
 

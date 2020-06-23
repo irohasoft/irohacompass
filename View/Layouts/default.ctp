@@ -44,7 +44,7 @@
 		echo $this->Html->script('bootstrap.min.js');
 		echo $this->Html->script('moment.js');
 		echo $this->Html->script('marked.min.js');
-		echo $this->Html->script('common.js?20200308');
+		echo $this->Html->script('common.js?20200622');
 		
 		// 管理画面用スクリプト
 		if($is_admin_page)
