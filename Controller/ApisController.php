@@ -400,7 +400,8 @@ class ApisController extends AppController
 			'conditions' => array(
 				'Leaf.page_id' => $page_id,
 				'Leaf.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
-			)
+			),
+			'order' => 'Leaf.leaf_zorder asc',
 		);
 		
 		// 管理権限の場合、ユーザIDは任意とする
