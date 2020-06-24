@@ -579,7 +579,7 @@ Leaf.prototype.display = function ()
 					"</div>" + 
 					"<div class='clsLeafMainContainer'>" +
 					"  <input type='text' placeholder='(non title)' value='" + this.leaf_title + "' class='clsLeafTitle'>" + 
-					"  <div class='clsLeafCover' title='" + this.leaf_title + "'></div>" + 
+					"  <div class='clsLeafCover' title='" + this.leaf_title + "></div>" + 
 					"  <div class='clsLeafDeleteButton ai-close'></div>" + 
 					"  <div class='clsLeafSave'>" + 
 					"    <span class='clsLeafSaveButton ai-button'><img src='" + ROOT_PATH + "images/btnSave.png'/>保存</span>" + 
@@ -678,8 +678,8 @@ Leaf.prototype.display = function ()
 		
 		// グループの場合、表示順を更新しない
 		if(leaf.leaf_kind==LEAF_KIND_GROUP)
-			return;
-
+			zIndex = zIndex.toString().substr(-5);
+		
 		// 表示順を更新
 		$(this).css({ zIndex: zIndex });
 		leaf.updateZOrder();
@@ -946,6 +946,8 @@ Leaf.prototype.update = function ()
 {
 	this.leaf_title   = this.clsLeafTitle.val();
 	this.leaf_content = this.clsLeafContent.val();
+	
+	console.log(this.leaf_title);
 	
 	var data = {
 		cmd				: "update",

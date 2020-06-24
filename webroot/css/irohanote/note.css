@@ -296,6 +296,7 @@ body {
 {
 	width				: 0px;
 }
+
 .clsLeafCover
 {
 	width				: 100%;
@@ -305,6 +306,11 @@ body {
 	background-color	: #eee;
 	opacity				: 0.1;
 	filter				: alpha(opacity=10);
+}
+
+.clsGroupContainer .clsLeafCover
+{
+	top					: -35px;
 }
 
 .clsLeafColorBar
