@@ -579,11 +579,11 @@ Leaf.prototype.display = function ()
 					"</div>" + 
 					"<div class='clsLeafMainContainer'>" +
 					"  <input type='text' placeholder='(non title)' value='" + this.leaf_title + "' class='clsLeafTitle'>" + 
-					"  <div class='clsLeafCover' title='" + this.leaf_title + "></div>" + 
-					"  <div class='clsLeafDeleteButton ai-close'></div>" + 
+					"  <div class='clsLeafCover' title='" + this.leaf_title + "'></div>" + 
 					"  <div class='clsLeafSave'>" + 
 					"    <span class='clsLeafSaveButton ai-button'><img src='" + ROOT_PATH + "images/btnSave.png'/>保存</span>" + 
 					"  </div>" + 
+					"  <div class='clsLeafDeleteButton ai-close'></div>" + 
 					"</div>" + 
 				"</div>"
 			);
