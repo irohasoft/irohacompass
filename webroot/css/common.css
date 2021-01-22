@@ -448,6 +448,11 @@ form .required .control-label:after
 	margin:10px;
 }
 
+.list-group h4
+{
+	font-weight			: bold;
+}
+
 .sort-item a.asc:after
 {
 	content			: ' ▼';
