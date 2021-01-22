@@ -19,3 +19,12 @@ CREATE TABLE IF NOT EXISTS `ib_smiles` (
   UNIQUE KEY `idx_smiles_user_progress` (`user_id`,`progress_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+CREATE TABLE `ib_ideas` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `body` text NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

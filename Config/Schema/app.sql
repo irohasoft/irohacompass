@@ -323,6 +323,18 @@ CREATE TABLE `ib_links` (
   UNIQUE KEY `link_id` (`link_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Table structure for ib_ideas
+-- ----------------------------
+CREATE TABLE `ib_ideas` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `body` text NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 SET FOREIGN_KEY_CHECKS=1;
 
 -- ----------------------------
