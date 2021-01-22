@@ -19,6 +19,7 @@ class DATABASE_CONFIG {
 		'password' => '',
 		//'database' => 'ic_test',
 		'database' => 'irohacompass',
+//		'database' => 'mysql_yuizono_202007140030',
 		//'password' => 'irohairoha1',
 		'prefix' => 'ib_',
 		'encoding' => 'utf8'
