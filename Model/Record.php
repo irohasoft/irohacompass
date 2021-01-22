@@ -26,97 +26,97 @@ class Record extends AppModel
 	 *
 	 * @var array
 	 */
-	public $validate = array(
-			'theme_id' => array(
-					'numeric' => array(
-							'rule' => array(
+	public $validate = [
+			'theme_id' => [
+					'numeric' => [
+							'rule' => [
 									'numeric'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'user_id' => array(
-					'numeric' => array(
-							'rule' => array(
+										]
+			],
+			'user_id' => [
+					'numeric' => [
+							'rule' => [
 									'numeric'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'task_id' => array(
-					'numeric' => array(
-							'rule' => array(
+										]
+			],
+			'task_id' => [
+					'numeric' => [
+							'rule' => [
 									'numeric'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			)
-	);
+										]
+			]
+	];
 	
 	// The Associations below have been created with all possible keys, those
 	// that are not needed can be removed
-	public $hasMany = array(
-	);
+	public $hasMany = [
+	];
 
 	/**
 	 * belongsTo associations
 	 *
 	 * @var array
 	 */
-	public $belongsTo = array(
-			'Theme' => array(
+	public $belongsTo = [
+			'Theme' => [
 					'className' => 'Theme',
 					'foreignKey' => 'theme_id',
 					'conditions' => '',
 					'fields' => '',
 					'order' => ''
-			),
-			'User' => array(
+			],
+			'User' => [
 					'className' => 'User',
 					'foreignKey' => 'user_id',
 					'conditions' => '',
 					'fields' => '',
 					'order' => ''
-			),
-			'Task' => array(
+			],
+			'Task' => [
 					'className' => 'Task',
 					'foreignKey' => 'task_id',
 					'conditions' => '',
 					'fields' => '',
 					'order' => ''
-			)
-	);
+			]
+	];
 	
 	// 検索用
-	public $actsAs = array(
+	public $actsAs = [
 			'Search.Searchable'
-	);
+	];
 
-	public $filterArgs = array(
-			'username' => array(
+	public $filterArgs = [
+			'username' => [
 					'type' => 'like',
 					'field' => 'User.username'
-			),
-			'name' => array(
+			],
+			'name' => [
 					'type' => 'like',
 					'field' => 'User.name'
-			)
-	);
+			]
+	];
 
 	/**
 	 * 学習テーマ、課題、進捗の追加、更新履歴を追加
@@ -132,10 +132,10 @@ class Record extends AppModel
 		
 		// 学習テーマの進捗率（全課題の平均）
 		$sql = "SELECT AVG(rate) as theme_avg FROM ib_tasks WHERE user_id = :user_id AND theme_id = :theme_id";
-		$params = array(
+		$params = [
 			'user_id'	=> $record['user_id'],
 			'theme_id'	=> $record['theme_id']
-		);
+		];
 		$data = $this->query($sql, $params);
 		$theme_rate = $data[0][0]["theme_avg"];
 		
@@ -143,9 +143,9 @@ class Record extends AppModel
 		if($record['task_id'] > 0)
 		{
 			$sql = "SELECT ifnull(rate, 0) as task_rate, status FROM ib_tasks WHERE id = :task_id";
-			$params = array(
+			$params = [
 				'task_id' => $record['task_id']
-			);
+			];
 			$data = $this->query($sql, $params);
 			//debug($data);
 			
@@ -153,7 +153,7 @@ class Record extends AppModel
 			$status		= $data[0]['ib_tasks']["status"];
 		}
 		
-		$data = array(
+		$data = [
 			'user_id'		=> $record['user_id'],
 			'theme_id'		=> $record['theme_id'],
 			'task_id'		=> $record['task_id'],
@@ -163,7 +163,7 @@ class Record extends AppModel
 			'theme_rate'	=> $theme_rate,
 			'record_type'	=> $record['record_type'],
 			'is_complete'	=> $status
-		);
+		];
 		
 		//debug($data);
 		
@@ -184,13 +184,13 @@ EOF;
 		// 集計開始日を指定（デモモードの場合、設定ファイルの日付を設定）
 		$start_date = Configure::read('demo_mode') ? Configure::read('demo_target_date') : date('Y-m-d', strtotime('-13 day'));
 		
-		$params = array(
+		$params = [
 			'user_id'		=> $user_id,
 			'start_date'	=> $start_date,
-		);
+		];
 		
 		$data = $this->query($sql, $params);
-		$ret_data = array();
+		$ret_data = [];
 		
 		//debug($data);
 		
@@ -226,13 +226,13 @@ EOF;
 		// 集計開始日を指定（デモモードの場合、設定ファイルの日付を設定）
 		$start_date = Configure::read('demo_mode') ? Configure::read('demo_target_date') : date('Y-m-d', strtotime('-13 day'));
 		
-		$params = array(
+		$params = [
 			'user_id'		=> $user_id,
 			'start_date'	=> $start_date,
-		);
+		];
 		
 		$data = $this->query($sql, $params);
-		$ret_data = array();
+		$ret_data = [];
 		
 		//debug($data);
 		
@@ -257,7 +257,7 @@ EOF;
 
 	public function getDateLabels()
 	{
-		$labels		= array();
+		$labels		= [];
 		
 		for($i=0; $i<14; $i++ )
 		{

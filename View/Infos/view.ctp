@@ -1,15 +1,15 @@
 <div class="infos-view">
 	<div class="breadcrumb">
 	<?php
-	$this->Html->addCrumb('HOME', array(
+	$this->Html->addCrumb('HOME', [
 			'controller' => 'users_themes',
 			'action' => 'index'
-	));
+	]);
 
-	$this->Html->addCrumb('お知らせ一覧', array(
+	$this->Html->addCrumb('お知らせ一覧', [
 		'controller' => 'infos',
 		'action' => 'index'
-	));
+	]);
 
 	echo $this->Html->getCrumbs(' / ');
 	
@@ -18,7 +18,7 @@
 	$body  = $info['Info']['body'];
 	//$body  = $this->Text->autoLinkUrls($body);
 	// 暫定対応
-	$body  = $this->Text->autoLinkUrls($body, array('escape' => false));
+	$body  = $this->Text->autoLinkUrls($body, ['escape' => false]);
 	$body  = nl2br($body);
 	?>
 	</div>

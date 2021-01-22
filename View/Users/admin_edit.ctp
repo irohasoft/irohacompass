@@ -1,7 +1,7 @@
 <?php echo $this->element('admin_menu');?>
 <?php echo $this->Html->css( 'select2.min.css');?>
 <?php echo $this->Html->script( 'select2.min.js');?>
-<?php $this->Html->scriptStart(array('inline' => false)); ?>
+<?php $this->Html->scriptStart(['inline' => false]); ?>
 	$(function (e) {
 		$('#GroupGroup').select2({placeholder:   "所属するグループを選択して下さい。(複数選択可)", closeOnSelect: <?php echo (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
 		$('#ThemeTheme').select2({placeholder: "利用する学習テーマを選択して下さい。(複数選択可)", closeOnSelect: <?php echo (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
@@ -10,7 +10,7 @@
 	});
 <?php $this->Html->scriptEnd(); ?>
 <div class="admin-users-edit">
-<?php echo $this->Html->link(__('<< 戻る'), array('action' => 'index'))?>
+<?php echo $this->Html->link(__('<< 戻る'), ['action' => 'index'])?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<?php echo ($this->request->data) ? __('編集') :  __('新規ユーザ'); ?>
@@ -21,14 +21,14 @@
 				$password_label = ($this->request->data) ? __('新しいパスワード') : __('パスワード');
 				
 				echo $this->Form->input('id');
-				echo $this->Form->input('username',				array('label' => 'ログインID'));
-				echo $this->Form->input('User.new_password',	array('label' => $password_label, 'type' => 'password', 'autocomplete' => 'new-password'));
-				echo $this->Form->input('name',					array('label' => '氏名'));
+				echo $this->Form->input('username',				['label' => 'ログインID']);
+				echo $this->Form->input('User.new_password',	['label' => $password_label, 'type' => 'password', 'autocomplete' => 'new-password']);
+				echo $this->Form->input('name',					['label' => '氏名']);
 				
 				// root アカウント、もしくは admin 権限以外の場合、権限変更を許可しない
 				$disabled = (($username == 'root')||($loginedUser['role']!='admin'));
 				
-				echo $this->Form->input('role',	array(
+				echo $this->Form->input('role',	[
 					'type' => 'radio',
 					'before' => '<label class="col col-sm-3 control-label">権限</label>',
 					'separator'=>"　", 
@@ -36,23 +36,23 @@
 					'legend' => false,
 					'class' => false,
 					'options' => Configure::read('user_role')
-					)
+					]
 				);
 				
-				echo $this->Form->input('lang',	array(
+				echo $this->Form->input('lang',	[
 					'type' => 'radio',
 					'before' => '<label class="col col-sm-3 control-label">言語</label>',
 					'separator'=>"　", 
 					'legend' => false,
 					'class' => false,
 					'options' => Configure::read('lang')
-					)
+					]
 				);
 				
-				echo $this->Form->input('email',				array('label' => 'メールアドレス'));
-				echo $this->Form->input('comment',				array('label' => '備考'));
-				echo $this->Form->input('Group',				array('label' => '所属グループ',	'size' => 20));
-				echo $this->Form->input('Theme',				array('label' => '学習テーマ',		'size' => 20));
+				echo $this->Form->input('email',				['label' => 'メールアドレス']);
+				echo $this->Form->input('comment',				['label' => '備考']);
+				echo $this->Form->input('Group',				['label' => '所属グループ',	'size' => 20]);
+				echo $this->Form->input('Theme',				['label' => '学習テーマ',		'size' => 20]);
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">

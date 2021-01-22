@@ -8,34 +8,34 @@
  * @license       http://www.gnu.org/licenses/gpl-3.0.en.html GPL License
  */
 
-$config['group_status']		= array('1' => '公開', '0' => '非公開');
-$config['theme_status']		= array('1' => '有効', '0' => '無効');
+$config['group_status']		= ['1' => '公開', '0' => '非公開'];
+$config['theme_status']		= ['1' => '有効', '0' => '無効'];
 
-$config['progress_type']			= array(
+$config['progress_type']			= [
 	'progress'	=> '進捗',
 	'comment'	=> 'コメント',
 	'idea'		=> 'アイデア・メモ',
 	'question'	=> '質問',
 	'answer'	=> '回答',
-);
+];
 
-$config['content_type']	= array(
+$config['content_type']	= [
 	'text'		=> 'テキスト',
 	'markdown'	=> 'Markdown',
 	'irohanote'	=> 'アイデアマップ',
-);
+];
 
-$config['progress_type_enq']	= array(
+$config['progress_type_enq']	= [
 	'single'	=> '選択形式',
 	'text'		=> '記述式'
-);
+];
 
-$config['lang']	= array(
+$config['lang']	= [
 	'jp'		=> '日本語',
 	'en'		=> '英語'
-);
+];
 
-$config['record_type'] = array(
+$config['record_type'] = [
 	'0'					=> '',
 	'theme_add'			=> '学習テーマ追加',
 	'theme_update'		=> '学習テーマ更新',
@@ -51,14 +51,14 @@ $config['record_type'] = array(
 	'idea_update'		=> 'アイデア・メモ更新',
 	'question_update'	=> '質問更新',
 	'answer_update'		=> '回答更新',
-);
+];
 
-$config['user_role'] = array('admin' => '管理者', 'user' => '学習者');
+$config['user_role'] = ['admin' => '管理者', 'user' => '学習者'];
 
-$config['task_priority'] = array('1' => '高', '2' => '中', '3' => '低');
-$config['task_status'] = array('1' => '未対応', '2' => '実施中', '3' => '完了');
+$config['task_priority'] = ['1' => '高', '2' => '中', '3' => '低'];
+$config['task_status'] = ['1' => '未対応', '2' => '実施中', '3' => '完了'];
 
-$config['upload_extensions'] = array(
+$config['upload_extensions'] = [
 	'.png',
 	'.gif',
 	'.jpg',
@@ -79,21 +79,21 @@ $config['upload_extensions'] = array(
 	'.mp3',
 	'.wma',
 	'.m4a',
-);
+];
 
-$config['upload_image_extensions'] = array(
+$config['upload_image_extensions'] = [
 	'.png',
 	'.gif',
 	'.jpg',
 	'.jpeg',
-);
+];
 
-$config['upload_movie_extensions'] = array(
+$config['upload_movie_extensions'] = [
 	'.mov',
 	'.mp4',
 	'.wmv',
 	'.asx',
-);
+];
 
 // アップロードサイズの上限（別途 php.ini で upload_max_filesize を設定する必要があります）
 $config['upload_maxsize']		= 1024 * 1024 * 10;
@@ -131,25 +131,25 @@ $config['demo_password']	= "pass";
 $config['demo_target_date']	= "2018/12/17";
 
 // フォームのスタイル(BoostCake)の基本設定
-$config['form_defaults'] = array(
-	'inputDefaults' => array(
+$config['form_defaults'] = [
+	'inputDefaults' => [
 		'div' => 'form-group',
-		'label' => array(
+		'label' => [
 			'class' => 'col col-sm-3 control-label'
-		),
+		],
 		'wrapInput' => 'col col-sm-9',
 		'class' => 'form-control'
-	),
+	],
 	'class' => 'form-horizontal'
-);
+];
 
-$config['form_submit_defaults'] = array(
+$config['form_submit_defaults'] = [
 	'div' => false,
 	'class' => 'btn btn-primary',
 	'data-localize' => 'save'
-);
+];
 
-$config['theme_colors'] = array(
+$config['theme_colors'] = [
 	'#337ab7' => 'default',
 	'#003f8e' => 'ink blue',
 	'#4169e1' => 'royal blue',
@@ -170,17 +170,17 @@ $config['theme_colors'] = array(
 	'#696969' => 'dim gray',
 	'#2f4f4f' => 'dark slate gray',
 	'#000000' => 'black'
-);
+];
 
-$config['emotion_icons']   = array(
+$config['emotion_icons']   = [
 	'positive-2' => 'positive-2.png',
 	'positive-1' => 'positive-1.png',
 	'normal'     => 'normal.png',
 	'negative'   => 'negative.png',
-);
+];
 
 // メール関連の設定
 $config['mail_title']	= '[iroha Compass] 進捗の更新';
-$config['admin_from']	= array('sendmail@irohasoft.com' => 'iroha Compass');
+$config['admin_from']	= ['sendmail@irohasoft.com' => 'iroha Compass'];
 
 

@@ -20,23 +20,23 @@ App::uses('Group', 'Group');
 class UsersController extends AppController
 {
 
-	public $components = array(
+	public $components = [
 			'Session',
 			'Paginator',
-			'Security' => array(
+			'Security' => [
 				'csrfUseOnce' => false,
-				'unlockedActions' => array('login', 'admin_login'),
-			),
+				'unlockedActions' => ['login', 'admin_login'],
+			],
 			'Search.Prg',
 			'Cookie',
-			'Auth' => array(
-					'allowedActions' => array(
+			'Auth' => [
+					'allowedActions' => [
 							'index',
 							'login',
 							'logout'
-					)
-			)
-	);
+					]
+			]
+	];
 
 	/**
 	 * ホーム画面（受講コース一覧）へリダイレクト
@@ -70,9 +70,9 @@ class UsersController extends AppController
 		{
 			$this->Flash->error(__('ユーザを削除できませんでした'));
 		}
-		return $this->redirect(array(
+		return $this->redirect([
 				'action' => 'index'
-		));
+		]);
 	}
 
 	/**
@@ -85,10 +85,10 @@ class UsersController extends AppController
 		$this->request->allowMethod('post', 'delete');
 		$this->User->deleteUserRecords($user_id);
 		$this->Flash->success(__('学習履歴を削除しました'));
-		return $this->redirect(array(
+		return $this->redirect([
 			'action' => 'edit',
 			$user_id
-		));
+		]);
 	}
 
 	/**
@@ -203,14 +203,14 @@ class UsersController extends AppController
 		//$this->User->virtualFields['group_title']  = 'group_title';		// 外部結合テーブルのフィールドによるソート用
 		//$this->User->virtualFields['course_title'] = 'course_title';		// 外部結合テーブルのフィールドによるソート用
 		
-		$this->paginate = array(
-			'User' => array(
-				'fields' => array('*',
+		$this->paginate = [
+			'User' => [
+				'fields' => ['*',
 					// 所属グループ一覧 ※パフォーマンス改善
 					'(SELECT group_concat(g.title order by g.id SEPARATOR \', \') as group_title  FROM ib_users_groups  ug INNER JOIN ib_groups  g ON g.id = ug.group_id  WHERE ug.user_id = User.id) as group_title',
 					// 受講コース一覧   ※パフォーマンス改善
 					'(SELECT group_concat(c.title order by c.id SEPARATOR \', \') as theme_title FROM ib_users_themes uc INNER JOIN ib_themes c ON c.id = uc.theme_id WHERE uc.user_id = User.id) as theme_title',
-				),
+				],
 				'conditions' => $conditions,
 				'limit' => 20,
 				'order' => 'created desc',
@@ -226,7 +226,7 @@ class UsersController extends AppController
 							'conditions' => 'User.id = UserGroup.user_id')
 				)
 */
-		));
+		]];
 
 		// ユーザ一覧を取得
 		try
@@ -259,10 +259,10 @@ class UsersController extends AppController
 		
 		$username = '';
 		
-		if ($this->request->is(array(
+		if ($this->request->is([
 				'post',
 				'put'
-		)))
+		]))
 		{
 			if(Configure::read('demo_mode'))
 				return;
@@ -276,9 +276,9 @@ class UsersController extends AppController
 
 				unset($this->request->data['User']['new_password']);
 
-				return $this->redirect(array(
+				return $this->redirect([
 						'action' => 'index'
-				));
+				]);
 			}
 			else
 			{
@@ -287,11 +287,11 @@ class UsersController extends AppController
 		}
 		else
 		{
-			$options = array(
-				'conditions' => array(
+			$options = [
+				'conditions' => [
 					'User.' . $this->User->primaryKey => $user_id
-				)
-			);
+				]
+			];
 			$this->request->data = $this->User->find('first', $options);
 			
 			if($this->request->data)
@@ -311,10 +311,10 @@ class UsersController extends AppController
 	 */
 	public function setting()
 	{
-		if ($this->request->is(array(
+		if ($this->request->is([
 				'post',
 				'put'
-		)))
+		]))
 		{
 			if(Configure::read('demo_mode'))
 				return;
@@ -347,11 +347,11 @@ class UsersController extends AppController
 		}
 		else
 		{
-			$options = array(
-				'conditions' => array(
+			$options = [
+				'conditions' => [
 						'User.' . $this->User->primaryKey => $this->Auth->user('id')
-				)
-			);
+				]
+			];
 			$this->request->data = $this->User->find('first', $options);
 		}
 	}

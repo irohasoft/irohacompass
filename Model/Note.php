@@ -24,8 +24,8 @@ class Note extends AppModel
 	 *
 	 * @var array
 	 */
-	public $validate = array(
-	);
+	public $validate = [
+	];
 	
 	// The Associations below have been created with all possible keys, those
 	// that are not needed can be removed
@@ -35,23 +35,23 @@ class Note extends AppModel
 	 *
 	 * @var array
 	 */
-	public $hasAndBelongsToMany = array(
-	);
+	public $hasAndBelongsToMany = [
+	];
 
 	/**
 	 * belongsTo associations
 	 *
 	 * @var array
 	 */
-	public $belongsTo = array(
-			'User' => array(
+	public $belongsTo = [
+			'User' => [
 					'className' => 'User',
 					'foreignKey' => 'user_id',
 					'conditions' => '',
 					'fields' => '',
 					'order' => ''
-			),
-	);
+			],
+	];
 	public function getUserIDList($note_id)
 	{
 		$sql = <<<EOF
@@ -59,13 +59,13 @@ SELECT id FROM ib_users
 EOF;
 
 
-		$params = array(
+		$params = [
 //			'note_id' => $note_id,
-		);
+		];
 		
 		$data = $this->query($sql, $params);
 		
-		$user_id_list =  array();
+		$user_id_list =  [];
 		
 		//debug($data);
 		foreach ($data as $item)

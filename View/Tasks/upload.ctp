@@ -78,7 +78,7 @@
 		</div>
 
 		<div class="form-group">
-			<?php echo $this->Form->create('Task', array('type'=>'file', 'enctype' => 'multipart/form-data')); ?>
+			<?php echo $this->Form->create('Task', ['type'=>'file', 'enctype' => 'multipart/form-data']); ?>
 				<div class="drop-container alert alert-warning">
 					<p>ここにファイルをドロップするか、ファイルを選択後、アップロードボタンをクリックしてください。</p>
 					<p>ファイルが複数ある場合には、ZIP形式で圧縮してアップロードを行ってください。</p>

@@ -24,31 +24,31 @@ App::uses('Group',  'Group');
 class RecordsController extends AppController
 {
 
-	public $components = array(
+	public $components = [
 			'Paginator',
 			'Search.Prg'
-	);
+	];
 
 	//public $presetVars = true;
 
-	public $paginate = array();
+	public $paginate = [];
 	
-	public $presetVars = array(
-		array(
+	public $presetVars = [
+		[
 			'name' => 'name', 
 			'type' => 'value',
 			'field' => 'User.name'
-		), 
-		array(
+		], 
+		[
 			'name' => 'username',
 			'type' => 'like',
 			'field' => 'User.username'
-		), 
-		array(
+		], 
+		[
 			'name' => 'contenttitle', 'type' => 'like',
 			'field' => 'Task.title'
-		)
-	);
+		]
+	];
 	
 	// 検索対象のフィルタ設定
 	/*
@@ -67,7 +67,7 @@ class RecordsController extends AppController
 		// アクセス可能な学習テーマ一覧を取得
 		$this->loadModel('UsersTheme');
 		$themes = $this->UsersTheme->getThemeRecord( $this->Auth->user('id') );
-		$theme_ids = array();
+		$theme_ids = [];
 		
 		foreach ($themes as $theme)
 		{
@@ -90,24 +90,24 @@ class RecordsController extends AppController
 		
 		$from_date	= (isset($this->request->query['from_date'])) ? 
 			$this->request->query['from_date'] : 
-				array(
+				[
 					'year' => date('Y', strtotime("-1 month")),
 					'month' => date('m', strtotime("-1 month")), 
 					'day' => date('d', strtotime("-1 month"))
-				);
+				];
 		
 		$to_date	= (isset($this->request->query['to_date'])) ? 
 			$this->request->query['to_date'] : 
-				array('year' => date('Y'), 'month' => date('m'), 'day' => date('d'));
+				['year' => date('Y'), 'month' => date('m'), 'day' => date('d')];
 		
 		if(Configure::read('demo_mode'))
 			$from_date = explode("/", Configure::read('demo_target_date'));
 		
 		// 学習日付による絞り込み
-		$conditions['Record.created BETWEEN ? AND ?'] = array(
+		$conditions['Record.created BETWEEN ? AND ?'] = [
 			implode("/", $from_date), 
 			implode("/", $to_date).' 23:59:59'
-		);
+		];
 		
 		if($contenttitle != "")
 			$conditions['Task.title like'] = '%'.$contenttitle.'%';
@@ -146,7 +146,7 @@ class RecordsController extends AppController
 		$labels			= $this->Record->getDateLabels();
 		$login_data		= $this->Record->getLoginData($user_id, $labels);
 		$progress_data	= $this->Record->getProgressData($user_id, $labels);
-		$themes			= $this->Theme->find('list', array('conditions' => array('Theme.id' => $theme_ids)));
+		$themes			= $this->Theme->find('list', ['conditions' => ['Theme.id' => $theme_ids]]);
 		
 		$this->set(compact('labels', 'login_data', 'progress_data', 'themes', 'theme_id', 'contenttitle', 'from_date', 'to_date', 'is_popup'));
 	}
@@ -187,21 +187,21 @@ class RecordsController extends AppController
 		
 		$from_date	= (isset($this->request->query['from_date'])) ? 
 			$this->request->query['from_date'] : 
-				array(
+				[
 					'year' => date('Y', strtotime("-1 month")),
 					'month' => date('m', strtotime("-1 month")), 
 					'day' => date('d', strtotime("-1 month"))
-				);
+				];
 		
 		$to_date	= (isset($this->request->query['to_date'])) ? 
 			$this->request->query['to_date'] : 
-				array('year' => date('Y'), 'month' => date('m'), 'day' => date('d'));
+				['year' => date('Y'), 'month' => date('m'), 'day' => date('d')];
 		
 		// 学習日付による絞り込み
-		$conditions['Record.created BETWEEN ? AND ?'] = array(
+		$conditions['Record.created BETWEEN ? AND ?'] = [
 			implode("/", $from_date), 
 			implode("/", $to_date).' 23:59:59'
-		);
+		];
 		
 		if($contenttitle != "")
 			$conditions['Task.title like'] = '%'.$contenttitle.'%';
@@ -220,20 +220,20 @@ class RecordsController extends AppController
 			$fp = fopen('php://output','w');
 			
 			// イベント申込状況を取得
-			$options = array(
+			$options = [
 				'conditions' => $conditions
-			);
+			];
 			
 			$rows = $this->Record->find('all', $options);
 			
-			$header = array("学習テーマ", "コンテンツ", "氏名", "得点", "合格点", "結果", "理解度", "学習時間", "学習日時");
+			$header = ["学習テーマ", "コンテンツ", "氏名", "得点", "合格点", "結果", "理解度", "学習時間", "学習日時"];
 			
 			mb_convert_variables("SJIS-WIN", "UTF-8", $header);
 			fputcsv($fp, $header);
 			
 			foreach($rows as $row)
 			{
-				$row = array(
+				$row = [
 					$row['Theme']['title'], 
 					$row['Task']['title'], 
 					$row['User']['name'], 
@@ -241,7 +241,7 @@ class RecordsController extends AppController
 					$row['Record']['theme_rate'], 
 					Utils::getHNSBySec($row['Record']['study_sec']), 
 					Utils::getYMDHN($row['Record']['created']),
-				);
+				];
 				
 				mb_convert_variables("SJIS-WIN", "UTF-8", $row);
 				
@@ -291,29 +291,29 @@ class RecordsController extends AppController
 	{
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->find('first', array(
-			'conditions' => array(
+		$content = $this->Task->find('first', [
+			'conditions' => [
 				'Task.id' => $task_id
-			)
-		));
+			]
+		]);
 		
 		$this->Record->create();
-		$data = array(
+		$data = [
 			'user_id'		=> $this->Auth->user('id'),
 			'theme_id'		=> $content['Theme']['id'],
 			'task_id'		=> $task_id,
 			'study_sec' 	=> $study_sec,
 			'is_complete'	=> $is_complete
-		);
+		];
 		
 		if ($this->Record->save($data))
 		{
 			$this->Flash->success(__('学習履歴を保存しました'));
-			return $this->redirect(array(
+			return $this->redirect([
 				'controller' => 'tasks',
 				'action' => 'index',
 				$content['Theme']['id']
-			));
+			]);
 		}
 		else
 		{
@@ -325,15 +325,15 @@ class RecordsController extends AppController
 	{
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->find('first', array(
-			'conditions' => array(
+		$content = $this->Task->find('first', [
+			'conditions' => [
 				'Task.id' => $task_id
-			)
-		));
+			]
+		]);
 		
 		$this->Record->create();
 		
-		$data = array(
+		$data = [
 //				'group_id' => $this->Session->read('Auth.User.Group.id'),
 			'user_id'		=> $this->Auth->user('id'),
 			'theme_id'		=> $content['Theme']['id'],
@@ -344,7 +344,7 @@ class RecordsController extends AppController
 			'is_passed'		=> $record['is_passed'],
 			'study_sec'		=> $record['study_sec'],
 			'is_complete'	=> 1
-		);
+		];
 		
 		if ($this->Record->save($data))
 		{
@@ -367,17 +367,17 @@ class RecordsController extends AppController
 			throw new NotFoundException(__('Invalid record'));
 		}
 		
-		if ($this->request->is(array(
+		if ($this->request->is([
 				'post',
 				'put'
-		)))
+		]))
 		{
 			if ($this->Record->save($this->request->data))
 			{
 				$this->Flash->success(__('The record has been saved.'));
-				return $this->redirect(array(
+				return $this->redirect([
 						'action' => 'index'
-				));
+				]);
 			}
 			else
 			{
@@ -386,11 +386,11 @@ class RecordsController extends AppController
 		}
 		else
 		{
-			$options = array(
-					'conditions' => array(
+			$options = [
+					'conditions' => [
 							'Record.' . $this->Record->primaryKey => $id
-					)
-			);
+					]
+			];
 			$this->request->data = $this->Record->find('first', $options);
 		}
 		
@@ -420,8 +420,8 @@ class RecordsController extends AppController
 		{
 			$this->Flash->error(__('The record could not be deleted. Please, try again.'));
 		}
-		return $this->redirect(array(
+		return $this->redirect([
 				'action' => 'index'
-		));
+		]);
 	}
 }

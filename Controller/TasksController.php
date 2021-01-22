@@ -21,22 +21,22 @@ App::uses('Record', 'Record');
 class TasksController extends AppController
 {
 
-	public $components = array(
+	public $components = [
 		'Paginator',
 		'Search.Prg',
-		'Security' => array(
+		'Security' => [
 			'validatePost' => false,
 			'csrfUseOnce' => false,
-			'unlockedActions' => array('admin_order', 'admin_preview', 'admin_upload_image'),
-		),
-	);
+			'unlockedActions' => ['admin_order', 'admin_preview', 'admin_upload_image'],
+		],
+	];
 
-	public $paginate = array(
+	public $paginate = [
 		'limit' => 100,
-		'order' => array(
+		'order' => [
 			'Post.title' => 'asc'
-		)
-	);
+		]
+	];
 
 	public function index($theme_id, $user_id = null)
 	{
@@ -46,11 +46,11 @@ class TasksController extends AppController
 		
 		// 学習テーマの情報を取得
 		$this->loadModel('Theme');
-		$theme = $this->Theme->find('first', array(
-			'conditions' => array(
+		$theme = $this->Theme->find('first', [
+			'conditions' => [
 				'Theme.id' => $theme_id
-			)
-		));
+			]
+		]);
 		
 		// ユーザの場合、
 		if($is_user)
@@ -91,15 +91,15 @@ class TasksController extends AppController
 			$this->loadModel('Progress');
 			
 			// キーワードを含む進捗を検索
-			$progress_list = $this->Progress->find('all', array(
-				'conditions' => array(
+			$progress_list = $this->Progress->find('all', [
+				'conditions' => [
 					'Task.theme_id' => $theme_id,
-					'OR' => array(
+					'OR' => [
 						'Progress.title like' => '%'.$keyword.'%',
 						'Progress.body like' => '%'.$keyword.'%'
-			))));
+			]]]);
 			
-			$task_id_list = array();
+			$task_id_list = [];
 			
 			foreach ($progress_list as $item)
 			{
@@ -115,11 +115,11 @@ class TasksController extends AppController
 			//debug($task_id_list);
 			
 			// キーワードを含む課題を検索
-			$conditions['OR'] = array(
-				array('Task.title like' => '%'.$keyword.'%'),
-				array('Task.body like' => '%'.$keyword.'%'),
-				array('Task.id' => $task_id_list),
-			);
+			$conditions['OR'] = [
+				['Task.title like' => '%'.$keyword.'%'],
+				['Task.body like' => '%'.$keyword.'%'],
+				['Task.id' => $task_id_list],
+			];
 		}
 		
 		// 完了以外の場合
@@ -132,11 +132,11 @@ class TasksController extends AppController
 		}
 		
 
-		$this->Paginator->settings = array(
+		$this->Paginator->settings = [
 			'limit' => 20,
 			'order' => 'Task.modified desc',
 			'conditions' => $conditions,
-		);
+		];
 		
 		$tasks = $this->paginate();
 		
@@ -154,11 +154,11 @@ class TasksController extends AppController
 
 		$this->layout = "";
 
-		$options = array(
-			'conditions' => array(
+		$options = [
+			'conditions' => [
 				'Task.' . $this->Task->primaryKey => $id
-			)
-		);
+			]
+		];
 		
 		$task = $this->Task->find('first', $options);
 		
@@ -178,15 +178,15 @@ class TasksController extends AppController
 		$this->autoRender = FALSE;
 		if($this->request->is('ajax'))
 		{
-			$data = array(
-				'Task' => array(
+			$data = [
+				'Task' => [
 					'id'     => 0,
 					'title'  => $this->data['task_title'],
 					'kind'   => $this->data['task_kind'],
 					'url'    => $this->data['task_url'],
 					'body'  => $this->data['task_body']
-				)
-			);
+				]
+			];
 			
 			$this->Session->write("Iroha.preview_task", $data);
 		}
@@ -213,11 +213,11 @@ class TasksController extends AppController
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$task = $this->Task->find('first', array(
-			'conditions' => array(
+		$task = $this->Task->find('first', [
+			'conditions' => [
 				'Task.id' => $id
-			)
-		));
+			]
+		]);
 		
 		$this->request->allowMethod('post', 'delete');
 		
@@ -230,9 +230,9 @@ class TasksController extends AppController
 			$this->Flash->error(__('The task could not be deleted. Please, try again.'));
 		}
 		
-		return $this->redirect(array(
+		return $this->redirect([
 			'action' => 'index/' . $task['Theme']['id']
-		));
+		]);
 	}
 
 	public function admin_delete_enq($id)
@@ -249,20 +249,20 @@ class TasksController extends AppController
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$task = $this->Task->find('first', array(
-			'conditions' => array(
+		$task = $this->Task->find('first', [
+			'conditions' => [
 				'Task.id' => $id
-			)
-		));
+			]
+		]);
 		
 		$this->request->allowMethod('post', 'delete');
 		
 		if ($this->Task->delete())
 		{
 			$this->Flash->success(__('コンテンツが削除されました'));
-			return $this->redirect(array(
+			return $this->redirect([
 				'action' => 'index_enq'
-			));
+			]);
 		}
 		else
 		{
@@ -279,11 +279,11 @@ class TasksController extends AppController
 
 	public function admin_index_enq()
 	{
-		$this->Paginator->settings = array(
+		$this->Paginator->settings = [
 			'limit' => 20,
 			'order' => 'Task.modified desc',
-			'conditions' => array('theme_id' => 0),
-		);
+			'conditions' => ['theme_id' => 0],
+		];
 		
 		$tasks = $this->paginate();
 		
@@ -323,10 +323,10 @@ class TasksController extends AppController
 		{
 			throw new NotFoundException(__('Invalid task'));
 		}
-		if ($this->request->is(array(
+		if ($this->request->is([
 				'post',
 				'put'
-		)))
+		]))
 		{
 			if(Configure::read('demo_mode'))
 				return;
@@ -352,22 +352,22 @@ class TasksController extends AppController
 					$this->request->data['study_sec'] //study_sec
 				);
 				*/
-				$this->Record->addRecord(array(
+				$this->Record->addRecord([
 					'user_id'		=> $this->Auth->user('id'),
 					'theme_id'		=> $theme_id,
 					'task_id'		=> $id,
 					'study_sec'		=> $this->request->data['study_sec'],
 					'record_type'	=> $record_type,
-				));
+				]);
 				// 学習テーマの更新日時を更新
 				$this->Task->Theme->id = $theme_id;
 				$this->Task->Theme->saveField('modified', date(date('Y-m-d H:i:s')));
 				
 				$this->Flash->success(__('課題内容が保存されました'));
 				
-				return $this->redirect( array(
+				return $this->redirect( [
 					'action' => 'index/' . $theme_id
-				));
+				]);
 			}
 			else
 			{
@@ -376,20 +376,20 @@ class TasksController extends AppController
 		}
 		else
 		{
-			$options = array(
-				'conditions' => array(
+			$options = [
+				'conditions' => [
 					'Task.' . $this->Task->primaryKey => $task_id
-				)
-			);
+				]
+			];
 			$this->request->data = $this->Task->find('first', $options);
 		}
 		
 		// コース情報を取得
-		$theme = $this->Task->Theme->find('first', array(
-			'conditions' => array(
+		$theme = $this->Task->Theme->find('first', [
+			'conditions' => [
 				'Theme.id' => $theme_id
-			)
-		));
+			]
+		]);
 		
 		$themes = $this->Task->Theme->find('list');
 		$users = $this->Task->User->find('list');
@@ -554,7 +554,7 @@ class TasksController extends AppController
 			
 			//debug($result);
 			
-			$response = ($result) ? array($file_url) : array(false);
+			$response = ($result) ? [$file_url] : [false];
 			echo json_encode($response);
 		}
 	}
@@ -588,18 +588,18 @@ class TasksController extends AppController
 			throw new NotFoundException(__('Invalid user'));
 		}
 		
-		if ($this->request->is(array(
+		if ($this->request->is([
 				'post',
 				'put'
-		)))
+		]))
 		{
 			if ($this->Task->save($this->request->data))
 			{
 				$this->Flash->success(__('アンケートが保存されました'));
 
-				return $this->redirect(array(
+				return $this->redirect([
 						'action' => 'index_enq'
-				));
+				]);
 			}
 			else
 			{
@@ -608,11 +608,11 @@ class TasksController extends AppController
 		}
 		else
 		{
-			$options = array(
-				'conditions' => array(
+			$options = [
+				'conditions' => [
 					'Task.' . $this->Task->primaryKey => $task_id
-				)
-			);
+				]
+			];
 			$this->request->data = $this->Task->find('first', $options);
 		}
 	}

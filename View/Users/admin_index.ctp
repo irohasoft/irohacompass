@@ -2,12 +2,12 @@
 <div class="admin-users-index">
 	<div class="ib-page-title"><?php echo __('ユーザ一覧'); ?></div>
 	<div class="buttons_container">
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'add')) ?>'">+ 追加</button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(['action' => 'add']) ?>'">+ 追加</button>
 	</div>
 	<div class="ib-horizontal">
 		<?php
 			echo $this->Form->create('User');
-			echo $this->Form->input('group_id',		array(
+			echo $this->Form->input('group_id',		[
 				'label' => 'グループ : ', 
 				'options'=>$groups, 
 				'selected'=>$group_id, 
@@ -15,9 +15,9 @@
 				'required'=>false, 
 				'class' => 'form-control',
 				'onchange' => 'submit(this.form);'
-			));
-			echo $this->Form->input('username',		array('label' => 'ログインID : ', 'required' => false));
-			echo $this->Form->input('name',			array('label' => '氏名 : '  , 'required' => false));
+			]);
+			echo $this->Form->input('username',		['label' => 'ログインID : ', 'required' => false]);
+			echo $this->Form->input('name',			['label' => '氏名 : '  , 'required' => false]);
 		?>
 		<input type="submit" class="btn btn-info btn-add" value="検索">
 		<?php
@@ -52,16 +52,16 @@
 		<?php if($loginedUser['role']=='admin') {?>
 		<td class="ib-col-action">
 			<button type="button" class="btn btn-success"
-				onclick="location.href='<?php echo Router::url(array('action' => 'edit', $user['User']['id'])) ?>'">編集</button>
+				onclick="location.href='<?php echo Router::url(['action' => 'edit', $user['User']['id']]) ?>'">編集</button>
 			<?php
 			if($loginedUser['role']=='admin')
 			{
-				echo $this->Form->postLink(__('削除'), array(
+				echo $this->Form->postLink(__('削除'), [
 					'action' => 'delete',
 					$user['User']['id']
-				), array(
+				], [
 					'class' => 'btn btn-danger'
-				), __('[%s] を削除してもよろしいですか?', $user['User']['name']));
+				], __('[%s] を削除してもよろしいですか?', $user['User']['name']));
 			}
 		?>
 		</td>

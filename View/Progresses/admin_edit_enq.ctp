@@ -36,7 +36,7 @@
 <?php echo $this->Html->script('summernote.min.js');?>
 <?php echo $this->Html->script('lang/summernote-ja-JP.js');?>
 <script>
-	var URL_UPLOAD	= '<?php echo Router::url(array('controller' => 'contents', 'action' => 'upload'))?>/image';
+	var URL_UPLOAD	= '<?php echo Router::url(['controller' => 'contents', 'action' => 'upload'])?>/image';
 
 	$(document).ready(function()
 	{
@@ -113,7 +113,7 @@
 		
 		$url.after('<input id="btnUpload" type="button" value="アップロード">');
 		$("#btnUpload").click(function(){
-			//window.open('<?php echo Router::url(array('controller' => 'tasks', 'action' => 'upload'))?>/image', '_upload', 'width=650,height=500,resizable=no');
+			//window.open('<?php echo Router::url(['controller' => 'tasks', 'action' => 'upload'])?>/image', '_upload', 'width=650,height=500,resizable=no');
 			//ファイルアップロードダイアログの iframe にURLを設定
 			$("#uploadFrame").attr("src", URL_UPLOAD);
 			//ファイルアップロードダイアログを表示
@@ -165,8 +165,8 @@
 <?php $this->end(); ?>
 	<div class="ib-breadcrumb">
 	<?php 
-		$this->Html->addCrumb('アンケート一覧',  array('controller' => 'tasks', 'action' => 'index_enq'));
-		$this->Html->addCrumb($content['Task']['title'], array('controller' => 'progresses', 'action' => 'index_enq', $content['Task']['id']));
+		$this->Html->addCrumb('アンケート一覧',  ['controller' => 'tasks', 'action' => 'index_enq']);
+		$this->Html->addCrumb($content['Task']['title'], ['controller' => 'progresses', 'action' => 'index_enq', $content['Task']['id']]);
 		
 		echo $this->Html->getCrumbs(' / ');
 	?>
@@ -179,9 +179,9 @@
 			<?php echo $this->Form->create('Progress', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title',	array('label' => __('タイトル')));
-				echo $this->Form->input('body',		array('label' => __('質問文')));
-				echo $this->Form->input('progress_type', array(
+				echo $this->Form->input('title',	['label' => __('タイトル')]);
+				echo $this->Form->input('body',		['label' => __('質問文')]);
+				echo $this->Form->input('progress_type', [
 					'type' => 'radio',
 					'before' => '<label class="col col-sm-3 control-label">回答形式</label>',
 					'separator'=>"　", 
@@ -190,7 +190,7 @@
 					'options' => Configure::read('progress_type_enq'),
 					'default' => 'single',
 					'onchange' => 'render()'
-					)
+					]
 				);
 
 			?>
@@ -202,17 +202,17 @@
 				<button class="btn" onclick="add_option();return false;">＋</button>
 				<button class="btn" onclick="del_option();return false;">−</button><br>
 			<?php
-				echo $this->Form->input('option_list',	array('label' => __('選択肢／正解'), 
+				echo $this->Form->input('option_list',	['label' => __('選択肢／正解'), 
 					'type' => 'select',
 					'label' => false,
 					'size' => 5,
-				));
-				echo $this->Form->hidden('options',	array('label' => __('選択肢')));
+				]);
+				echo $this->Form->hidden('options',	['label' => __('選択肢')]);
 			?>
 				</div>
 			</div>
 			<?php
-				echo $this->Form->input('comment',	array('label' => __('備考')));
+				echo $this->Form->input('comment',	['label' => __('備考')]);
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">

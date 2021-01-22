@@ -24,34 +24,34 @@ class UsersTheme extends AppModel
 	 *
 	 * @var array
 	 */
-	public $validate = array(
-			'user_id' => array(
-					'numeric' => array(
-							'rule' => array(
+	public $validate = [
+			'user_id' => [
+					'numeric' => [
+							'rule' => [
 									'numeric'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'theme_id' => array(
-					'numeric' => array(
-							'rule' => array(
+										]
+			],
+			'theme_id' => [
+					'numeric' => [
+							'rule' => [
 									'numeric'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			)
-	);
+										]
+			]
+	];
 
 	public function getThemeRecord($user_id)
 	{
@@ -78,9 +78,9 @@ class UsersTheme extends AppModel
 EOF;
 		// debug($user_id);
 
-		$params = array(
+		$params = [
 				'user_id' => $user_id
-		);
+		];
 
 		$data = $this->query($sql, $params);
 
@@ -109,11 +109,11 @@ SELECT u.email as email, u.name as name, u.role as role
  INNER JOIN ib_users u ON uc.user_id = u.id
  WHERE uc.theme_id = :theme_id AND LENGTH(u.email) > 5
 EOF;
-		$params = array('theme_id' => $theme_id);
+		$params = ['theme_id' => $theme_id];
 		$data = $this->query($sql, $params);
 		
 		//debug($data);
-		$list = array();
+		$list = [];
 		
 		for($i=0; $i< count($data); $i++)
 		{
@@ -130,20 +130,20 @@ EOF;
 	 *
 	 * @var array
 	 */
-	public $belongsTo = array(
-			'User' => array(
+	public $belongsTo = [
+			'User' => [
 					'className' => 'User',
 					'foreignKey' => 'user_id',
 					'conditions' => '',
 					'fields' => '',
 					'order' => ''
-			),
-			'Theme' => array(
+			],
+			'Theme' => [
 					'className' => 'Theme',
 					'foreignKey' => 'theme_id',
 					'conditions' => '',
 					'fields' => '',
 					'order' => ''
-			)
-	);
+			]
+	];
 }

@@ -10,7 +10,7 @@
 
 class DATABASE_CONFIG {
 
-	public $default = array(
+	public $default = [
 		'datasource' => 'Database/Mysql',
 		'persistent' => true,
 		'login' => 'root',
@@ -18,5 +18,5 @@ class DATABASE_CONFIG {
 		'database' => 'irohacompass',
 		'prefix' => 'ib_',
 		'encoding' => 'utf8'
-	);
+	];
 }

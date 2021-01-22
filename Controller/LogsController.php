@@ -22,13 +22,13 @@ class LogsController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator',
-		'Auth' => array(
-			'allowedActions' => array(
+	public $components = ['Paginator',
+		'Auth' => [
+			'allowedActions' => [
 				'admin_add',
-			)
-		)
-	);
+			]
+		]
+	];
 
 	public function add()
 	{

@@ -70,7 +70,7 @@
 	var _sec			= 0;
 	var G_WEBROOT		= '<?php echo $this->Html->webroot;?>';
 	var G_LANG			= '<?php echo @$loginedUser['lang'];?>';
-	var URL_LOGS_ADD	= '<?php echo Router::url(array('controller' => 'logs', 'action' => 'add')) ?>';
+	var URL_LOGS_ADD	= '<?php echo Router::url(['controller' => 'logs', 'action' => 'add']) ?>';
 	
 	</script>
 	<style>
@@ -93,11 +93,11 @@
 			<a href="<?php echo $this->Html->url('/')?>"><?php echo h($this->Session->read('Setting.title')); ?></a>
 		</div>
 		<?php if(@$loginedUser) {?>
-		<div class="ib-navi-item ib-right"><?php echo $this->Html->link('<span data-localize="logout">ログアウト</span>', $logoutURL, array('escape' => false)); ?></div>
+		<div class="ib-navi-item ib-right"><?php echo $this->Html->link('<span data-localize="logout">ログアウト</span>', $logoutURL, ['escape' => false]); ?></div>
 		<div class="ib-navi-sepa ib-right"></div>
-		<div class="ib-navi-item ib-right"><?php echo $this->Html->link('<span data-localize="setting">設定</span>', array('controller' => 'users', 'action' => 'setting'), array('escape' => false)); ?></div>
+		<div class="ib-navi-item ib-right"><?php echo $this->Html->link('<span data-localize="setting">設定</span>', ['controller' => 'users', 'action' => 'setting'], ['escape' => false]); ?></div>
 		<div class="ib-navi-sepa ib-right"></div>
-		<div class="ib-navi-item ib-right navi-item-idea"><?php echo $this->Html->link('<span data-localize="idea">アイデア</span>', array('controller' => 'ideas'), array('escape' => false)); ?></div>
+		<div class="ib-navi-item ib-right navi-item-idea"><?php echo $this->Html->link('<span data-localize="idea">アイデア</span>', ['controller' => 'ideas'], ['escape' => false]); ?></div>
 		<div class="ib-navi-sepa ib-right"></div>
 		<div class="ib-navi-item ib-right"><?php echo __('ようこそ ').h($loginedUser["name"]); ?> さん </div>
 		<?php }?>

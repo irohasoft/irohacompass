@@ -18,19 +18,19 @@ class ThemesController extends AppController
 	 *
 	 * @var array
 	 */
-	public $components = array(
+	public $components = [
 		'Paginator',
-		'Security' => array(
+		'Security' => [
 			'validatePost' => false,
-			'unlockedActions' => array('admin_order')
-		),
-	);
+			'unlockedActions' => ['admin_order']
+		],
+	];
 
-	public $paginate = array(
-		'order' => array(
+	public $paginate = [
+		'order' => [
 			'Theme.modified' => 'desc'
-		)
-	);
+		]
+	];
 	
 	public function index()
 	{
@@ -74,10 +74,10 @@ class ThemesController extends AppController
 		// ユーザフラグ
 		$is_user = (($this->action == 'add')||($this->action == 'edit'));
 		
-		if ($this->request->is(array(
+		if ($this->request->is([
 				'post',
 				'put'
-		)))
+		]))
 		{
 			if(Configure::read('demo_mode'))
 				return;
@@ -93,13 +93,13 @@ class ThemesController extends AppController
 				$id = ($id == null) ? $this->Theme->getLastInsertID() : $id;
 				
 				$this->loadModel('Record');
-				$this->Record->addRecord(array(
+				$this->Record->addRecord([
 					'user_id'		=> $this->Auth->user('id'),
 					'theme_id'		=> $id,
 					'task_id'		=> 0,
 					'study_sec'		=> $this->request->data['study_sec'],
 					'record_type'	=> $record_type,
-				));
+				]);
 				
 				// 新規追加の場合、学習テーマとユーザの紐づけを追加
 				if($is_add)
@@ -112,17 +112,17 @@ class ThemesController extends AppController
 				// ユーザの場合、課題一覧へ遷移
 				if($is_user)
 				{
-					return $this->redirect(array(
+					return $this->redirect([
 						'controller' => 'tasks',
 						'action' => 'index',
 						$id
-					));
+					]);
 				}
 				else
 				{
-					return $this->redirect(array(
+					return $this->redirect([
 						'action' => 'index'
-					));
+					]);
 				}
 			}
 			else
@@ -132,11 +132,11 @@ class ThemesController extends AppController
 		}
 		else
 		{
-			$options = array(
-				'conditions' => array(
+			$options = [
+				'conditions' => [
 					'Theme.' . $this->Theme->primaryKey => $id
-				)
-			);
+				]
+			];
 			$this->request->data = $this->Theme->find('first', $options);
 		}
 		
@@ -163,9 +163,9 @@ class ThemesController extends AppController
 		{
 			$this->Flash->error(__('The theme could not be deleted. Please, try again.'));
 		}
-		return $this->redirect(array(
+		return $this->redirect([
 				'action' => 'index'
-		));
+		]);
 	}
 
 	public function admin_order()

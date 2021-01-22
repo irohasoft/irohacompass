@@ -24,9 +24,9 @@ class UsersGroupsController extends AppController
 	 *
 	 * @var array
 	 */
-	public $components = array(
+	public $components = [
 			'Paginator'
-	);
+	];
 
 	/**
 	 * index method

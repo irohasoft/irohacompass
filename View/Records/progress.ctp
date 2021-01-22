@@ -140,10 +140,10 @@ height: 300px;
 
 <ol class="breadcrumb">
 <?php
-	$this->Html->addCrumb('HOME', array(
+	$this->Html->addCrumb('HOME', [
 		'controller' => 'users_themes',
 		'action' => 'index'
-	));
+	]);
 	echo $this->Html->getCrumbs(' / ');
 ?>
 </ol>
@@ -158,16 +158,16 @@ height: 300px;
 				<?php
 					echo $this->Form->create('Record');
 					echo '<div class="ib-search-buttons">';
-					echo $this->Form->submit(__('検索'),	array('class' => 'btn btn-info', 'div' => false));
+					echo $this->Form->submit(__('検索'),	['class' => 'btn btn-info', 'div' => false]);
 					echo '</div>';
 					
 					echo '<div class="ib-row">';
-					echo $this->Form->input('theme_id',	array('label' => '学習テーマ :', 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control'));
-					echo $this->Form->input('contenttitle',	array('label' => '課題名 :', 'value'=>$contenttitle, 'class'=>'form-control'));
+					echo $this->Form->input('theme_id',	['label' => '学習テーマ :', 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
+					echo $this->Form->input('contenttitle',	['label' => '課題名 :', 'value'=>$contenttitle, 'class'=>'form-control']);
 					echo '</div>';
 					
 					echo '<div class="ib-search-date-container">';
-					echo $this->Form->input('from_date', array(
+					echo $this->Form->input('from_date', [
 						'type' => 'date',
 						'dateFormat' => 'YMD',
 						'monthNames' => false,
@@ -179,8 +179,8 @@ height: 300px;
 						'class'=>'form-control',
 						'style' => 'display: inline;',
 						'value' => $from_date
-					));
-					echo $this->Form->input('to_date', array(
+					]);
+					echo $this->Form->input('to_date', [
 						'type' => 'date',
 						'dateFormat' => 'YMD',
 						'monthNames' => false,
@@ -192,7 +192,7 @@ height: 300px;
 						'class'=>'form-control',
 						'style' => 'display: inline;',
 						'value' => $to_date
-					));
+					]);
 					echo '</div>';
 					echo $this->Form->end();
 				?>
@@ -217,8 +217,8 @@ height: 300px;
 				<tbody>
 					<?php foreach ($records as $record): ?>
 					<tr>
-						<td><a href="<?php echo Router::url(array('controller' => 'tasks', 'action' => 'index', $record['Theme']['id']));?>"><?php echo h($record['Theme']['title']); ?></a></td>
-						<td><a href="<?php echo Router::url(array('controller' => 'progresses', 'action' => 'index', $record['Task']['id']));?>"><?php echo h($record['Task']['title']); ?></a></td>
+						<td><a href="<?php echo Router::url(['controller' => 'tasks', 'action' => 'index', $record['Theme']['id']]);?>"><?php echo h($record['Theme']['title']); ?></a></td>
+						<td><a href="<?php echo Router::url(['controller' => 'progresses', 'action' => 'index', $record['Task']['id']]);?>"><?php echo h($record['Task']['title']); ?></a></td>
 						<td><?php echo h($record['User']['name']); ?>&nbsp;</td>
 						<!--
 						<td class="ib-col-center"><?php echo h($record['Record']['rate']); ?>&nbsp;</td>

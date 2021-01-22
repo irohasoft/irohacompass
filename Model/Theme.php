@@ -26,47 +26,47 @@ class Theme extends AppModel
 	 *
 	 * @var array
 	 */
-	public $validate = array(
-			'title' => array(
-					'notBlank' => array(
-							'rule' => array(
+	public $validate = [
+			'title' => [
+					'notBlank' => [
+							'rule' => [
 									'notBlank'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'learning_target' => array(
-					'notBlank' => array(
-							'rule' => array(
+										]
+			],
+			'learning_target' => [
+					'notBlank' => [
+							'rule' => [
 									'notBlank'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'sort_no' => array(
-					'numeric' => array(
-							'rule' => array(
+										]
+			],
+			'sort_no' => [
+					'numeric' => [
+							'rule' => [
 									'numeric'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			)
-	);
+										]
+			]
+	];
 	
 	// The Associations below have been created with all possible keys, those
 	// that are not needed can be removed
@@ -76,22 +76,22 @@ class Theme extends AppModel
 	 *
 	 * @var array
 	 */
-	public $belongsTo = array(
-		'User' => array(
+	public $belongsTo = [
+		'User' => [
 			'className' => 'User',
 			'foreignKey' => 'user_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		),
-	);
+		],
+	];
 
 	/**
 	 * hasMany associations
 	 *
 	 * @var array
 	 */
-	public $hasMany = array(
+	public $hasMany = [
 	/*
 		'Task' => array(
 			'className' => 'Task',
@@ -107,7 +107,7 @@ class Theme extends AppModel
 			'counterQuery' => ''
 		)
 	*/
-	);
+	];
 
 	/**
 	 * hasAndBelongsToMany associations
@@ -138,10 +138,10 @@ class Theme extends AppModel
 		{
 			$sql = "UPDATE ib_themes SET sort_no = :sort_no WHERE id= :id";
 
-			$params = array(
+			$params = [
 					'sort_no' => ($i+1),
 					'id' => $id_list[$i]
-			);
+			];
 
 			$this->query($sql, $params);
 		}
@@ -152,10 +152,10 @@ class Theme extends AppModel
 	{
 		$has_right = false;
 		
-		$params = array(
+		$params = [
 			'user_id'   => $user_id,
 			'theme_id' => $theme_id
-		);
+		];
 		
 		$sql = <<<EOF
 SELECT count(*) as cnt
@@ -227,9 +227,9 @@ EOF;
 EOF;
 		// debug($user_id);
 
-		$params = array(
+		$params = [
 				'user_id' => $user_id
-		);
+		];
 
 		$data = $this->query($sql, $params);
 
@@ -240,10 +240,10 @@ EOF;
 	{
 		$sql = "SELECT COUNT(*) as cnt FROM ib_users_themes WHERE user_id = :user_id AND theme_id = :theme_id";
 		
-		$params = array(
+		$params = [
 			'user_id' => $user_id,
 			'theme_id' => $theme_id,
-		);
+		];
 		
 		$data = $this->query($sql, $params);
 		$cnt  = $data[0][0]['cnt'];
@@ -251,10 +251,10 @@ EOF;
 		if($cnt < 1)
 		{
 			$sql = "INSERT INTO ib_users_themes(user_id, theme_id) VALUES(:user_id, :theme_id)";
-			$params = array(
+			$params = [
 				'user_id' => $user_id,
 				'theme_id' => $theme_id,
-			);
+			];
 			$this->query($sql, $params);
 		}
 	}

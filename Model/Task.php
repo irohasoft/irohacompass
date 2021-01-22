@@ -26,97 +26,97 @@ class Task extends AppModel
 	 *
 	 * @var array
 	 */
-	public $validate = array(
-			'theme_id' => array(
-					'numeric' => array(
-							'rule' => array(
+	public $validate = [
+			'theme_id' => [
+					'numeric' => [
+							'rule' => [
 									'numeric'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'user_id' => array(
-					'numeric' => array(
-							'rule' => array(
+										]
+			],
+			'user_id' => [
+					'numeric' => [
+							'rule' => [
 									'numeric'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'title' => array(
-					'notBlank' => array(
-							'rule' => array(
+										]
+			],
+			'title' => [
+					'notBlank' => [
+							'rule' => [
 									'notBlank'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'body' => array(
-					'notBlank' => array(
-							'rule' => array(
+										]
+			],
+			'body' => [
+					'notBlank' => [
+							'rule' => [
 									'notBlank'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'timelimit' => array(
-					'numeric' => array(
-						'rule' => array('range', -1, 101),
+										]
+			],
+			'timelimit' => [
+					'numeric' => [
+						'rule' => ['range', -1, 101],
 						'message' => '0-100の整数で入力して下さい。',
 						'allowEmpty' => true,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'kind' => array(
-					'notBlank' => array(
-							'rule' => array(
+										]
+			],
+			'kind' => [
+					'notBlank' => [
+							'rule' => [
 									'notBlank'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'sort_no' => array(
-					'numeric' => array(
-							'rule' => array(
+										]
+			],
+			'sort_no' => [
+					'numeric' => [
+							'rule' => [
 									'numeric'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-	);
+										]
+			],
+	];
 
 	public function getTaskRecord($user_id, $theme_id)
 	{
@@ -153,11 +153,11 @@ class Task extends AppModel
 EOF;
 		// debug($user_id);
 
-		$params = array(
+		$params = [
 //				'group_id' => $group_id,
 				'user_id' => $user_id,
 				'theme_id' => $theme_id
-		);
+		];
 
 		$data = $this->query($sql, $params);
 
@@ -173,10 +173,10 @@ EOF;
 		{
 			$sql = "UPDATE ib_tasks SET sort_no = :sort_no WHERE id= :id";
 
-			$params = array(
+			$params = [
 					'sort_no' => ($i+1),
 					'id' => $id_list[$i]
-			);
+			];
 
 			$this->query($sql, $params);
 		}
@@ -186,9 +186,9 @@ EOF;
 	{
 		$sql = "UPDATE ib_tasks SET rate = (SELECT MAX(rate) FROM ib_progresses WHERE task_id = :task_id) WHERE id= :task_id";
 
-		$params = array(
+		$params = [
 			'task_id' => $task_id
-		);
+		];
 
 		$this->query($sql, $params);
 	}
@@ -198,52 +198,52 @@ EOF;
 	 *
 	 * @var array
 	 */
-	public $belongsTo = array(
-			'Theme' => array(
+	public $belongsTo = [
+			'Theme' => [
 					'className' => 'Theme',
 					'foreignKey' => 'theme_id',
 					'conditions' => '',
 					'fields' => '',
 					'order' => ''
-			),
-			'User' => array(
+			],
+			'User' => [
 					'className' => 'User',
 					'foreignKey' => 'user_id',
 					'conditions' => '',
 					'fields' => '',
 					'order' => ''
-			)
-	);
+			]
+	];
 
 	/**
 	 * hasMany associations
 	 *
 	 * @var array
 	 */
-	public $hasMany = array(
-	);
+	public $hasMany = [
+	];
 
 	// 検索用
-	public $actsAs = array(
+	public $actsAs = [
 			'Search.Searchable'
-	);
+	];
 
-	public $filterArgs = array(
-			'status' => array(
+	public $filterArgs = [
+			'status' => [
 					'type' => 'value',
 					'field' => 'Task.status'
-			),
-			'themetitle' => array(
+			],
+			'themetitle' => [
 					'type' => 'like',
 					'field' => 'Theme.title'
-			),
-			'contenttitle' => array(
+			],
+			'contenttitle' => [
 					'type' => 'like',
 					'field' => 'Task.title'
-			),
-			'active' => array(
+			],
+			'active' => [
 					'type' => 'value'
-			)
-	);
+			]
+	];
 
 }

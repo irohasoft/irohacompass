@@ -22,34 +22,34 @@ class Group extends AppModel
 	 *
 	 * @var array
 	 */
-	public $validate = array(
-			'title' => array(
-					'notBlank' => array(
-							'rule' => array(
+	public $validate = [
+			'title' => [
+					'notBlank' => [
+							'rule' => [
 									'notBlank'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'status' => array(
-					'numeric' => array(
-							'rule' => array(
+										]
+			],
+			'status' => [
+					'numeric' => [
+							'rule' => [
 									'numeric'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			)
-	);
+										]
+			]
+	];
 	
 	// The Associations below have been created with all possible keys, those
 	// that are not needed can be removed
@@ -76,8 +76,8 @@ class Group extends AppModel
 			)
 	);
 	*/
-	public $hasAndBelongsToMany = array(
-			'Theme' => array(
+	public $hasAndBelongsToMany = [
+			'Theme' => [
 					'className' => 'Theme',
 					'joinTable' => 'groups_themes',
 					'foreignKey' => 'group_id',
@@ -89,8 +89,8 @@ class Group extends AppModel
 					'limit' => '',
 					'offset' => '',
 					'finderQuery' => ''
-			),
-			'User' => array(
+			],
+			'User' => [
 					'className' => 'User',
 					'joinTable' => 'users_groups',
 					'foreignKey' => 'group_id',
@@ -102,8 +102,8 @@ class Group extends AppModel
 					'limit' => '',
 					'offset' => '',
 					'finderQuery' => ''
-			),
-	);
+			],
+	];
 	
 	/**
 	 * 指定したグループに所属するユーザIDリストを取得
@@ -115,11 +115,11 @@ class Group extends AppModel
 	{
 		$sql = "SELECT user_id FROM ib_users_groups WHERE group_id = :group_id";
 		
-		$params = array('group_id' => $group_id);
+		$params = ['group_id' => $group_id];
 		
 		$data = $this->query($sql, $params);
 		
-		$list = array();
+		$list = [];
 		
 		for($i=0; $i< count($data); $i++)
 		{
@@ -137,7 +137,7 @@ class Group extends AppModel
 	public function getGroupList()
 	{
 		$groups = $this->find('all');
-		$data   = array("0" => "全て");
+		$data   = ["0" => "全て"];
 		
 		for($i=0; $i< count($groups); $i++)
 		{

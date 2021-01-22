@@ -24,15 +24,15 @@ class NotesController extends AppController
 	 *
 	 * @var array
 	 */
-	public $components = array(
+	public $components = [
 		'Paginator',
-		'Security' => array(
+		'Security' => [
 			'csrfUseOnce' => false,
-			'unlockedActions' => array('leaf_control', 'link_control', 'webpage')
-		),
+			'unlockedActions' => ['leaf_control', 'link_control', 'webpage']
+		],
 		'Session',
 		'RequestHandler',
-	);
+	];
 
 	/**
 	 * index method
@@ -44,17 +44,17 @@ class NotesController extends AppController
 		$this->layout = '';
 		$this->autoRender = FALSE;
 		
-		$options = array(
-			'conditions' => array(
+		$options = [
+			'conditions' => [
 				'Note.user_id' => 'admin'
-			)
-		);
+			]
+		];
 		
 		$notes = $this->Note->find('all', $options);
 		
-		$xmlArray = array('root' => array('note' => array()));
+		$xmlArray = ['root' => ['note' => []]];
 		
-		$list = array();
+		$list = [];
 		
 		foreach ($notes as $note)
 		{
@@ -63,7 +63,7 @@ class NotesController extends AppController
 		
 		$xmlArray['root']['note'] = $list;
 		
-		$xmlObject = Xml::fromArray($xmlArray, array('format' => 'tags')); // Xml::build() を使うこともできます
+		$xmlObject = Xml::fromArray($xmlArray, ['format' => 'tags']); // Xml::build() を使うこともできます
 		$xmlString = $xmlObject->asXML();
 		
 		$this->response->type('xml');

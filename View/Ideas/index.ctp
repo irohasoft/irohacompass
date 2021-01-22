@@ -6,10 +6,10 @@
 		<div class="panel-body">
 			<?php
 				echo $this->Form->create('Idea', Configure::read('form_defaults'));
-				echo $this->Form->input('Idea.body', array(
+				echo $this->Form->input('Idea.body', [
 					'label' => '<span data-localize="new_idea">新しいアイデア・メモ</span>',
 					'autocomplete' => 'new-password'
-				));
+				]);
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">
@@ -32,7 +32,7 @@
 					$body  = $idea['Idea']['body'];
 					//$body  = $this->Text->autoLinkUrls($body);
 					// 暫定対応
-					$body  = $this->Text->autoLinkUrls($body, array('escape' => false));
+					$body  = $this->Text->autoLinkUrls($body, ['escape' => false]);
 					$body  = nl2br($body);
 					
 					echo $body;
@@ -51,8 +51,8 @@
 					
 					echo '<br>';
 					echo $this->Form->postLink(__('削除'),
-						array('action' => 'delete', $idea['Idea']['id']),
-						array('class'=>'btn btn-default', 'data-localize' => 'delete'),
+						['action' => 'delete', $idea['Idea']['id']],
+						['class'=>'btn btn-default', 'data-localize' => 'delete'],
 						__('削除してもよろしいですか?')
 					);
 					
@@ -63,7 +63,7 @@
 							__('削除してもよろしいですか?')
 					);
 					*/
-					echo $this->Form->hidden('id', array('id'=>'', 'class'=>'target_id', 'value'=>$idea['Idea']['id']));
+					echo $this->Form->hidden('id', ['id'=>'', 'class'=>'target_id', 'value'=>$idea['Idea']['id']]);
 				}
 				
 				?>

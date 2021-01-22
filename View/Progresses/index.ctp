@@ -3,8 +3,8 @@
 <?php echo $this->Html->script( 'select2.min.js');?>
 <?php $this->start('script-embedded'); ?>
 <script>
-	var URL_UPLOAD	= '<?php echo Router::url(array('controller' => 'tasks', 'action' => 'upload', 'admin' => false))?>/file';
-	var URL_NOTE	= '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false))?>/';
+	var URL_UPLOAD	= '<?php echo Router::url(['controller' => 'tasks', 'action' => 'upload', 'admin' => false])?>/file';
+	var URL_NOTE	= '<?php echo Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/';
 	var LS_KEY_EMAIL_USER = 'ic-email-user-<?php echo $content['Theme']['id']; ?>';
 	
 	/* 進捗一覧用 */
@@ -73,7 +73,7 @@
 	{
 		
 		$.ajax({
-			url: "<?php echo Router::url(array('action' => 'smile')) ?>",
+			url: "<?php echo Router::url(['action' => 'smile']) ?>",
 			type: "POST",
 			data: {
 				progress_id	: progress_id
@@ -177,8 +177,8 @@
 	<?php
 		$controller = ($is_user) ? 'users_themes' : 'themes';
 		
-		$this->Html->addCrumb('学習テーマ一覧', array('controller' => $controller, 'action' => 'index'));
-		$this->Html->addCrumb($content['Theme']['title'], array('controller' => 'tasks', 'action' => 'index', $content['Theme']['id']));
+		$this->Html->addCrumb('学習テーマ一覧', ['controller' => $controller, 'action' => 'index']);
+		$this->Html->addCrumb($content['Theme']['title'], ['controller' => 'tasks', 'action' => 'index', $content['Theme']['id']]);
 		$this->Html->addCrumb(h($content['Task']['title']));
 		
 		echo $this->Html->getCrumbs(' / ');
@@ -188,7 +188,7 @@
 		<div class="panel-heading"><b><span data-localize="task">課題</span></b></div>
 		<div class="panel-body">
 			<big>
-			<?php echo $this->Form->hidden('content_body', array('value' => $content['Task']['body']));?>
+			<?php echo $this->Form->hidden('content_body', ['value' => $content['Task']['body']]);?>
 			</big>
 			<div>
 				<?php 
@@ -206,7 +206,7 @@
 			</div>
 			<div>
 				<br>
-				<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?php echo Router::url(array('controller' => 'tasks', 'action' => 'edit', $content['Theme']['id'], $content['Task']['id'])) ?>'"><span data-localize="edit">編集</span></button>
+				<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?php echo Router::url(['controller' => 'tasks', 'action' => 'edit', $content['Theme']['id'], $content['Task']['id']]) ?>'"><span data-localize="edit">編集</span></button>
 			</div>
 		</div>
 	</div>
@@ -217,7 +217,7 @@
 		<?php if($is_add) {?>
 		<button type="button" class="btn btn-primary btn-add" onclick="$('html, body').animate({scrollTop: ($(document).height()-1050)},800);"><span data-localize="add">+ 追加</span></button>
 		<?php } else {?>
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'index', $content['Task']['id']));?>#edit'"><span data-localize="add">+ 追加</span></button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(['action' => 'index', $content['Task']['id']]);?>#edit'"><span data-localize="add">+ 追加</span></button>
 		<?php }?>
 	</div>
 	
@@ -226,7 +226,7 @@
 		<a href="#">　▼ ページの下へ</a>　
 	</span>
 	並べ替え：
-	<span class="sort-item"><?php echo $this->Paginator->sort('created', '作成日時', array('direction' => 'desc')); ?></span>
+	<span class="sort-item"><?php echo $this->Paginator->sort('created', '作成日時', ['direction' => 'desc']); ?></span>
 	<?php }?>
 	
 	<?php foreach ($progresses as $progress): ?>
@@ -249,7 +249,7 @@
 				進捗率 : <?php echo h($progress['Progress']['rate']); ?>% &nbsp;&nbsp;
 			<?php }?>
 			<?php if(Configure::read('use_emotion_icon')) { ?>
-				感情 : <?php echo $this->Html->image($progress['Progress']['emotion_icon'].'.png', array('width' => 30)); ?>
+				感情 : <?php echo $this->Html->image($progress['Progress']['emotion_icon'].'.png', ['width' => 30]); ?>
 			<?php }?>
 			</div>
 			<div class="progress-text bg-warning">
@@ -264,7 +264,7 @@
 						break;
 					case '':
 					case 'markdown':
-						echo $this->Form->hidden('progress_'.$progress['Progress']['id'], array('value' => $progress['Progress']['body'], 'class' => 'progress'));
+						echo $this->Form->hidden('progress_'.$progress['Progress']['id'], ['value' => $progress['Progress']['body'], 'class' => 'progress']);
 						break;
 					case 'irohanote':
 						echo Utils::getNoteLink($progress['Progress']['page_id'], $this->Html);
@@ -293,17 +293,17 @@
 				$sort_key	= ($this->request->params['named']) ? 'sort:'.$this->request->params['named']['sort'] : '';
 				$direction	= ($this->request->params['named']) ? 'direction:'.$this->request->params['named']['direction'] : '';
 				
-				echo $this->Form->button('<span data-localize="edit">編集</span>', array(
+				echo $this->Form->button('<span data-localize="edit">編集</span>', [
 					'class'		=> 'btn btn-success btn-edit',
-					'onclick'	=> "location.href='".Router::url(array('action' => 'index', $progress['Task']['id'], $progress['Progress']['id'], $sort_key, $direction))."#edit'",
-				));
+					'onclick'	=> "location.href='".Router::url(['action' => 'index', $progress['Task']['id'], $progress['Progress']['id'], $sort_key, $direction])."#edit'",
+				]);
 				
 				echo $this->Form->postLink(__('削除'), 
-						array('action' => 'delete', $progress['Progress']['id']), 
-						array('class'=>'btn btn-danger','data-localize' => 'delete'), 
+						['action' => 'delete', $progress['Progress']['id']], 
+						['class'=>'btn btn-danger','data-localize' => 'delete'], 
 						__('[%s] を削除してもよろしいですか?', $progress['Progress']['title'])
 				); 
-				echo $this->Form->hidden('id', array('id'=>'', 'class'=>'target_id', 'value'=>$progress['Progress']['id']));
+				echo $this->Form->hidden('id', ['id'=>'', 'class'=>'target_id', 'value'=>$progress['Progress']['id']]);
 			}
 			
 			// スマイル機能
@@ -311,12 +311,12 @@
 			{
 				$image_file = ($progress['is_smiled']) ? 'smile-on.png' : 'smile-off.png';
 				
-				echo $this->Html->image($image_file, array(
+				echo $this->Html->image($image_file, [
 					'width'		=> 40, 
 					'class'		=>'smile-icon smile-icon-'.$progress['Progress']['id'], 
 					'onclick'	=>'smile('.$progress['Progress']['id'].');',
 					'title'		=>'スマイルする', 
-				));
+				]);
 				echo '<div class="name_display">'.$progress['name_display'].'</div>';
 			}
 			?>
@@ -337,8 +337,8 @@
 			<?php echo $this->Form->create('Progress', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title',	array('label' => "<span data-localize='title'>タイトル</span>"));
-				echo $this->Form->input('progress_type',	array(
+				echo $this->Form->input('title',	['label' => "<span data-localize='title'>タイトル</span>"]);
+				echo $this->Form->input('progress_type',	[
 					'type' => 'radio',
 					'before' => '<label class="col col-sm-3 control-label"><span data-localize="kind">種別</span></label>',
 					'separator'=>"　", 
@@ -348,9 +348,9 @@
 					'default' => 'progress',
 					'div' => 'form-group row-progress-type',
 					'onchange' => 'setProgressType(this)',
-					)
+					]
 				);
-				echo $this->Form->input('content_type',	array(
+				echo $this->Form->input('content_type',	[
 					'type' => 'radio',
 					'before' => '<label class="col col-sm-3 control-label"><span data-localize="content_type">進捗の入力形式</span></label>',
 					'separator'=>"　", 
@@ -360,12 +360,12 @@
 					'default' => 'markdown',
 					'div' => 'form-group row-content-type',
 					'onchange' => 'setContentType(this)',
-					)
+					]
 				);
-				echo $this->Form->input('body',		array(
+				echo $this->Form->input('body',		[
 					'label' =>  '<span data-localize="content">内容</span>',
 					'div' => 'form-group row-body',
-					)
+					]
 				);
 				
 				
@@ -379,11 +379,11 @@
 				
 				Utils::writeFormGroup('', '※ <a href="https://ja.wikipedia.org/wiki/Markdown" target="_blank">Markdown 形式</a> で記述可能です。', false, 'row-markdown');
 				
-				echo $this->Form->hidden('page_id', array('class' => 'form-group row-page-id'));
+				echo $this->Form->hidden('page_id', ['class' => 'form-group row-page-id']);
 				
-				echo $this->Form->input('file',		array('label' => '<span data-localize="attachment">添付ファイル</span>', 'class' => 'form-control form-control-upload'));
+				echo $this->Form->input('file',		['label' => '<span data-localize="attachment">添付ファイル</span>', 'class' => 'form-control form-control-upload']);
 
-				echo $this->Form->input('status',	array(
+				echo $this->Form->input('status',	[
 					'type' => 'radio',
 					'before' => '<label class="col col-sm-3 control-label"><span data-localize="status">課題のステータス</span></label>',
 					'separator'=>"　", 
@@ -392,10 +392,10 @@
 					'class' => false,
 					'value' => $content['Task']['status'],
 					'options' => Configure::read('task_status')
-					)
+					]
 				);
 				
-				$rate_list = array(
+				$rate_list = [
 					'0'  => '0%',
 					'10' => '10%',
 					'20' => '20%',
@@ -407,27 +407,27 @@
 					'80' => '80%',
 					'90' => '90%',
 					'100' => '100%',
-				);
+				];
 				
-				echo $this->Form->input('rate',		array(
+				echo $this->Form->input('rate',		[
 					'label' => '<span data-localize="progress_rate">進捗率</span>', 
 					'options'=>$rate_list, 
 					'class' => 'form-control',
 					'value' => $content['Task']['rate'],
 					'div' => 'form-group row-progress',
-				));
+				]);
 				
 				Configure::read('emotion_icons');
-				$emotion_icons = array();
+				$emotion_icons = [];
 				
 				foreach(Configure::read('emotion_icons') as $key => $value)
 				{
-					$emotion_icons[$key] = $this->Html->image($value, array('width' => 40));
+					$emotion_icons[$key] = $this->Html->image($value, ['width' => 40]);
 				}
 				
 				if(Configure::read('use_emotion_icon'))
 				{
-					echo $this->Form->input('emotion_icon',	array(
+					echo $this->Form->input('emotion_icon',	[
 						'type' => 'radio',
 						'before' => '<label class="col col-sm-3 control-label">感情</label><div>　※ 現在の感情を選択してください</div>',
 						'after' => '',
@@ -435,11 +435,11 @@
 						'legend' => false,
 						'class' => false,
 						'options' => $emotion_icons,
-						)
+						]
 					);
 				}
 				
-				echo $this->Form->hidden('file_name', array('class' => 'form-control-filename'));
+				echo $this->Form->hidden('file_name', ['class' => 'form-control-filename']);
 				
 				
 				// メール通知対象リスト
@@ -458,7 +458,7 @@
 			<div class="form-group">
 				
 			</div>
-			<?php echo $this->Form->input('User',		array('label' => __('　'), 'size' => 20, 'multiple' => true, 'before' => '<div class="col col-sm-9 col-sm-offset-3"><input name="is_mail" type="checkbox">&nbsp;<span data-localize="email_notification">メール通知</span></div>'));?>
+			<?php echo $this->Form->input('User',		['label' => __('　'), 'size' => 20, 'multiple' => true, 'before' => '<div class="col col-sm-9 col-sm-offset-3"><input name="is_mail" type="checkbox">&nbsp;<span data-localize="email_notification">メール通知</span></div>']);?>
 			<div class="form-group add-progress">
 				<div class="col col-sm-9 col-sm-offset-3">
 					<?php echo $this->Form->submit(($is_add) ? __('追加') :  __('保存'), Configure::read('form_submit_defaults')); ?>

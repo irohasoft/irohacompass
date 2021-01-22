@@ -1,7 +1,7 @@
 <?php if(!$is_user) echo $this->element('admin_menu');?>
 <?php $this->start('script-embedded'); ?>
 <script>
-	var URL_NOTE	= '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false))?>/';
+	var URL_NOTE	= '<?php echo Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/';
 	
 	$(document).ready(function()
 	{
@@ -51,7 +51,7 @@
 <?php
 	$controller = ($is_user) ? 'users_themes' : 'themes';
 ?>
-	<?php echo $this->Html->link(__('<< 戻る'), array('controller' => $controller, 'action' => 'index', @$this->params['pass'][0]))?>
+	<?php echo $this->Html->link(__('<< 戻る'), ['controller' => $controller, 'action' => 'index', @$this->params['pass'][0]])?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<?php echo (($this->action == 'admin_edit')||($this->action == 'edit')) ? "<span data-localize='edit'>編集</span>" :  __('新規学習テーマ'); ?>
@@ -60,18 +60,18 @@
 			<?php echo $this->Form->create('Theme', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title', array('label' => __('学習テーマ名 / Title')));
-				echo $this->Form->input('learning_target',	array(
+				echo $this->Form->input('title', ['label' => __('学習テーマ名 / Title')]);
+				echo $this->Form->input('learning_target',	[
 					'label' => __('学習目標 / Goal'),
 					'div' => 'form-group row-body',
-					)
+					]
 				);
 				
 				if(!$is_user)
 				{
-					echo $this->Form->input('user_id', array(
+					echo $this->Form->input('user_id', [
 						'label' => '所有者',
-					));
+					]);
 				}
 				
 				Utils::writeFormGroup('', '※ <a href="https://ja.wikipedia.org/wiki/Markdown" target="_blank">Markdown 形式</a> で記述可能です。', false, 'row-markdown');
@@ -84,7 +84,7 @@
 					);
 				}
 				
-				echo $this->Form->hidden('page_id', array('class' => 'form-group row-page-id'));
+				echo $this->Form->hidden('page_id', ['class' => 'form-group row-page-id']);
 				
 				//echo $this->Form->input('comment',			array('label' => __('備考')));
 			?>

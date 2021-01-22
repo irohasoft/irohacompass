@@ -24,73 +24,73 @@ class Progress extends AppModel
 	 *
 	 * @var array
 	 */
-	public $validate = array(
-			'task_id' => array(
-					'numeric' => array(
-							'rule' => array(
+	public $validate = [
+			'task_id' => [
+					'numeric' => [
+							'rule' => [
 									'numeric'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'progress_type' => array(
-					'notBlank' => array(
-							'rule' => array(
+										]
+			],
+			'progress_type' => [
+					'notBlank' => [
+							'rule' => [
 									'notBlank'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'body' => array(
-					'notBlank' => array(
-							'rule' => array(
+										]
+			],
+			'body' => [
+					'notBlank' => [
+							'rule' => [
 									'notBlank'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'rate' => array(
-					'notBlank' => array(
-							'rule' => array(
+										]
+			],
+			'rate' => [
+					'notBlank' => [
+							'rule' => [
 									'notBlank'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			),
-			'emotion_icon' => array(
-					'notBlank' => array(
-							'rule' => array(
+										]
+			],
+			'emotion_icon' => [
+					'notBlank' => [
+							'rule' => [
 									'notBlank'
-							)
+							]
 					// 'message' => 'Your custom message here',
 					// 'allowEmpty' => false,
 					// 'required' => false,
 					// 'last' => false, // Stop validation after this rule
 					// 'on' => 'create', // Limit validation to 'create' or
 					// 'update' operations
-										)
-			)
-	);
+										]
+			]
+	];
 	
 	// The Associations below have been created with all possible keys, those
 	// that are not needed can be removed
@@ -100,25 +100,25 @@ class Progress extends AppModel
 	 *
 	 * @var array
 	 */
-	public $belongsTo = array(
-			'Task' => array(
+	public $belongsTo = [
+			'Task' => [
 					'className' => 'Task',
 					'foreignKey' => 'task_id',
 					'conditions' => '',
 					'fields' => '',
 					'order' => ''
-			),
-			'User' => array(
+			],
+			'User' => [
 				'className' => 'User',
 				'foreignKey' => 'user_id',
 				'conditions' => '',
 				'fields' => '',
 				'order' => ''
-			)
-	);
+			]
+	];
 
-	public $hasMany = array(
-			'Smile' => array(
+	public $hasMany = [
+			'Smile' => [
 					'className' => 'Smile',
 					'foreignKey' => 'progress_id',
 					'dependent' => false,
@@ -130,8 +130,8 @@ class Progress extends AppModel
 					'exclusive' => '',
 					'finderQuery' => '',
 					'counterQuery' => ''
-			)
-	);
+			]
+	];
 
 	public function setOrder($id_list)
 	{
@@ -139,10 +139,10 @@ class Progress extends AppModel
 		{
 			$sql = "UPDATE ib_progress SET sort_no = :sort_no WHERE id= :id";
 
-			$params = array(
+			$params = [
 					'sort_no' => ($i+1),
 					'id' => $id_list[$i]
-			);
+			];
 
 			$this->query($sql, $params);
 		}

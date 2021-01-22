@@ -18,9 +18,9 @@ App::uses('AppController', 'Controller');
  */
 class UsersThemesController extends AppController
 {
-	public $components = array(
+	public $components = [
 		'Paginator'
-	);
+	];
 
 	public function index()
 	{
@@ -28,11 +28,11 @@ class UsersThemesController extends AppController
 		App::import('Model', 'Setting');
 		$this->Setting = new Setting();
 		
-		$data = $this->Setting->find('all', array(
-			'conditions' => array(
+		$data = $this->Setting->find('all', [
+			'conditions' => [
 				'Setting.setting_key' => 'information'
-			)
-		));
+			]
+		]);
 		
 		$info = $data[0]['Setting']['setting_value'];
 		
@@ -58,7 +58,7 @@ class UsersThemesController extends AppController
 		// 最近の学習履歴一覧を取得
 		$this->loadModel('Record');
 		
-		$theme_ids = array();
+		$theme_ids = [];
 		
 		foreach ($themes as $theme)
 		{
@@ -67,11 +67,11 @@ class UsersThemesController extends AppController
 		
 		$conditions['Theme.id'] = $theme_ids;
 		
-		$options = array(
+		$options = [
 			'conditions' => $conditions,
 			'order' => 'Record.created desc',
 			'limit' => 5,
-		);
+		];
 		
 		$records = $this->Record->find('all', $options);
 		

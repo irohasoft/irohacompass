@@ -20,7 +20,7 @@
 
 <div class="tasks form">
 	<?php
-		$this->Html->addCrumb('アンケート一覧', array('action' => 'index_enq'));
+		$this->Html->addCrumb('アンケート一覧', ['action' => 'index_enq']);
 		echo $this->Html->getCrumbs(' / ');
 	?>
 	<div class="panel panel-default">
@@ -31,8 +31,8 @@
 			<?php echo $this->Form->create('Task', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title',	array('label' => 'アンケートタイトル'));
-				echo $this->Form->input('comment', array('label' => '備考'));
+				echo $this->Form->input('title',	['label' => 'アンケートタイトル']);
+				echo $this->Form->input('comment', ['label' => '備考']);
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">

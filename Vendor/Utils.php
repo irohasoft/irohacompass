@@ -59,7 +59,7 @@ class Utils
 			if($name=='')
 				$name = '添付ファイル';
 			
-			$link = '<br>'.$helper->link($name, $url, array('target'=>'_blank', 'download' => $name));
+			$link = '<br>'.$helper->link($name, $url, ['target'=>'_blank', 'download' => $name]);
 		}
 		
 		return $link;
@@ -83,7 +83,7 @@ class Utils
 		$tag = sprintf(
 			$tag,
 			$page_id,
-			Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false)),
+			Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false]),
 			$page_id
 		);
 		

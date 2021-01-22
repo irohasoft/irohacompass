@@ -47,7 +47,7 @@
 					});
 
 					$.ajax({
-						url: "<?php echo Router::url(array('action' => 'order')) ?>",
+						url: "<?php echo Router::url(['action' => 'order']) ?>",
 						type: "POST",
 						data: { id_list : id_list },
 						dataType: "text",
@@ -71,7 +71,7 @@
 <div class="progresses index">
 	<div class="ib-breadcrumb">
 	<?php 
-		$this->Html->addCrumb('アンケート一覧', array('controller' => 'tasks', 'action' => 'index_enq'));
+		$this->Html->addCrumb('アンケート一覧', ['controller' => 'tasks', 'action' => 'index_enq']);
 		$this->Html->addCrumb($content['Task']['title']);
 		
 		echo $this->Html->getCrumbs(' / ');
@@ -80,7 +80,7 @@
 	<div class="ib-page-title"><?php echo __('質問一覧'); ?></div>
 	
 	<div class="buttons_container">
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'add_enq', $content['Task']['id'])) ?>'">+ 追加</button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(['action' => 'add_enq', $content['Task']['id']]) ?>'">+ 追加</button>
 	</div>
 	
 	<div class="alert alert-warning">ドラッグアンドドロップで表示順が変更できます。</div>
@@ -106,16 +106,16 @@
 		<td class="ib-col-date"><?php echo Utils::getYMDHN($progress['Progress']['created']); ?>&nbsp;</td>
 		<td class="ib-col-date"><?php echo Utils::getYMDHN($progress['Progress']['modified']); ?>&nbsp;</td>
 		<td class="actions text-center">
-			<button type="button" class="btn btn-success" onclick="location.href='<?php echo Router::url(array('action' => 'edit_enq', $progress['Task']['id'], $progress['Progress']['id'])) ?>'">編集</button>
+			<button type="button" class="btn btn-success" onclick="location.href='<?php echo Router::url(['action' => 'edit_enq', $progress['Task']['id'], $progress['Progress']['id']]) ?>'">編集</button>
 			<?php
 			if($loginedUser['role']=='admin')
 			{
 				echo $this->Form->postLink(__('削除'), 
-						array('action' => 'admin_delete_enq', $progress['Task']['id'], $progress['Progress']['id']), 
-						array('class'=>'btn btn-danger'), 
+						['action' => 'admin_delete_enq', $progress['Task']['id'], $progress['Progress']['id']], 
+						['class'=>'btn btn-danger'], 
 						__('[%s] を削除してもよろしいですか?', $progress['Progress']['title'])
 				); 
-				echo $this->Form->hidden('id', array('id'=>'', 'class'=>'target_id', 'value'=>$progress['Progress']['id']));
+				echo $this->Form->hidden('id', ['id'=>'', 'class'=>'target_id', 'value'=>$progress['Progress']['id']]);
 			}
 			?>
 		</td>

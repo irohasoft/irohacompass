@@ -26,13 +26,13 @@ class ApisController extends AppController
 	 *
 	 * @var array
 	 */
-	public $components = array(
+	public $components = [
 		'Paginator',
-		'Security' => array(
+		'Security' => [
 			'csrfUseOnce' => false,
-			'unlockedActions' => array('note_control', 'page_control', 'leaf_control', 'link_control', 'webpage', 'note_export')
-		),
-	);
+			'unlockedActions' => ['note_control', 'page_control', 'leaf_control', 'link_control', 'webpage', 'note_export']
+		],
+	];
 
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -59,18 +59,18 @@ class ApisController extends AppController
 		// ログインユーザがアクセス可能なノートIDリスト
 		$note_id_list  = $this->getNoteIDList($user_id);
 		
-		$options = array(
-			'conditions' => array(
+		$options = [
+			'conditions' => [
 				'Note.id' => $note_id_list
-			),
+			],
 			'order' => 'Note.note_order',
-		);
+		];
 		
 		$this->loadModel('Note');
 		$notes = $this->Note->find('all', $options);
 		
-		$xmlArray = array('root' => array('result' => array()));
-		$xmlArray['root']['result'] = array('error_code' => '0');
+		$xmlArray = ['root' => ['result' => []]];
+		$xmlArray['root']['result'] = ['error_code' => '0'];
 		
 		$list = $this->getList($notes, 'Note');
 		
@@ -101,12 +101,12 @@ class ApisController extends AppController
 		$cmd = $this->data['cmd'];
 		
 		$this->loadModel('Note');
-		$data = $this->Note->find('first', array(
-			'conditions' => array(
+		$data = $this->Note->find('first', [
+			'conditions' => [
 				'Note.note_id' => @$this->data['note_id'],
 				'Note.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
-			)
-		));
+			]
+		]);
 		
 		if(
 			($cmd=='add')||
@@ -184,7 +184,7 @@ class ApisController extends AppController
 					if(@$page['parent_id'])
 						$parent_id = $this->getRenewedID($base_id, $page['parent_id']);
 					
-					$data = array();
+					$data = [];
 					$data['Page'] = $page;
 					
 					$data['Page']['id']				= null;
@@ -204,7 +204,7 @@ class ApisController extends AppController
 					$page_id	= $this->getRenewedID($base_id, $leaf['page_id']);
 					$leaf_id	= $this->getRenewedID($base_id, $leaf['leaf_id']);
 					
-					$data = array();
+					$data = [];
 					$data['Leaf'] = $leaf;
 					
 					$data['Leaf']['id']				= null;
@@ -226,7 +226,7 @@ class ApisController extends AppController
 					$leaf_id	= $this->getRenewedID($base_id, $link['leaf_id']);
 					$leaf_id2	= $this->getRenewedID($base_id, $link['leaf_id2']);
 					
-					$data = array();
+					$data = [];
 					$data['Link'] = $link;
 					
 					$data['Link']['id']				= null;
@@ -244,8 +244,8 @@ class ApisController extends AppController
 				break;
 		}
 
-		$xmlArray = array('root' => array('result' => array()));
-		$xmlArray['root']['result'] = array('error_code' => '0');
+		$xmlArray = ['root' => ['result' => []]];
+		$xmlArray['root']['result'] = ['error_code' => '0'];
 
 		// XML出力
 		$this->flashXML($xmlArray);
@@ -270,12 +270,12 @@ class ApisController extends AppController
 		
 		$note_id = $this->getParam('note_id');
 		
-		$options = array(
-			'conditions' => array(
+		$options = [
+			'conditions' => [
 				'Note.note_id' => $note_id,
 				'Note.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
-			)
-		);
+			]
+		];
 		
 		// 管理権限の場合、ユーザIDは任意とする
 		if($this->isAdminRole())
@@ -286,13 +286,13 @@ class ApisController extends AppController
 		$this->loadModel('Note');
 		$note = $this->Note->find('first', $options);
 		
-		$options = array(
-			'conditions' => array(
+		$options = [
+			'conditions' => [
 				'Page.note_id' => $note_id,
 				'Page.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
-			),
+			],
 			'order' => 'Page.page_order',
-		);
+		];
 		
 		// 管理権限の場合、ユーザIDは任意とする
 		if($this->isAdminRole())
@@ -301,7 +301,7 @@ class ApisController extends AppController
 		$this->loadModel('Page');
 		$pages = $this->Page->find('all', $options);
 		
-		$xmlArray = array('root' => array('note' => array()));
+		$xmlArray = ['root' => ['note' => []]];
 		
 		$xmlArray['root']['note'] = $note['Note'];
 		
@@ -334,12 +334,12 @@ class ApisController extends AppController
 		$cmd = $this->data['cmd'];
 		
 		$this->loadModel('Page');
-		$data = $this->Page->find('first', array(
-			'conditions' => array(
+		$data = $this->Page->find('first', [
+			'conditions' => [
 				'Page.page_id' => $this->data['page_id'],
 				'Page.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
-			)
-		));
+			]
+		]);
 
 		switch($cmd)
 		{
@@ -366,8 +366,8 @@ class ApisController extends AppController
 		
 		$page_id = $this->Page->getLastInsertID();
 		
-		$xmlArray = array('root' => array('result' => array(), 'page_id' => $page_id, 'page_title' => @$this->data['page_title']));
-		$xmlArray['root']['result'] = array('error_code' => '0');
+		$xmlArray = ['root' => ['result' => [], 'page_id' => $page_id, 'page_title' => @$this->data['page_title']]];
+		$xmlArray['root']['result'] = ['error_code' => '0'];
 
 		// XML出力
 		$this->flashXML($xmlArray);
@@ -396,13 +396,13 @@ class ApisController extends AppController
 		//debug($note_id);
 		//debug($this->getUserIDList($note_id));
 		
-		$options = array(
-			'conditions' => array(
+		$options = [
+			'conditions' => [
 				'Leaf.page_id' => $page_id,
 				'Leaf.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
-			),
+			],
 			'order' => 'Leaf.leaf_zorder asc',
-		);
+		];
 		
 		// 管理権限の場合、ユーザIDは任意とする
 		if($this->isAdminRole())
@@ -411,7 +411,7 @@ class ApisController extends AppController
 		$this->loadModel('Leaf');
 		$leafs = $this->Leaf->find('all', $options);
 		
-		$xmlArray = array('root' => array());
+		$xmlArray = ['root' => []];
 		
 		$list = $this->getList($leafs, 'Leaf');
 		
@@ -446,11 +446,11 @@ class ApisController extends AppController
 		
 		$leaf_id = $this->data['leaf_id'];
 		
-		$data = $this->Leaf->find('first', array(
-			'conditions' => array(
+		$data = $this->Leaf->find('first', [
+			'conditions' => [
 				'Leaf.leaf_id' => $this->data['leaf_id']
-			)
-		));
+			]
+		]);
 		
 		switch($cmd)
 		{
@@ -507,8 +507,8 @@ class ApisController extends AppController
 				break;
 		}
 		
-		$xmlArray = array('root' => array('result' => array()));
-		$xmlArray['root']['result'] = array('error_code' => '0');
+		$xmlArray = ['root' => ['result' => []]];
+		$xmlArray['root']['result'] = ['error_code' => '0'];
 		
 		// XML出力
 		$this->flashXML($xmlArray);
@@ -524,16 +524,16 @@ class ApisController extends AppController
 		
 		$page_id = $this->getParam('page_id');
 		
-		$options = array(
-			'conditions' => array(
+		$options = [
+			'conditions' => [
 				'Link.page_id' => $page_id
-			)
-		);
+			]
+		];
 		
 		$this->loadModel('Link');
 		$links = $this->Link->find('all', $options);
 		
-		$xmlArray = array('root' => array('link' => array()));
+		$xmlArray = ['root' => ['link' => []]];
 		
 		$list = $this->getList($links, 'Link');
 		
@@ -576,17 +576,17 @@ class ApisController extends AppController
 				$this->Link->save($data);
 				break;
 			case 'delete':
-				$this->Link->deleteAll(array('Link.link_id' => $this->data['link_id']));
+				$this->Link->deleteAll(['Link.link_id' => $this->data['link_id']]);
 				$this->Link->delete();
 				break;
 			case 'delete_by_leaf_id':
-				$this->Link->deleteAll(array('Link.leaf_id' => $this->data['leaf_id']));
-				$this->Link->deleteAll(array('Link.leaf_id2' => $this->data['leaf_id']));
+				$this->Link->deleteAll(['Link.leaf_id' => $this->data['leaf_id']]);
+				$this->Link->deleteAll(['Link.leaf_id2' => $this->data['leaf_id']]);
 				break;
 		}
 		
-		$xmlArray = array('root' => array('result' => array()));
-		$xmlArray['root']['result'] = array('error_code' => '0');
+		$xmlArray = ['root' => ['result' => []]];
+		$xmlArray['root']['result'] = ['error_code' => '0'];
 		
 		// XML出力
 		$this->flashXML($xmlArray);
@@ -613,15 +613,15 @@ class ApisController extends AppController
 		$keyword = $this->getParam('keyword');
 		$note_id = $this->getParam('note_id');
 		
-		$options = array(
-			'conditions' => array(
-				'OR' => array(
-					array('Leaf.leaf_title like' 	=> '%'.$keyword.'%'),
-					array('Leaf.leaf_content like'=> '%'.$keyword.'%'),
-				),
+		$options = [
+			'conditions' => [
+				'OR' => [
+					['Leaf.leaf_title like' 	=> '%'.$keyword.'%'],
+					['Leaf.leaf_content like'=> '%'.$keyword.'%'],
+				],
 				'Leaf.user_id' => $user_id,
-			)
-		);
+			]
+		];
 		
 		// ノートが指定されている場合、ノート内を検索
 		if($note_id!='')
@@ -632,13 +632,13 @@ class ApisController extends AppController
 		$this->loadModel('Leaf');
 		$leafs = $this->Leaf->find('all', $options);
 		
-		$xmlArray = array('root' => array());
+		$xmlArray = ['root' => []];
 		
-		$xmlArray['root']['result'] = array('error_code' => '0');
+		$xmlArray['root']['result'] = ['error_code' => '0'];
 		
 		
 		// リストに変換
-		$list = array();
+		$list = [];
 		
 		foreach($leafs as $item)
 		{
@@ -685,40 +685,40 @@ class ApisController extends AppController
 		
 		$note_id = $this->getParam('note_id');
 
-		$options = array(
-			'conditions' => array(
+		$options = [
+			'conditions' => [
 				'Note.note_id' => $note_id,
 				'Note.user_id' => $user_id
-			),
-		);
+			],
+		];
 		
 		$note = $this->Note->find('first', $options);
 		
-		$options = array(
-			'conditions' => array(
+		$options = [
+			'conditions' => [
 				'Page.note_id' => $note_id,
 				'Page.user_id' => $user_id
-			),
-		);
+			],
+		];
 		
 		$pages = $this->Page->find('all', $options);
 		
-		$options = array(
-			'conditions' => array(
+		$options = [
+			'conditions' => [
 				'Leaf.note_id' => $note_id,
 				'Leaf.user_id' => $user_id
-			),
-		);
+			],
+		];
 		
 		//debug($options);
 		$leafs = $this->Leaf->find('all', $options);
 		
-		$options = array(
-			'conditions' => array(
+		$options = [
+			'conditions' => [
 				'Link.note_id' => $note_id,
 				'Link.user_id' => $user_id
-			),
-		);
+			],
+		];
 		
 		$links = $this->Link->find('all', $options);
 		
@@ -727,9 +727,9 @@ class ApisController extends AppController
 		$leaf_list = $this->getList($leafs, 'Leaf');
 		$link_list = $this->getList($links, 'Link');
 		
-		$xmlArray = array('root' => array());
+		$xmlArray = ['root' => []];
 		
-		$xmlArray['root']['result'] = array('error_code' => '0');
+		$xmlArray['root']['result'] = ['error_code' => '0'];
 		$xmlArray['root']['note'] = $note['Note'];
 		
 		if($page_list)
@@ -766,8 +766,8 @@ class ApisController extends AppController
 		$customer_id = $this->UsersPlan->getCustomerID($user_id);
 		$sub = $this->UsersPlan->getActiveSub($customer_id);
 		
-		$xmlArray = array('root' => array('result' => array()));
-		$xmlArray['root']['result'] = array('error_code' => '0');
+		$xmlArray = ['root' => ['result' => []]];
+		$xmlArray['root']['result'] = ['error_code' => '0'];
 		
 		$xmlArray['root']['sub'] = $sub;
 		$xmlArray['root']['plan'] = $sub['plan'];
@@ -793,8 +793,8 @@ class ApisController extends AppController
 		//$url = 'https://www.washingtontimes.com/';
 		$page_title = $this->getPageTitle($url);
 
-		$xmlArray = array('root' => array('result' => array(), 'title' => $page_title));
-		$xmlArray['root']['result'] = array('error_code' => '0');
+		$xmlArray = ['root' => ['result' => [], 'title' => $page_title]];
+		$xmlArray['root']['result'] = ['error_code' => '0'];
 		
 		// XML出力
 		$this->flashXML($xmlArray);
@@ -854,7 +854,7 @@ class ApisController extends AppController
 	
 	private function getList($arr, $name)
 	{
-		$list = array();
+		$list = [];
 		
 		foreach($arr as $item)
 		{
@@ -869,8 +869,8 @@ class ApisController extends AppController
 	 */
 	private function flashError($error_code, $error_message = null)
 	{
-		$xmlArray = array('root' => array());
-		$xmlArray['root']['result'] = array('error_code' => $error_code, 'error_message' => $error_message);
+		$xmlArray = ['root' => []];
+		$xmlArray['root']['result'] = ['error_code' => $error_code, 'error_message' => $error_message];
 		$this->flashXML($xmlArray);
 	}
 	
@@ -879,7 +879,7 @@ class ApisController extends AppController
 	 */
 	private function flashXML($xmlArray)
 	{
-		$xmlObject = Xml::fromArray($xmlArray, array('format' => 'tags'));
+		$xmlObject = Xml::fromArray($xmlArray, ['format' => 'tags']);
 		$xmlString = $xmlObject->asXML();
 		
 		$this->response->type('xml');

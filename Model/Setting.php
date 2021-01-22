@@ -20,28 +20,28 @@ class Setting extends AppModel {
  *
  * @var array
  */
-	public $validate = array(
-		'setting_key' => array(
-			'notBlank' => array(
-				'rule' => array('notBlank'),
+	public $validate = [
+		'setting_key' => [
+			'notBlank' => [
+				'rule' => ['notBlank'],
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'setting_value' => array(
-			'notBlank' => array(
-				'rule' => array('notBlank'),
+			],
+		],
+		'setting_value' => [
+			'notBlank' => [
+				'rule' => ['notBlank'],
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	);
+			],
+		],
+	];
 	
 	public function getSettingValue($setting_key)
 	{
@@ -52,9 +52,9 @@ SELECT setting_value
   FROM ib_settings
  WHERE setting_key = :setting_key
 EOF;
-		$params = array(
+		$params = [
 				'setting_key' => $setting_key
-		);
+		];
 		
 		$data = $this->query($sql, $params);
 		
@@ -70,7 +70,7 @@ EOF;
 	
 	public function getSettings()
 	{
-		$result = array();
+		$result = [];
 		
 		$settings = $this->query("SELECT setting_key, setting_value FROM ib_settings");
 		
@@ -88,10 +88,10 @@ EOF;
 	{
 		foreach ($settings as $key => $value)
 		{
-			$params = array(
+			$params = [
 				'setting_key' => $key,
 				'setting_value' => $value
-			);
+			];
 			
 			$this->query("UPDATE ib_settings SET setting_value = :setting_value WHERE setting_key = :setting_key", $params);
 		}

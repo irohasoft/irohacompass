@@ -24,8 +24,8 @@ class Link extends AppModel
 	 *
 	 * @var array
 	 */
-	public $validate = array(
-	);
+	public $validate = [
+	];
 	
 	// The Associations below have been created with all possible keys, those
 	// that are not needed can be removed
@@ -35,21 +35,21 @@ class Link extends AppModel
 	 *
 	 * @var array
 	 */
-	public $hasAndBelongsToMany = array(
-	);
+	public $hasAndBelongsToMany = [
+	];
 
 	/**
 	 * belongsTo associations
 	 *
 	 * @var array
 	 */
-	public $belongsTo = array(
-			'User' => array(
+	public $belongsTo = [
+			'User' => [
 					'className' => 'User',
 					'foreignKey' => 'user_id',
 					'conditions' => '',
 					'fields' => '',
 					'order' => ''
-			),
-	);
+			],
+	];
 }

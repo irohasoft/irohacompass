@@ -24,9 +24,9 @@ class IdeasController extends AppController
 	 *
 	 * @var array
 	 */
-	public $components = array(
+	public $components = [
 		'Paginator'
-	);
+	];
 
 	public function admin_index()
 	{
@@ -43,21 +43,21 @@ class IdeasController extends AppController
 	{
 		$this->Idea->recursive = 0;
 
-		$this->Paginator->settings = array(
+		$this->Paginator->settings = [
 			'limit' => 10,
 			'order' => 'Idea.created desc',
-			'conditions' => array(
+			'conditions' => [
 				'user_id' => $this->Auth->user('id')
-			),
-		);
+			],
+		];
 		
 		$ideas = $this->paginate();
 		//debug($ideas);
 		
-		if ($this->request->is(array(
+		if ($this->request->is([
 				'post',
 				'put'
-		)))
+		]))
 		{
 			if(Configure::read('demo_mode'))
 				return;
@@ -70,7 +70,7 @@ class IdeasController extends AppController
 			if ($this->Idea->save($this->request->data))
 			{
 				$this->Flash->success(__('アイデア・メモを追加しました'));
-				$this->redirect(array());
+				$this->redirect([]);
 			}
 			else
 			{
@@ -108,9 +108,9 @@ class IdeasController extends AppController
 		if ($this->Idea->delete())
 		{
 			$this->Flash->success(__('アイデアが削除されました'));
-			return $this->redirect(array(
+			return $this->redirect([
 					'action' => 'index'
-			));
+			]);
 		}
 		else
 		{

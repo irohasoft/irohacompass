@@ -77,7 +77,7 @@ table tr td
 			<?php if($info!=""){?>
 			<div class="well">
 				<?php
-				$info = $this->Text->autoLinkUrls($info, array( 'target' => '_blank'));
+				$info = $this->Text->autoLinkUrls($info, [ 'target' => '_blank']);
 				$info = nl2br($info);
 				echo $info;
 				?>
@@ -90,12 +90,12 @@ table tr td
 			<?php foreach ($infos as $info): ?>
 			<tr>
 				<td width="100" valign="top"><?php echo h(Utils::getYMD($info['Info']['created'])); ?></td>
-				<td><?php echo $this->Html->link($info['Info']['title'], array('controller' => 'infos', 'action' => 'view', $info['Info']['id'])); ?></td>
+				<td><?php echo $this->Html->link($info['Info']['title'], ['controller' => 'infos', 'action' => 'view', $info['Info']['id']]); ?></td>
 			</tr>
 			<?php endforeach; ?>
 			</tbody>
 			</table>
-			<div class="text-right"><a href="<?php echo Router::url(array('controller' => 'infos', 'action' => 'index'));?>"><span data-localize='view_list'>一覧を表示</span></a></div>
+			<div class="text-right"><a href="<?php echo Router::url(['controller' => 'infos', 'action' => 'index']);?>"><span data-localize='view_list'>一覧を表示</span></a></div>
 			<?php }?>
 			
 			<?php echo $no_info;?>
@@ -131,8 +131,8 @@ table tr td
 			<tbody>
 			<?php foreach ($records as $record): ?>
 				<tr>
-					<td nowrap><div class="reader"><a href="<?php echo Router::url(array('controller' => 'tasks', 'action' => 'index', $record['Theme']['id']));?>"><?php echo h($record['Theme']['title']); ?></a></div></td>
-					<td nowrap><div class="reader"><a href="<?php echo Router::url(array('controller' => 'progresses', 'action' => 'index', $record['Task']['id']));?>"><?php echo h($record['Task']['title']); ?></a></div></td>
+					<td nowrap><div class="reader"><a href="<?php echo Router::url(['controller' => 'tasks', 'action' => 'index', $record['Theme']['id']]);?>"><?php echo h($record['Theme']['title']); ?></a></div></td>
+					<td nowrap><div class="reader"><a href="<?php echo Router::url(['controller' => 'progresses', 'action' => 'index', $record['Task']['id']]);?>"><?php echo h($record['Task']['title']); ?></a></div></td>
 					<td nowrap><?php echo h($record['User']['name']); ?>&nbsp;</td>
 					<!--
 					<td class="ib-col-center"><?php echo h($record['Record']['rate']); ?>&nbsp;</td>
@@ -147,7 +147,7 @@ table tr td
 			</table>
 			</div>
 			
-			<div class="text-right"><a href="<?php echo Router::url(array('controller' => 'records', 'action' => 'progress'));?>"><span data-localize='view_list'>一覧を表示</span></a></div>
+			<div class="text-right"><a href="<?php echo Router::url(['controller' => 'records', 'action' => 'progress']);?>"><span data-localize='view_list'>一覧を表示</span></a></div>
 		</div>
 	</div>
 	<?php }?>
@@ -155,8 +155,8 @@ table tr td
 	<div class="panel panel-info">
 		<div class="panel-heading"><span data-localize='learning_theme'>学習テーマ一覧</span></div>
 		<div class="buttons_container">
-			<button class="btn btn-warning" onclick="location.href='<?php echo Router::url(array('controller' => 'ideas')) ?>'"><span data-localize='add_idea_memo'>+ アイデア・メモ</span></button>
-			<button class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('controller' => 'themes', 'action' => 'add')) ?>'"><span data-localize='add_learning_theme'>+ 学習テーマを追加</span></button>
+			<button class="btn btn-warning" onclick="location.href='<?php echo Router::url(['controller' => 'ideas']) ?>'"><span data-localize='add_idea_memo'>+ アイデア・メモ</span></button>
+			<button class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(['controller' => 'themes', 'action' => 'add']) ?>'"><span data-localize='add_learning_theme'>+ 学習テーマを追加</span></button>
 		</div>
 		<div class="panel-body">
 			<div class="theme-list" data-localize='my_learning_themes'>所有しているテーマ</div>
@@ -165,7 +165,7 @@ table tr td
 			foreach ($themes as $theme)
 			{
 				if ($theme['Theme']['user_id']==$loginedUser['id']) { ?>
-				<a href="<?php echo Router::url(array('controller' => 'tasks', 'action' => 'index', $theme['Theme']['id']));?>" class="list-group-item">
+				<a href="<?php echo Router::url(['controller' => 'tasks', 'action' => 'index', $theme['Theme']['id']]);?>" class="list-group-item">
 					<?php if($theme[0]['left_cnt']!=0){?>
 					<button type="button" class="btn btn-danger btn-rest">残り <span class="badge"><?php echo h($theme[0]['left_cnt']); ?></span></button>
 					<?php }?>
@@ -187,7 +187,7 @@ table tr td
 			foreach ($themes as $theme)
 			{
 				if ($theme['Theme']['user_id']!=$loginedUser['id']) { ?>
-				<a href="<?php echo Router::url(array('controller' => 'tasks', 'action' => 'index', $theme['Theme']['id']));?>" class="list-group-item">
+				<a href="<?php echo Router::url(['controller' => 'tasks', 'action' => 'index', $theme['Theme']['id']]);?>" class="list-group-item">
 					<?php if($theme[0]['left_cnt']!=0){?>
 					<button type="button" class="btn btn-danger btn-rest">残り <span class="badge"><?php echo h($theme[0]['left_cnt']); ?></span></button>
 					<?php }?>

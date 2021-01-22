@@ -40,11 +40,11 @@
  *
  * @see ErrorHandler for more information on error handling and configuration.
  */
-	Configure::write('Error', array(
+	Configure::write('Error', [
 		'handler' => 'ErrorHandler::handleError',
 		'level' => E_ALL & ~E_DEPRECATED & ~E_STRICT,
 		'trace' => true
-	));
+	]);
 
 /**
  * Configure the Exception handler used for uncaught exceptions. By default,
@@ -66,11 +66,11 @@
  *
  * @see ErrorHandler for more information on exception handling and configuration.
  */
-	Configure::write('Exception', array(
+	Configure::write('Exception', [
 		'handler' => 'ErrorHandler::handleException',
 		'renderer' => 'ExceptionRenderer',
 		'log' => true
-	));
+	]);
 
 /**
  * Application wide charset encoding
@@ -140,7 +140,7 @@
  *	`admin_index()` and `/admin/controller/index`
  *	`manager_index()` and `/manager/controller/index`
  */
-	Configure::write('Routing.prefixes', array('admin'));
+	Configure::write('Routing.prefixes', ['admin']);
 
 /**
  * Turn off all caching application-wide.
@@ -203,9 +203,9 @@
  * To use database sessions, run the app/Config/Schema/sessions.php schema using
  * the cake shell command: cake schema create Sessions
  */
-	Configure::write('Session', array(
+	Configure::write('Session', [
 		'defaults' => 'php'
-	));
+	]);
 
 /**
  * A random string used in security hashing methods.

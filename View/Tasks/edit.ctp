@@ -8,8 +8,8 @@
 <script>
 	//$('input[name="data[Task][kind]"]:radio').val(['text']);
 	var _editor;
-	var URL_UPLOAD	= '<?php echo Router::url(array('controller' => 'tasks', 'action' => 'upload', 'admin' => false))?>/file';
-	var URL_NOTE	= '<?php echo Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false))?>/';
+	var URL_UPLOAD	= '<?php echo Router::url(['controller' => 'tasks', 'action' => 'upload', 'admin' => false])?>/file';
+	var URL_NOTE	= '<?php echo Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/';
 	
 	$(document).ready(function()
 	{
@@ -69,7 +69,7 @@
 </script>
 <?php $this->end(); ?>
 <?php
-$rate_list = array(
+$rate_list = [
 	'0'  => '0%',
 	'10' => '10%',
 	'20' => '20%',
@@ -81,14 +81,14 @@ $rate_list = array(
 	'80' => '80%',
 	'90' => '90%',
 	'100' => '100%',
-);
+];
 ?>
 <div class="tasks-edit">
 	<?php
 		$controller = ($is_user) ? 'users_themes' : 'themes';
 		
-		$this->Html->addCrumb('学習テーマ一覧', array('controller' => $controller, 'action' => 'index'));
-		$this->Html->addCrumb(h($theme['Theme']['title']), array('action' => 'index',$this->params['pass'][0]));
+		$this->Html->addCrumb('学習テーマ一覧', ['controller' => $controller, 'action' => 'index']);
+		$this->Html->addCrumb(h($theme['Theme']['title']), ['action' => 'index',$this->params['pass'][0]]);
 		echo $this->Html->getCrumbs(' / ');
 	?>
 	<div class="panel panel-default">
@@ -99,9 +99,9 @@ $rate_list = array(
 			<?php echo $this->Form->create('Task', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title',	array('label' => '<span data-localize="title">課題タイトル</span>'));
+				echo $this->Form->input('title',	['label' => '<span data-localize="title">課題タイトル</span>']);
 				
-				echo $this->Form->input('priority',	array(
+				echo $this->Form->input('priority',	[
 					'type' => 'radio',
 					'before' => '<label class="col col-sm-3 control-label"><span data-localize="priority">優先度</span></label>',
 					'separator'=>"　", 
@@ -110,10 +110,10 @@ $rate_list = array(
 					'class' => false,
 					'value' => $priority,
 					'options' => Configure::read('task_priority')
-					)
+					]
 				);
 				
-				echo $this->Form->input('status',	array(
+				echo $this->Form->input('status',	[
 					'type' => 'radio',
 					'before' => '<label class="col col-sm-3 control-label"><span data-localize="status">ステータス</span></label>',
 					'separator'=>"　", 
@@ -122,13 +122,13 @@ $rate_list = array(
 					'class' => false,
 					'value' => $status,
 					'options' => Configure::read('task_status')
-					)
+					]
 				);
 				
-				echo $this->Form->input('body',		array('label' => '<span data-localize="content">課題の内容</span>'));
+				echo $this->Form->input('body',		['label' => '<span data-localize="content">課題の内容</span>']);
 				Utils::writeFormGroup('', '※ <a href="https://ja.wikipedia.org/wiki/Markdown" target="_blank">Markdown 形式</a> で記述可能です。');
 				
-				echo $this->Form->input('deadline', array(
+				echo $this->Form->input('deadline', [
 					'type' => 'date',
 					'dateFormat' => 'YMD',
 					'monthNames' => false,
@@ -139,7 +139,7 @@ $rate_list = array(
 					'class'=>'form-control date',
 					'style' => 'display: inline;',
 					'value' => $deadline,
-				));
+				]);
 				
 				if(Configure::read('use_irohanote'))
 				{
@@ -148,15 +148,15 @@ $rate_list = array(
 						false, 'row-irohanote');
 				}
 				
-				echo $this->Form->hidden('page_id', array('class' => 'form-group row-page-id'));
+				echo $this->Form->hidden('page_id', ['class' => 'form-group row-page-id']);
 				
-				echo $this->Form->input('file',		array('label' => '<span data-localize="attachment">添付ファイル</span>', 'class' => 'form-control form-control-upload'));
-				echo $this->Form->input('rate',		array(
+				echo $this->Form->input('file',		['label' => '<span data-localize="attachment">添付ファイル</span>', 'class' => 'form-control form-control-upload']);
+				echo $this->Form->input('rate',		[
 					'label' => '<span data-localize="progress_rate">進捗率</span>', 
 					'options'=>$rate_list, 
 					'class' => 'form-control',
-				));
-				echo $this->Form->hidden('file_name', array('class' => 'form-control-filename'));
+				]);
+				echo $this->Form->hidden('file_name', ['class' => 'form-control-filename']);
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">

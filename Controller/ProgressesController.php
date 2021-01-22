@@ -20,15 +20,15 @@ App::uses('Record', 'Record');
 class ProgressesController extends AppController
 {
 
-	public $components = array(
+	public $components = [
 		'Paginator',
-		'Security' => array(
+		'Security' => [
 			'validatePost' => false,
 			'csrfUseOnce' => false,
 			'csrfCheck' => false,
-			'unlockedActions' => array('admin_order')
-		),
-	);
+			'unlockedActions' => ['admin_order']
+		],
+	];
 
 	public function index($task_id, $progress_id = null)
 	{
@@ -42,14 +42,14 @@ class ProgressesController extends AppController
 		));
 		*/
 		
-		$this->Paginator->settings = array(
+		$this->Paginator->settings = [
 			'limit' => 500,
 			'maxLimit' => 500,
 			'order' => 'Progress.created asc',
-			'conditions' => array(
+			'conditions' => [
 				'task_id' => $task_id
-			),
-		);
+			],
+		];
 		
 		//debug($this->request->params);
 		
@@ -72,11 +72,11 @@ class ProgressesController extends AppController
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->find('first', array(
-			'conditions' => array(
+		$content = $this->Task->find('first', [
+			'conditions' => [
 				'Task.id' => $task_id
-			)
-		));
+			]
+		]);
 		
 		$is_record = (($this->action == 'record') || ($this->action == 'admin_record'));
 		$is_admin  = ($this->action == 'admin_record');
@@ -86,7 +86,7 @@ class ProgressesController extends AppController
 		
 		for($i=0; $i < count($progresses); $i++)
 		{
-			$smiled_ids   = array(); // スマイルした人のID（自分以外）
+			$smiled_ids   = []; // スマイルした人のID（自分以外）
 			
 			$smiles = $progresses[$i]['Smile'];
 			
@@ -106,13 +106,13 @@ class ProgressesController extends AppController
 			}
 			
 			$this->User->recursive = 0;
-			$user = $this->User->find('first', array(
-				'fields' => array("GROUP_CONCAT(User.name SEPARATOR ', ') as name_display"),
-				'conditions'	=> array(
+			$user = $this->User->find('first', [
+				'fields' => ["GROUP_CONCAT(User.name SEPARATOR ', ') as name_display"],
+				'conditions'	=> [
 					'User.id'	=> $smiled_ids
-				),
-				'group' => array('User.id')
-			));
+				],
+				'group' => ['User.id']
+			]);
 			
 			// スマイルした名前を表示
 			$progresses[$i]['name_display']	= @$user[0]['name_display'];
@@ -122,10 +122,10 @@ class ProgressesController extends AppController
 		
 		$is_add  = ($progress_id==null);
 		
-		if ($this->request->is(array(
+		if ($this->request->is([
 				'post',
 				'put'
-		)))
+		]))
 		{
 			if(Configure::read('demo_mode'))
 				return;
@@ -144,11 +144,11 @@ class ProgressesController extends AppController
 				$this->__save_record($task_id, $progress_id);
 
 				$this->Flash->success(__('進捗を保存しました'));
-				return $this->redirect(array(
+				return $this->redirect([
 					'controller' => 'progresses',
 					'action' => 'index',
 					$task_id
-				));
+				]);
 			}
 			else
 			{
@@ -157,9 +157,9 @@ class ProgressesController extends AppController
 		}
 		else
 		{
-			$options = array( 'conditions' => array(
+			$options = [ 'conditions' => [
 				'Progress.' . $this->Progress->primaryKey => $progress_id
-			));
+			]];
 			
 			$this->request->data = $this->Progress->find('first', $options);
 		}
@@ -196,23 +196,23 @@ class ProgressesController extends AppController
 		$this->Task->saveField('status', $task_status);
 		
 		// 課題情報を取得
-		$task = $this->Task->find('first', array(
-			'conditions' => array(
+		$task = $this->Task->find('first', [
+			'conditions' => [
 				'Task.id' => $task_id
-			)
-		));
+			]
+		]);
 		
 		// 学習履歴を追加
 		$this->loadModel('Record');
 		
-		$this->Record->addRecord(array(
+		$this->Record->addRecord([
 			'user_id'		=> $this->Auth->user('id'),
 			'theme_id'		=> $task['Theme']['id'],
 			'task_id'		=> $task_id,
 			'study_sec'		=> $this->request->data['study_sec'],
 			'emotion_icon'	=> $emotion_icon,
 			'record_type'	=> $record_type,
-		));
+		]);
 		
 		// 課題の更新日時を更新
 		$this->Task->id = $task_id;
@@ -233,11 +233,11 @@ class ProgressesController extends AppController
 			//$list = $this->UsersTheme->getMailList($task['Theme']['id']);
 			
 			// メール通知リスト
-			$users = $this->User->find('all', array(
-				'conditions' => array(
+			$users = $this->User->find('all', [
+				'conditions' => [
 					'User.id' => $this->request->data['Progress']['User']
-				),
-			));
+				],
+			]);
 			
 			$admin_from	= Configure :: read('admin_from');
 			$mail_title	= Configure :: read('mail_title');
@@ -248,16 +248,16 @@ class ProgressesController extends AppController
 					continue;
 				
 				// 管理者か学習者かによってURLを変更
-				$url = Router::url(array('controller' => 'progresses', 'action' => 'index', $task_id, 'admin' => ($user['User']['role']=='admin')), true);
+				$url = Router::url(['controller' => 'progresses', 'action' => 'index', $task_id, 'admin' => ($user['User']['role']=='admin')], true);
 				
-				$params = array(
+				$params = [
 					'name'			=> $user['User']['name'],
 					'theme_title'	=> $task['Theme']['title'],
 					'content_title'	=> $task['Task']['title'],
 					'record_type'	=> Configure::read('record_type.'.$record_type),
 					'url'			=> $url,
 					'updater'		=> $this->Auth->user('name'),
-				);
+				];
 				
 				// メールの送信
 				$mail = new CakeEmail();
@@ -276,12 +276,12 @@ class ProgressesController extends AppController
 	public function index_enq($task_id, $record_id = null)
 	{
 		$this->Progress->recursive = 0;
-		$progresses = $this->Progress->find('all', array(
-			'conditions' => array(
+		$progresses = $this->Progress->find('all', [
+			'conditions' => [
 				'task_id' => $task_id
-			),
-			'order' => array('Progress.sort_no' => 'asc')
-		));
+			],
+			'order' => ['Progress.sort_no' => 'asc']
+		]);
 		
 		// 管理者以外の場合、コンテンツの閲覧権限の確認
 		if(
@@ -304,11 +304,11 @@ class ProgressesController extends AppController
 		if ($record_id)
 		{
 			$this->loadModel('Record');
-			$record = $this->Record->find('first', array(
-				'conditions' => array(
+			$record = $this->Record->find('first', [
+				'conditions' => [
 					'Record.id' => $record_id
-				)
-			));
+				]
+			]);
 			
 			$this->set('mode',   "record");
 			$this->set('record', $record);
@@ -316,16 +316,16 @@ class ProgressesController extends AppController
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->find('first', array(
-			'conditions' => array(
+		$content = $this->Task->find('first', [
+			'conditions' => [
 				'Task.id' => $task_id
-			)
-		));
+			]
+		]);
 		
 		// 採点処理
 		if ($this->request->is('post'))
 		{
-			$details = array();
+			$details = [];
 			
 			// 成績の詳細情報の作成
 			$i = 0;
@@ -334,28 +334,28 @@ class ProgressesController extends AppController
 				$progress_id = $progress['Progress']['id'];
 				$answer = @$this->request->data['answer_' . $progress_id];
 				
-				$details[$i] = array(
+				$details[$i] = [
 					'progress_id' => $progress_id,
 					'answer' => $answer,
-				);
+				];
 				$i ++;
 			}
 			
-			$record = array(
+			$record = [
 				'study_sec' => $this->request->data['Progress']['study_sec']
-			);
+			];
 			
 			$this->loadModel('Record');
 			$this->Record->create();
 			
 			//debug($this->Record);
-			$data = array(
+			$data = [
 				'user_id'		=> $this->Auth->user('id'),
 				'theme_id'		=> 0,
 				'task_id'	=> $task_id,
 				'study_sec'		=> $record['study_sec'],
 				'is_complete'	=> 1
-			);
+			];
 			
 			//debug($data);
 			if ($this->Record->save($data))
@@ -371,11 +371,11 @@ class ProgressesController extends AppController
 				}
 				
 				$this->Flash->success(__('アンケートの回答内容を送信しました'));
-				$this->redirect(array(
+				$this->redirect([
 					'action' => 'record_enq',
 					$task_id,
 					$this->Record->getLastInsertID()
-				));
+				]);
 			}
 			else
 			{
@@ -424,22 +424,22 @@ class ProgressesController extends AppController
 	{
 		$this->Progress->recursive = 0;
 		$progresses = $this->Progress->find('all', 
-				array(
-						'conditions' => array(
+				[
+						'conditions' => [
 								'task_id' => $id
-						),
-						'order' => array('Progress.sort_no' => 'asc')
-				));
+						],
+						'order' => ['Progress.sort_no' => 'asc']
+				]);
 		
 		// コースの情報を取得
 		$this->loadModel('Task');
 		
 		$content = $this->Task->find('first',
-				array(
-						'conditions' => array(
+				[
+						'conditions' => [
 								'Task.id' => $id
-						)
-				));
+						]
+				]);
 		
 		$this->set(compact('content', 'progresses'));
 	}
@@ -468,10 +468,10 @@ class ProgressesController extends AppController
 		{
 			throw new NotFoundException(__('Invalid tasks progress'));
 		}
-		if ($this->request->is(array(
+		if ($this->request->is([
 				'post',
 				'put'
-		)))
+		]))
 		{
 			if ($id == null)
 			{
@@ -488,11 +488,11 @@ class ProgressesController extends AppController
 			{
 				$this->Flash->success(__('質問が保存されました'));
 				return $this->redirect(
-						array(
+						[
 								'controller' => 'progresses',
 								'action' => 'index_enq',
 								$task_id
-						));
+						]);
 			}
 			else
 			{
@@ -501,21 +501,21 @@ class ProgressesController extends AppController
 		}
 		else
 		{
-			$options = array(
-					'conditions' => array(
+			$options = [
+					'conditions' => [
 							'Progress.' . $this->Progress->primaryKey => $id
-					)
-			);
+					]
+			];
 			$this->request->data = $this->Progress->find('first', $options);
 		}
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->find('first', array(
-			'conditions' => array(
+		$content = $this->Task->find('first', [
+			'conditions' => [
 				'Task.id' => $task_id
-			)
-		));
+			]
+		]);
 		
 		$this->set(compact('content'));
 	}
@@ -543,23 +543,23 @@ class ProgressesController extends AppController
 		$this->request->allowMethod('post', 'delete');
 		
 		// 問題情報を取得
-		$progress = $this->Progress->find('first', array(
-			'conditions' => array(
+		$progress = $this->Progress->find('first', [
+			'conditions' => [
 				'Progress.id' => $id
-			)
-		));
+			]
+		]);
 		
 		if ($this->Progress->delete())
 		{
 			$this->Flash->success(__('問題が削除されました'));
-			return $this->redirect(array(
+			return $this->redirect([
 				'controller' => 'progresses',
 				'action' => 'index',
 				$progress['Progress']['task_id']
-			));
-			return $this->redirect(array(
+			]);
+			return $this->redirect([
 					'action' => 'index'
-			));
+			]);
 		}
 		else
 		{
@@ -578,21 +578,21 @@ class ProgressesController extends AppController
 		$this->request->allowMethod('post', 'delete');
 		
 		// 問題情報を取得
-		$progress = $this->Progress->find('first', array(
-			'conditions' => array(
+		$progress = $this->Progress->find('first', [
+			'conditions' => [
 				'Progress.id' => $id
-			)
-		));
+			]
+		]);
 		
 		if ($this->Progress->delete())
 		{
 			$this->Flash->success(__('質問が削除されました'));
 			return $this->redirect(
-					array(
+					[
 							'controller' => 'progresses',
 							'action' => 'index_enq',
 							$task_id
-					));
+					]);
 		}
 		else
 		{
@@ -620,16 +620,16 @@ class ProgressesController extends AppController
 		$this->autoRender = FALSE;
 		if($this->request->is('ajax'))
 		{
-			$data = array(
+			$data = [
 				'progress_id'	=> $this->data['progress_id'],
 				'user_id'		=> $this->Auth->user('id'),
-			);
+			];
 			
 			$this->loadModel('Smile');
 			
-			$smile = $this->Smile->find('first', array(
+			$smile = $this->Smile->find('first', [
 				'conditions' => $data
-			));
+			]);
 			
 			if($smile)
 			{

@@ -35,7 +35,7 @@
 		
 		function openNote(page_id)
 		{
-			window.open('<?php echo Router::url(array('controller' => 'notes', 'action' => 'page', 'admin' => false))?>/'+page_id, '_note', 'width=1000,height=700,resizable=yes');
+			window.open('<?php echo Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/'+page_id, '_note', 'width=1000,height=700,resizable=yes');
 		}
 	</script>
 <?php $this->end(); ?>
@@ -46,10 +46,10 @@
 	
 	if($this->action!='admin_record')
 	{
-		$this->Html->addCrumb('<< '.__('学習テーマ一覧'), array(
+		$this->Html->addCrumb('<< '.__('学習テーマ一覧'), [
 			'controller' => $controller,
 			'action' => 'index'
-		));
+		]);
 	}
 	
 	echo $this->Html->getCrumbs(' / ');
@@ -63,17 +63,17 @@
 	<div class="panel-body">
 	<div class="well">
 		<?php if($theme['Theme']['learning_target']!='') {?>
-		<?php echo $this->Form->hidden('learning_target', array('value' => $theme['Theme']['learning_target'], 'id' => 'learning_target'));?>
+		<?php echo $this->Form->hidden('learning_target', ['value' => $theme['Theme']['learning_target'], 'id' => 'learning_target']);?>
 		<?php }?>
 		<div>
 			<?php echo Utils::getNoteLink($theme['Theme']['page_id'], $this->Html);?>
 		</div>
 		<div>
-			<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?php echo Router::url(array('controller' => 'themes', 'action' => 'edit', $theme['Theme']['id'])) ?>'"><span data-localize='edit'>編集</span></button>
+			<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?php echo Router::url(['controller' => 'themes', 'action' => 'edit', $theme['Theme']['id']]) ?>'"><span data-localize='edit'>編集</span></button>
 		</div>
 	</div>
 	<div class="buttons_container">
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'add', $theme['Theme']['id'])) ?>'"><span data-localize='add_task'>+ 課題を追加</span></button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(['action' => 'add', $theme['Theme']['id']]) ?>'"><span data-localize='add_task'>+ 課題を追加</span></button>
 	</div>
 	<div class="ib-horizontal">
 		<?php
@@ -81,7 +81,7 @@
 			$status_list[99] = '完了以外';
 			
 			echo $this->Form->create('Task');
-			echo $this->Form->input('status', array(
+			echo $this->Form->input('status', [
 				'label'		=> '<span data-localize="status">ステータス</span> : ', 
 				'options'	=> $status_list, 
 				'selected'	=> $status, 
@@ -89,9 +89,9 @@
 				'required'	=> false, 
 				'class'		=> 'form-control',
 				'onchange'	=> 'submit(this.form);'
-			));
+			]);
 			
-			echo $this->Form->input('keyword',		array('label' => '<span data-localize="keyword">キーワード</span> : ', 'value' => $keyword, 'required' => false));
+			echo $this->Form->input('keyword',		['label' => '<span data-localize="keyword">キーワード</span> : ', 'value' => $keyword, 'required' => false]);
 		?>
 		<button class="btn btn-info btn-add"><span data-localize="search">検索</span></button>
 		<?php
@@ -116,8 +116,8 @@
 			<tr>
 				<td>
 					<?php
-						echo $this->Html->link($task['Task']['title'], array('controller' => 'progresses', 'action' => 'index', $task['Task']['id']));
-						echo $this->Form->hidden('id', array('id'=>'', 'class'=>'task_id', 'value'=>$task['Task']['id']));
+						echo $this->Html->link($task['Task']['title'], ['controller' => 'progresses', 'action' => 'index', $task['Task']['id']]);
+						echo $this->Form->hidden('id', ['id'=>'', 'class'=>'task_id', 'value'=>$task['Task']['id']]);
 					?>
 				</td>
 				<td class="text-center" nowrap><?php echo Configure::read('task_status.'.$task['Task']['status']); ?>&nbsp;</td>
@@ -127,11 +127,11 @@
 				<td class="ib-col-date" nowrap><?php echo Utils::getYMDHN($task['Task']['created']); ?>&nbsp;</td>
 				<td class="ib-col-date" nowrap><?php echo Utils::getYMDHN($task['Task']['modified']); ?>&nbsp;</td>
 				<td class="ib-col-action">
-					<button type="button" class="btn btn-success" onclick="location.href='<?php echo Router::url(array('action' => 'edit', $theme['Theme']['id'], $task['Task']['id'])) ?>'"><span data-localize='edit'>編集</span></button>
+					<button type="button" class="btn btn-success" onclick="location.href='<?php echo Router::url(['action' => 'edit', $theme['Theme']['id'], $task['Task']['id']]) ?>'"><span data-localize='edit'>編集</span></button>
 					<?php
 						echo $this->Form->postLink(__('削除'),
-							array('action' => 'delete', $task['Task']['id']),
-							array('class'=>'btn btn-danger', 'data-localize' => 'delete'),
+							['action' => 'delete', $task['Task']['id']],
+							['class'=>'btn btn-danger', 'data-localize' => 'delete'],
 							__('[%s] を削除してもよろしいですか?', $task['Task']['title'])
 						);
 					?>

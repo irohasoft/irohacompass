@@ -9,14 +9,14 @@
 			<?php echo $this->Form->create('User'); ?>
 			
 			<div class="form-group">
-				<?php echo $this->Form->input('username', array('label' => __('ログインID / Login ID'), 'class'=>'form-control', 'value' => $username)); ?>
+				<?php echo $this->Form->input('username', ['label' => __('ログインID / Login ID'), 'class'=>'form-control', 'value' => $username]); ?>
 			</div>
 			<div class="form-group">
-				<?php echo $this->Form->input('password', array('label' => __('パスワード / Password'), 'class'=>'form-control', 'value' => $password));?>
+				<?php echo $this->Form->input('password', ['label' => __('パスワード / Password'), 'class'=>'form-control', 'value' => $password]);?>
 				<input type="checkbox" name="data[User][remember_me]" checked="checked" value="1" id="remember_me"><?php echo __('ログイン状態を保持 / Remeber me')?>
 				<?php echo $this->Form->unlockField('remember_me'); ?>
 			</div>
-			<?php echo $this->Form->end(array('label' => 'ログイン / Login', 'class'=>'btn btn-lg btn-primary btn-block')); ?>
+			<?php echo $this->Form->end(['label' => 'ログイン / Login', 'class'=>'btn btn-lg btn-primary btn-block']); ?>
 		</div>
 	</div>
 </div>

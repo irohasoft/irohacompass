@@ -4,7 +4,7 @@
 	function openRecord(theme_id, user_id)
 	{
 		window.open(
-			'<?php echo Router::url(array('controller' => 'tasks', 'action' => 'record')) ?>/'+theme_id+'/'+user_id,
+			'<?php echo Router::url(['controller' => 'tasks', 'action' => 'record']) ?>/'+theme_id+'/'+user_id,
 			'irohacompass_record',
 			'width=1100, height=700, menubar=no, toolbar=no, scrollbars=yes'
 		);
@@ -13,7 +13,7 @@
 	function openTestRecord(content_id, record_id)
 	{
 		window.open(
-			'<?php echo Router::url(array('controller' => 'progresses', 'action' => 'record_each')) ?>/'+content_id+'/'+record_id,
+			'<?php echo Router::url(['controller' => 'progresses', 'action' => 'record_each']) ?>/'+content_id+'/'+record_id,
 			'irohacompass_record',
 			'width=1100, height=700, menubar=no, toolbar=no, scrollbars=yes'
 		);
@@ -21,14 +21,14 @@
 	
 	function openProgress(user_id, user_name)
 	{
-		document.getElementById("fraDetail").src = '<?php echo Router::url(array('controller' => 'records', 'action' => 'progress'))?>/' + user_id;
+		document.getElementById("fraDetail").src = '<?php echo Router::url(['controller' => 'records', 'action' => 'progress'])?>/' + user_id;
 		$('#progressModal .modal-title').text(user_name + ' さんの進捗');
 		$('#progressModal').modal();
 	}
 	
 	function downloadCSV()
 	{
-		var url = '<?php echo Router::url(array('action' => 'csv')) ?>/' + $('#MembersEventEventId').val() + '/' + $('#MembersEventStatus').val() + '/' + $('#MembersEventUsername').val();
+		var url = '<?php echo Router::url(['action' => 'csv']) ?>/' + $('#MembersEventEventId').val() + '/' + $('#MembersEventStatus').val() + '/' + $('#MembersEventUsername').val();
 		$("#RecordCmd").val("csv");
 		$("#RecordAdminIndexForm").submit();
 		$("#RecordCmd").val("");
@@ -41,20 +41,20 @@
 		<?php
 			echo $this->Form->create('Record');
 			echo '<div class="ib-search-buttons">';
-			echo $this->Form->submit(__('検索'),	array('class' => 'btn btn-info', 'div' => false));
+			echo $this->Form->submit(__('検索'),	['class' => 'btn btn-info', 'div' => false]);
 			echo $this->Form->hidden('cmd');
 			echo '<button type="button" class="btn btn-default" onclick="downloadCSV()">'.__('CSV出力').'</button>';
 			echo '</div>';
 			
 			echo '<div class="ib-row">';
-			echo $this->Form->input('theme_id',			array('label' => '学習テーマ :', 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control'));
-			echo $this->Form->input('contenttitle',			array('label' => '課題名 :', 'value'=>$contenttitle, 'class'=>'form-control'));
-			echo $this->Form->input('group_id',		array('label' => 'グループ :', 'options'=>$groups, 'selected'=>$group_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control'));
-			echo $this->Form->input('user_id',		array('label' => 'ユーザ :', 'options'=>$users, 'selected'=>$user_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control'));
+			echo $this->Form->input('theme_id',			['label' => '学習テーマ :', 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
+			echo $this->Form->input('contenttitle',			['label' => '課題名 :', 'value'=>$contenttitle, 'class'=>'form-control']);
+			echo $this->Form->input('group_id',		['label' => 'グループ :', 'options'=>$groups, 'selected'=>$group_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
+			echo $this->Form->input('user_id',		['label' => 'ユーザ :', 'options'=>$users, 'selected'=>$user_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
 			echo '</div>';
 			
 			echo '<div class="ib-search-date-container">';
-			echo $this->Form->input('from_date', array(
+			echo $this->Form->input('from_date', [
 				'type' => 'date',
 				'dateFormat' => 'YMD',
 				'monthNames' => false,
@@ -66,8 +66,8 @@
 				'class'=>'form-control',
 				'style' => 'display: inline;',
 				'value' => $from_date
-			));
-			echo $this->Form->input('to_date', array(
+			]);
+			echo $this->Form->input('to_date', [
 				'type' => 'date',
 				'dateFormat' => 'YMD',
 				'monthNames' => false,
@@ -79,7 +79,7 @@
 				'class'=>'form-control',
 				'style' => 'display: inline;',
 				'value' => $to_date
-			));
+			]);
 			echo '</div>';
 			echo $this->Form->end();
 		?>
@@ -101,8 +101,8 @@
 	<tbody>
 	<?php foreach ($records as $record): ?>
 	<tr>
-		<td><a href="<?php echo Router::url(array('controller' => 'tasks', 'action' => 'index', $record['Theme']['id']));?>"><?php echo h($record['Theme']['title']); ?></a></td>
-		<td><a href="<?php echo Router::url(array('controller' => 'progresses', 'action' => 'index', $record['Task']['id']));?>"><?php echo h($record['Task']['title']); ?></a></td>
+		<td><a href="<?php echo Router::url(['controller' => 'tasks', 'action' => 'index', $record['Theme']['id']]);?>"><?php echo h($record['Theme']['title']); ?></a></td>
+		<td><a href="<?php echo Router::url(['controller' => 'progresses', 'action' => 'index', $record['Task']['id']]);?>"><?php echo h($record['Task']['title']); ?></a></td>
 		<td><a href="javascript:openProgress('<?php echo h($record['User']['id']); ?>', '<?php echo h($record['User']['name']); ?>');"><?php echo h($record['User']['name']); ?></a></td>
 		<td class="ib-col-center"><?php echo h($record['Record']['rate']); ?>&nbsp;</td>
 		<td class="ib-col-center"><?php echo h($record['Record']['theme_rate']); ?>&nbsp;</td>

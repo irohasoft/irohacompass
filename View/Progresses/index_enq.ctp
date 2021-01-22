@@ -3,10 +3,10 @@
 <?php
 	if($this->action!='admin_record')
 	{
-		$theme_url = array('controller' => 'tasks', 'action' => 'index', $content['Theme']['id']);
+		$theme_url = ['controller' => 'tasks', 'action' => 'index', $content['Theme']['id']];
 		
-		$this->Html->addCrumb('コース一覧', array('controller' => 'users_themes', 'action' => 'index'));
-		$this->Html->addCrumb($content['Theme']['title'], array('controller' => 'tasks', 'action' => 'index_enq', $content['Theme']['id']));
+		$this->Html->addCrumb('コース一覧', ['controller' => 'users_themes', 'action' => 'index']);
+		$this->Html->addCrumb($content['Theme']['title'], ['controller' => 'tasks', 'action' => 'index_enq', $content['Theme']['id']]);
 		
 		echo $this->Html->getCrumbs(' / ');
 	}

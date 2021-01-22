@@ -104,7 +104,7 @@
 <div class="tasks index">
 	<div class="ib-page-title"><?php echo __('アンケート一覧'); ?></div>
 	<div class="buttons_container">
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'add_enq')) ?>'">+ 追加</button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(['action' => 'add_enq']) ?>'">+ 追加</button>
 	</div>
 	<table id='sortable-table'>
 	<thead>
@@ -121,21 +121,21 @@
 	<tr>
 		<td>
 			<?php
-				echo $this->Html->link($content['Task']['title'], array('controller' => 'progresses', 'action' => 'index_enq', $content['Task']['id']));
-				echo $this->Form->hidden('id', array('id'=>'', 'class'=>'content_id', 'value'=>$content['Task']['id']));
+				echo $this->Html->link($content['Task']['title'], ['controller' => 'progresses', 'action' => 'index_enq', $content['Task']['id']]);
+				echo $this->Form->hidden('id', ['id'=>'', 'class'=>'content_id', 'value'=>$content['Task']['id']]);
 			?>
 		</td>
 		<td><?php echo h(Configure::read('content_kind.'.$content['Task']['kind'])); ?>&nbsp;</td>
 		<td class="ib-col-date"><?php echo Utils::getYMDHN($content['Task']['created']); ?>&nbsp;</td>
 		<td class="ib-col-date"><?php echo Utils::getYMDHN($content['Task']['modified']); ?>&nbsp;</td>
 		<td class="ib-col-action">
-			<button type="button" class="btn btn-success" onclick="location.href='<?php echo Router::url(array('action' => 'edit_enq', $content['Task']['id'])) ?>'">編集</button>
+			<button type="button" class="btn btn-success" onclick="location.href='<?php echo Router::url(['action' => 'edit_enq', $content['Task']['id']]) ?>'">編集</button>
 			<?php
 			if($loginedUser['role']=='admin')
 			{
 				echo $this->Form->postLink(__('削除'),
-					array('action' => 'delete_enq', $content['Task']['id']),
-					array('class'=>'btn btn-danger'),
+					['action' => 'delete_enq', $content['Task']['id']],
+					['class'=>'btn btn-danger'],
 					__('[%s] を削除してもよろしいですか?', $content['Task']['title'])
 				);
 			}?>

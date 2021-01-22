@@ -1,5 +1,5 @@
 <?php
-$url = Router::url(array('controller' => 'users', 'action' => 'login', 'admin' => true));
+$url = Router::url(['controller' => 'users', 'action' => 'login', 'admin' => true]);
 ?>
 <div class="install-installed">
 	<div class="panel panel-info">

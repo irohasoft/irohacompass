@@ -24,33 +24,33 @@ App::import('Vendor', 'Utils');
 class AppController extends Controller
 {
 
-	public $components = array(
+	public $components = [
 			'DebugKit.Toolbar',
 			'Session',
 			'Flash',
-			'Auth' => array(
-					'loginRedirect' => array(
+			'Auth' => [
+					'loginRedirect' => [
 							'controller' => 'users_themes',
 							'action' => 'index'
-					),
-					'logoutRedirect' => array(
+					],
+					'logoutRedirect' => [
 							'controller' => 'users',
 							'action' => 'login',
 							'home'
-					),
+					],
 					'authError' => false
-			)
-	);
+			]
+	];
 	
 	//public $helpers = array('Session');
-	public $helpers = array(
+	public $helpers = [
 		'Session',
-		'Html' => array('className' => 'BoostCake.BoostCakeHtml'),
-		'Form' => array('className' => 'BoostCake.BoostCakeForm'),
-		'Paginator' => array('className' => 'BoostCake.BoostCakePaginator'),
-	);
+		'Html' => ['className' => 'BoostCake.BoostCakeHtml'],
+		'Form' => ['className' => 'BoostCake.BoostCakeForm'],
+		'Paginator' => ['className' => 'BoostCake.BoostCakePaginator'],
+	];
 	
-	public $uses = array('Setting');
+	public $uses = ['Setting'];
 	
 	public function beforeFilter()
 	{
@@ -109,21 +109,21 @@ class AppController extends Controller
 				}
 			}
 			
-			$this->Auth->loginAction = array(
+			$this->Auth->loginAction = [
 					'controller' => 'users',
 					'action' => 'login',
 					'admin' => true
-			);
-			$this->Auth->loginRedirect = array(
+			];
+			$this->Auth->loginRedirect = [
 					'controller' => 'users',
 					'action' => 'index',
 					'admin' => true
-			);
-			$this->Auth->logoutRedirect = array(
+			];
+			$this->Auth->logoutRedirect = [
 					'controller' => 'users',
 					'action' => 'login',
 					'admin' => true
-			);
+			];
 			$this->set('loginURL', "/admin/users/login/");
 			$this->set('logoutURL', "/admin/users/logout/");
 			
@@ -133,30 +133,30 @@ class AppController extends Controller
 			
 			$this->set('group_list', 
 					$this->Group->find('list', 
-							array(
-									'fields' => array(
+							[
+									'fields' => [
 											'id',
 											'title'
-									)
-							)));
+									]
+							]));
 		}
 		else
 		{
-			$this->Auth->loginAction = array(
+			$this->Auth->loginAction = [
 					'controller' => 'users',
 					'action' => 'login',
 					'admin' => false
-			);
-			$this->Auth->loginRedirect = array(
+			];
+			$this->Auth->loginRedirect = [
 					'controller' => 'users',
 					'action' => 'index',
 					'admin' => false
-			);
-			$this->Auth->logoutRedirect = array(
+			];
+			$this->Auth->logoutRedirect = [
 					'controller' => 'users',
 					'action' => 'login',
 					'admin' => false
-			);
+			];
 			
 			$this->set('loginURL', "/users/login/");
 			$this->set('logoutURL', "/users/logout/");
@@ -168,28 +168,28 @@ class AppController extends Controller
 		
 		if($user['lang']=='en')
 		{
-			Configure::write('progress_type', array(
+			Configure::write('progress_type', [
 				'progress'	=> 'Progress',
 				'comment'	=> 'Comment',
 				'idea'		=> 'Idea, Memo',
 				'question'	=> 'Question',
 				'answer'	=> 'Answer',
-			));
-			Configure::write('task_status', array(
+			]);
+			Configure::write('task_status', [
 				'1' => 'Waiting',
 				'2' => 'Working',
 				'3' => 'Completed'
-			));
-			Configure::write('task_priority', array(
+			]);
+			Configure::write('task_priority', [
 				'1' => 'High',
 				'2' => 'Middle',
 				'3' => 'Low'
-			));
-			Configure::write('content_type', array(
+			]);
+			Configure::write('content_type', [
 				'text'		=> 'Text',
 				'markdown'	=> 'Markdown',
 				'irohanote'	=> 'Idea Map',
-			));
+			]);
 		}
 	}
 
@@ -203,7 +203,7 @@ class AppController extends Controller
 
 	function writeLog($log_type, $log_content, $controller = '', $action = '', $params = '', $sec = 0)
 	{
-		$data = array(
+		$data = [
 			'log_type'		=> $log_type,
 			'log_content'	=> $log_content,
 			'controller'	=> $controller,
@@ -213,7 +213,7 @@ class AppController extends Controller
 			'user_id'		=> $this->Auth->user('id'),
 			'user_ip'		=> $_SERVER['REMOTE_ADDR'],
 			'user_agent'	=> $_SERVER['HTTP_USER_AGENT']
-		);
+		];
 		
 		$this->loadModel('Log');
 		$this->Log->create();
