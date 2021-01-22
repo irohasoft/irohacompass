@@ -45,7 +45,7 @@
 		<td><?php echo h($user['User']['username']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['name']); ?></td>
 		<td nowrap><?php echo h(Configure::read('user_role.'.$user['User']['role'])); ?>&nbsp;</td>
-		<td><div class="reader" title="<?php echo h($user[0]['group_title']); ?>"><p><?php echo h($user[0]['group_title']); ?>&nbsp;</p></td>
+		<td><div class="reader" title="<?php echo h($user[0]['group_title']); ?>"><p><?php echo h($user[0]['group_title']); ?>&nbsp;</p></div></td>
 		<td><div class="reader" title="<?php echo h($user[0]['theme_title']); ?>"><p><?php echo h($user[0]['theme_title']); ?>&nbsp;</p></div></td>
 		<td class="ib-col-datetime"><?php echo h(Utils::getYMDHN($user['User']['last_accessed'])); ?>&nbsp;</td>
 		<td class="ib-col-datetime"><?php echo h(Utils::getYMDHN($user['User']['created'])); ?>&nbsp;</td>
