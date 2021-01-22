@@ -17,6 +17,7 @@
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 	Router::connect('/', array('controller' => 'users_themes', 'action' => 'index'));
+	Router::connect('/admin', ['controller' => 'users', 'action' => 'index', 'admin' => true]);
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
