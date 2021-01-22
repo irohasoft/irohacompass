@@ -43,7 +43,8 @@ class ProgressesController extends AppController
 		*/
 		
 		$this->Paginator->settings = array(
-			'limit' => 100,
+			'limit' => 500,
+			'maxLimit' => 500,
 			'order' => 'Progress.created asc',
 			'conditions' => array(
 				'task_id' => $task_id
