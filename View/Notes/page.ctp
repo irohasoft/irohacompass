@@ -8,32 +8,32 @@
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Cache-Control" content="no-cache">
 	<meta name="viewport" content="width=device-width,user-scalable=1, minimal-ui" />
-	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/jquery-ui-1.10.3.custom.css">
-	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/spectrum.css">
-	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/common.css?20190210">
-	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/note.css?20190210">
-	<link rel="stylesheet" href="<?php echo $this->Html->webroot;?>css/irohanote/note_mobile.css">
+	<link rel="stylesheet" href="<?= $this->Html->webroot;?>css/irohanote/jquery-ui-1.10.3.custom.css">
+	<link rel="stylesheet" href="<?= $this->Html->webroot;?>css/irohanote/spectrum.css">
+	<link rel="stylesheet" href="<?= $this->Html->webroot;?>css/irohanote/common.css?20190210">
+	<link rel="stylesheet" href="<?= $this->Html->webroot;?>css/irohanote/note.css?20190210">
+	<link rel="stylesheet" href="<?= $this->Html->webroot;?>css/irohanote/note_mobile.css">
 	<script>
-	var ROOT_PATH		= '<?php echo $this->Html->webroot;?>';
-	var API_BASE_URL	= '<?php echo $this->Html->webroot;?>apis/';
+	var ROOT_PATH		= '<?= $this->Html->webroot;?>';
+	var API_BASE_URL	= '<?= $this->Html->webroot;?>apis/';
 	var API_EXTENSION	= '';
-	var LANG			= '<?php echo @$loginedUser['lang'];?>';
+	var LANG			= '<?= @$loginedUser['lang'];?>';
 	
-	var _page_id    = '<?php echo $page_id;?>';
-	var _isReadOnly = <?php echo ($mode=='edit') ? 'false' : 'true';?>;
+	var _page_id    = '<?= $page_id;?>';
+	var _isReadOnly = <?= ($mode=='edit') ? 'false' : 'true';?>;
 	</script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/common.js?20190210"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/jquery-ui-1.9.2.min.js"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/jquery.localize.min.js"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/jquery.jsPlumb-1.5.2-min.js"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/spectrum.js"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/css_touch.js"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.note.js?20190210"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.page.js?20190210"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.leaf.js?20190210"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/irohanote.link.js?20190210"></script>
-	<script type="text/javascript" src="<?php echo $this->Html->webroot;?>js/irohanote/note.js?20190210"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/irohanote/common.js?20190210"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/jquery-ui-1.9.2.min.js"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/jquery.localize.min.js"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/irohanote/jquery.jsPlumb-1.5.2-min.js"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/irohanote/spectrum.js"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/irohanote/css_touch.js"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/irohanote/irohanote.note.js?20190210"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/irohanote/irohanote.page.js?20190210"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/irohanote/irohanote.leaf.js?20190210"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/irohanote/irohanote.link.js?20190210"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/irohanote/note.js?20190210"></script>
 </head>
 <body>
 <div id="ai-navi">
@@ -46,7 +46,7 @@
 	<div class="ai-navi-sepa ai-right"></div>
 	-->
 	<div id="btnMenu" class="ai-navi-item ai-right ai-navi-sidr" title="">
-		<img src="<?php echo $this->Html->webroot;?>images/menu_48_48.png" width="15">
+		<img src="<?= $this->Html->webroot;?>images/menu_48_48.png" width="15">
 	</div>
 	<div class="ai-navi-sepa ai-right"></div>
 	<div id="note_search" class="ai-navi-item ai-right" style="width:160px;padding:4px;border:0;">
@@ -54,8 +54,8 @@
 		<input type="button" id="btnSearch"  value="検索">
 	</div>
 </div>
-<button id="btnFullscreen"><img src="<?php echo $this->Html->webroot;?>images/fullscreen.png"></button>
-<button id="btnFullscreenExit"><img src="<?php echo $this->Html->webroot;?>images/fullscreen_exit.png"></button>
+<button id="btnFullscreen"><img src="<?= $this->Html->webroot;?>images/fullscreen.png"></button>
+<button id="btnFullscreenExit"><img src="<?= $this->Html->webroot;?>images/fullscreen_exit.png"></button>
 <div id="sidr">
 	<ul>
 		<li><span id="btnPageShare" title="選択されているページを公開・共有します">公開設定</span></li>
@@ -65,40 +65,40 @@
 	</ul>
 </div>
 <div id="stage">
-	<img id="imgLogo" src="<?php echo $this->Html->webroot;?>images/irohanotecloud.png">
+	<img id="imgLogo" src="<?= $this->Html->webroot;?>images/irohanotecloud.png">
 	<span id="lblPageTitle"></span>
 	<span id="btnPageTitleEdit" class="ai-button">編集</span>
 	<div id="map">
 	</div>
 	<div class="stage-button-block">
 		<span id="btnLeafAdd" class="ai-button" title="画面上に新規テキストが追加されます">
-			<img src="<?php echo $this->Html->webroot;?>images/icon_add_card.gif">
+			<img src="<?= $this->Html->webroot;?>images/icon_add_card.gif">
 			<div class='ai-button-title' data-localize="text">テキスト</div>
 		</span>
 		<span id="btnLeafWebAdd" class="ai-button" title="画面上に新規Webカードが追加されます">
-			<img src="<?php echo $this->Html->webroot;?>images/icon_add_web.gif">
+			<img src="<?= $this->Html->webroot;?>images/icon_add_web.gif">
 			<div class='ai-button-title' data-localize="web">Web</div>
 		</span>
 		<!--
 		<span id="btnLeafImageAdd" class="ai-button" title="画面上に新規画像カードが追加されます">
-			<img src="<?php echo $this->Html->webroot;?>images/icon_add_web.gif">
+			<img src="<?= $this->Html->webroot;?>images/icon_add_web.gif">
 			<div class='ai-button-title' data-localize="image">画像</div>
 		</span>
 		-->
 		<span id="btnGroupAdd" class="ai-button" title="画面上に新規グループが追加されます">
-			<img src="<?php echo $this->Html->webroot;?>images/icon_add_group.gif">
+			<img src="<?= $this->Html->webroot;?>images/icon_add_group.gif">
 			<div class='ai-button-title' data-localize="group">グループ</div>
 		</span>
 	</div>
 	<div id="divLinkMessage">リンク先のリーフを選択してください。キャンセルする場合には何もないところをクリック（タッチ）してください。</div>
 	<div id="divLinkTarget"></div>
-	<div id="divLinkDelete"><span id="btnLinkDelete" class="ai-button"><img src="<?php echo $this->Html->webroot;?>images/btnTrash.png"/>削除</span></div>
+	<div id="divLinkDelete"><span id="btnLinkDelete" class="ai-button"><img src="<?= $this->Html->webroot;?>images/btnTrash.png"/>削除</span></div>
 	<div class="button-container">
 		<p>画面イメージ保存のため、閉じるボタンを使用して閉じてください。</p>
 		<button id="btnClose" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">閉じる</span></button>
 	</div>
 </div>
-<div id="divLoader"><img src="<?php echo $this->Html->webroot;?>images/loader_icon.gif"></div>
+<div id="divLoader"><img src="<?= $this->Html->webroot;?>images/loader_icon.gif"></div>
 <div id="pageShareDialog" style="display:none;" title="公開設定">
 	<p>
 		<br>

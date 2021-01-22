@@ -1,11 +1,11 @@
-<?php echo $this->element('admin_menu');?>
+<?= $this->element('admin_menu');?>
 <div class="admin-settings-index">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<?php echo __('システム設定'); ?>
+			<?= __('システム設定'); ?>
 		</div>
 		<div class="panel-body">
-			<?php echo $this->Form->create('Setting', Configure::read('form_defaults')); ?>
+			<?= $this->Form->create('Setting', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('title',		['label' => 'システム名',					'value'=>$settings['title']]);
 				echo $this->Form->input('copyright',	['label' => 'コピーライト',				'value'=>$settings['copyright']]);
@@ -19,10 +19,10 @@
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">
-					<?php echo $this->Form->end(['label' => __('保存'), 'class' => 'btn btn-primary']); ?>
+					<?= $this->Form->end(['label' => __('保存'), 'class' => 'btn btn-primary']); ?>
 				</div>
 			</div>
-			<?php echo $this->Form->end(); ?>
+			<?= $this->Form->end(); ?>
 		</div>
 	</div>
 	

@@ -1,4 +1,4 @@
-<?php echo $this->element('admin_menu'); ?>
+<?= $this->element('admin_menu'); ?>
 <?php $this->start('css-embedded'); ?>
 <!--[if !IE]><!-->
 <style>
@@ -102,9 +102,9 @@
 	</script>
 <?php $this->end(); ?>
 <div class="tasks index">
-	<div class="ib-page-title"><?php echo __('アンケート一覧'); ?></div>
+	<div class="ib-page-title"><?= __('アンケート一覧'); ?></div>
 	<div class="buttons_container">
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(['action' => 'add_enq']) ?>'">+ 追加</button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['action' => 'add_enq']) ?>'">+ 追加</button>
 	</div>
 	<table id='sortable-table'>
 	<thead>
@@ -113,7 +113,7 @@
 		<th>コンテンツ種別</th>
 		<th class="ib-col-date">作成日時</th>
 		<th class="ib-col-date">更新日時</th>
-		<th class="ib-col-action"><?php echo __('Actions'); ?></th>
+		<th class="ib-col-action"><?= __('Actions'); ?></th>
 	</tr>
 	</thead>
 	<tbody>
@@ -125,11 +125,11 @@
 				echo $this->Form->hidden('id', ['id'=>'', 'class'=>'content_id', 'value'=>$content['Task']['id']]);
 			?>
 		</td>
-		<td><?php echo h(Configure::read('content_kind.'.$content['Task']['kind'])); ?>&nbsp;</td>
-		<td class="ib-col-date"><?php echo Utils::getYMDHN($content['Task']['created']); ?>&nbsp;</td>
-		<td class="ib-col-date"><?php echo Utils::getYMDHN($content['Task']['modified']); ?>&nbsp;</td>
+		<td><?= h(Configure::read('content_kind.'.$content['Task']['kind'])); ?>&nbsp;</td>
+		<td class="ib-col-date"><?= Utils::getYMDHN($content['Task']['created']); ?>&nbsp;</td>
+		<td class="ib-col-date"><?= Utils::getYMDHN($content['Task']['modified']); ?>&nbsp;</td>
 		<td class="ib-col-action">
-			<button type="button" class="btn btn-success" onclick="location.href='<?php echo Router::url(['action' => 'edit_enq', $content['Task']['id']]) ?>'">編集</button>
+			<button type="button" class="btn btn-success" onclick="location.href='<?= Router::url(['action' => 'edit_enq', $content['Task']['id']]) ?>'">編集</button>
 			<?php
 			if($loginedUser['role']=='admin')
 			{

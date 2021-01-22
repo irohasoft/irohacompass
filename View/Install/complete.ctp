@@ -17,7 +17,7 @@ $url = str_replace('/users/', '/admin/users/', $url);
 			</p>
 		</div>
 		<div class="panel-footer text-center">
-			<button class="btn btn-primary" onclick="location.href='<?php echo $url;?>'">管理者ログイン画面へ</button>
+			<button class="btn btn-primary" onclick="location.href='<?= $url;?>'">管理者ログイン画面へ</button>
 		</div>
 	</div>
 </div>

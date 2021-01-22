@@ -13,17 +13,17 @@
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">
-					<?php echo $this->Form->submit('追加', Configure::read('form_submit_defaults')); ?>
+					<?= $this->Form->submit('追加', Configure::read('form_submit_defaults')); ?>
 				</div>
 			</div>
-			<?php echo $this->Form->end(); ?>
+			<?= $this->Form->end(); ?>
 		</div>
 	</div>
 		
 		<?php foreach ($ideas as $idea): ?>
 		<div class="panel panel-default">
 			<div class="pull-right">
-				<p><?php echo h(Utils::getYMDHN($idea['Idea']['created'])); ?></p>
+				<p><?= h(Utils::getYMDHN($idea['Idea']['created'])); ?></p>
 			</div>
 			<br>
 			<div class="panel-body">
@@ -70,5 +70,5 @@
 			</div>
 		</div>
 		<?php endforeach; ?>
-		<?php echo $this->element('paging');?>
+		<?= $this->element('paging');?>
 </div>

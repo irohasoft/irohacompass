@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('summernote.css');?>
+<?= $this->Html->css('summernote.css');?>
 <style type='text/css'>
 	.header
 	{
@@ -15,9 +15,9 @@
 <script>
 	$(document).ready(function()
 	{
-		var mode = '<?php echo $mode?>';
-		var file_url = '<?php echo $file_url?>';
-		var file_name = '<?php echo $file_name?>';
+		var mode = '<?= $mode?>';
+		var file_url = '<?= $file_url?>';
+		var file_name = '<?= $file_name?>';
 
 		if(mode=='complete')
 		{
@@ -69,16 +69,16 @@
 	<div class="panel-body">
 		<div class="form-group">
 			<h4>アップロード可能なファイル形式</h4>
-			<?php echo $upload_extensions;?>
+			<?= $upload_extensions;?>
 		</div>
 
 		<div class="form-group">
 			<h4>アップロード可能なファイルサイズ</h4>
-			最大 : <?php echo $this->Number->toReadableSize($upload_maxsize) ;?>バイト
+			最大 : <?= $this->Number->toReadableSize($upload_maxsize) ;?>バイト
 		</div>
 
 		<div class="form-group">
-			<?php echo $this->Form->create('Task', ['type'=>'file', 'enctype' => 'multipart/form-data']); ?>
+			<?= $this->Form->create('Task', ['type'=>'file', 'enctype' => 'multipart/form-data']); ?>
 				<div class="drop-container alert alert-warning">
 					<p>ここにファイルをドロップするか、ファイルを選択後、アップロードボタンをクリックしてください。</p>
 					<p>ファイルが複数ある場合には、ZIP形式で圧縮してアップロードを行ってください。</p>
@@ -86,7 +86,7 @@
 				</div>
 				<button type="submit" id="btnUpload" class="btn btn-primary"><span data-localize="upload">アップロード</span></button>
 				<button class="btn" onclick="parent.closeDialog();"><span data-localize="close"> 閉じる </span></button>
-			<?php echo $this->Form->end(); ?>
+			<?= $this->Form->end(); ?>
 		</div>
 	</div>
 </div>

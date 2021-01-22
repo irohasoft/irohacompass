@@ -1,10 +1,10 @@
-<?php echo $this->element('admin_menu');?>
+<?= $this->element('admin_menu');?>
 <?php $this->start('script-embedded'); ?>
 <script>
 	function openRecord(theme_id, user_id)
 	{
 		window.open(
-			'<?php echo Router::url(['controller' => 'tasks', 'action' => 'record']) ?>/'+theme_id+'/'+user_id,
+			'<?= Router::url(['controller' => 'tasks', 'action' => 'record']) ?>/'+theme_id+'/'+user_id,
 			'irohacompass_record',
 			'width=1100, height=700, menubar=no, toolbar=no, scrollbars=yes'
 		);
@@ -13,7 +13,7 @@
 	function openTestRecord(content_id, record_id)
 	{
 		window.open(
-			'<?php echo Router::url(['controller' => 'progresses', 'action' => 'record_each']) ?>/'+content_id+'/'+record_id,
+			'<?= Router::url(['controller' => 'progresses', 'action' => 'record_each']) ?>/'+content_id+'/'+record_id,
 			'irohacompass_record',
 			'width=1100, height=700, menubar=no, toolbar=no, scrollbars=yes'
 		);
@@ -21,14 +21,14 @@
 	
 	function openProgress(user_id, user_name)
 	{
-		document.getElementById("fraDetail").src = '<?php echo Router::url(['controller' => 'records', 'action' => 'progress'])?>/' + user_id;
+		document.getElementById("fraDetail").src = '<?= Router::url(['controller' => 'records', 'action' => 'progress'])?>/' + user_id;
 		$('#progressModal .modal-title').text(user_name + ' さんの進捗');
 		$('#progressModal').modal();
 	}
 	
 	function downloadCSV()
 	{
-		var url = '<?php echo Router::url(['action' => 'csv']) ?>/' + $('#MembersEventEventId').val() + '/' + $('#MembersEventStatus').val() + '/' + $('#MembersEventUsername').val();
+		var url = '<?= Router::url(['action' => 'csv']) ?>/' + $('#MembersEventEventId').val() + '/' + $('#MembersEventStatus').val() + '/' + $('#MembersEventUsername').val();
 		$("#RecordCmd").val("csv");
 		$("#RecordAdminIndexForm").submit();
 		$("#RecordCmd").val("");
@@ -36,7 +36,7 @@
 </script>
 <?php $this->end(); ?>
 <div class="admin-records-index">
-	<div class="ib-page-title"><?php echo __('進捗一覧'); ?></div>
+	<div class="ib-page-title"><?= __('進捗一覧'); ?></div>
 	<div class="ib-horizontal">
 		<?php
 			echo $this->Form->create('Record');
@@ -87,34 +87,34 @@
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 	<tr>
-		<th nowrap><?php echo $this->Paginator->sort('theme_id', '学習テーマ'); ?></th>
-		<th nowrap><?php echo $this->Paginator->sort('task_id', '課題'); ?></th>
-		<th nowrap><?php echo $this->Paginator->sort('User.name', '氏名'); ?></th>
-		<th nowrap class="ib-col-center"><?php echo $this->Paginator->sort('rate', '進捗率'); ?></th>
-		<th nowrap class="ib-col-center"><?php echo $this->Paginator->sort('theme_rate', '進捗率(全体)'); ?></th>
-		<th nowrap class="ib-col-center"><?php echo $this->Paginator->sort('is_complete', '完了'); ?></th>
-		<th class="ib-col-center" nowrap><?php echo $this->Paginator->sort('record_type', '種別'); ?></th>
-		<th class="ib-col-center"><?php echo $this->Paginator->sort('study_sec', '学習時間'); ?></th>
-		<th class="ib-col-datetime"><?php echo $this->Paginator->sort('created', '学習日時'); ?></th>
+		<th nowrap><?= $this->Paginator->sort('theme_id', '学習テーマ'); ?></th>
+		<th nowrap><?= $this->Paginator->sort('task_id', '課題'); ?></th>
+		<th nowrap><?= $this->Paginator->sort('User.name', '氏名'); ?></th>
+		<th nowrap class="ib-col-center"><?= $this->Paginator->sort('rate', '進捗率'); ?></th>
+		<th nowrap class="ib-col-center"><?= $this->Paginator->sort('theme_rate', '進捗率(全体)'); ?></th>
+		<th nowrap class="ib-col-center"><?= $this->Paginator->sort('is_complete', '完了'); ?></th>
+		<th class="ib-col-center" nowrap><?= $this->Paginator->sort('record_type', '種別'); ?></th>
+		<th class="ib-col-center"><?= $this->Paginator->sort('study_sec', '学習時間'); ?></th>
+		<th class="ib-col-datetime"><?= $this->Paginator->sort('created', '学習日時'); ?></th>
 	</tr>
 	</thead>
 	<tbody>
 	<?php foreach ($records as $record): ?>
 	<tr>
-		<td><a href="<?php echo Router::url(['controller' => 'tasks', 'action' => 'index', $record['Theme']['id']]);?>"><?php echo h($record['Theme']['title']); ?></a></td>
-		<td><a href="<?php echo Router::url(['controller' => 'progresses', 'action' => 'index', $record['Task']['id']]);?>"><?php echo h($record['Task']['title']); ?></a></td>
-		<td><a href="javascript:openProgress('<?php echo h($record['User']['id']); ?>', '<?php echo h($record['User']['name']); ?>');"><?php echo h($record['User']['name']); ?></a></td>
-		<td class="ib-col-center"><?php echo h($record['Record']['rate']); ?>&nbsp;</td>
-		<td class="ib-col-center"><?php echo h($record['Record']['theme_rate']); ?>&nbsp;</td>
-		<td nowrap class="ib-col-center"><?php echo h(Configure::read('content_status.'.$record['Record']['is_complete'])); ?>&nbsp;</td>
-		<td nowrap class="ib-col-center"><?php echo h(Configure::read('record_type.'.$record['Record']['record_type'])); ?>&nbsp;</td>
-		<td class="ib-col-center"><?php echo h(Utils::getHNSBySec($record['Record']['study_sec'])); ?>&nbsp;</td>
-		<td class="ib-col-date"><?php echo h(Utils::getYMDHN($record['Record']['created'])); ?>&nbsp;</td>
+		<td><a href="<?= Router::url(['controller' => 'tasks', 'action' => 'index', $record['Theme']['id']]);?>"><?= h($record['Theme']['title']); ?></a></td>
+		<td><a href="<?= Router::url(['controller' => 'progresses', 'action' => 'index', $record['Task']['id']]);?>"><?= h($record['Task']['title']); ?></a></td>
+		<td><a href="javascript:openProgress('<?= h($record['User']['id']); ?>', '<?= h($record['User']['name']); ?>');"><?= h($record['User']['name']); ?></a></td>
+		<td class="ib-col-center"><?= h($record['Record']['rate']); ?>&nbsp;</td>
+		<td class="ib-col-center"><?= h($record['Record']['theme_rate']); ?>&nbsp;</td>
+		<td nowrap class="ib-col-center"><?= h(Configure::read('content_status.'.$record['Record']['is_complete'])); ?>&nbsp;</td>
+		<td nowrap class="ib-col-center"><?= h(Configure::read('record_type.'.$record['Record']['record_type'])); ?>&nbsp;</td>
+		<td class="ib-col-center"><?= h(Utils::getHNSBySec($record['Record']['study_sec'])); ?>&nbsp;</td>
+		<td class="ib-col-date"><?= h(Utils::getYMDHN($record['Record']['created'])); ?>&nbsp;</td>
 	</tr>
 	<?php endforeach; ?>
 	</tbody>
 	</table>
-	<?php echo $this->element('paging');?>
+	<?= $this->element('paging');?>
 </div>
 
 <!--進捗ダイアログ-->

@@ -1,4 +1,4 @@
-<?php echo $this->element('admin_menu');?>
+<?= $this->element('admin_menu');?>
 <?php $this->start('css-embedded'); ?>
 	<style type='text/css'>
 		.td-reader
@@ -47,7 +47,7 @@
 					});
 
 					$.ajax({
-						url: "<?php echo Router::url(['action' => 'order']) ?>",
+						url: "<?= Router::url(['action' => 'order']) ?>",
 						type: "POST",
 						data: { id_list : id_list },
 						dataType: "text",
@@ -77,36 +77,36 @@
 		echo $this->Html->getCrumbs(' / ');
 	?>
 	</div>
-	<div class="ib-page-title"><?php echo __('質問一覧'); ?></div>
+	<div class="ib-page-title"><?= __('質問一覧'); ?></div>
 	
 	<div class="buttons_container">
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(['action' => 'add_enq', $content['Task']['id']]) ?>'">+ 追加</button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['action' => 'add_enq', $content['Task']['id']]) ?>'">+ 追加</button>
 	</div>
 	
 	<div class="alert alert-warning">ドラッグアンドドロップで表示順が変更できます。</div>
 	<table id='sortable-table' cellpadding="0" cellspacing="0">
 	<thead>
 	<tr>
-		<th><?php echo $this->Paginator->sort('title',			'タイトル'); ?></th>
-		<th><?php echo $this->Paginator->sort('body',			'問題文'); ?></th>
-		<th><?php echo $this->Paginator->sort('progress_type',	'回答形式'); ?></th>
-		<th><?php echo $this->Paginator->sort('options',		'選択肢'); ?></th>
-		<th class="ib-col-date"><?php echo $this->Paginator->sort('created',	'作成日時'); ?></th>
-		<th class="ib-col-date"><?php echo $this->Paginator->sort('modified',	'更新日時'); ?></th>
-		<th class="actions text-center"><?php echo __('Actions'); ?></th>
+		<th><?= $this->Paginator->sort('title',			'タイトル'); ?></th>
+		<th><?= $this->Paginator->sort('body',			'問題文'); ?></th>
+		<th><?= $this->Paginator->sort('progress_type',	'回答形式'); ?></th>
+		<th><?= $this->Paginator->sort('options',		'選択肢'); ?></th>
+		<th class="ib-col-date"><?= $this->Paginator->sort('created',	'作成日時'); ?></th>
+		<th class="ib-col-date"><?= $this->Paginator->sort('modified',	'更新日時'); ?></th>
+		<th class="actions text-center"><?= __('Actions'); ?></th>
 	</tr>
 	</thead>
 	<tbody>
 	<?php foreach ($progresses as $progress): ?>
 	<tr>
-		<td class="td-reader"><?php echo h($progress['Progress']['title']); ?>&nbsp;</td>
-		<td class="td-reader"><?php echo h(strip_tags($progress['Progress']['body'])); ?>&nbsp;</td>
-		<td><?php echo h(Configure::read('progress_type.'.$progress['Progress']['progress_type'])); ?>&nbsp;</td>
-		<td class="td-reader"><?php echo h($progress['Progress']['options']); ?>&nbsp;</td>
-		<td class="ib-col-date"><?php echo Utils::getYMDHN($progress['Progress']['created']); ?>&nbsp;</td>
-		<td class="ib-col-date"><?php echo Utils::getYMDHN($progress['Progress']['modified']); ?>&nbsp;</td>
+		<td class="td-reader"><?= h($progress['Progress']['title']); ?>&nbsp;</td>
+		<td class="td-reader"><?= h(strip_tags($progress['Progress']['body'])); ?>&nbsp;</td>
+		<td><?= h(Configure::read('progress_type.'.$progress['Progress']['progress_type'])); ?>&nbsp;</td>
+		<td class="td-reader"><?= h($progress['Progress']['options']); ?>&nbsp;</td>
+		<td class="ib-col-date"><?= Utils::getYMDHN($progress['Progress']['created']); ?>&nbsp;</td>
+		<td class="ib-col-date"><?= Utils::getYMDHN($progress['Progress']['modified']); ?>&nbsp;</td>
 		<td class="actions text-center">
-			<button type="button" class="btn btn-success" onclick="location.href='<?php echo Router::url(['action' => 'edit_enq', $progress['Task']['id'], $progress['Progress']['id']]) ?>'">編集</button>
+			<button type="button" class="btn btn-success" onclick="location.href='<?= Router::url(['action' => 'edit_enq', $progress['Task']['id'], $progress['Progress']['id']]) ?>'">編集</button>
 			<?php
 			if($loginedUser['role']=='admin')
 			{

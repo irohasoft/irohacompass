@@ -11,9 +11,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<?php echo $this->Html->charset(); ?>
+	<?= $this->Html->charset(); ?>
 	
-	<title><?php echo h($this->Session->read('Setting.title')); ?></title>
+	<title><?= h($this->Session->read('Setting.title')); ?></title>
 	<meta name="application-name" content="iroha Compass">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<?php
@@ -64,19 +64,19 @@
 		echo $this->fetch('script-embedded');
 	?>
 	<script>
-	var _controller		= '<?php echo $this->params['controller'] ?>';
-	var _action			= '<?php echo $this->params['action'] ?>';
-	var _params			= '<?php echo join(',', $this->params['pass']) ?>';
+	var _controller		= '<?= $this->params['controller'] ?>';
+	var _action			= '<?= $this->params['action'] ?>';
+	var _params			= '<?= join(',', $this->params['pass']) ?>';
 	var _sec			= 0;
-	var G_WEBROOT		= '<?php echo $this->Html->webroot;?>';
-	var G_LANG			= '<?php echo @$loginedUser['lang'];?>';
-	var URL_LOGS_ADD	= '<?php echo Router::url(['controller' => 'logs', 'action' => 'add']) ?>';
+	var G_WEBROOT		= '<?= $this->Html->webroot;?>';
+	var G_LANG			= '<?= @$loginedUser['lang'];?>';
+	var URL_LOGS_ADD	= '<?= Router::url(['controller' => 'logs', 'action' => 'add']) ?>';
 	
 	</script>
 	<style>
 		.ib-theme-color
 		{
-			background-color	: <?php echo h($this->Session->read('Setting.color')); ?>;
+			background-color	: <?= h($this->Session->read('Setting.color')); ?>;
 			color				: white;
 		}
 		
@@ -90,16 +90,16 @@
 <body>
 	<div class="header ib-theme-color">
 		<div class="ib-logo ib-left">
-			<a href="<?php echo $this->Html->url('/')?>"><?php echo h($this->Session->read('Setting.title')); ?></a>
+			<a href="<?= $this->Html->url('/')?>"><?= h($this->Session->read('Setting.title')); ?></a>
 		</div>
 		<?php if(@$loginedUser) {?>
-		<div class="ib-navi-item ib-right"><?php echo $this->Html->link('<span data-localize="logout">ログアウト</span>', $logoutURL, ['escape' => false]); ?></div>
+		<div class="ib-navi-item ib-right"><?= $this->Html->link('<span data-localize="logout">ログアウト</span>', $logoutURL, ['escape' => false]); ?></div>
 		<div class="ib-navi-sepa ib-right"></div>
-		<div class="ib-navi-item ib-right"><?php echo $this->Html->link('<span data-localize="setting">設定</span>', ['controller' => 'users', 'action' => 'setting'], ['escape' => false]); ?></div>
+		<div class="ib-navi-item ib-right"><?= $this->Html->link('<span data-localize="setting">設定</span>', ['controller' => 'users', 'action' => 'setting'], ['escape' => false]); ?></div>
 		<div class="ib-navi-sepa ib-right"></div>
-		<div class="ib-navi-item ib-right navi-item-idea"><?php echo $this->Html->link('<span data-localize="idea">アイデア</span>', ['controller' => 'ideas'], ['escape' => false]); ?></div>
+		<div class="ib-navi-item ib-right navi-item-idea"><?= $this->Html->link('<span data-localize="idea">アイデア</span>', ['controller' => 'ideas'], ['escape' => false]); ?></div>
 		<div class="ib-navi-sepa ib-right"></div>
-		<div class="ib-navi-item ib-right"><?php echo __('ようこそ ').h($loginedUser["name"]); ?> さん </div>
+		<div class="ib-navi-item ib-right"><?= __('ようこそ ').h($loginedUser["name"]); ?> さん </div>
 		<?php }?>
 	</div>
 	
@@ -107,22 +107,22 @@
 		<div id="header" class="row">
 		</div>
 		<div id="content" class="row">
-			<?php echo $this->Session->flash(); ?>
+			<?= $this->Session->flash(); ?>
 
-			<?php echo $this->fetch('content'); ?>
+			<?= $this->fetch('content'); ?>
 		</div>
 		<div id="footer" class="row">
 		</div>
 	</div>
 	
 	<div class="ib-theme-color text-center">
-		<?php echo h($this->Session->read('Setting.copyright')); ?>
+		<?= h($this->Session->read('Setting.copyright')); ?>
 	</div>
 	
 	<div class="irohasoft">
 		Powered by <a href="https://irohacompass.irohasoft.jp/">iroha Compass</a>
 	</div>
 	
-	<?php echo $this->element('sql_dump'); ?>
+	<?= $this->element('sql_dump'); ?>
 </body>
 </html>

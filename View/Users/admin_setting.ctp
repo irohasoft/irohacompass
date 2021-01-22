@@ -1,4 +1,4 @@
-<?php echo $this->element('admin_menu');?>
+<?= $this->element('admin_menu');?>
 <div class="admin-users-setting">
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -20,10 +20,10 @@
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">
-					<?php echo $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
+					<?= $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
 				</div>
 			</div>
-			<?php echo $this->Form->end(); ?>
+			<?= $this->Form->end(); ?>
 		</div>
 	</div>
 </div>

@@ -35,7 +35,7 @@
 		
 		function openNote(page_id)
 		{
-			window.open('<?php echo Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/'+page_id, '_note', 'width=1000,height=700,resizable=yes');
+			window.open('<?= Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/'+page_id, '_note', 'width=1000,height=700,resizable=yes');
 		}
 	</script>
 <?php $this->end(); ?>
@@ -59,21 +59,21 @@
 	</div>
 
 	<div class="panel panel-info">
-	<div class="panel-heading lead"><?php echo h($theme['Theme']['title']); ?></div>
+	<div class="panel-heading lead"><?= h($theme['Theme']['title']); ?></div>
 	<div class="panel-body">
 	<div class="well">
 		<?php if($theme['Theme']['learning_target']!='') {?>
-		<?php echo $this->Form->hidden('learning_target', ['value' => $theme['Theme']['learning_target'], 'id' => 'learning_target']);?>
+		<?= $this->Form->hidden('learning_target', ['value' => $theme['Theme']['learning_target'], 'id' => 'learning_target']);?>
 		<?php }?>
 		<div>
-			<?php echo Utils::getNoteLink($theme['Theme']['page_id'], $this->Html);?>
+			<?= Utils::getNoteLink($theme['Theme']['page_id'], $this->Html);?>
 		</div>
 		<div>
-			<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?php echo Router::url(['controller' => 'themes', 'action' => 'edit', $theme['Theme']['id']]) ?>'"><span data-localize='edit'>編集</span></button>
+			<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?= Router::url(['controller' => 'themes', 'action' => 'edit', $theme['Theme']['id']]) ?>'"><span data-localize='edit'>編集</span></button>
 		</div>
 	</div>
 	<div class="buttons_container">
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(['action' => 'add', $theme['Theme']['id']]) ?>'"><span data-localize='add_task'>+ 課題を追加</span></button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['action' => 'add', $theme['Theme']['id']]) ?>'"><span data-localize='add_task'>+ 課題を追加</span></button>
 	</div>
 	<div class="ib-horizontal">
 		<?php
@@ -101,14 +101,14 @@
 	<table class="responsive-table">
 		<thead>
 			<tr>
-				<th nowrap><span data-localize='task'><?php echo $this->Paginator->sort('title',			'課題名'); ?></span></th>
-				<th class="text-center" nowrap><span data-localize='status'><?php echo $this->Paginator->sort('status',			'状態'); ?></span></th>
-				<th class="text-center" nowrap><span data-localize='progress_rate'><?php echo $this->Paginator->sort('rate',	'進捗率'); ?></span></th>
-				<th class="text-center" nowrap><span data-localize='priority'><?php echo $this->Paginator->sort('priority',		'優先度'); ?></span></th>
-				<th class="text-center" nowrap><span data-localize='deadline'><?php echo $this->Paginator->sort('deadline',		'期日'); ?></span></th>
-				<th class="ib-col-date" nowrap><span data-localize='created_date'><?php echo $this->Paginator->sort('created',	'作成日時'); ?></span></th>
-				<th class="ib-col-date" nowrap><span data-localize='updated_date'><?php echo $this->Paginator->sort('modified',	'更新日時'); ?></span></th>
-				<th class="actions text-center" nowrap><?php echo __('Actions'); ?></th>
+				<th nowrap><span data-localize='task'><?= $this->Paginator->sort('title',			'課題名'); ?></span></th>
+				<th class="text-center" nowrap><span data-localize='status'><?= $this->Paginator->sort('status',			'状態'); ?></span></th>
+				<th class="text-center" nowrap><span data-localize='progress_rate'><?= $this->Paginator->sort('rate',	'進捗率'); ?></span></th>
+				<th class="text-center" nowrap><span data-localize='priority'><?= $this->Paginator->sort('priority',		'優先度'); ?></span></th>
+				<th class="text-center" nowrap><span data-localize='deadline'><?= $this->Paginator->sort('deadline',		'期日'); ?></span></th>
+				<th class="ib-col-date" nowrap><span data-localize='created_date'><?= $this->Paginator->sort('created',	'作成日時'); ?></span></th>
+				<th class="ib-col-date" nowrap><span data-localize='updated_date'><?= $this->Paginator->sort('modified',	'更新日時'); ?></span></th>
+				<th class="actions text-center" nowrap><?= __('Actions'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -120,14 +120,14 @@
 						echo $this->Form->hidden('id', ['id'=>'', 'class'=>'task_id', 'value'=>$task['Task']['id']]);
 					?>
 				</td>
-				<td class="text-center" nowrap><?php echo Configure::read('task_status.'.$task['Task']['status']); ?>&nbsp;</td>
-				<td class="text-center" nowrap><?php echo $task['Task']['rate']; ?>%&nbsp;</td>
-				<td class="text-center" nowrap><?php echo Configure::read('task_priority.'.$task['Task']['priority']); ?>&nbsp;</td>
-				<td class="text-center" nowrap><?php echo Utils::getYMD($task['Task']['deadline']); ?>&nbsp;</td>
-				<td class="ib-col-date" nowrap><?php echo Utils::getYMDHN($task['Task']['created']); ?>&nbsp;</td>
-				<td class="ib-col-date" nowrap><?php echo Utils::getYMDHN($task['Task']['modified']); ?>&nbsp;</td>
+				<td class="text-center" nowrap><?= Configure::read('task_status.'.$task['Task']['status']); ?>&nbsp;</td>
+				<td class="text-center" nowrap><?= $task['Task']['rate']; ?>%&nbsp;</td>
+				<td class="text-center" nowrap><?= Configure::read('task_priority.'.$task['Task']['priority']); ?>&nbsp;</td>
+				<td class="text-center" nowrap><?= Utils::getYMD($task['Task']['deadline']); ?>&nbsp;</td>
+				<td class="ib-col-date" nowrap><?= Utils::getYMDHN($task['Task']['created']); ?>&nbsp;</td>
+				<td class="ib-col-date" nowrap><?= Utils::getYMDHN($task['Task']['modified']); ?>&nbsp;</td>
 				<td class="ib-col-action">
-					<button type="button" class="btn btn-success" onclick="location.href='<?php echo Router::url(['action' => 'edit', $theme['Theme']['id'], $task['Task']['id']]) ?>'"><span data-localize='edit'>編集</span></button>
+					<button type="button" class="btn btn-success" onclick="location.href='<?= Router::url(['action' => 'edit', $theme['Theme']['id'], $task['Task']['id']]) ?>'"><span data-localize='edit'>編集</span></button>
 					<?php
 						echo $this->Form->postLink(__('削除'),
 							['action' => 'delete', $task['Task']['id']],
@@ -140,7 +140,7 @@
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-	<?php echo $this->element('paging');?>
+	<?= $this->element('paging');?>
 
 	</div>
 	</div>

@@ -1,6 +1,6 @@
 <?php //echo $this->element('menu');?>
-<?php echo $this->Html->script( 'Chart.bundle.js');?>
-<?php echo $this->Html->script( 'Chart.utils.js');?>
+<?= $this->Html->script( 'Chart.bundle.js');?>
+<?= $this->Html->script( 'Chart.utils.js');?>
 <?php $this->start('css-embedded'); ?>
 <style type='text/css'>
 #RecordFromDateYear,
@@ -127,9 +127,9 @@ height: 300px;
 <?php $this->end(); ?>
 <?php $this->start('script-embedded'); ?>
 <script>
-	var labels			= <?php echo json_encode($labels);?>;
-	var login_data		= <?php echo json_encode($login_data);?>;
-	var progress_data	= <?php echo json_encode($progress_data);?>;
+	var labels			= <?= json_encode($labels);?>;
+	var login_data		= <?= json_encode($login_data);?>;
+	var progress_data	= <?= json_encode($progress_data);?>;
 	
 	$(document).ready(function()
 	{
@@ -149,7 +149,7 @@ height: 300px;
 </ol>
 <div class="infos index">
 	<div class="panel panel-success">
-		<div class="panel-heading"><?php echo __('最近の進捗'); ?></div>
+		<div class="panel-heading"><?= __('最近の進捗'); ?></div>
 		<div class="chart-container">
 			<canvas id="chart"></canvas>
 		</div>
@@ -201,38 +201,38 @@ height: 300px;
 				<table cellpadding="0" cellspacing="0">
 				<thead>
 				<tr>
-					<th nowrap><?php echo $this->Paginator->sort('theme_id', '学習テーマ'); ?></th>
-					<th nowrap><?php echo $this->Paginator->sort('content_id', '課題'); ?></th>
-					<th nowrap><?php echo $this->Paginator->sort('user_id', '氏名'); ?></th>
+					<th nowrap><?= $this->Paginator->sort('theme_id', '学習テーマ'); ?></th>
+					<th nowrap><?= $this->Paginator->sort('content_id', '課題'); ?></th>
+					<th nowrap><?= $this->Paginator->sort('user_id', '氏名'); ?></th>
 					<!--
-					<th nowrap class="ib-col-center"><?php echo $this->Paginator->sort('rate', '進捗率'); ?></th>
-					<th nowrap class="ib-col-center"><?php echo $this->Paginator->sort('theme_rate', '進捗率(全体)'); ?></th>
-					<th nowrap class="ib-col-center"><?php echo $this->Paginator->sort('is_complete', '完了'); ?></th>
-					<th class="ib-col-center"><?php echo $this->Paginator->sort('study_sec', '学習時間'); ?></th>
+					<th nowrap class="ib-col-center"><?= $this->Paginator->sort('rate', '進捗率'); ?></th>
+					<th nowrap class="ib-col-center"><?= $this->Paginator->sort('theme_rate', '進捗率(全体)'); ?></th>
+					<th nowrap class="ib-col-center"><?= $this->Paginator->sort('is_complete', '完了'); ?></th>
+					<th class="ib-col-center"><?= $this->Paginator->sort('study_sec', '学習時間'); ?></th>
 					-->
-					<th class="ib-col-center" nowrap><?php echo $this->Paginator->sort('record_type', '種別'); ?></th>
-					<th class="ib-col-datetime"><?php echo $this->Paginator->sort('created', '学習日時'); ?></th>
+					<th class="ib-col-center" nowrap><?= $this->Paginator->sort('record_type', '種別'); ?></th>
+					<th class="ib-col-datetime"><?= $this->Paginator->sort('created', '学習日時'); ?></th>
 				</tr>
 				</thead>
 				<tbody>
 					<?php foreach ($records as $record): ?>
 					<tr>
-						<td><a href="<?php echo Router::url(['controller' => 'tasks', 'action' => 'index', $record['Theme']['id']]);?>"><?php echo h($record['Theme']['title']); ?></a></td>
-						<td><a href="<?php echo Router::url(['controller' => 'progresses', 'action' => 'index', $record['Task']['id']]);?>"><?php echo h($record['Task']['title']); ?></a></td>
-						<td><?php echo h($record['User']['name']); ?>&nbsp;</td>
+						<td><a href="<?= Router::url(['controller' => 'tasks', 'action' => 'index', $record['Theme']['id']]);?>"><?= h($record['Theme']['title']); ?></a></td>
+						<td><a href="<?= Router::url(['controller' => 'progresses', 'action' => 'index', $record['Task']['id']]);?>"><?= h($record['Task']['title']); ?></a></td>
+						<td><?= h($record['User']['name']); ?>&nbsp;</td>
 						<!--
-						<td class="ib-col-center"><?php echo h($record['Record']['rate']); ?>&nbsp;</td>
-						<td class="ib-col-center"><?php echo h($record['Record']['theme_rate']); ?>&nbsp;</td>
-						<td nowrap class="ib-col-center"><?php echo h(Configure::read('content_status.'.$record['Record']['is_complete'])); ?>&nbsp;</td>
-						<td class="ib-col-center"><?php echo h(Utils::getHNSBySec($record['Record']['study_sec'])); ?>&nbsp;</td>
+						<td class="ib-col-center"><?= h($record['Record']['rate']); ?>&nbsp;</td>
+						<td class="ib-col-center"><?= h($record['Record']['theme_rate']); ?>&nbsp;</td>
+						<td nowrap class="ib-col-center"><?= h(Configure::read('content_status.'.$record['Record']['is_complete'])); ?>&nbsp;</td>
+						<td class="ib-col-center"><?= h(Utils::getHNSBySec($record['Record']['study_sec'])); ?>&nbsp;</td>
 						-->
-						<td nowrap class="ib-col-center"><?php echo h(Configure::read('record_type.'.$record['Record']['record_type'])); ?>&nbsp;</td>
-						<td class="ib-col-date"><?php echo h(Utils::getYMDHN($record['Record']['created'])); ?>&nbsp;</td>
+						<td nowrap class="ib-col-center"><?= h(Configure::read('record_type.'.$record['Record']['record_type'])); ?>&nbsp;</td>
+						<td class="ib-col-date"><?= h(Utils::getYMDHN($record['Record']['created'])); ?>&nbsp;</td>
 					</tr>
 					<?php endforeach; ?>
 				</tbody>
 				</table>
-				<?php echo $this->element('paging');?>
+				<?= $this->element('paging');?>
 			</div>
 		</div>
 	</div>

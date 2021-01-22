@@ -1,15 +1,15 @@
 <?php if(!$is_user) echo $this->element('admin_menu');?>
 <?php $this->start('css-embedded'); ?>
-<?php echo $this->Html->css('summernote.css');?>
+<?= $this->Html->css('summernote.css');?>
 <?php $this->end(); ?>
 <?php $this->start('script-embedded'); ?>
-<?php echo $this->Html->script('summernote.min.js');?>
-<?php echo $this->Html->script('lang/summernote-ja-JP.js');?>
+<?= $this->Html->script('summernote.min.js');?>
+<?= $this->Html->script('lang/summernote-ja-JP.js');?>
 <script>
 	//$('input[name="data[Task][kind]"]:radio').val(['text']);
 	var _editor;
-	var URL_UPLOAD	= '<?php echo Router::url(['controller' => 'tasks', 'action' => 'upload', 'admin' => false])?>/file';
-	var URL_NOTE	= '<?php echo Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/';
+	var URL_UPLOAD	= '<?= Router::url(['controller' => 'tasks', 'action' => 'upload', 'admin' => false])?>/file';
+	var URL_NOTE	= '<?= Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/';
 	
 	$(document).ready(function()
 	{
@@ -93,10 +93,10 @@ $rate_list = [
 	?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<?php echo (($this->action == 'admin_edit')||($this->action == 'edit')) ? '<span data-localize="edit">編集</span>' :  '<span data-localize="add">新規課題</span>'; ?>
+			<?= (($this->action == 'admin_edit')||($this->action == 'edit')) ? '<span data-localize="edit">編集</span>' :  '<span data-localize="add">新規課題</span>'; ?>
 		</div>
 		<div class="panel-body">
-			<?php echo $this->Form->create('Task', Configure::read('form_defaults')); ?>
+			<?= $this->Form->create('Task', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('title',	['label' => '<span data-localize="title">課題タイトル</span>']);
@@ -160,11 +160,11 @@ $rate_list = [
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">
-					<?php echo $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
+					<?= $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
 				</div>
 			</div>
 			<input name="study_sec" type="hidden" value="0">
-			<?php echo $this->Form->end(); ?>
+			<?= $this->Form->end(); ?>
 		</div>
 	</div>
 </div>

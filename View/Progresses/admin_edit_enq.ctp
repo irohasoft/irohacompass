@@ -1,6 +1,6 @@
-<?php echo $this->element('admin_menu');?>
+<?= $this->element('admin_menu');?>
 <div class="progresses form">
-<?php echo $this->Html->css('summernote.css');?>
+<?= $this->Html->css('summernote.css');?>
 <?php $this->start('css-embedded'); ?>
 <style type='text/css'>
 	#ProgressOptionList
@@ -33,10 +33,10 @@
 </style>
 <?php $this->end(); ?>
 <?php $this->start('script-embedded'); ?>
-<?php echo $this->Html->script('summernote.min.js');?>
-<?php echo $this->Html->script('lang/summernote-ja-JP.js');?>
+<?= $this->Html->script('summernote.min.js');?>
+<?= $this->Html->script('lang/summernote-ja-JP.js');?>
 <script>
-	var URL_UPLOAD	= '<?php echo Router::url(['controller' => 'contents', 'action' => 'upload'])?>/image';
+	var URL_UPLOAD	= '<?= Router::url(['controller' => 'contents', 'action' => 'upload'])?>/image';
 
 	$(document).ready(function()
 	{
@@ -113,7 +113,7 @@
 		
 		$url.after('<input id="btnUpload" type="button" value="アップロード">');
 		$("#btnUpload").click(function(){
-			//window.open('<?php echo Router::url(['controller' => 'tasks', 'action' => 'upload'])?>/image', '_upload', 'width=650,height=500,resizable=no');
+			//window.open('<?= Router::url(['controller' => 'tasks', 'action' => 'upload'])?>/image', '_upload', 'width=650,height=500,resizable=no');
 			//ファイルアップロードダイアログの iframe にURLを設定
 			$("#uploadFrame").attr("src", URL_UPLOAD);
 			//ファイルアップロードダイアログを表示
@@ -122,8 +122,8 @@
 		});
 		
 		// リッチテキストエディタを起動
-		CommonUtil.setRichTextEditor('#ProgressBody', <?php echo (Configure::read('use_upload_image') ? 'true' : 'false')?>, '<?php echo $this->webroot ?>');
-		CommonUtil.setRichTextEditor('#ProgressExplain', <?php echo (Configure::read('use_upload_image') ? 'true' : 'false')?>, '<?php echo $this->webroot ?>');
+		CommonUtil.setRichTextEditor('#ProgressBody', <?= (Configure::read('use_upload_image') ? 'true' : 'false')?>, '<?= $this->webroot ?>');
+		CommonUtil.setRichTextEditor('#ProgressExplain', <?= (Configure::read('use_upload_image') ? 'true' : 'false')?>, '<?= $this->webroot ?>');
 		
 		if($("#ProgressOptions").val()=="")
 			return;
@@ -173,10 +173,10 @@
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<?php echo ($this->action == 'admin_edit') ? __('編集') :  __('新規質問'); ?>
+			<?= ($this->action == 'admin_edit') ? __('編集') :  __('新規質問'); ?>
 		</div>
 		<div class="panel-body">
-			<?php echo $this->Form->create('Progress', Configure::read('form_defaults')); ?>
+			<?= $this->Form->create('Progress', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('title',	['label' => __('タイトル')]);
@@ -216,7 +216,7 @@
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">
-					<?php echo $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
+					<?= $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
 				</div>
 			</div>
 		</div>

@@ -6,6 +6,6 @@
 	?>
 	</div>
 	<div class="text-center">
-		<?php echo $this->Paginator->pagination(['ul' => 'pagination']); ?>
+		<?= $this->Paginator->pagination(['ul' => 'pagination']); ?>
 	</div>
 

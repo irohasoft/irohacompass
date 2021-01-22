@@ -1,11 +1,11 @@
 <?php if(!$is_user) echo $this->element('admin_menu');?>
-<?php echo $this->Html->css( 'select2.min.css');?>
-<?php echo $this->Html->script( 'select2.min.js');?>
+<?= $this->Html->css( 'select2.min.css');?>
+<?= $this->Html->script( 'select2.min.js');?>
 <?php $this->start('script-embedded'); ?>
 <script>
-	var URL_UPLOAD	= '<?php echo Router::url(['controller' => 'tasks', 'action' => 'upload', 'admin' => false])?>/file';
-	var URL_NOTE	= '<?php echo Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/';
-	var LS_KEY_EMAIL_USER = 'ic-email-user-<?php echo $content['Theme']['id']; ?>';
+	var URL_UPLOAD	= '<?= Router::url(['controller' => 'tasks', 'action' => 'upload', 'admin' => false])?>/file';
+	var URL_NOTE	= '<?= Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/';
+	var LS_KEY_EMAIL_USER = 'ic-email-user-<?= $content['Theme']['id']; ?>';
 	
 	/* 進捗一覧用 */
 	$(function(){
@@ -62,7 +62,7 @@
 		});
 
 		// メール通知用
-		$('#ProgressUser').select2({placeholder:   "メール通知するユーザを選択して下さい。(複数選択可／次回以降は自動で選択されます)", closeOnSelect: <?php echo (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
+		$('#ProgressUser').select2({placeholder:   "メール通知するユーザを選択して下さい。(複数選択可／次回以降は自動で選択されます)", closeOnSelect: <?= (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
 		$('#ProgressUser').val(CommonUtil.getLocalStorage(LS_KEY_EMAIL_USER)).change();
 		
 		// 進捗編集画面の再描画
@@ -73,7 +73,7 @@
 	{
 		
 		$.ajax({
-			url: "<?php echo Router::url(['action' => 'smile']) ?>",
+			url: "<?= Router::url(['action' => 'smile']) ?>",
 			type: "POST",
 			data: {
 				progress_id	: progress_id
@@ -188,7 +188,7 @@
 		<div class="panel-heading"><b><span data-localize="task">課題</span></b></div>
 		<div class="panel-body">
 			<big>
-			<?php echo $this->Form->hidden('content_body', ['value' => $content['Task']['body']]);?>
+			<?= $this->Form->hidden('content_body', ['value' => $content['Task']['body']]);?>
 			</big>
 			<div>
 				<?php 
@@ -206,7 +206,7 @@
 			</div>
 			<div>
 				<br>
-				<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?php echo Router::url(['controller' => 'tasks', 'action' => 'edit', $content['Theme']['id'], $content['Task']['id']]) ?>'"><span data-localize="edit">編集</span></button>
+				<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?= Router::url(['controller' => 'tasks', 'action' => 'edit', $content['Theme']['id'], $content['Task']['id']]) ?>'"><span data-localize="edit">編集</span></button>
 			</div>
 		</div>
 	</div>
@@ -217,7 +217,7 @@
 		<?php if($is_add) {?>
 		<button type="button" class="btn btn-primary btn-add" onclick="$('html, body').animate({scrollTop: ($(document).height()-1050)},800);"><span data-localize="add">+ 追加</span></button>
 		<?php } else {?>
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(['action' => 'index', $content['Task']['id']]);?>#edit'"><span data-localize="add">+ 追加</span></button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['action' => 'index', $content['Task']['id']]);?>#edit'"><span data-localize="add">+ 追加</span></button>
 		<?php }?>
 	</div>
 	
@@ -226,7 +226,7 @@
 		<a href="#">　▼ ページの下へ</a>　
 	</span>
 	並べ替え：
-	<span class="sort-item"><?php echo $this->Paginator->sort('created', '作成日時', ['direction' => 'desc']); ?></span>
+	<span class="sort-item"><?= $this->Paginator->sort('created', '作成日時', ['direction' => 'desc']); ?></span>
 	<?php }?>
 	
 	<?php foreach ($progresses as $progress): ?>
@@ -237,23 +237,23 @@
 	<?php }?>
 		<div class="panel-heading">
 			<div class="pull-left">
-			[<?php echo h(Configure::read('progress_type.'.$progress['Progress']['progress_type'])); ?>] <?php echo h($progress['User']['name']); ?>
+			[<?= h(Configure::read('progress_type.'.$progress['Progress']['progress_type'])); ?>] <?= h($progress['User']['name']); ?>
 			</div>
 			<div class="pull-right">
-			<?php echo h(Utils::getYMDHN($progress['Progress']['created'])); ?>
+			<?= h(Utils::getYMDHN($progress['Progress']['created'])); ?>
 			</div>
 		</div>
 		<div class="panel-body">
 			<div class="text-left">
 			<?php if($progress['Progress']['progress_type']=='progress') { ?>
-				進捗率 : <?php echo h($progress['Progress']['rate']); ?>% &nbsp;&nbsp;
+				進捗率 : <?= h($progress['Progress']['rate']); ?>% &nbsp;&nbsp;
 			<?php }?>
 			<?php if(Configure::read('use_emotion_icon')) { ?>
-				感情 : <?php echo $this->Html->image($progress['Progress']['emotion_icon'].'.png', ['width' => 30]); ?>
+				感情 : <?= $this->Html->image($progress['Progress']['emotion_icon'].'.png', ['width' => 30]); ?>
 			<?php }?>
 			</div>
 			<div class="progress-text bg-warning">
-				<h4><?php echo h($progress['Progress']['title']); ?></h4>
+				<h4><?= h($progress['Progress']['title']); ?></h4>
 				<?php 
 				$content_type = $progress['Progress']['content_type'];
 				
@@ -329,12 +329,12 @@
 	<?php 
 	?>
 	<a name="edit"></a>
-	<div class="panel <?php echo ($is_add) ? 'panel-default' :  'panel-danger'; ?>">
+	<div class="panel <?= ($is_add) ? 'panel-default' :  'panel-danger'; ?>">
 		<div class="panel-heading">
-			<?php echo (!$is_add) ? '<span data-localize="edit">編集</span>' :  '<span data-localize="add">新規追加</span>'; ?>
+			<?= (!$is_add) ? '<span data-localize="edit">編集</span>' :  '<span data-localize="add">新規追加</span>'; ?>
 		</div>
 		<div class="panel-body">
-			<?php echo $this->Form->create('Progress', Configure::read('form_defaults')); ?>
+			<?= $this->Form->create('Progress', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('title',	['label' => "<span data-localize='title'>タイトル</span>"]);
@@ -458,14 +458,14 @@
 			<div class="form-group">
 				
 			</div>
-			<?php echo $this->Form->input('User',		['label' => __('　'), 'size' => 20, 'multiple' => true, 'before' => '<div class="col col-sm-9 col-sm-offset-3"><input name="is_mail" type="checkbox">&nbsp;<span data-localize="email_notification">メール通知</span></div>']);?>
+			<?= $this->Form->input('User',		['label' => __('　'), 'size' => 20, 'multiple' => true, 'before' => '<div class="col col-sm-9 col-sm-offset-3"><input name="is_mail" type="checkbox">&nbsp;<span data-localize="email_notification">メール通知</span></div>']);?>
 			<div class="form-group add-progress">
 				<div class="col col-sm-9 col-sm-offset-3">
-					<?php echo $this->Form->submit(($is_add) ? __('追加') :  __('保存'), Configure::read('form_submit_defaults')); ?>
+					<?= $this->Form->submit(($is_add) ? __('追加') :  __('保存'), Configure::read('form_submit_defaults')); ?>
 				</div>
 			</div>
 			<input name="study_sec" type="hidden" value="0">
-			<?php echo $this->Form->end(); ?>
+			<?= $this->Form->end(); ?>
 		</div>
 	</div>
 	

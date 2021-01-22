@@ -1,7 +1,7 @@
 <?php if(!$is_user) echo $this->element('admin_menu');?>
 <?php $this->start('script-embedded'); ?>
 <script>
-	var URL_NOTE	= '<?php echo Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/';
+	var URL_NOTE	= '<?= Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/';
 	
 	$(document).ready(function()
 	{
@@ -51,13 +51,13 @@
 <?php
 	$controller = ($is_user) ? 'users_themes' : 'themes';
 ?>
-	<?php echo $this->Html->link(__('<< 戻る'), ['controller' => $controller, 'action' => 'index', @$this->params['pass'][0]])?>
+	<?= $this->Html->link(__('<< 戻る'), ['controller' => $controller, 'action' => 'index', @$this->params['pass'][0]])?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<?php echo (($this->action == 'admin_edit')||($this->action == 'edit')) ? "<span data-localize='edit'>編集</span>" :  __('新規学習テーマ'); ?>
+			<?= (($this->action == 'admin_edit')||($this->action == 'edit')) ? "<span data-localize='edit'>編集</span>" :  __('新規学習テーマ'); ?>
 		</div>
 		<div class="panel-body">
-			<?php echo $this->Form->create('Theme', Configure::read('form_defaults')); ?>
+			<?= $this->Form->create('Theme', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('title', ['label' => __('学習テーマ名 / Title')]);
@@ -90,11 +90,11 @@
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">
-					<?php echo $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
+					<?= $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
 				</div>
 			</div>
 			<input name="study_sec" type="hidden" value="0">
-			<?php echo $this->Form->end(); ?>
+			<?= $this->Form->end(); ?>
 		</div>
 	</div>
 </div>

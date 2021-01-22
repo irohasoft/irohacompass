@@ -14,7 +14,7 @@
 	</ol>
 	
 	<div id="lblStudySec" class="btn btn-info"></div>
-	<div class="ib-page-title"><?php echo $content['Task']['title']; ?></div>
+	<div class="ib-page-title"><?= $content['Task']['title']; ?></div>
 	<?php $this->start('css-embedded'); ?>
 	<style type='text/css'>
 		.radio-group
@@ -69,7 +69,7 @@
 	<?php $this->start('script-embedded'); ?>
 	<script>
 		var studySec  = 0;
-		var mode      = '<?php echo $mode ?>';
+		var mode      = '<?= $mode ?>';
 		var timerID   = null;
 		
 		$(document).ready(function()
@@ -89,15 +89,15 @@
 	<?php
 		$index = 1;
 	?>
-	<?php echo $this->Form->create('Progress'); ?>
+	<?= $this->Form->create('Progress'); ?>
 		<?php foreach ($progresses as $progress): ?>
 			<div class="panel panel-info">
-				<div class="panel-heading">No.<?php echo $index;?></div>
+				<div class="panel-heading">No.<?= $index;?></div>
 				<div class="panel-body">
-					<h4><?php echo h($progress['Progress']['title']); ?></h4>
+					<h4><?= h($progress['Progress']['title']); ?></h4>
 					
 					<div class="progress-text bg-warning">
-						<?php echo $progress['Progress']['body']; ?>
+						<?= $progress['Progress']['body']; ?>
 					</div>
 					
 					<div class="radio-group">
