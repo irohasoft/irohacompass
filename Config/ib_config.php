@@ -3,9 +3,9 @@
  * iroha Compass Project
  *
  * @author        Kotaro Miura
- * @copyright     2015-2018 iroha Soft, Inc. (http://irohasoft.jp)
- * @link          http://irohacompass.irohasoft.jp
- * @license       http://www.gnu.org/licenses/gpl-3.0.en.html GPL License
+ * @copyright     2015-2021 iroha Soft, Inc. (https://irohasoft.jp)
+ * @link          https://irohacompass.irohasoft.jp
+ * @license       https://www.gnu.org/licenses/gpl-3.0.en.html GPL License
  */
 
 $config['group_status']		= ['1' => '公開', '0' => '非公開'];
