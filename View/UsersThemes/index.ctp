@@ -49,6 +49,12 @@ table tr td
 	{
 		width:30%;
 	}
+	
+	.progress-container
+	{
+		max-width	: 100%;
+		overflow-x: scroll;
+	}
 }
 </style>
 <?php $this->end(); ?>
@@ -104,6 +110,9 @@ table tr td
 			<div class="chart-container">
 				<canvas id="chart"></canvas>
 			</div>
+			
+			<!--最近の進捗一覧-->
+			<div class="progress-container">
 			<table cellpadding="0" cellspacing="0">
 			<thead>
 			<tr>
@@ -136,6 +145,8 @@ table tr td
 			<?php endforeach; ?>
 			</tbody>
 			</table>
+			</div>
+			
 			<div class="text-right"><a href="<?php echo Router::url(array('controller' => 'records', 'action' => 'progress'));?>"><span data-localize='view_list'>一覧を表示</span></a></div>
 		</div>
 	</div>
