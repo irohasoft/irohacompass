@@ -13,14 +13,9 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => true,
-		//'host' => 'localhost',
-		//'host' => 'localhost:3307',
 		'login' => 'root',
 		'password' => '',
-		//'database' => 'ic_test',
 		'database' => 'irohacompass',
-//		'database' => 'mysql_yuizono_202007140030',
-		//'password' => 'irohairoha1',
 		'prefix' => 'ib_',
 		'encoding' => 'utf8'
 	);
