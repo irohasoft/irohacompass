@@ -268,7 +268,7 @@ class ApisController extends AppController
 			return;
 		}
 		
-		$note_id = $this->getParam('note_id');
+		$note_id = $this->getParamData('note_id');
 		
 		$options = [
 			'conditions' => [
@@ -390,8 +390,8 @@ class ApisController extends AppController
 			return;
 		}
 		
-		$page_id = $this->getParam('page_id');
-		$note_id = $this->getParam('note_id');
+		$page_id = $this->getParamData('page_id');
+		$note_id = $this->getParamData('note_id');
 		
 		//debug($note_id);
 		//debug($this->getUserIDList($note_id));
@@ -522,7 +522,7 @@ class ApisController extends AppController
 		$this->layout = '';
 		$this->autoRender = FALSE;
 		
-		$page_id = $this->getParam('page_id');
+		$page_id = $this->getParamData('page_id');
 		
 		$options = [
 			'conditions' => [
@@ -610,8 +610,8 @@ class ApisController extends AppController
 			$this->flashError(101);
 			return;
 		}
-		$keyword = $this->getParam('keyword');
-		$note_id = $this->getParam('note_id');
+		$keyword = $this->getParamData('keyword');
+		$note_id = $this->getParamData('note_id');
 		
 		$options = [
 			'conditions' => [
@@ -683,7 +683,7 @@ class ApisController extends AppController
 		$this->loadModel('Leaf');
 		$this->loadModel('Link');
 		
-		$note_id = $this->getParam('note_id');
+		$note_id = $this->getParamData('note_id');
 
 		$options = [
 			'conditions' => [
@@ -839,7 +839,7 @@ class ApisController extends AppController
 	/**
 	 * パラメータを取得
 	 */
-	private function getParam($key)
+	private function getParamData($key)
 	{
 		$val = '';
 		
@@ -965,7 +965,7 @@ class ApisController extends AppController
 	//	Bearerからアクセストークンを取得	//
 	//	iroha Note 2 用						//
 	//--------------------------------------//
-	function getAccessTokenFromBearer()
+	private function getAccessTokenFromBearer()
 	{
 		$access_token = "";
 		
@@ -983,7 +983,7 @@ class ApisController extends AppController
 	// 前半5桁・・・ベースとなるID			//
 	// 後半5桁・・・既存のID				//
 	//--------------------------------------//
-	function getRenewedID($base_id, $original_id)
+	private function getRenewedID($base_id, $original_id)
 	{
 		$element_id = substr('00000'.$original_id, -5);
 		

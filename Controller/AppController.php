@@ -207,15 +207,15 @@ class AppController extends Controller
 	 * クエリストリングの取得
 	 * @param string $key キー
 	 */
-	protected function getQuery($key = null)
+	protected function getQuery($key)
 	{
 		if(!isset($this->request->query[$key]))
 			return '';
 		
 		$val = $this->request->query[$key];
 		
-		if($val=='')
-			return null;
+		if($val==null)
+			return '';
 		
 		return $val;
 	}
@@ -229,9 +229,8 @@ class AppController extends Controller
 		return isset($this->request->query[$key]);
 	}
 
-
 	/**
-	 * リクエストパラメータの取得
+	 * ルート要素とリクエストパラメータを取得
 	 * @param string $key キー
 	 */
 	protected function getParam($key)
@@ -241,8 +240,8 @@ class AppController extends Controller
 		
 		$val = $this->request->params[$key];
 		
-		if($val=='')
-			return null;
+		if($val==null)
+			return '';
 		
 		return $val;
 	}
@@ -281,7 +280,7 @@ class AppController extends Controller
 		}
 	}
 
-	function writeLog($log_type, $log_content, $controller = '', $action = '', $params = '', $sec = 0)
+	protected function writeLog($log_type, $log_content, $controller = '', $action = '', $params = '', $sec = 0)
 	{
 		$data = [
 			'log_type'		=> $log_type,
