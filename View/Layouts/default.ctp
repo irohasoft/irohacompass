@@ -93,7 +93,7 @@
 			<a href="<?= $this->Html->url('/')?>"><?= h($this->Session->read('Setting.title')); ?></a>
 		</div>
 		<?php if(@$loginedUser) {?>
-		<div class="ib-navi-item ib-right"><?= $this->Html->link('<span data-localize="logout">ログアウト</span>', $logoutURL, ['escape' => false]); ?></div>
+		<div class="ib-navi-item ib-right"><?= $this->Html->link(__('ログアウト'), ['controller' => 'users', 'action' => 'logout']); ?></div>
 		<div class="ib-navi-sepa ib-right"></div>
 		<div class="ib-navi-item ib-right"><?= $this->Html->link('<span data-localize="setting">設定</span>', ['controller' => 'users', 'action' => 'setting'], ['escape' => false]); ?></div>
 		<div class="ib-navi-sepa ib-right"></div>

@@ -23,21 +23,13 @@ App::import('Vendor', 'Utils');
  */
 class AppController extends Controller
 {
-
 	public $components = [
 			'DebugKit.Toolbar',
 			'Session',
 			'Flash',
 			'Auth' => [
-					'loginRedirect' => [
-							'controller' => 'users_themes',
-							'action' => 'index'
-					],
-					'logoutRedirect' => [
-							'controller' => 'users',
-							'action' => 'login',
-							'home'
-					],
+			'loginRedirect' => ['controller' => 'users_themes', 'action' => 'index'],
+			'logoutRedirect' => ['controller' => 'users','action' => 'login','home'],
 					'authError' => false
 			]
 	];
@@ -52,24 +44,25 @@ class AppController extends Controller
 	
 	public $uses = ['Setting'];
 	
+	/**
+	 * コールバック（コントローラのアクションロジック実行前に実行）
+	 */
 	public function beforeFilter()
 	{
-		$this->set('loginedUser', $this->Auth->user());
+		$this->set('loginedUser', $this->readAuthUser());
 		
 		// 他のサイトの設定が存在する場合、設定情報及びログイン情報をクリア
-		if($this->Session->check('Setting'))
+		if($this->hasSession('Setting'))
 		{
-			if($this->Session->read('Setting.app_dir')!=APP_DIR)
+			if($this->readSession('Setting.app_dir')!=APP_DIR)
 			{
 				// セッション内の設定情報を削除
-				$this->Session->delete('Setting');
+				$this->deleteSession('Setting');
 				
 				// 他のサイトとのログイン情報の混合を避けるため、強制ログアウト
-				if($this->Auth->user())
+				if($this->readAuthUser())
 				{
-					if($this->Cookie)
-						$this->Cookie->delete('Auth');
-					
+					//$this->Cookie->delete('Auth');
 					$this->redirect($this->Auth->logout());
 					return;
 				}
@@ -77,91 +70,51 @@ class AppController extends Controller
 		}
 		
 		// データベース内に格納された設定情報をセッションに格納
-		if(!$this->Session->check('Setting'))
+		if(!$this->hasSession('Setting'))
 		{
 			$settings = $this->Setting->getSettings();
 			
-			$this->Session->Write('Setting.app_dir', APP_DIR);
+			$this->writeSession('Setting.app_dir', APP_DIR);
 			
-			foreach ($settings as $key => $value)
+			foreach($settings as $key => $value)
 			{
-				$this->Session->Write('Setting.'.$key, $value);
+				$this->writeSession('Setting.'.$key, $value);
 			}
 		}
 		
-		if (isset($this->request->params['admin']))
+		if($this->getParam('admin'))
 		{
 			// role が admin, manager, editor, teacher以外の場合、強制ログアウトする
-			if($this->Auth->user())
+			if($this->readAuthUser())
 			{
 				if(
-					($this->Auth->user('role')!='admin')&&
-					($this->Auth->user('role')!='manager')&&
-					($this->Auth->user('role')!='editor')&&
-					($this->Auth->user('role')!='teacher')
+					($this->readAuthUser('role')!='admin')&&
+					($this->readAuthUser('role')!='manager')&&
+					($this->readAuthUser('role')!='editor')&&
+					($this->readAuthUser('role')!='teacher')
 				)
 				{
 					if($this->Cookie)
 						$this->Cookie->delete('Auth');
 					
+					$this->Flash->error(__('管理画面へのアクセス権限がありません'));
 					$this->redirect($this->Auth->logout());
 					return;
 				}
 			}
 			
-			$this->Auth->loginAction = [
-					'controller' => 'users',
-					'action' => 'login',
-					'admin' => true
-			];
-			$this->Auth->loginRedirect = [
-					'controller' => 'users',
-					'action' => 'index',
-					'admin' => true
-			];
-			$this->Auth->logoutRedirect = [
-					'controller' => 'users',
-					'action' => 'login',
-					'admin' => true
-			];
-			$this->set('loginURL', "/admin/users/login/");
-			$this->set('logoutURL', "/admin/users/logout/");
+			$this->Auth->loginAction = ['controller' => 'users','action' => 'login','admin' => true];
+			$this->Auth->loginRedirect = ['controller' => 'users','action' => 'index','admin' => true];
+			$this->Auth->logoutRedirect = ['controller' => 'users','action' => 'login','admin' => true];
 			
-			// グループ一覧を共通で保持する
+			// グループモデルを共通で保持する
 			$this->loadModel('Group');
-			$group_list = $this->Group->find('all');
-			
-			$this->set('group_list', 
-					$this->Group->find('list', 
-							[
-									'fields' => [
-											'id',
-											'title'
-									]
-							]));
 		}
 		else
 		{
-			$this->Auth->loginAction = [
-					'controller' => 'users',
-					'action' => 'login',
-					'admin' => false
-			];
-			$this->Auth->loginRedirect = [
-					'controller' => 'users',
-					'action' => 'index',
-					'admin' => false
-			];
-			$this->Auth->logoutRedirect = [
-					'controller' => 'users',
-					'action' => 'login',
-					'admin' => false
-			];
-			
-			$this->set('loginURL', "/users/login/");
-			$this->set('logoutURL', "/users/logout/");
-			// $this->layout = 'login'; //レイアウトを切り替える。
-			// AuthComponent::$sessionKey = "Auth.User";
+			$this->Auth->loginAction = ['controller' => 'users', 'action' => 'login', 'admin' => false];
+			$this->Auth->loginRedirect = ['controller' => 'users', 'action' => 'index', 'admin' => false];
+			$this->Auth->logoutRedirect = ['controller' => 'users', 'action' => 'login', 'admin' => false];
 		}
 		
 		$user = $this->Auth->user();
@@ -199,6 +152,133 @@ class AppController extends Controller
 		
 		// iframeへの埋め込みの禁止
 		//header("X-Frame-Options: DENY");
+	}
+
+	/**
+	 * セッションの取得
+	 * @param string $key キー
+	 */
+	protected function readSession($key)
+	{
+		return $this->Session->read($key);
+	}
+
+	/**
+	 * セッションの削除
+	 * @param string $key キー
+	 */
+	protected function deleteSession($key)
+	{
+		$this->Session->delete($key);
+	}
+
+	/**
+	 * セッションの存在確認
+	 * @param string $key キー
+	 */
+	protected function hasSession($key)
+	{
+		return $this->Session->check($key);
+	}
+
+	/**
+	 * セッションの保存
+	 * @param string $key キー
+	 * @param string $value 値
+	 */
+	protected function writeSession($key, $value)
+	{
+		$this->Session->write($key, $value);
+	}
+
+	/**
+	 * ログインユーザ情報の取得
+	 * @param string $key キー
+	 */
+	protected function readAuthUser($key = null)
+	{
+		if(!$key)
+			return $this->Auth->user();
+		
+		return $this->Auth->user($key);
+	}
+
+	/**
+	 * クエリストリングの取得
+	 * @param string $key キー
+	 */
+	protected function getQuery($key = null)
+	{
+		if(!isset($this->request->query[$key]))
+			return '';
+		
+		$val = $this->request->query[$key];
+		
+		if($val=='')
+			return null;
+		
+		return $val;
+	}
+
+	/**
+	 * クエリストリングの存在確認
+	 * @param string $key キー
+	 */
+	protected function hasQuery($key)
+	{
+		return isset($this->request->query[$key]);
+	}
+
+
+	/**
+	 * リクエストパラメータの取得
+	 * @param string $key キー
+	 */
+	protected function getParam($key)
+	{
+		if(!isset($this->request->params[$key]))
+			return '';
+		
+		$val = $this->request->params[$key];
+		
+		if($val=='')
+			return null;
+		
+		return $val;
+	}
+
+	/**
+	 * POSTデータの取得
+	 * @param string $key キー
+	 */
+	protected function getData($key = null)
+	{
+		$val = $this->request->data;
+		
+		if(!$val)
+			return null;
+		
+		if($key)
+			$val = empty($val[$key]) ? null :$val[$key];
+		
+		return $val;
+	}
+
+	/**
+	 * POSTデータの上書き
+	 * @param string $key キー
+	 * @param string $value 値
+	 */
+	protected function setData($key, $value)
+	{
+		if($key)
+		{
+			$this->request->data[$key] = $value;
+		}
+		else
+		{
+			$this->request->data = $value;
+		}
 	}
 
 	function writeLog($log_type, $log_content, $controller = '', $action = '', $params = '', $sec = 0)

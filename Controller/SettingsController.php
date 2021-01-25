@@ -9,6 +9,7 @@
  */
 
 App::uses('AppController', 'Controller');
+
 /**
  * Settings Controller
  *
@@ -33,16 +34,16 @@ class SettingsController extends AppController {
 	 */
 	public function admin_index()
 	{
-		if ($this->request->is(['post', 'put']))
+		if($this->request->is(['post', 'put']))
 		{
 			if(Configure::read('demo_mode'))
 				return;
 			
-			$this->Setting->setSettings($this->request->data['Setting']);
+			$this->Setting->setSettings($this->getData('Setting'));
 			
-			foreach ($this->request->data['Setting'] as $key => $value)
+			foreach($this->getData('Setting') as $key => $value)
 			{
-				$this->Session->Write('Setting.'.$key, $value);
+				$this->writeSession('Setting.'.$key, $value);
 			}
 			
 			$this->Flash->success(__('設定が保存されました'));
