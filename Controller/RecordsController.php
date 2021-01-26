@@ -81,14 +81,7 @@ class RecordsController extends AppController
 		$from_date		= $this->getQuery('from_date');
 		$to_date		= $this->getQuery('to_date');
 		
-		if($theme_id != '')
-		{
-			$conditions['Theme.id'] = $theme_id;
-		}
-		else
-		{
-			$conditions['Theme.id'] = $theme_ids;
-		}
+		$conditions['Theme.id'] = ($theme_id != '') ? $theme_id : $theme_ids;
 		
 		if(!$from_date)
 			$from_date = [
@@ -169,14 +162,14 @@ class RecordsController extends AppController
 		// 検索条件設定
 		$this->Prg->commonProcess();
 		
-		$conditions = $this->Record->parseCriteria($this->Prg->parsedParams());
+		$conditions = [];
 		
-		$group_id			= $this->getQuery('group_id');
-		$theme_id			= $this->getQuery('theme_id');
-		$user_id			= $this->getQuery('user_id');
-		$contenttitle		= $this->getQuery('contenttitle');
-		$from_date			= $this->getQuery('from_date');
-		$to_date			= $this->getQuery('to_date');
+		$group_id	= $this->getQuery('group_id');
+		$theme_id	= $this->getQuery('theme_id');
+		$user_id	= $this->getQuery('user_id');
+		$task_title	= $this->getQuery('task_title');
+		$from_date	= $this->getQuery('from_date');
+		$to_date	= $this->getQuery('to_date');
 		
 		if($group_id != '')
 			$conditions['User.id'] = $this->Group->getUserIdByGroupID($group_id);
@@ -186,6 +179,9 @@ class RecordsController extends AppController
 		
 		if($user_id != '')
 			$conditions['User.id'] = $user_id;
+		
+		if($task_title != '')
+			$conditions['Task.title like'] = '%'.$task_title.'%';
 		
 		if(!$from_date)
 			$from_date = [
@@ -202,9 +198,6 @@ class RecordsController extends AppController
 			implode("/", $from_date), 
 			implode("/", $to_date).' 23:59:59'
 		];
-		
-		if($contenttitle != '')
-			$conditions['Task.title like'] = '%'.$contenttitle.'%';
 		
 		// CSV出力モードの場合
 		if($this->getQuery('cmd')=='csv')
@@ -268,22 +261,11 @@ class RecordsController extends AppController
 			
 			$this->set('records', $result);
 			
-			//$groups = $this->Group->getGroupList();
+			$groups = $this->Record->User->Group->find('list');
+			$themes = $this->Record->Theme->find('list');
+			$users  = $this->Record->User->find('list');
 			
-			$this->Group = new Group();
-			$this->Theme = new Theme();
-			$this->User = new User();
-			//debug($this->User);
-			
-			$this->set('groups',     $this->Group->find('list'));
-			$this->set('themes',    $this->Theme->find('list'));
-			$this->set('users',      $this->User->find('list'));
-			$this->set('group_id',   $group_id);
-			$this->set('theme_id',  $theme_id);
-			$this->set('user_id',    $user_id);
-			$this->set('contenttitle', $contenttitle);
-			$this->set('from_date', $from_date);
-			$this->set('to_date', $to_date);
+			$this->set(compact('groups', 'themes', 'users', 'group_id', 'theme_id', 'user_id', 'task_title', 'from_date', 'to_date'));
 		}
 	}
 

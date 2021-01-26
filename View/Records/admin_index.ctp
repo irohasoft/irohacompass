@@ -47,8 +47,8 @@
 			echo '</div>';
 			
 			echo '<div class="ib-row">';
-			echo $this->Form->input('theme_id',			['label' => '学習テーマ :', 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
-			echo $this->Form->input('contenttitle',			['label' => '課題名 :', 'value'=>$contenttitle, 'class'=>'form-control']);
+			echo $this->Form->input('theme_id',		['label' => '学習テーマ :', 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
+			echo $this->Form->input('task_title',	['label' => '課題名 :', 'value'=>$task_title, 'class'=>'form-control']);
 			echo $this->Form->input('group_id',		['label' => 'グループ :', 'options'=>$groups, 'selected'=>$group_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
 			echo $this->Form->input('user_id',		['label' => 'ユーザ :', 'options'=>$users, 'selected'=>$user_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
 			echo '</div>';
