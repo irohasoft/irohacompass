@@ -51,16 +51,12 @@ class InfosController extends AppController
 	 */
 	public function view($info_id = null)
 	{
-		if (! $this->Info->exists($info_id))
+		if(!$this->Info->exists($info_id))
 		{
 			throw new NotFoundException(__('Invalid info'));
 		}
-		$options = [
-			'conditions' => [
-				'Info.' . $this->Info->primaryKey => $info_id
-			]
-		];
-		$this->set('info', $this->Info->find('first', $options));
+		
+		$this->set('info', $this->Info->findById($info_id));
 	}
 
 	/**
@@ -101,11 +97,11 @@ class InfosController extends AppController
 	 */
 	public function admin_edit($info_id = null)
 	{
-		if ($this->action == 'admin_edit' && ! $this->Info->exists($info_id))
+		if($this->action == 'admin_edit' && !$this->Info->exists($info_id))
 		{
 			throw new NotFoundException(__('Invalid info'));
 		}
-		if ($this->request->is([
+		if($this->request->is([
 				'post',
 				'put'
 		]))
@@ -116,12 +112,10 @@ class InfosController extends AppController
 			// 作成者を設定
 			$this->request->data['Info']['user_id'] = $this->Auth->user('id');
 			
-			if ($this->Info->save($this->request->data))
+			if($this->Info->save($this->request->data))
 			{
 				$this->Flash->success(__('お知らせが保存されました'));
-				return $this->redirect([
-						'action' => 'index'
-				]);
+				return $this->redirect(['action' => 'index']);
 			}
 			else
 			{
@@ -130,14 +124,8 @@ class InfosController extends AppController
 		}
 		else
 		{
-			$options = [
-				'conditions' => [
-					'Info.' . $this->Info->primaryKey => $info_id
-				]
-			];
-			$this->request->data = $this->Info->find('first', $options);
+			$this->request->data = $this->Info->findById($info_id);
 		}
-		//$users = $this->Info->User->find('list');
 
 		$this->Group = new Group();
 		
@@ -152,12 +140,15 @@ class InfosController extends AppController
 	public function admin_delete($info_id = null)
 	{
 		$this->Info->id = $info_id;
-		if (! $this->Info->exists())
+		
+		if(!$this->Info->exists())
 		{
 			throw new NotFoundException(__('Invalid info'));
 		}
+		
 		$this->request->allowMethod('post', 'delete');
-		if ($this->Info->delete())
+		
+		if($this->Info->delete())
 		{
 			$this->Flash->success(__('お知らせが削除されました'));
 		}
@@ -165,8 +156,7 @@ class InfosController extends AppController
 		{
 			$this->Flash->error(__('The info could not be deleted. Please, try again.'));
 		}
-		return $this->redirect([
-				'action' => 'index'
-		]);
+		
+		return $this->redirect(['action' => 'index']);
 	}
 }

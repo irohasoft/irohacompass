@@ -42,21 +42,17 @@ class TasksController extends AppController
 	{
 		$theme_id	= intval($theme_id);
 		$is_user	= ($this->action == 'index');
-		$keyword	= (isset($this->request->query['keyword'])) ? $this->request->query['keyword'] : "";
+		$keyword	= (isset($this->request->query['keyword'])) ? $this->request->query['keyword'] : '';
 		
 		// 学習テーマの情報を取得
 		$this->loadModel('Theme');
-		$theme = $this->Theme->find('first', [
-			'conditions' => [
-				'Theme.id' => $theme_id
-			]
-		]);
+		$theme = $this->Theme->findById($theme_id);
 		
 		// ユーザの場合、
 		if($is_user)
 		{
 			// 学習テーマの閲覧権限の確認
-			if(! $this->Theme->hasRight($this->Auth->user('id'), $theme_id))
+			if(!$this->Theme->hasRight($this->Auth->user('id'), $theme_id))
 			{
 				throw new NotFoundException(__('Invalid access'));
 			}
@@ -86,7 +82,7 @@ class TasksController extends AppController
 		if($status != '')
 			$conditions['status'] = $status;
 		
-		if($keyword != "")
+		if($keyword != '')
 		{
 			$this->loadModel('Progress');
 			
@@ -147,25 +143,19 @@ class TasksController extends AppController
 	{
 		$id = intval($id);
 		
-		if (! $this->Task->exists($id))
+		if(!$this->Task->exists($id))
 		{
 			throw new NotFoundException(__('Invalid task'));
 		}
 
-		$this->layout = "";
+		$this->layout = '';
 
-		$options = [
-			'conditions' => [
-				'Task.' . $this->Task->primaryKey => $id
-			]
-		];
-		
-		$task = $this->Task->find('first', $options);
+		$task = $this->Task->findById($id);
 		
 		// コンテンツの閲覧権限の確認
 		$this->loadModel('Theme');
 		
-		if(! $this->Theme->hasRight($this->Auth->user('id'), $task['Task']['theme_id']))
+		if(!$this->Theme->hasRight($this->Auth->user('id'), $task['Task']['theme_id']))
 		{
 			throw new NotFoundException(__('Invalid access'));
 		}
@@ -194,7 +184,7 @@ class TasksController extends AppController
 
 	public function preview()
 	{
-		$this->layout = "";
+		$this->layout = '';
 		$this->set('task', $this->Session->read('Iroha.preview_task'));
 		$this->render('view');
 	}
@@ -206,22 +196,18 @@ class TasksController extends AppController
 		
 		$this->Task->id = $id;
 		
-		if (! $this->Task->exists())
+		if(!$this->Task->exists())
 		{
 			throw new NotFoundException(__('Invalid task'));
 		}
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$task = $this->Task->find('first', [
-			'conditions' => [
-				'Task.id' => $id
-			]
-		]);
+		$task = $this->Task->findById($id);
 		
 		$this->request->allowMethod('post', 'delete');
 		
-		if ($this->Task->delete())
+		if($this->Task->delete())
 		{
 			$this->Flash->success(__('コンテンツが削除されました'));
 		}
@@ -230,9 +216,7 @@ class TasksController extends AppController
 			$this->Flash->error(__('The task could not be deleted. Please, try again.'));
 		}
 		
-		return $this->redirect([
-			'action' => 'index/' . $task['Theme']['id']
-		]);
+		return $this->redirect(['action' => 'index', $task['Theme']['id']]);
 	}
 
 	public function admin_delete_enq($id)
@@ -242,27 +226,21 @@ class TasksController extends AppController
 		
 		$this->Task->id = $id;
 		
-		if (! $this->Task->exists())
+		if(!$this->Task->exists())
 		{
 			throw new NotFoundException(__('Invalid task'));
 		}
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$task = $this->Task->find('first', [
-			'conditions' => [
-				'Task.id' => $id
-			]
-		]);
+		$task = $this->Task->findById($id);
 		
 		$this->request->allowMethod('post', 'delete');
 		
-		if ($this->Task->delete())
+		if($this->Task->delete())
 		{
 			$this->Flash->success(__('コンテンツが削除されました'));
-			return $this->redirect([
-				'action' => 'index_enq'
-			]);
+			return $this->redirect(['action' => 'index_enq']);
 		}
 		else
 		{
@@ -319,14 +297,12 @@ class TasksController extends AppController
 		$is_add  = (($this->action == 'admin_add')||($this->action == 'add'));
 		$is_user = (($this->action == 'add')||($this->action == 'edit'));
 		
-		if ($this->action == 'edit' && ! $this->Task->exists($task_id))
+		if($this->action == 'edit' && !$this->Task->exists($task_id))
 		{
 			throw new NotFoundException(__('Invalid task'));
 		}
-		if ($this->request->is([
-				'post',
-				'put'
-		]))
+		
+		if($this->request->is(['post', 'put']))
 		{
 			if(Configure::read('demo_mode'))
 				return;
@@ -337,7 +313,7 @@ class TasksController extends AppController
 				$this->request->data['Task']['theme_id'] = $theme_id;
 			}
 			
-			if ($this->Task->save($this->request->data))
+			if($this->Task->save($this->request->data))
 			{
 				// 学習履歴を追加
 				$record_type = $is_add ? 'task_add' : 'task_update';
@@ -376,20 +352,11 @@ class TasksController extends AppController
 		}
 		else
 		{
-			$options = [
-				'conditions' => [
-					'Task.' . $this->Task->primaryKey => $task_id
-				]
-			];
-			$this->request->data = $this->Task->find('first', $options);
+			$this->request->data = $this->Task->findById($task_id);
 		}
 		
 		// コース情報を取得
-		$theme = $this->Task->Theme->find('first', [
-			'conditions' => [
-				'Theme.id' => $theme_id
-			]
-		]);
+		$theme = $this->Task->Theme->findById($theme_id);
 		
 		$themes = $this->Task->Theme->find('list');
 		$users = $this->Task->User->find('list');
@@ -409,7 +376,7 @@ class TasksController extends AppController
 
 	public function upload($file_type)
 	{
-		//$this->layout = "";
+		//$this->layout = '';
 		App::import ( "Vendor", "FileUpload" );
 
 		$fileUpload = new FileUpload();
@@ -452,7 +419,7 @@ class TasksController extends AppController
 		
 		$original_file_name = '';
 		
-		if ($this->request->is('post') || $this->request->is('put'))
+		if($this->request->is('post') || $this->request->is('put'))
 		{
 			if(Configure::read('demo_mode'))
 				return;
@@ -525,7 +492,7 @@ class TasksController extends AppController
 	{
 		$this->autoRender = FALSE;
 		
-		if ($this->request->is('post') || $this->request->is('put'))
+		if($this->request->is('post') || $this->request->is('put'))
 		{
 			App::import ( "Vendor", "FileUpload" );
 			$fileUpload = new FileUpload();
@@ -562,6 +529,7 @@ class TasksController extends AppController
 	public function admin_order()
 	{
 		$this->autoRender = FALSE;
+		
 		if($this->request->is('ajax'))
 		{
 			$this->Task->setOrder($this->data['id_list']);
@@ -583,23 +551,18 @@ class TasksController extends AppController
 
 	public function admin_edit_enq($task_id = null)
 	{
-		if ($this->action == 'admin_edit' && ! $this->Task->exists($id))
+		if($this->action == 'admin_edit' && !$this->Task->exists($id))
 		{
 			throw new NotFoundException(__('Invalid user'));
 		}
 		
-		if ($this->request->is([
-				'post',
-				'put'
-		]))
+		if($this->request->is(['post', 'put']))
 		{
-			if ($this->Task->save($this->request->data))
+			if($this->Task->save($this->request->data))
 			{
 				$this->Flash->success(__('アンケートが保存されました'));
 
-				return $this->redirect([
-						'action' => 'index_enq'
-				]);
+				return $this->redirect(['action' => 'index_enq']);
 			}
 			else
 			{
@@ -608,12 +571,7 @@ class TasksController extends AppController
 		}
 		else
 		{
-			$options = [
-				'conditions' => [
-					'Task.' . $this->Task->primaryKey => $task_id
-				]
-			];
-			$this->request->data = $this->Task->find('first', $options);
+			$this->request->data = $this->Task->findById($task_id);
 		}
 	}
 }

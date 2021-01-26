@@ -96,8 +96,8 @@ $rate_list = [
 			<?= (($this->action == 'admin_edit')||($this->action == 'edit')) ? '<span data-localize="edit">編集</span>' :  '<span data-localize="add">新規課題</span>'; ?>
 		</div>
 		<div class="panel-body">
-			<?= $this->Form->create('Task', Configure::read('form_defaults')); ?>
 			<?php
+				echo $this->Form->create('Task', Configure::read('form_defaults'));
 				echo $this->Form->input('id');
 				echo $this->Form->input('title',	['label' => '<span data-localize="title">課題タイトル</span>']);
 				
@@ -157,14 +157,13 @@ $rate_list = [
 					'class' => 'form-control',
 				]);
 				echo $this->Form->hidden('file_name', ['class' => 'form-control-filename']);
+				echo '<input name="study_sec" type="hidden" value="0">';
+				
+				echo Configure::read('form_submit_before')
+					.$this->Form->submit(__('保存'), Configure::read('form_submit_defaults'))
+					.Configure::read('form_submit_after');
+				echo $this->Form->end();
 			?>
-			<div class="form-group">
-				<div class="col col-sm-9 col-sm-offset-3">
-					<?= $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
-				</div>
-			</div>
-			<input name="study_sec" type="hidden" value="0">
-			<?= $this->Form->end(); ?>
 		</div>
 	</div>
 </div>

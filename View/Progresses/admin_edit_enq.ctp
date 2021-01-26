@@ -176,8 +176,8 @@
 			<?= ($this->action == 'admin_edit') ? __('編集') :  __('新規質問'); ?>
 		</div>
 		<div class="panel-body">
-			<?= $this->Form->create('Progress', Configure::read('form_defaults')); ?>
 			<?php
+				echo $this->Form->create('Progress', Configure::read('form_defaults'));
 				echo $this->Form->input('id');
 				echo $this->Form->input('title',	['label' => __('タイトル')]);
 				echo $this->Form->input('body',		['label' => __('質問文')]);
@@ -213,12 +213,11 @@
 			</div>
 			<?php
 				echo $this->Form->input('comment',	['label' => __('備考')]);
+				echo Configure::read('form_submit_before')
+					.$this->Form->submit(__('保存'), Configure::read('form_submit_defaults'))
+					.Configure::read('form_submit_after');
+				echo $this->Form->end();
 			?>
-			<div class="form-group">
-				<div class="col col-sm-9 col-sm-offset-3">
-					<?= $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>

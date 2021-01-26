@@ -12,7 +12,6 @@ App::uses('AppController', 'Controller');
 
 class ThemesController extends AppController
 {
-
 	/**
 	 * Components
 	 *
@@ -64,7 +63,7 @@ class ThemesController extends AppController
 
 	public function edit($id = null)
 	{
-		if ($this->action == 'edit' && ! $this->Theme->exists($id))
+		if($this->action == 'edit' && !$this->Theme->exists($id))
 		{
 			throw new NotFoundException(__('Invalid theme'));
 		}
@@ -74,10 +73,7 @@ class ThemesController extends AppController
 		// ユーザフラグ
 		$is_user = (($this->action == 'add')||($this->action == 'edit'));
 		
-		if ($this->request->is([
-				'post',
-				'put'
-		]))
+		if($this->request->is(['post', 'put']))
 		{
 			if(Configure::read('demo_mode'))
 				return;
@@ -86,7 +82,7 @@ class ThemesController extends AppController
 			if(!$this->request->data['Theme']['user_id'])
 				$this->request->data['Theme']['user_id'] = $this->Auth->user('id');
 			
-			if ($this->Theme->save($this->request->data))
+			if($this->Theme->save($this->request->data))
 			{
 				// 学習履歴を追加
 				$record_type = $is_add ? 'theme_add' : 'theme_update';
@@ -112,17 +108,11 @@ class ThemesController extends AppController
 				// ユーザの場合、課題一覧へ遷移
 				if($is_user)
 				{
-					return $this->redirect([
-						'controller' => 'tasks',
-						'action' => 'index',
-						$id
-					]);
+					return $this->redirect(['controller' => 'tasks', 'action' => 'index', $id]);
 				}
 				else
 				{
-					return $this->redirect([
-						'action' => 'index'
-					]);
+					return $this->redirect(['action' => 'index']);
 				}
 			}
 			else
@@ -132,12 +122,7 @@ class ThemesController extends AppController
 		}
 		else
 		{
-			$options = [
-				'conditions' => [
-					'Theme.' . $this->Theme->primaryKey => $id
-				]
-			];
-			$this->request->data = $this->Theme->find('first', $options);
+			$this->request->data = $this->Theme->findById($id);
 		}
 		
 		$users = $this->Theme->User->find('list');
@@ -150,12 +135,15 @@ class ThemesController extends AppController
 			return;
 		
 		$this->Theme->id = $id;
-		if (! $this->Theme->exists())
+		
+		if(!$this->Theme->exists())
 		{
 			throw new NotFoundException(__('Invalid theme'));
 		}
+		
 		$this->request->allowMethod('post', 'delete');
-		if ($this->Theme->delete())
+		
+		if($this->Theme->delete())
 		{
 			$this->Flash->success(__('学習テーマが削除されました'));
 		}
@@ -163,14 +151,14 @@ class ThemesController extends AppController
 		{
 			$this->Flash->error(__('The theme could not be deleted. Please, try again.'));
 		}
-		return $this->redirect([
-				'action' => 'index'
-		]);
+		
+		return $this->redirect(['action' => 'index']);
 	}
 
 	public function admin_order()
 	{
 		$this->autoRender = FALSE;
+		
 		if($this->request->is('ajax'))
 		{
 			$this->Theme->setOrder($this->data['id_list']);

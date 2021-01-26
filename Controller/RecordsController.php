@@ -76,10 +76,10 @@ class RecordsController extends AppController
 		
 		$conditions = $this->Record->parseCriteria($this->Prg->parsedParams());
 		
-		$theme_id			= (isset($this->request->query['theme_id'])) ? $this->request->query['theme_id'] : "";
-		$contenttitle		= (isset($this->request->query['contenttitle'])) ? $this->request->query['contenttitle'] : "";
+		$theme_id			= $this->getQuery('theme_id'])) ? $this->request->query['theme_id'] : '';
+		$contenttitle		= $this->getQuery('contenttitle'])) ? $this->request->query['contenttitle'] : '';
 		
-		if($theme_id != "")
+		if($theme_id != '')
 		{
 			$conditions['Theme.id'] = $theme_id;
 		}
@@ -88,7 +88,7 @@ class RecordsController extends AppController
 			$conditions['Theme.id'] = $theme_ids;
 		}
 		
-		$from_date	= (isset($this->request->query['from_date'])) ? 
+		$from_date	= $this->getQuery('from_date'])) ? 
 			$this->request->query['from_date'] : 
 				[
 					'year' => date('Y', strtotime("-1 month")),
@@ -96,7 +96,7 @@ class RecordsController extends AppController
 					'day' => date('d', strtotime("-1 month"))
 				];
 		
-		$to_date	= (isset($this->request->query['to_date'])) ? 
+		$to_date	= $this->getQuery('to_date'])) ? 
 			$this->request->query['to_date'] : 
 				['year' => date('Y'), 'month' => date('m'), 'day' => date('d')];
 		
@@ -109,7 +109,7 @@ class RecordsController extends AppController
 			implode("/", $to_date).' 23:59:59'
 		];
 		
-		if($contenttitle != "")
+		if($contenttitle != '')
 			$conditions['Task.title like'] = '%'.$contenttitle.'%';
 		
 		$this->Paginator->settings['conditions'] = $conditions;
@@ -122,7 +122,7 @@ class RecordsController extends AppController
 		}
 		catch (Exception $e)
 		{
-			$this->request->params['named']['page']=1;
+			$this->request->params['named']['page'] = 1;
 			$result = $this->paginate();
 		}
 		
@@ -171,31 +171,29 @@ class RecordsController extends AppController
 		
 		$conditions = $this->Record->parseCriteria($this->Prg->parsedParams());
 		
-		$group_id			= (isset($this->request->query['group_id'])) ? $this->request->query['group_id'] : "";
-		$theme_id			= (isset($this->request->query['theme_id'])) ? $this->request->query['theme_id'] : "";
-		$user_id			= (isset($this->request->query['user_id'])) ? $this->request->query['user_id'] : "";
-		$contenttitle		= (isset($this->request->query['contenttitle'])) ? $this->request->query['contenttitle'] : "";
+		$group_id			= $this->getQuery('group_id']);
+		$theme_id			= $this->getQuery('theme_id']);
+		$user_id			= $this->getQuery('user_id']);
+		$contenttitle		= $this->getQuery('contenttitle']);
 		
-		if($group_id != "")
+		if($group_id != '')
 			$conditions['User.id'] = $this->Group->getUserIdByGroupID($group_id);
 		
-		if($theme_id != "")
+		if($theme_id != '')
 			$conditions['Theme.id'] = $theme_id;
 		
-		if($user_id != "")
+		if($user_id != '')
 			$conditions['User.id'] = $user_id;
 		
-		$from_date	= (isset($this->request->query['from_date'])) ? 
-			$this->request->query['from_date'] : 
-				[
-					'year' => date('Y', strtotime("-1 month")),
-					'month' => date('m', strtotime("-1 month")), 
-					'day' => date('d', strtotime("-1 month"))
-				];
+		if(!$from_date)
+			$from_date = [
+				'year' => date('Y', strtotime("-1 month")),
+				'month' => date('m', strtotime("-1 month")), 
+				'day' => date('d', strtotime("-1 month"))
+			];
 		
-		$to_date	= (isset($this->request->query['to_date'])) ? 
-			$this->request->query['to_date'] : 
-				['year' => date('Y'), 'month' => date('m'), 'day' => date('d')];
+		if(!$to_date)
+			$to_date = ['year' => date('Y'), 'month' => date('m'), 'day' => date('d')];
 		
 		// 学習日付による絞り込み
 		$conditions['Record.created BETWEEN ? AND ?'] = [
@@ -203,11 +201,11 @@ class RecordsController extends AppController
 			implode("/", $to_date).' 23:59:59'
 		];
 		
-		if($contenttitle != "")
+		if($contenttitle != '')
 			$conditions['Task.title like'] = '%'.$contenttitle.'%';
 		
 		// CSV出力モードの場合
-		if(@$this->request->query['cmd']=='csv')
+		if($this->getQuery('cmd')=='csv')
 		{
 			$this->autoRender = false;
 
@@ -262,7 +260,7 @@ class RecordsController extends AppController
 			}
 			catch (Exception $e)
 			{
-				$this->request->params['named']['page']=1;
+				$this->request->params['named']['page'] = 1;
 				$result = $this->paginate();
 			}
 			
@@ -291,11 +289,7 @@ class RecordsController extends AppController
 	{
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->find('first', [
-			'conditions' => [
-				'Task.id' => $task_id
-			]
-		]);
+		$content = $this->Task->findById($task_id);
 		
 		$this->Record->create();
 		$data = [
@@ -306,14 +300,10 @@ class RecordsController extends AppController
 			'is_complete'	=> $is_complete
 		];
 		
-		if ($this->Record->save($data))
+		if($this->Record->save($data))
 		{
 			$this->Flash->success(__('学習履歴を保存しました'));
-			return $this->redirect([
-				'controller' => 'tasks',
-				'action' => 'index',
-				$content['Theme']['id']
-			]);
+			return $this->redirect(['controller' => 'tasks', 'action' => 'index', $content['Theme']['id']]);
 		}
 		else
 		{
@@ -325,16 +315,11 @@ class RecordsController extends AppController
 	{
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->find('first', [
-			'conditions' => [
-				'Task.id' => $task_id
-			]
-		]);
+		$content = $this->Task->findById($task_id);
 		
 		$this->Record->create();
 		
 		$data = [
-//				'group_id' => $this->Session->read('Auth.User.Group.id'),
 			'user_id'		=> $this->Auth->user('id'),
 			'theme_id'		=> $content['Theme']['id'],
 			'task_id'		=> $task_id,
@@ -346,38 +331,35 @@ class RecordsController extends AppController
 			'is_complete'	=> 1
 		];
 		
-		if ($this->Record->save($data))
+		if($this->Record->save($data))
 		{
 			$this->RecordsQuestion = new RecordsQuestion();
 			
 			foreach ($details as $detail)
-			:
+			{
 				$this->RecordsQuestion->create();
 				$detail['record_id'] = $this->Record->getLastInsertID();
 				$this->RecordsQuestion->save($detail);
-			endforeach
-			;
+			}
 		}
 	}
 
 	public function edit($id = null)
 	{
-		if (! $this->Record->exists($id))
+		if(!$this->Record->exists($id))
 		{
 			throw new NotFoundException(__('Invalid record'));
 		}
 		
-		if ($this->request->is([
+		if($this->request->is([
 				'post',
 				'put'
 		]))
 		{
-			if ($this->Record->save($this->request->data))
+			if($this->Record->save($this->request->data))
 			{
 				$this->Flash->success(__('The record has been saved.'));
-				return $this->redirect([
-						'action' => 'index'
-				]);
+				return $this->redirect(['action' => 'index']);
 			}
 			else
 			{
@@ -386,12 +368,7 @@ class RecordsController extends AppController
 		}
 		else
 		{
-			$options = [
-					'conditions' => [
-							'Record.' . $this->Record->primaryKey => $id
-					]
-			];
-			$this->request->data = $this->Record->find('first', $options);
+			$this->request->data = $this->Record->findById($id);
 		}
 		
 		$groups = $this->Record->Group->find('list');
@@ -405,14 +382,14 @@ class RecordsController extends AppController
 	{
 		$this->Record->id = $id;
 		
-		if (! $this->Record->exists())
+		if(!$this->Record->exists())
 		{
 			throw new NotFoundException(__('Invalid record'));
 		}
 		
 		$this->request->allowMethod('post', 'delete');
 		
-		if ($this->Record->delete())
+		if($this->Record->delete())
 		{
 			$this->Flash->success(__('The record has been deleted.'));
 		}
@@ -420,8 +397,7 @@ class RecordsController extends AppController
 		{
 			$this->Flash->error(__('The record could not be deleted. Please, try again.'));
 		}
-		return $this->redirect([
-				'action' => 'index'
-		]);
+		
+		return $this->redirect(['action' => 'index']);
 	}
 }

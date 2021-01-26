@@ -826,7 +826,7 @@ class ApisController extends AppController
 		$html =  curl_exec($ch);
 		curl_close($ch);
 		
-		if ( preg_match( "/<title>(.*?)<\/title>/i", $html, $matches) )
+		if(preg_match( "/<title>(.*?)<\/title>/i", $html, $matches))
 		{
 			return $matches[1];
 		}

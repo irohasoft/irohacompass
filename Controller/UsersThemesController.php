@@ -25,14 +25,8 @@ class UsersThemesController extends AppController
 	public function index()
 	{
 		// 全体のお知らせの取得
-		App::import('Model', 'Setting');
-		$this->Setting = new Setting();
-		
-		$data = $this->Setting->find('all', [
-			'conditions' => [
-				'Setting.setting_key' => 'information'
-			]
-		]);
+		$this->loadModel('Setting');
+		$data = $this->Setting->findAllBySettingKey('information');
 		
 		$info = $data[0]['Setting']['setting_value'];
 		
@@ -40,16 +34,16 @@ class UsersThemesController extends AppController
 		$this->loadModel('Info');
 		$infos = $this->Info->getInfos($this->Auth->user('id'), 2);
 		
-		$no_info = "";
+		$no_info = '';
 		
 		// 全体のお知らせもお知らせも存在しない場合
-		if(($info=="") && count($infos)==0)
+		if(($info=='') && count($infos)==0)
 			$no_info = "お知らせはありません";
 		
 		// 受講学習テーマ情報の取得
 		$themes = $this->UsersTheme->getThemeRecord( $this->Auth->user('id') );
 		
-		$no_record = "";
+		$no_record = '';
 		
 		if(count($themes)==0)
 			$no_record = "選択可能な学習テーマはありません";

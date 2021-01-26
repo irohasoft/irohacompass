@@ -33,15 +33,6 @@ class ProgressesController extends AppController
 	public function index($task_id, $progress_id = null)
 	{
 		//$this->Progress->recursive = 0;
-		/*
-		$progresses = $this->Progress->find('all', array(
-			'conditions' => array(
-				'task_id' => $task_id
-			),
-			'order' => array('Progress.created' => 'asc')
-		));
-		*/
-		
 		$this->Paginator->settings = [
 			'limit' => 500,
 			'maxLimit' => 500,
@@ -63,7 +54,7 @@ class ProgressesController extends AppController
 			
 			if(count($progresses) > 0)
 			{
-				if(! $this->Theme->hasRight($this->Auth->user('id'), $progresses[0]['Task']['theme_id']))
+				if(!$this->Theme->hasRight($this->Auth->user('id'), $progresses[0]['Task']['theme_id']))
 				{
 					throw new NotFoundException(__('Invalid access'));
 				}
@@ -72,11 +63,7 @@ class ProgressesController extends AppController
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->find('first', [
-			'conditions' => [
-				'Task.id' => $task_id
-			]
-		]);
+		$content = $this->Task->findById($task_id);
 		
 		$is_record = (($this->action == 'record') || ($this->action == 'admin_record'));
 		$is_admin  = ($this->action == 'admin_record');
@@ -122,33 +109,25 @@ class ProgressesController extends AppController
 		
 		$is_add  = ($progress_id==null);
 		
-		if ($this->request->is([
-				'post',
-				'put'
-		]))
+		if($this->request->is(['post', 'put']))
 		{
 			if(Configure::read('demo_mode'))
 				return;
 			
-			if ($progress_id == null)
+			if($is_add)
 			{
 				$this->request->data['Progress']['user_id'] = $this->Auth->user('id');
 				$this->request->data['Progress']['task_id'] = $task_id;
 			}
 			
-			if (! $this->Progress->validates())
+			if(!$this->Progress->validates())
 				return;
 			
-			if ($this->Progress->save($this->request->data))
+			if($this->Progress->save($this->request->data))
 			{
 				$this->__save_record($task_id, $progress_id);
-
 				$this->Flash->success(__('進捗を保存しました'));
-				return $this->redirect([
-					'controller' => 'progresses',
-					'action' => 'index',
-					$task_id
-				]);
+				return $this->redirect(['controller' => 'progresses', 'action' => 'index', $task_id]);
 			}
 			else
 			{
@@ -157,11 +136,7 @@ class ProgressesController extends AppController
 		}
 		else
 		{
-			$options = [ 'conditions' => [
-				'Progress.' . $this->Progress->primaryKey => $progress_id
-			]];
-			
-			$this->request->data = $this->Progress->find('first', $options);
+			$this->request->data = $this->Progress->findById($progress_id);
 		}
 		
 		
@@ -196,11 +171,7 @@ class ProgressesController extends AppController
 		$this->Task->saveField('status', $task_status);
 		
 		// 課題情報を取得
-		$task = $this->Task->find('first', [
-			'conditions' => [
-				'Task.id' => $task_id
-			]
-		]);
+		$task = $this->Task->findById($task_id);
 		
 		// 学習履歴を追加
 		$this->loadModel('Record');
@@ -293,7 +264,7 @@ class ProgressesController extends AppController
 			
 			if(count($progresses) > 0)
 			{
-				if(! $this->Theme->hasRight($this->Auth->user('id'), $progresses[0]['Task']['theme_id']))
+				if(!$this->Theme->hasRight($this->Auth->user('id'), $progresses[0]['Task']['theme_id']))
 				{
 					throw new NotFoundException(__('Invalid access'));
 				}
@@ -301,14 +272,10 @@ class ProgressesController extends AppController
 		}
 		
 		// レコードIDが指定されている場合、成績を取得
-		if ($record_id)
+		if($record_id)
 		{
 			$this->loadModel('Record');
-			$record = $this->Record->find('first', [
-				'conditions' => [
-					'Record.id' => $record_id
-				]
-			]);
+			$record = $this->Record->findById($record_id);
 			
 			$this->set('mode',   "record");
 			$this->set('record', $record);
@@ -316,14 +283,10 @@ class ProgressesController extends AppController
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->find('first', [
-			'conditions' => [
-				'Task.id' => $task_id
-			]
-		]);
+		$content = $this->Task->findById($task_id);
 		
 		// 採点処理
-		if ($this->request->is('post'))
+		if($this->request->is('post'))
 		{
 			$details = [];
 			
@@ -358,7 +321,7 @@ class ProgressesController extends AppController
 			];
 			
 			//debug($data);
-			if ($this->Record->save($data))
+			if($this->Record->save($data))
 			{
 				$this->loadModel('RecordsQuestion');
 				$record_id = $this->Record->getLastInsertID();
@@ -371,11 +334,7 @@ class ProgressesController extends AppController
 				}
 				
 				$this->Flash->success(__('アンケートの回答内容を送信しました'));
-				$this->redirect([
-					'action' => 'record_enq',
-					$task_id,
-					$this->Record->getLastInsertID()
-				]);
+				$this->redirect(['action' => 'record_enq', $task_id, $this->Record->getLastInsertID()]);
 			}
 			else
 			{
@@ -434,12 +393,7 @@ class ProgressesController extends AppController
 		// コースの情報を取得
 		$this->loadModel('Task');
 		
-		$content = $this->Task->find('first',
-				[
-						'conditions' => [
-								'Task.id' => $id
-						]
-				]);
+		$content = $this->Task->findById($id);
 		
 		$this->set(compact('content', 'progresses'));
 	}
@@ -464,35 +418,28 @@ class ProgressesController extends AppController
 			'required' => 'create'
 		));
 		*/
-		if ($this->action == 'edit_enq' && ! $this->Post->exists($id))
+		if($this->action == 'edit_enq' && !$this->Post->exists($id))
 		{
 			throw new NotFoundException(__('Invalid tasks progress'));
 		}
-		if ($this->request->is([
-				'post',
-				'put'
-		]))
+		
+		if($this->request->is(['post', 'put']))
 		{
-			if ($id == null)
+			if($id == null)
 			{
 				$this->request->data['Progress']['user_id'] = $this->Auth->user('id');
 				$this->request->data['Progress']['task_id'] = $task_id;
 			}
 			
-			if (! $this->Progress->validates())
+			if(!$this->Progress->validates())
 				return;
 			
 			//debug($this->request->data);
 			//exit;
-			if ($this->Progress->save($this->request->data))
+			if($this->Progress->save($this->request->data))
 			{
 				$this->Flash->success(__('質問が保存されました'));
-				return $this->redirect(
-						[
-								'controller' => 'progresses',
-								'action' => 'index_enq',
-								$task_id
-						]);
+				return $this->redirect(['controller' => 'progresses', 'action' => 'index_enq', $task_id]);
 			}
 			else
 			{
@@ -501,21 +448,12 @@ class ProgressesController extends AppController
 		}
 		else
 		{
-			$options = [
-					'conditions' => [
-							'Progress.' . $this->Progress->primaryKey => $id
-					]
-			];
-			$this->request->data = $this->Progress->find('first', $options);
+			$this->request->data = $this->Progress->findById($id);
 		}
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->find('first', [
-			'conditions' => [
-				'Task.id' => $task_id
-			]
-		]);
+		$content = $this->Task->findById($task_id);
 		
 		$this->set(compact('content'));
 	}
@@ -535,31 +473,20 @@ class ProgressesController extends AppController
 	public function delete($id)
 	{
 		$this->Progress->id = $id;
-		if (! $this->Progress->exists())
+		if(!$this->Progress->exists())
 		{
 			throw new NotFoundException(__('Invalid tasks progress'));
 		}
 		
 		$this->request->allowMethod('post', 'delete');
 		
-		// 問題情報を取得
-		$progress = $this->Progress->find('first', [
-			'conditions' => [
-				'Progress.id' => $id
-			]
-		]);
+		// 進捗情報を取得
+		$progress = $this->Progress->findById($id);
 		
-		if ($this->Progress->delete())
+		if($this->Progress->delete())
 		{
-			$this->Flash->success(__('問題が削除されました'));
-			return $this->redirect([
-				'controller' => 'progresses',
-				'action' => 'index',
-				$progress['Progress']['task_id']
-			]);
-			return $this->redirect([
-					'action' => 'index'
-			]);
+			$this->Flash->success(__('進捗が削除されました'));
+			return $this->redirect(['controller' => 'progresses', 'action' => 'index', $progress['Progress']['task_id']]);
 		}
 		else
 		{
@@ -570,7 +497,7 @@ class ProgressesController extends AppController
 	public function admin_delete_enq($task_id, $id)
 	{
 		$this->Progress->id = $id;
-		if (! $this->Progress->exists())
+		if(!$this->Progress->exists())
 		{
 			throw new NotFoundException(__('Invalid tasks progress'));
 		}
@@ -578,21 +505,12 @@ class ProgressesController extends AppController
 		$this->request->allowMethod('post', 'delete');
 		
 		// 問題情報を取得
-		$progress = $this->Progress->find('first', [
-			'conditions' => [
-				'Progress.id' => $id
-			]
-		]);
+		$progress = $this->Progress->findById($id);
 		
-		if ($this->Progress->delete())
+		if($this->Progress->delete())
 		{
 			$this->Flash->success(__('質問が削除されました'));
-			return $this->redirect(
-					[
-							'controller' => 'progresses',
-							'action' => 'index_enq',
-							$task_id
-					]);
+			return $this->redirect(['controller' => 'progresses', 'action' => 'index_enq', $task_id]);
 		}
 		else
 		{

@@ -324,6 +324,7 @@
 		</div>
 	</div>
 	<?php endforeach; ?>
+	<?= $this->element('paging');?>
 	
 	<!--進捗編集エリア-->
 	<?php 
@@ -334,8 +335,8 @@
 			<?= (!$is_add) ? '<span data-localize="edit">編集</span>' :  '<span data-localize="add">新規追加</span>'; ?>
 		</div>
 		<div class="panel-body">
-			<?= $this->Form->create('Progress', Configure::read('form_defaults')); ?>
 			<?php
+				echo $this->Form->create('Progress', Configure::read('form_defaults'));
 				echo $this->Form->input('id');
 				echo $this->Form->input('title',	['label' => "<span data-localize='title'>タイトル</span>"]);
 				echo $this->Form->input('progress_type',	[
@@ -454,18 +455,15 @@
 					$mail_target .= str_replace(',', '', $item['name']);
 				}
 				*/
-			?>
-			<div class="form-group">
+				echo $this->Form->input('User', ['label' => __('　'), 'size' => 20, 'multiple' => true, 
+					'before' => '<div class="col col-sm-9 col-sm-offset-3"><input name="is_mail" type="checkbox">&nbsp;<span data-localize="email_notification">メール通知</span></div>']);
 				
-			</div>
-			<?= $this->Form->input('User',		['label' => __('　'), 'size' => 20, 'multiple' => true, 'before' => '<div class="col col-sm-9 col-sm-offset-3"><input name="is_mail" type="checkbox">&nbsp;<span data-localize="email_notification">メール通知</span></div>']);?>
-			<div class="form-group add-progress">
-				<div class="col col-sm-9 col-sm-offset-3">
-					<?= $this->Form->submit(($is_add) ? __('追加') :  __('保存'), Configure::read('form_submit_defaults')); ?>
-				</div>
-			</div>
-			<input name="study_sec" type="hidden" value="0">
-			<?= $this->Form->end(); ?>
+				echo '<input name="study_sec" type="hidden" value="0">';
+				echo Configure::read('form_submit_before')
+					.$this->Form->submit(($is_add) ? __('追加') :  __('保存'), Configure::read('form_submit_defaults'))
+					.Configure::read('form_submit_after');
+				echo $this->Form->end();
+			?>
 		</div>
 	</div>
 	
