@@ -39,47 +39,50 @@ class IdeasController extends AppController
 	 *
 	 * @return void
 	 */
-	public function index()
+	public function index($idea_id = null)
 	{
+		$is_add  = ($idea_id==null);
+		
 		$this->Idea->recursive = 0;
 
 		$this->Paginator->settings = [
 			'limit' => 10,
 			'order' => 'Idea.created desc',
 			'conditions' => [
-				'user_id' => $this->Auth->user('id')
+				'user_id' => $this->readAuthUser('id')
 			],
 		];
 		
 		$ideas = $this->paginate();
 		//debug($ideas);
 		
-		if ($this->request->is([
-				'post',
-				'put'
-		]))
+		if($this->request->is(['post','put']))
 		{
 			if(Configure::read('demo_mode'))
 				return;
 
-			$this->request->data['Idea']['user_id'] = $this->Auth->user('id');
+			if($is_add)
+				$this->request->data['Idea']['user_id'] = $this->readAuthUser('id');
 			
-			if (! $this->Idea->validates())
+			if(!$this->Idea->validates())
 				return;
 			
-			if ($this->Idea->save($this->request->data))
+			if($this->Idea->save($this->request->data))
 			{
 				$this->Flash->success(__('アイデア・メモを追加しました'));
-				$this->redirect([]);
+				$this->redirect(['action' => 'index']);
 			}
 			else
 			{
 				$this->Flash->error(__('The tasks idea could not be saved. Please, try again.'));
 			}
 		}
+		else
+		{
+			$this->request->data = $this->Idea->findById($idea_id);
+		}
 		
-		
-		$this->set('ideas', $ideas);
+		$this->set(compact('ideas', 'is_add'));
 	}
 
 	/**
@@ -98,7 +101,7 @@ class IdeasController extends AppController
 	{
 		$this->Idea->id = $id;
 		
-		if (! $this->Idea->exists())
+		if (!$this->Idea->exists())
 		{
 			throw new NotFoundException(__('Invalid tasks idea'));
 		}
@@ -108,9 +111,7 @@ class IdeasController extends AppController
 		if ($this->Idea->delete())
 		{
 			$this->Flash->success(__('アイデアが削除されました'));
-			return $this->redirect([
-					'action' => 'index'
-			]);
+			return $this->redirect(['action' => 'index']);
 		}
 		else
 		{

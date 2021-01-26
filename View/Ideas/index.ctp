@@ -1,22 +1,21 @@
 <div class="users-setting">
-	<div class="panel panel-default">
+	<div class="panel <?= ($is_add) ? 'panel-default' :  'panel-danger'; ?>">
 		<div class="panel-heading">
-			<span data-localize="ideabox">アイデアボックス</span>
+			<?= (!$is_add) ? '<span data-localize="edit">編集</span>' :  '<span data-localize="ideabox">アイデアボックス</span>'; ?>
 		</div>
 		<div class="panel-body">
 			<?php
 				echo $this->Form->create('Idea', Configure::read('form_defaults'));
+				echo $this->Form->input('id');
 				echo $this->Form->input('Idea.body', [
 					'label' => '<span data-localize="new_idea">新しいアイデア・メモ</span>',
 					'autocomplete' => 'new-password'
 				]);
+				echo Configure::read('form_submit_before')
+					.$this->Form->submit(__('保存'), Configure::read('form_submit_defaults'))
+					.Configure::read('form_submit_after');
+				echo $this->Form->end();
 			?>
-			<div class="form-group">
-				<div class="col col-sm-9 col-sm-offset-3">
-					<?= $this->Form->submit('追加', Configure::read('form_submit_defaults')); ?>
-				</div>
-			</div>
-			<?= $this->Form->end(); ?>
 		</div>
 	</div>
 		
@@ -42,27 +41,21 @@
 				// 自分の進捗のみ編集、削除可能とする
 				if($idea['User']['id']==$loginedUser['id'])
 				{
-					/*
-					echo $this->Form->button('編集', array(
+					echo '<br>';
+					
+					echo $this->Form->button(__('編集'), array(
 						'class'		=> 'btn btn-success btn-edit',
 						'onclick'	=> "location.href='".Router::url(array('action' => 'index', $idea['Idea']['id']))."#edit'",
 					));
-					*/
 					
-					echo '<br>';
+					echo ' ';
+					
 					echo $this->Form->postLink(__('削除'),
 						['action' => 'delete', $idea['Idea']['id']],
-						['class'=>'btn btn-default', 'data-localize' => 'delete'],
+						['class'=>'btn btn-danger', 'data-localize' => 'delete'],
 						__('削除してもよろしいですか?')
 					);
 					
-					/*
-					echo $this->Form->postLink(__('削除'), 
-							array('action' => 'delete', $idea['Idea']['id']), 
-							array('class'=>'text-danger'), 
-							__('削除してもよろしいですか?')
-					);
-					*/
 					echo $this->Form->hidden('id', ['id'=>'', 'class'=>'target_id', 'value'=>$idea['Idea']['id']]);
 				}
 				
