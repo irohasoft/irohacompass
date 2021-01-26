@@ -117,7 +117,7 @@ class AppController extends Controller
 			$this->Auth->logoutRedirect = ['controller' => 'users', 'action' => 'login', 'admin' => false];
 		}
 		
-		$user = $this->Auth->user();
+		$user = $this->readAuthUser();
 		
 		if($user['lang']=='en')
 		{
@@ -289,7 +289,7 @@ class AppController extends Controller
 			'action'		=> $action,
 			'params'		=> $params,
 			'sec'			=> $sec,
-			'user_id'		=> $this->Auth->user('id'),
+			'user_id'		=> $this->readAuthUser('id'),
 			'user_ip'		=> $_SERVER['REMOTE_ADDR'],
 			'user_agent'	=> $_SERVER['HTTP_USER_AGENT']
 		];

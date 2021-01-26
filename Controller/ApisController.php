@@ -843,10 +843,10 @@ class ApisController extends AppController
 	{
 		$val = '';
 		
-		if(@$this->params->query[$key])
+		if($this->hasQuery($key))
 			$val = $this->params->query[$key];
 		
-		if(@$this->data[$key])
+		if($this->getData($key))
 			$val = $this->data[$key];
 		
 		return $val;
@@ -913,7 +913,7 @@ class ApisController extends AppController
 		}
 		else
 		{
-			$user_id = $this->Auth->user('id');
+			$user_id = $this->readAuthUser('id');
 		}
 		
 		return $user_id;
@@ -957,7 +957,7 @@ class ApisController extends AppController
 		}
 		else
 		{
-			return ($this->Auth->user('role')=='admin');
+			return ($this->readAuthUser('role')=='admin');
 		}
 	}
 

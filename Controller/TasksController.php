@@ -42,7 +42,8 @@ class TasksController extends AppController
 	{
 		$theme_id	= intval($theme_id);
 		$is_user	= ($this->action == 'index');
-		$keyword	= (isset($this->request->query['keyword'])) ? $this->request->query['keyword'] : '';
+		$keyword	= $this->getQuery('keyword');
+		$status		= $this->getQuery('status');
 		
 		// 学習テーマの情報を取得
 		$this->loadModel('Theme');
@@ -52,7 +53,7 @@ class TasksController extends AppController
 		if($is_user)
 		{
 			// 学習テーマの閲覧権限の確認
-			if(!$this->Theme->hasRight($this->Auth->user('id'), $theme_id))
+			if(!$this->Theme->hasRight($this->readAuthUser('id'), $theme_id))
 			{
 				throw new NotFoundException(__('Invalid access'));
 			}
@@ -65,16 +66,15 @@ class TasksController extends AppController
 		
 		$key = 'Iroha.search.task.status';
 		
-		if(isset($this->request->query['status']))
+		if($this->hasQuery('status'))
 		{
 			// ステータスが新しく指定された場合、セッションに保存
-			$status = $this->request->query['status'];
-			$this->Session->write($key, intval($this->request->query['status']));
+			$this->writeSession($key, intval($status));
 		}
 		else
 		{
 			// 既にセッションにステータスが存在する場合、選択中のステータスに設定
-			$status = $this->Session->check($key) ? $this->Session->read($key) : 99;
+			$status = $this->Session->check($key) ? $this->readSession($key) : 99;
 		}
 		
 		$conditions['theme_id'] = $theme_id;
@@ -155,7 +155,7 @@ class TasksController extends AppController
 		// コンテンツの閲覧権限の確認
 		$this->loadModel('Theme');
 		
-		if(!$this->Theme->hasRight($this->Auth->user('id'), $task['Task']['theme_id']))
+		if(!$this->Theme->hasRight($this->readAuthUser('id'), $task['Task']['theme_id']))
 		{
 			throw new NotFoundException(__('Invalid access'));
 		}
@@ -178,14 +178,14 @@ class TasksController extends AppController
 				]
 			];
 			
-			$this->Session->write("Iroha.preview_task", $data);
+			$this->writeSession("Iroha.preview_task", $data);
 		}
 	}
 
 	public function preview()
 	{
 		$this->layout = '';
-		$this->set('task', $this->Session->read('Iroha.preview_task'));
+		$this->set('task', $this->readSession('Iroha.preview_task'));
 		$this->render('view');
 	}
 
@@ -309,7 +309,7 @@ class TasksController extends AppController
 			
 			if($is_add)
 			{
-				$this->request->data['Task']['user_id'] = $this->Auth->user('id');
+				$this->request->data['Task']['user_id'] = $this->readAuthUser('id');
 				$this->request->data['Task']['theme_id'] = $theme_id;
 			}
 			
@@ -321,7 +321,7 @@ class TasksController extends AppController
 				$this->loadModel('Record');
 				/*
 				$this->Record->addRecord(
-					$this->Auth->user('id'),
+					$this->readAuthUser('id'),
 					$theme_id,
 					$id, // task_id
 					$record_type, 
@@ -329,7 +329,7 @@ class TasksController extends AppController
 				);
 				*/
 				$this->Record->addRecord([
-					'user_id'		=> $this->Auth->user('id'),
+					'user_id'		=> $this->readAuthUser('id'),
 					'theme_id'		=> $theme_id,
 					'task_id'		=> $id,
 					'study_sec'		=> $this->request->data['study_sec'],
@@ -455,7 +455,7 @@ class TasksController extends AppController
 				
 				$new_name = date("YmdHis").$fileUpload->getExtension( $fileUpload->get_file_name() );	//	ファイル名：YYYYMMDDHHNNSS形式＋"既存の拡張子"
 				
-				$user_id    = intval($this->Auth->user('id'));
+				$user_id    = intval($this->readAuthUser('id'));
 				$upload_dir = WWW_ROOT.DS."uploads".DS.$user_id;
 				
 				if(!file_exists($upload_dir))
@@ -508,7 +508,7 @@ class TasksController extends AppController
 			
 			$new_name = date("YmdHis").$fileUpload->getExtension( $fileUpload->get_file_name() );	//	ファイル名：YYYYMMDDHHNNSS形式＋"既存の拡張子"
 
-			$user_id    = intval($this->Auth->user('id'));
+			$user_id    = intval($this->readAuthUser('id'));
 			$upload_dir = WWW_ROOT.DS."uploads".DS.$user_id;
 			
 			if(!file_exists($upload_dir))

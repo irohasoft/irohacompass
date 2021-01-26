@@ -80,7 +80,7 @@ class ThemesController extends AppController
 			
 			// 所有者が指定されていない場合のみ、ログインユーザを所有者に設定
 			if(!$this->request->data['Theme']['user_id'])
-				$this->request->data['Theme']['user_id'] = $this->Auth->user('id');
+				$this->request->data['Theme']['user_id'] = $this->readAuthUser('id');
 			
 			if($this->Theme->save($this->request->data))
 			{
@@ -90,7 +90,7 @@ class ThemesController extends AppController
 				
 				$this->loadModel('Record');
 				$this->Record->addRecord([
-					'user_id'		=> $this->Auth->user('id'),
+					'user_id'		=> $this->readAuthUser('id'),
 					'theme_id'		=> $id,
 					'task_id'		=> 0,
 					'study_sec'		=> $this->request->data['study_sec'],
@@ -100,7 +100,7 @@ class ThemesController extends AppController
 				// 新規追加の場合、学習テーマとユーザの紐づけを追加
 				if($is_add)
 				{
-					$this->Theme->addUserTheme($this->Auth->user('id'), $this->Theme->getLastInsertID());
+					$this->Theme->addUserTheme($this->readAuthUser('id'), $this->Theme->getLastInsertID());
 				}
 				
 				$this->Flash->success(__('学習テーマが保存されました'));

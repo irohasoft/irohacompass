@@ -66,7 +66,7 @@ class RecordsController extends AppController
 		
 		// アクセス可能な学習テーマ一覧を取得
 		$this->loadModel('UsersTheme');
-		$themes = $this->UsersTheme->getThemeRecord( $this->Auth->user('id') );
+		$themes = $this->UsersTheme->getThemeRecord( $this->readAuthUser('id') );
 		$theme_ids = [];
 		
 		foreach ($themes as $theme)
@@ -76,8 +76,10 @@ class RecordsController extends AppController
 		
 		$conditions = $this->Record->parseCriteria($this->Prg->parsedParams());
 		
-		$theme_id			= $this->getQuery('theme_id'])) ? $this->request->query['theme_id'] : '';
-		$contenttitle		= $this->getQuery('contenttitle'])) ? $this->request->query['contenttitle'] : '';
+		$theme_id		= $this->getQuery('theme_id');
+		$contenttitle	= $this->getQuery('contenttitle');
+		$from_date		= $this->getQuery('from_date');
+		$to_date		= $this->getQuery('to_date');
 		
 		if($theme_id != '')
 		{
@@ -88,17 +90,15 @@ class RecordsController extends AppController
 			$conditions['Theme.id'] = $theme_ids;
 		}
 		
-		$from_date	= $this->getQuery('from_date'])) ? 
-			$this->request->query['from_date'] : 
-				[
-					'year' => date('Y', strtotime("-1 month")),
-					'month' => date('m', strtotime("-1 month")), 
-					'day' => date('d', strtotime("-1 month"))
-				];
+		if(!$from_date)
+			$from_date = [
+				'year' => date('Y', strtotime("-1 month")),
+				'month' => date('m', strtotime("-1 month")), 
+				'day' => date('d', strtotime("-1 month"))
+			];
 		
-		$to_date	= $this->getQuery('to_date'])) ? 
-			$this->request->query['to_date'] : 
-				['year' => date('Y'), 'month' => date('m'), 'day' => date('d')];
+		if(!$to_date)
+			$to_date = ['year' => date('Y'), 'month' => date('m'), 'day' => date('d')];
 		
 		if(Configure::read('demo_mode'))
 			$from_date = explode("/", Configure::read('demo_target_date'));
@@ -134,11 +134,11 @@ class RecordsController extends AppController
 		// ユーザIDが指定されていない、もしくは管理者以外の場合、自身の進捗データを取得
 		if(
 			(!$user_id)||
-			($this->Auth->user('role')!='admin')
+			($this->readAuthUser('role')!='admin')
 		)
 		{
 			$is_popup = false;
-			$user_id = $this->Auth->user('id');
+			$user_id = $this->readAuthUser('id');
 		}
 		
 		
@@ -171,10 +171,12 @@ class RecordsController extends AppController
 		
 		$conditions = $this->Record->parseCriteria($this->Prg->parsedParams());
 		
-		$group_id			= $this->getQuery('group_id']);
-		$theme_id			= $this->getQuery('theme_id']);
-		$user_id			= $this->getQuery('user_id']);
-		$contenttitle		= $this->getQuery('contenttitle']);
+		$group_id			= $this->getQuery('group_id');
+		$theme_id			= $this->getQuery('theme_id');
+		$user_id			= $this->getQuery('user_id');
+		$contenttitle		= $this->getQuery('contenttitle');
+		$from_date			= $this->getQuery('from_date');
+		$to_date			= $this->getQuery('to_date');
 		
 		if($group_id != '')
 			$conditions['User.id'] = $this->Group->getUserIdByGroupID($group_id);
@@ -293,7 +295,7 @@ class RecordsController extends AppController
 		
 		$this->Record->create();
 		$data = [
-			'user_id'		=> $this->Auth->user('id'),
+			'user_id'		=> $this->readAuthUser('id'),
 			'theme_id'		=> $content['Theme']['id'],
 			'task_id'		=> $task_id,
 			'study_sec' 	=> $study_sec,
@@ -320,7 +322,7 @@ class RecordsController extends AppController
 		$this->Record->create();
 		
 		$data = [
-			'user_id'		=> $this->Auth->user('id'),
+			'user_id'		=> $this->readAuthUser('id'),
 			'theme_id'		=> $content['Theme']['id'],
 			'task_id'		=> $task_id,
 			'theme_rate'	=> $record['theme_rate'],
@@ -351,10 +353,7 @@ class RecordsController extends AppController
 			throw new NotFoundException(__('Invalid record'));
 		}
 		
-		if($this->request->is([
-				'post',
-				'put'
-		]))
+		if($this->request->is(['post', 'put']))
 		{
 			if($this->Record->save($this->request->data))
 			{

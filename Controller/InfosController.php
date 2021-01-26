@@ -38,7 +38,7 @@ class InfosController extends AppController
 	{
 		// お知らせ一覧を取得
 		$this->loadModel('Info');
-		$this->paginate = $this->Info->getInfoOption($this->Auth->user('id'));
+		$this->paginate = $this->Info->getInfoOption($this->readAuthUser('id'));
 		
 		$infos = $this->paginate();
 		
@@ -101,16 +101,14 @@ class InfosController extends AppController
 		{
 			throw new NotFoundException(__('Invalid info'));
 		}
-		if($this->request->is([
-				'post',
-				'put'
-		]))
+		
+		if($this->request->is(['post', 'put']))
 		{
 			if(Configure::read('demo_mode'))
 				return;
 			
 			// 作成者を設定
-			$this->request->data['Info']['user_id'] = $this->Auth->user('id');
+			$this->request->data['Info']['user_id'] = $this->readAuthUser('id');
 			
 			if($this->Info->save($this->request->data))
 			{

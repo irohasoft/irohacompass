@@ -118,7 +118,7 @@ class UsersController extends AppController
 			if( $this->Auth->login() )
 			{
 				// 最終ログイン日時を保存
-				$this->User->id = $this->Auth->user('id');
+				$this->User->id = $this->readAuthUser('id');
 				$this->User->saveField('last_logined', date(date('Y-m-d H:i:s')));
 				return $this->redirect( $this->Auth->redirect());
 			}
@@ -145,10 +145,10 @@ class UsersController extends AppController
 				}
 				
 				// 最終ログイン日時を保存
-				$this->User->id = $this->Auth->user('id');
+				$this->User->id = $this->readAuthUser('id');
 				$this->User->saveField('last_logined', date(date('Y-m-d H:i:s')));
 				$this->writeLog('user_logined', '');
-				$this->Session->delete('Auth.redirect');
+				$this->deleteSession('Auth.redirect');
 				$this->redirect($this->Auth->redirect());
 			}
 			else
@@ -299,15 +299,12 @@ class UsersController extends AppController
 	 */
 	public function setting()
 	{
-		if($this->request->is([
-				'post',
-				'put'
-		]))
+		if($this->request->is(['post', 'put']))
 		{
 			if(Configure::read('demo_mode'))
 				return;
 			
-			$this->request->data['User']['id'] = $this->Auth->user('id');
+			$this->request->data['User']['id'] = $this->readAuthUser('id');
 			
 			if($this->request->data['User']['new_password'] != $this->request->data['User']['new_password2'])
 			{
@@ -335,7 +332,7 @@ class UsersController extends AppController
 		}
 		else
 		{
-			$this->request->data = $this->User->findById($this->Auth->user('id'));
+			$this->request->data = $this->User->findById($this->readAuthUser('id'));
 		}
 	}
 

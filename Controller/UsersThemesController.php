@@ -32,7 +32,7 @@ class UsersThemesController extends AppController
 		
 		// お知らせ一覧を取得
 		$this->loadModel('Info');
-		$infos = $this->Info->getInfos($this->Auth->user('id'), 2);
+		$infos = $this->Info->getInfos($this->readAuthUser('id'), 2);
 		
 		$no_info = '';
 		
@@ -41,7 +41,7 @@ class UsersThemesController extends AppController
 			$no_info = "お知らせはありません";
 		
 		// 受講学習テーマ情報の取得
-		$themes = $this->UsersTheme->getThemeRecord( $this->Auth->user('id') );
+		$themes = $this->UsersTheme->getThemeRecord( $this->readAuthUser('id') );
 		
 		$no_record = '';
 		
@@ -72,7 +72,7 @@ class UsersThemesController extends AppController
 		//debug($records);
 		
 		// 進捗チャート用の情報を取得
-		$user_id		= $this->Auth->user('id');
+		$user_id		= $this->readAuthUser('id');
 		$labels			= $this->Record->getDateLabels();
 		$login_data		= $this->Record->getLoginData($user_id, $labels);
 		$progress_data	= $this->Record->getProgressData($user_id, $labels);
