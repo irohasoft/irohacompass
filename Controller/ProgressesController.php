@@ -63,7 +63,7 @@ class ProgressesController extends AppController
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->findById($task_id);
+		$content = $this->Task->get($task_id);
 		
 		$is_record = (($this->action == 'record') || ($this->action == 'admin_record'));
 		$is_admin  = ($this->action == 'admin_record');
@@ -136,7 +136,7 @@ class ProgressesController extends AppController
 		}
 		else
 		{
-			$this->request->data = $this->Progress->findById($progress_id);
+			$this->request->data = $this->Progress->get($progress_id);
 		}
 		
 		
@@ -171,7 +171,7 @@ class ProgressesController extends AppController
 		$this->Task->saveField('status', $task_status);
 		
 		// 課題情報を取得
-		$task = $this->Task->findById($task_id);
+		$task = $this->Task->get($task_id);
 		
 		// 学習履歴を追加
 		$this->loadModel('Record');
@@ -275,7 +275,7 @@ class ProgressesController extends AppController
 		if($record_id)
 		{
 			$this->loadModel('Record');
-			$record = $this->Record->findById($record_id);
+			$record = $this->Record->get($record_id);
 			
 			$this->set('mode',   "record");
 			$this->set('record', $record);
@@ -283,7 +283,7 @@ class ProgressesController extends AppController
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->findById($task_id);
+		$content = $this->Task->get($task_id);
 		
 		// 採点処理
 		if($this->request->is('post'))
@@ -393,7 +393,7 @@ class ProgressesController extends AppController
 		// コースの情報を取得
 		$this->loadModel('Task');
 		
-		$content = $this->Task->findById($id);
+		$content = $this->Task->get($id);
 		
 		$this->set(compact('content', 'progresses'));
 	}
@@ -448,12 +448,12 @@ class ProgressesController extends AppController
 		}
 		else
 		{
-			$this->request->data = $this->Progress->findById($id);
+			$this->request->data = $this->Progress->get($id);
 		}
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->findById($task_id);
+		$content = $this->Task->get($task_id);
 		
 		$this->set(compact('content'));
 	}
@@ -481,7 +481,7 @@ class ProgressesController extends AppController
 		$this->request->allowMethod('post', 'delete');
 		
 		// 進捗情報を取得
-		$progress = $this->Progress->findById($id);
+		$progress = $this->Progress->get($id);
 		
 		if($this->Progress->delete())
 		{
@@ -505,7 +505,7 @@ class ProgressesController extends AppController
 		$this->request->allowMethod('post', 'delete');
 		
 		// 問題情報を取得
-		$progress = $this->Progress->findById($id);
+		$progress = $this->Progress->get($id);
 		
 		if($this->Progress->delete())
 		{

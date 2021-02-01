@@ -122,7 +122,7 @@ class ThemesController extends AppController
 		}
 		else
 		{
-			$this->request->data = $this->Theme->findById($id);
+			$this->request->data = $this->Theme->get($id);
 		}
 		
 		$users = $this->Theme->User->find('list');

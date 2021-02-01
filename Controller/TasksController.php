@@ -47,7 +47,7 @@ class TasksController extends AppController
 		
 		// 学習テーマの情報を取得
 		$this->loadModel('Theme');
-		$theme = $this->Theme->findById($theme_id);
+		$theme = $this->Theme->get($theme_id);
 		
 		// ユーザの場合、
 		if($is_user)
@@ -150,7 +150,7 @@ class TasksController extends AppController
 
 		$this->layout = '';
 
-		$task = $this->Task->findById($id);
+		$task = $this->Task->get($id);
 		
 		// コンテンツの閲覧権限の確認
 		$this->loadModel('Theme');
@@ -203,7 +203,7 @@ class TasksController extends AppController
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$task = $this->Task->findById($id);
+		$task = $this->Task->get($id);
 		
 		$this->request->allowMethod('post', 'delete');
 		
@@ -233,7 +233,7 @@ class TasksController extends AppController
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$task = $this->Task->findById($id);
+		$task = $this->Task->get($id);
 		
 		$this->request->allowMethod('post', 'delete');
 		
@@ -352,11 +352,11 @@ class TasksController extends AppController
 		}
 		else
 		{
-			$this->request->data = $this->Task->findById($task_id);
+			$this->request->data = $this->Task->get($task_id);
 		}
 		
 		// コース情報を取得
-		$theme = $this->Task->Theme->findById($theme_id);
+		$theme = $this->Task->Theme->get($theme_id);
 		
 		$themes = $this->Task->Theme->find('list');
 		$users = $this->Task->User->find('list');
@@ -571,7 +571,7 @@ class TasksController extends AppController
 		}
 		else
 		{
-			$this->request->data = $this->Task->findById($task_id);
+			$this->request->data = $this->Task->get($task_id);
 		}
 	}
 }

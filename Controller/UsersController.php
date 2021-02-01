@@ -115,7 +115,7 @@ class UsersController extends AppController
 			// クッキー上のアカウントでログイン
 			$this->request->data = $this->Cookie->read('Auth');
 			
-			if( $this->Auth->login() )
+			if($this->Auth->login())
 			{
 				// 最終ログイン日時を保存
 				$this->User->id = $this->readAuthUser('id');
@@ -153,6 +153,7 @@ class UsersController extends AppController
 			}
 			else
 			{
+				$this->writeLog('login_error', $this->request->data['User']['username']);
 				$this->Flash->error(__('ログインID、もしくはパスワードが正しくありません'));
 			}
 		}
@@ -233,7 +234,7 @@ class UsersController extends AppController
 		{
 			$users = $this->paginate();
 		}
-		catch (Exception $e)
+		catch(Exception $e)
 		{
 			// 指定したページが存在しなかった場合（主に検索条件変更時に発生）、1ページ目を設定
 			$this->request->params['named']['page'] = 1;
@@ -252,7 +253,7 @@ class UsersController extends AppController
 	 */
 	public function admin_edit($user_id = null)
 	{
-		if($this->action == 'admin_edit' && !$this->User->exists($user_id))
+		if($this->action=='admin_edit' && !$this->User->exists($user_id))
 		{
 			throw new NotFoundException(__('Invalid user'));
 		}
@@ -275,21 +276,19 @@ class UsersController extends AppController
 			}
 			else
 			{
-				$this->Flash->error(__('The user could not be saved. Please, try again.'));
+				$this->Flash->error(__('ユーザ情報が保存できませんでした'));
 			}
 		}
 		else
 		{
-			$this->request->data = $this->User->findById($user_id);
+			$this->request->data = $this->User->get($user_id);
 			
 			if($this->request->data)
 				$username = $this->request->data['User']['username'];
 		}
 
-		$this->Group = new Group();
-		
 		$themes = $this->User->Theme->find('list');
-		$groups = $this->Group->find('list');
+		$groups = $this->User->Group->find('list');
 		
 		$this->set(compact('themes', 'groups', 'username'));
 	}
@@ -332,7 +331,7 @@ class UsersController extends AppController
 		}
 		else
 		{
-			$this->request->data = $this->User->findById($this->readAuthUser('id'));
+			$this->request->data = $this->User->get($this->readAuthUser('id'));
 		}
 	}
 

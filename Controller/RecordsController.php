@@ -273,7 +273,7 @@ class RecordsController extends AppController
 	{
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->findById($task_id);
+		$content = $this->Task->get($task_id);
 		
 		$this->Record->create();
 		$data = [
@@ -299,7 +299,7 @@ class RecordsController extends AppController
 	{
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->findById($task_id);
+		$content = $this->Task->get($task_id);
 		
 		$this->Record->create();
 		
@@ -349,7 +349,7 @@ class RecordsController extends AppController
 		}
 		else
 		{
-			$this->request->data = $this->Record->findById($id);
+			$this->request->data = $this->Record->get($id);
 		}
 		
 		$groups = $this->Record->Group->find('list');

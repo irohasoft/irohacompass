@@ -61,26 +61,19 @@ class UsersThemesController extends AppController
 			array_push($theme_ids, $theme['Theme']['id']);
 		}
 		
-		$conditions['Theme.id'] = $theme_ids;
-		
-		$options = [
-			'conditions' => $conditions,
-			'order' => 'Record.created desc',
-			'limit' => 5,
-		];
-		
-		$records = $this->Record->find('all', $options);
-		
-		//debug($records);
+		$records = $this->Record->find()
+			->where(['Theme.id' => $theme_ids])
+			->order(['Record.created desc'])
+			->limit(5)
+			->all();
 		
 		// 進捗チャート用の情報を取得
 		$labels			= $this->Record->getDateLabels();
 		$login_data		= $this->Record->getLoginData($user_id, $labels);
 		$progress_data	= $this->Record->getProgressData($user_id, $labels);
 		
-		
 		$this->loadModel('Idea');
-		$idea_count = $this->Idea->find('count', ['conditions' => ['User.id' => $user_id]]);
+		$idea_count = $this->Idea->find()->where(['User.id' => $user_id])->count();
 		
 		if($this->request->is(['post','put']))
 		{
@@ -102,9 +95,7 @@ class UsersThemesController extends AppController
 				$this->Flash->error(__('The tasks idea could not be saved. Please, try again.'));
 			}
 		}
-
-
-
+		
 		$this->set(compact('themes', 'no_record', 'info', 'infos', 'no_info', 'records', 'labels', 'login_data', 'progress_data', 'idea_count'));
 	}
 }

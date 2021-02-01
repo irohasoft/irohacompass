@@ -79,7 +79,7 @@ class IdeasController extends AppController
 		}
 		else
 		{
-			$this->request->data = $this->Idea->findById($idea_id);
+			$this->request->data = $this->Idea->get($idea_id);
 		}
 		
 		$this->set(compact('ideas', 'is_add'));

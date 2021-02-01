@@ -76,7 +76,7 @@ class GroupsController extends AppController
 		}
 		else
 		{
-			$this->request->data = $this->Group->findById($group_id);
+			$this->request->data = $this->Group->get($group_id);
 		}
 		
 		$users   = $this->Group->User->find('list');

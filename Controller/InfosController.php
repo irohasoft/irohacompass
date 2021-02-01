@@ -56,7 +56,7 @@ class InfosController extends AppController
 			throw new NotFoundException(__('Invalid info'));
 		}
 		
-		$this->set('info', $this->Info->findById($info_id));
+		$this->set('info', $this->Info->get($info_id));
 	}
 
 	/**
@@ -97,7 +97,7 @@ class InfosController extends AppController
 	 */
 	public function admin_edit($info_id = null)
 	{
-		if($this->action == 'admin_edit' && !$this->Info->exists($info_id))
+		if($this->action=='admin_edit' && !$this->Info->exists($info_id))
 		{
 			throw new NotFoundException(__('Invalid info'));
 		}
@@ -122,10 +122,8 @@ class InfosController extends AppController
 		}
 		else
 		{
-			$this->request->data = $this->Info->findById($info_id);
+			$this->request->data = $this->Info->get($info_id);
 		}
-
-		$this->Group = new Group();
 		
 		$groups = $this->Group->find('list');
 		$this->set(compact('groups'));
