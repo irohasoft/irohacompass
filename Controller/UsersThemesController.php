@@ -24,6 +24,8 @@ class UsersThemesController extends AppController
 
 	public function index()
 	{
+		$user_id = $this->readAuthUser('id');
+		
 		// 全体のお知らせの取得
 		$this->loadModel('Setting');
 		$data = $this->Setting->findAllBySettingKey('information');
@@ -32,7 +34,7 @@ class UsersThemesController extends AppController
 		
 		// お知らせ一覧を取得
 		$this->loadModel('Info');
-		$infos = $this->Info->getInfos($this->readAuthUser('id'), 2);
+		$infos = $this->Info->getInfos($user_id, 2);
 		
 		$no_info = '';
 		
@@ -41,7 +43,7 @@ class UsersThemesController extends AppController
 			$no_info = "お知らせはありません";
 		
 		// 受講学習テーマ情報の取得
-		$themes = $this->UsersTheme->getThemeRecord( $this->readAuthUser('id') );
+		$themes = $this->UsersTheme->getThemeRecord($user_id);
 		
 		$no_record = '';
 		
@@ -72,11 +74,37 @@ class UsersThemesController extends AppController
 		//debug($records);
 		
 		// 進捗チャート用の情報を取得
-		$user_id		= $this->readAuthUser('id');
 		$labels			= $this->Record->getDateLabels();
 		$login_data		= $this->Record->getLoginData($user_id, $labels);
 		$progress_data	= $this->Record->getProgressData($user_id, $labels);
 		
-		$this->set(compact('themes', 'no_record', 'info', 'infos', 'no_info', 'records', 'labels', 'login_data', 'progress_data'));
+		
+		$this->loadModel('Idea');
+		$idea_count = $this->Idea->find('count', ['conditions' => ['User.id' => $user_id]]);
+		
+		if($this->request->is(['post','put']))
+		{
+			if(Configure::read('demo_mode'))
+				return;
+
+			$this->request->data['Idea']['user_id'] = $user_id;
+			
+			if(!$this->Idea->validates())
+				return;
+			
+			if($this->Idea->save($this->request->data))
+			{
+				$this->Flash->success(__('アイデア・メモを追加しました'));
+				$this->redirect(['action' => 'index']);
+			}
+			else
+			{
+				$this->Flash->error(__('The tasks idea could not be saved. Please, try again.'));
+			}
+		}
+
+
+
+		$this->set(compact('themes', 'no_record', 'info', 'infos', 'no_info', 'records', 'labels', 'login_data', 'progress_data', 'idea_count'));
 	}
 }

@@ -178,7 +178,7 @@ CommonUtility.prototype.createProgressChart = function (labels, access_data, pro
 		            ticks: {
 						min: 0,
 //						max: 100,
-//		                stepSize: 10
+//		                stepSize: 100
 		            },
 		        }, {
 		            id: "y-axis-2",
@@ -187,7 +187,7 @@ CommonUtility.prototype.createProgressChart = function (labels, access_data, pro
 		            ticks: {
 						min:0,
 						max: 10,
-		                stepSize: 1
+		                stepSize: 2
 		            },
 		            gridLines: {
 		                drawOnChartArea: false, 

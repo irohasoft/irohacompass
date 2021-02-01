@@ -10,7 +10,7 @@
 
 .chart-container
 {
-	height			: 180px;
+	height			: 150px;
 }
 
 table tr td
@@ -24,6 +24,19 @@ table tr td
 	overflow		: hidden;
 	text-overflow	: ellipsis;
 	white-space		: nowrap;
+}
+
+.idea-form
+{
+	width			: calc(100% - 100px);
+	float			: left;
+}
+
+.idea-body
+{
+	width			: calc(100% - 100px);
+	float			: left;
+	margin-right	: 10px;
 }
 
 @media only screen and (max-width:800px)
@@ -66,7 +79,7 @@ table tr td
 	
 	$(document).ready(function()
 	{
-		CommonUtil.createProgressChart(labels, login_data, progress_data, 180);
+		CommonUtil.createProgressChart(labels, login_data, progress_data, 150);
 	});
 </script>
 <?php $this->end(); ?>
@@ -152,10 +165,25 @@ table tr td
 	</div>
 	<?php }?>
 	
+	<div class="panel panel-default">
+		<div class="panel-heading"><span data-localize='learning_theme'>アイデアボックス</span></div>
+		<div class="panel-body">
+			<?php
+				echo $this->Form->create('Idea', ['class' => 'idea-form']);
+				echo $this->Form->textarea('body', ['class' => 'idea-body', 'placeholder' => '新しいアイデア・メモ等を書き込んでください']);
+				echo $this->Form->submit(__('追加'), ['class' => 'btn btn-primary idea-submit']);
+				echo $this->Form->end();
+			?>
+			<div class="text-right">
+				<?= $idea_count?>件登録済み<br>
+				<a href="<?= Router::url(['controller' => 'ideas', 'action' => 'index']);?>"><span data-localize='view_list'>一覧を表示</span></a>
+			</div>
+		</div>
+	</div>
+	
 	<div class="panel panel-info">
 		<div class="panel-heading"><span data-localize='learning_theme'>学習テーマ一覧</span></div>
 		<div class="buttons_container">
-			<button class="btn btn-warning" onclick="location.href='<?= Router::url(['controller' => 'ideas']) ?>'"><span data-localize='add_idea_memo'>+ アイデア・メモ</span></button>
 			<button class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['controller' => 'themes', 'action' => 'add']) ?>'"><span data-localize='add_learning_theme'>+ 学習テーマを追加</span></button>
 		</div>
 		<div class="panel-body">
