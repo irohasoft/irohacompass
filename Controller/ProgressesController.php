@@ -93,13 +93,11 @@ class ProgressesController extends AppController
 			}
 			
 			$this->User->recursive = 0;
-			$user = $this->User->find('first', [
-				'fields' => ["GROUP_CONCAT(User.name SEPARATOR ', ') as name_display"],
-				'conditions'	=> [
-					'User.id'	=> $smiled_ids
-				],
-				'group' => ['User.id']
-			]);
+			$user = $this->User->find()
+				->select(["GROUP_CONCAT(User.name SEPARATOR ', ') as name_display"])
+				->where(['User.id'	=> $smiled_ids])
+				->group(['User.id'])
+				->first();
 			
 			// スマイルした名前を表示
 			$progresses[$i]['name_display']	= @$user[0]['name_display'];
@@ -204,11 +202,9 @@ class ProgressesController extends AppController
 			//$list = $this->UsersTheme->getMailList($task['Theme']['id']);
 			
 			// メール通知リスト
-			$users = $this->User->find('all', [
-				'conditions' => [
-					'User.id' => $this->request->data['Progress']['User']
-				],
-			]);
+			$users = $this->User->find()
+				->where(['User.id' => $this->request->data['Progress']['User']])
+				->all();
 			
 			$admin_from	= Configure :: read('admin_from');
 			$mail_title	= Configure :: read('mail_title');
@@ -247,12 +243,10 @@ class ProgressesController extends AppController
 	public function index_enq($task_id, $record_id = null)
 	{
 		$this->Progress->recursive = 0;
-		$progresses = $this->Progress->find('all', [
-			'conditions' => [
-				'task_id' => $task_id
-			],
-			'order' => ['Progress.sort_no' => 'asc']
-		]);
+		$progresses = $this->Progress->find()
+				->where(['task_id' => $task_id])
+				->order(['Progress.sort_no' => 'asc'])
+				->all();
 		
 		// 管理者以外の場合、コンテンツの閲覧権限の確認
 		if(
@@ -382,13 +376,10 @@ class ProgressesController extends AppController
 	public function admin_index_enq($id)
 	{
 		$this->Progress->recursive = 0;
-		$progresses = $this->Progress->find('all', 
-				[
-						'conditions' => [
-								'task_id' => $id
-						],
-						'order' => ['Progress.sort_no' => 'asc']
-				]);
+		$progresses = $this->Progress->find()
+				->where(['task_id' => $id])
+				->order(['Progress.sort_no' => 'asc'])
+				->all();
 		
 		// コースの情報を取得
 		$this->loadModel('Task');
@@ -536,18 +527,19 @@ class ProgressesController extends AppController
 	public function smile()
 	{
 		$this->autoRender = FALSE;
+		
 		if($this->request->is('ajax'))
 		{
-			$data = [
+			$this->loadModel('Smile');
+			
+			$conditions = [
 				'progress_id'	=> $this->data['progress_id'],
 				'user_id'		=> $this->readAuthUser('id'),
 			];
 			
-			$this->loadModel('Smile');
-			
-			$smile = $this->Smile->find('first', [
-				'conditions' => $data
-			]);
+			$smile = $this->Smile->find()
+				->where($conditions)
+				->first();
 			
 			if($smile)
 			{

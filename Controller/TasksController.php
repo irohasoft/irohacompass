@@ -87,13 +87,9 @@ class TasksController extends AppController
 			$this->loadModel('Progress');
 			
 			// キーワードを含む進捗を検索
-			$progress_list = $this->Progress->find('all', [
-				'conditions' => [
-					'Task.theme_id' => $theme_id,
-					'OR' => [
-						'Progress.title like' => '%'.$keyword.'%',
-						'Progress.body like' => '%'.$keyword.'%'
-			]]]);
+			$progress_list = $this->Progress->find()
+				->where($conditions)
+				->all();
 			
 			$task_id_list = [];
 			

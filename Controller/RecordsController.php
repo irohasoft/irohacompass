@@ -212,12 +212,9 @@ class RecordsController extends AppController
 			
 			$fp = fopen('php://output','w');
 			
-			// イベント申込状況を取得
-			$options = [
-				'conditions' => $conditions
-			];
-			
-			$rows = $this->Record->find('all', $options);
+			$rows = $this->Record->find()
+				->where($conditions)
+				->all();
 			
 			$header = ["学習テーマ", "コンテンツ", "氏名", "得点", "合格点", "結果", "理解度", "学習時間", "学習日時"];
 			

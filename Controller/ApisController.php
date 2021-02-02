@@ -59,15 +59,11 @@ class ApisController extends AppController
 		// ログインユーザがアクセス可能なノートIDリスト
 		$note_id_list  = $this->getNoteIDList($user_id);
 		
-		$options = [
-			'conditions' => [
-				'Note.id' => $note_id_list
-			],
-			'order' => 'Note.note_order',
-		];
-		
 		$this->loadModel('Note');
-		$notes = $this->Note->find('all', $options);
+		$notes = $this->Note->find()
+			->where(['Note.id' => $note_id_list])
+			->order(['Note.note_order'])
+			->all();
 		
 		$xmlArray = ['root' => ['result' => []]];
 		$xmlArray['root']['result'] = ['error_code' => '0'];
@@ -101,12 +97,15 @@ class ApisController extends AppController
 		$cmd = $this->data['cmd'];
 		
 		$this->loadModel('Note');
-		$data = $this->Note->find('first', [
-			'conditions' => [
-				'Note.note_id' => @$this->data['note_id'],
-				'Note.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
-			]
-		]);
+		
+		$conditions = [
+			'Note.note_id' => @$this->data['note_id'],
+			'Note.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
+		];
+			
+		$data = $this->Note->find()
+			->where($conditions)
+			->first();
 		
 		if(
 			($cmd=='add')||
@@ -270,36 +269,36 @@ class ApisController extends AppController
 		
 		$note_id = $this->getParamData('note_id');
 		
-		$options = [
-			'conditions' => [
-				'Note.note_id' => $note_id,
-				'Note.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
-			]
+		$conditions = [
+			'Note.note_id' => $note_id,
+			'Note.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
 		];
 		
 		// 管理権限の場合、ユーザIDは任意とする
 		if($this->isAdminRole())
-			unset($options['conditions']['Note.user_id']);
+			unset($conditions['Note.user_id']);
 		
 		//debug($options);
 		
 		$this->loadModel('Note');
-		$note = $this->Note->find('first', $options);
+		$note = $this->Note->find()
+			->where($conditions)
+			->first();
 		
-		$options = [
-			'conditions' => [
-				'Page.note_id' => $note_id,
-				'Page.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
-			],
-			'order' => 'Page.page_order',
+		$conditions = [
+			'Page.note_id' => $note_id,
+			'Page.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
 		];
 		
 		// 管理権限の場合、ユーザIDは任意とする
 		if($this->isAdminRole())
-			unset($options['conditions']['Page.user_id']);
+			unset($conditions['Page.user_id']);
 		
 		$this->loadModel('Page');
-		$pages = $this->Page->find('all', $options);
+		$pages = $this->Page->find()
+			->where($conditions)
+			->order(['Page.page_order'])
+			->all();
 		
 		$xmlArray = ['root' => ['note' => []]];
 		
@@ -334,13 +333,16 @@ class ApisController extends AppController
 		$cmd = $this->data['cmd'];
 		
 		$this->loadModel('Page');
-		$data = $this->Page->find('first', [
-			'conditions' => [
-				'Page.page_id' => $this->data['page_id'],
-				'Page.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
-			]
-		]);
-
+		
+		$conditions = [
+			'Page.page_id' => $this->data['page_id'],
+			'Page.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
+		];
+		
+		$data = $this->Page->find()
+			->where($conditions)
+			->first();
+		
 		switch($cmd)
 		{
 			case 'add':
@@ -396,20 +398,20 @@ class ApisController extends AppController
 		//debug($note_id);
 		//debug($this->getUserIDList($note_id));
 		
-		$options = [
-			'conditions' => [
-				'Leaf.page_id' => $page_id,
-				'Leaf.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
-			],
-			'order' => 'Leaf.leaf_zorder asc',
+		$conditions = [
+			'Leaf.page_id' => $page_id,
+			'Leaf.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
 		];
 		
 		// 管理権限の場合、ユーザIDは任意とする
 		if($this->isAdminRole())
-			unset($options['conditions']['Leaf.user_id']);
+			unset($conditions['Leaf.user_id']);
 		
 		$this->loadModel('Leaf');
-		$leafs = $this->Leaf->find('all', $options);
+		$leafs = $this->Leaf->find()
+			->where($conditions)
+			->order(['Leaf.leaf_zorder asc'])
+			->all();
 		
 		$xmlArray = ['root' => []];
 		
@@ -446,11 +448,9 @@ class ApisController extends AppController
 		
 		$leaf_id = $this->data['leaf_id'];
 		
-		$data = $this->Leaf->find('first', [
-			'conditions' => [
-				'Leaf.leaf_id' => $this->data['leaf_id']
-			]
-		]);
+		$data = $this->Leaf->find()
+			->where(['Leaf.leaf_id' => $this->data['leaf_id']])
+			->first();
 		
 		switch($cmd)
 		{
@@ -524,14 +524,10 @@ class ApisController extends AppController
 		
 		$page_id = $this->getParamData('page_id');
 		
-		$options = [
-			'conditions' => [
-				'Link.page_id' => $page_id
-			]
-		];
-		
 		$this->loadModel('Link');
-		$links = $this->Link->find('all', $options);
+		$links = $this->Link->find()
+			->where(['Link.page_id' => $page_id])
+			->all();
 		
 		$xmlArray = ['root' => ['link' => []]];
 		
@@ -613,24 +609,22 @@ class ApisController extends AppController
 		$keyword = $this->getParamData('keyword');
 		$note_id = $this->getParamData('note_id');
 		
-		$options = [
-			'conditions' => [
-				'OR' => [
-					['Leaf.leaf_title like' 	=> '%'.$keyword.'%'],
-					['Leaf.leaf_content like'=> '%'.$keyword.'%'],
-				],
-				'Leaf.user_id' => $user_id,
-			]
+		$conditions = [
+			'OR' => [
+				['Leaf.leaf_title like' 	=> '%'.$keyword.'%'],
+				['Leaf.leaf_content like'=> '%'.$keyword.'%'],
+			],
+			'Leaf.user_id' => $user_id,
 		];
 		
 		// ノートが指定されている場合、ノート内を検索
 		if($note_id!='')
-		{
-			$options['conditions']['Leaf.note_id'] = $note_id;
-		}
+			$conditions['Leaf.note_id'] = $note_id;
 		
 		$this->loadModel('Leaf');
-		$leafs = $this->Leaf->find('all', $options);
+		$leafs = $this->Leaf->find()
+			->where($conditions)
+			->all();
 		
 		$xmlArray = ['root' => []];
 		
@@ -685,42 +679,42 @@ class ApisController extends AppController
 		
 		$note_id = $this->getParamData('note_id');
 
-		$options = [
-			'conditions' => [
-				'Note.note_id' => $note_id,
-				'Note.user_id' => $user_id
-			],
+		$conditions = [
+			'Note.note_id' => $note_id,
+			'Note.user_id' => $user_id
 		];
 		
-		$note = $this->Note->find('first', $options);
+		$note = $this->Note->find()
+			->where($conditions)
+			->first();
 		
-		$options = [
-			'conditions' => [
-				'Page.note_id' => $note_id,
-				'Page.user_id' => $user_id
-			],
+		$conditions = [
+			'Page.note_id' => $note_id,
+			'Page.user_id' => $user_id
 		];
 		
-		$pages = $this->Page->find('all', $options);
+		$pages = $this->Page->find()
+			->where($conditions)
+			->all();
 		
-		$options = [
-			'conditions' => [
-				'Leaf.note_id' => $note_id,
-				'Leaf.user_id' => $user_id
-			],
+		$conditions = [
+			'Leaf.note_id' => $note_id,
+			'Leaf.user_id' => $user_id
 		];
 		
 		//debug($options);
-		$leafs = $this->Leaf->find('all', $options);
+		$leafs = $this->Leaf->find()
+			->where($conditions)
+			->all();
 		
-		$options = [
-			'conditions' => [
-				'Link.note_id' => $note_id,
-				'Link.user_id' => $user_id
-			],
+		$conditions = [
+			'Link.note_id' => $note_id,
+			'Link.user_id' => $user_id
 		];
 		
-		$links = $this->Link->find('all', $options);
+		$links = $this->Link->find()
+			->where($conditions)
+			->all();
 		
 		// リストに変換
 		$page_list = $this->getList($pages, 'Page');

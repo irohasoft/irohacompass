@@ -44,13 +44,9 @@ class NotesController extends AppController
 		$this->layout = '';
 		$this->autoRender = FALSE;
 		
-		$options = [
-			'conditions' => [
-				'Note.user_id' => 'admin'
-			]
-		];
-		
-		$notes = $this->Note->find('all', $options);
+		$notes = $this->Note->find()
+			->where(['Note.user_id' => 'admin'])
+			->all();
 		
 		$xmlArray = ['root' => ['note' => []]];
 		
