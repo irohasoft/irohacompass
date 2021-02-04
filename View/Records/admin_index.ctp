@@ -47,10 +47,10 @@
 			echo '</div>';
 			
 			echo '<div class="ib-row">';
-			echo $this->Form->input('theme_id',		['label' => '学習テーマ :', 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
-			echo $this->Form->input('task_title',	['label' => '課題名 :', 'value'=>$task_title, 'class'=>'form-control']);
-			echo $this->Form->input('group_id',		['label' => 'グループ :', 'options'=>$groups, 'selected'=>$group_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
-			echo $this->Form->input('user_id',		['label' => 'ユーザ :', 'options'=>$users, 'selected'=>$user_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
+			echo $this->Form->input('theme_id',		['label' => __('学習テーマ').' :', 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
+			echo $this->Form->input('task_title',	['label' => __('課題名').' :', 'value'=>$task_title, 'class'=>'form-control']);
+			echo $this->Form->input('group_id',		['label' => __('グループ').' :', 'options'=>$groups, 'selected'=>$group_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
+			echo $this->Form->input('user_id',		['label' => __('ユーザ').' :', 'options'=>$users, 'selected'=>$user_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
 			echo '</div>';
 			
 			echo '<div class="ib-search-date-container">';
@@ -87,15 +87,15 @@
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 	<tr>
-		<th nowrap><?= $this->Paginator->sort('theme_id', '学習テーマ'); ?></th>
-		<th nowrap><?= $this->Paginator->sort('task_id', '課題'); ?></th>
-		<th nowrap><?= $this->Paginator->sort('User.name', '氏名'); ?></th>
-		<th nowrap class="ib-col-center"><?= $this->Paginator->sort('rate', '進捗率'); ?></th>
-		<th nowrap class="ib-col-center"><?= $this->Paginator->sort('theme_rate', '進捗率(全体)'); ?></th>
-		<th nowrap class="ib-col-center"><?= $this->Paginator->sort('is_complete', '完了'); ?></th>
-		<th class="ib-col-center" nowrap><?= $this->Paginator->sort('record_type', '種別'); ?></th>
-		<th class="ib-col-center"><?= $this->Paginator->sort('study_sec', '学習時間'); ?></th>
-		<th class="ib-col-datetime"><?= $this->Paginator->sort('created', '学習日時'); ?></th>
+		<th nowrap><?= $this->Paginator->sort('theme_id', __('学習テーマ')); ?></th>
+		<th nowrap><?= $this->Paginator->sort('task_id', __('課題')); ?></th>
+		<th nowrap><?= $this->Paginator->sort('User.name', __('氏名')); ?></th>
+		<th nowrap class="ib-col-center"><?= $this->Paginator->sort('rate', __('進捗率')); ?></th>
+		<th nowrap class="ib-col-center"><?= $this->Paginator->sort('theme_rate', __('進捗率(全体)')); ?></th>
+		<th nowrap class="ib-col-center"><?= $this->Paginator->sort('is_complete', __('完了')); ?></th>
+		<th class="ib-col-center" nowrap><?= $this->Paginator->sort('record_type', __('種別')); ?></th>
+		<th class="ib-col-center"><?= $this->Paginator->sort('study_sec', __('滞留時間')); ?></th>
+		<th class="ib-col-datetime"><?= $this->Paginator->sort('created', __('更新日時')); ?></th>
 	</tr>
 	</thead>
 	<tbody>

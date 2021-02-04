@@ -177,7 +177,7 @@
 	<?php
 		$controller = ($is_user) ? 'users_themes' : 'themes';
 		
-		$this->Html->addCrumb('学習テーマ一覧', ['controller' => $controller, 'action' => 'index']);
+		$this->Html->addCrumb(__('学習テーマ一覧'), ['controller' => $controller, 'action' => 'index']);
 		$this->Html->addCrumb($content['Theme']['title'], ['controller' => 'tasks', 'action' => 'index', $content['Theme']['id']]);
 		$this->Html->addCrumb(h($content['Task']['title']));
 		

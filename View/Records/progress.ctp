@@ -162,8 +162,8 @@ height: 300px;
 					echo '</div>';
 					
 					echo '<div class="ib-row">';
-					echo $this->Form->input('theme_id',	['label' => '学習テーマ :', 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
-					echo $this->Form->input('contenttitle',	['label' => '課題名 :', 'value'=>$contenttitle, 'class'=>'form-control']);
+					echo $this->Form->input('theme_id',	['label' => __('学習テーマ').' :', 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
+					echo $this->Form->input('contenttitle',	['label' => __('課題名').' :', 'value'=>$contenttitle, 'class'=>'form-control']);
 					echo '</div>';
 					
 					echo '<div class="ib-search-date-container">';
@@ -201,17 +201,17 @@ height: 300px;
 				<table cellpadding="0" cellspacing="0">
 				<thead>
 				<tr>
-					<th nowrap><?= $this->Paginator->sort('theme_id', '学習テーマ'); ?></th>
-					<th nowrap><?= $this->Paginator->sort('content_id', '課題'); ?></th>
-					<th nowrap><?= $this->Paginator->sort('user_id', '氏名'); ?></th>
+					<th nowrap><?= $this->Paginator->sort('theme_id', __('学習テーマ')); ?></th>
+					<th nowrap><?= $this->Paginator->sort('content_id', __('課題')); ?></th>
+					<th nowrap><?= $this->Paginator->sort('user_id', __('氏名')); ?></th>
 					<!--
 					<th nowrap class="ib-col-center"><?= $this->Paginator->sort('rate', '進捗率'); ?></th>
 					<th nowrap class="ib-col-center"><?= $this->Paginator->sort('theme_rate', '進捗率(全体)'); ?></th>
 					<th nowrap class="ib-col-center"><?= $this->Paginator->sort('is_complete', '完了'); ?></th>
 					<th class="ib-col-center"><?= $this->Paginator->sort('study_sec', '学習時間'); ?></th>
 					-->
-					<th class="ib-col-center" nowrap><?= $this->Paginator->sort('record_type', '種別'); ?></th>
-					<th class="ib-col-datetime"><?= $this->Paginator->sort('created', '学習日時'); ?></th>
+					<th class="ib-col-center" nowrap><?= $this->Paginator->sort('record_type', __('種別')); ?></th>
+					<th class="ib-col-datetime"><?= $this->Paginator->sort('created', __('更新日時')); ?></th>
 				</tr>
 				</thead>
 				<tbody>

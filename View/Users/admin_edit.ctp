@@ -3,8 +3,8 @@
 <?= $this->Html->script( 'select2.min.js');?>
 <?php $this->Html->scriptStart(['inline' => false]); ?>
 	$(function (e) {
-		$('#GroupGroup').select2({placeholder:   "所属するグループを選択して下さい。(複数選択可)", closeOnSelect: <?= (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
-		$('#ThemeTheme').select2({placeholder: "利用する学習テーマを選択して下さい。(複数選択可)", closeOnSelect: <?= (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
+		$('#GroupGroup').select2({placeholder:   "<?= __('所属するグループを選択して下さい。(複数選択可)')?>", closeOnSelect: <?= (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
+		$('#ThemeTheme').select2({placeholder: "<?= __('利用する学習テーマを選択して下さい。(複数選択可)')?>", closeOnSelect: <?= (Configure::read('close_on_select') ? 'true' : 'false'); ?>,});
 		// パスワードの自動復元を防止
 		setTimeout('$("#UserNewPassword").val("");', 500);
 	});
@@ -49,10 +49,10 @@
 					]
 				);
 				
-				echo $this->Form->input('email',				['label' => 'メールアドレス']);
-				echo $this->Form->input('comment',				['label' => '備考']);
-				echo $this->Form->input('Group',				['label' => '所属グループ',	'size' => 20]);
-				echo $this->Form->input('Theme',				['label' => '学習テーマ',		'size' => 20]);
+				echo $this->Form->input('email',				['label' => __('メールアドレス')]);
+				echo $this->Form->input('comment',				['label' => __('備考')]);
+				echo $this->Form->input('Group',				['label' => __('所属グループ'),	'size' => 20]);
+				echo $this->Form->input('Theme',				['label' => __('学習テーマ'),		'size' => 20]);
 			?>
 			<div class="form-group">
 				<div class="col col-sm-9 col-sm-offset-3">

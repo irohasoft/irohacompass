@@ -9,9 +9,9 @@
 	<thead>
 	<tr>
 		<th><?= $this->Paginator->sort('title', 'グループ名'); ?></th>
-		<th nowrap class="col-theme"><?= $this->Paginator->sort('theme_title', '学習テーマ'); ?></th>
-		<th class="ib-col-date"><?= $this->Paginator->sort('created', '作成日時'); ?></th>
-		<th class="ib-col-date"><?= $this->Paginator->sort('modified', '更新日時'); ?></th>
+		<th nowrap class="col-theme"><?= $this->Paginator->sort('theme_title', __('学習テーマ')); ?></th>
+		<th class="ib-col-date"><?= $this->Paginator->sort('created', __('作成日時')); ?></th>
+		<th class="ib-col-date"><?= $this->Paginator->sort('modified', __('更新日時')); ?></th>
 		<th class="ib-col-action"><?= __('Actions'); ?></th>
 	</tr>
 	</thead>
