@@ -100,7 +100,7 @@ class ProgressesController extends AppController
 				->first();
 			
 			// スマイルした名前を表示
-			$progresses[$i]['name_display']	= @$user[0]['name_display'];
+			$progresses[$i]['name_display']	= isset($user[0]['name_display']) ? $user[0]['name_display'] : null;
 			// 自分自身がスマイルしたかどうか
 			$progresses[$i]['is_smiled']	= $is_smiled;
 		}

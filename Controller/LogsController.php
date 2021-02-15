@@ -46,7 +46,7 @@ class LogsController extends AppController {
 				$this->data['controller'],
 				$this->data['action'],
 				$this->data['params'],
-				@$this->data['sec']
+				isset($this->data['sec']) ? $this->data['sec'] : null
 			);
 			
 			// 最終アクセス日時を保存

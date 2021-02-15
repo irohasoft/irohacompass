@@ -69,7 +69,7 @@
 	var _params			= '<?= join(',', $this->params['pass']) ?>';
 	var _sec			= 0;
 	var G_WEBROOT		= '<?= $this->Html->webroot;?>';
-	var G_LANG			= '<?= @$loginedUser['lang'];?>';
+	var G_LANG			= '<?= isset($loginedUser) ? $loginedUser['lang'] : 'jp';?>';
 	var URL_LOGS_ADD	= '<?= Router::url(['controller' => 'logs', 'action' => 'add']) ?>';
 	
 	</script>
@@ -92,7 +92,7 @@
 		<div class="ib-logo ib-left">
 			<a href="<?= $this->Html->url('/')?>"><?= h($this->Session->read('Setting.title')); ?></a>
 		</div>
-		<?php if(@$loginedUser) {?>
+		<?php if(isset($loginedUser)) {?>
 		<div class="ib-navi-item ib-right"><?= $this->Html->link(__('ログアウト'), ['controller' => 'users', 'action' => 'logout']); ?></div>
 		<div class="ib-navi-sepa ib-right"></div>
 		<div class="ib-navi-item ib-right"><?= $this->Html->link('<span data-localize="setting">設定</span>', ['controller' => 'users', 'action' => 'setting'], ['escape' => false]); ?></div>
