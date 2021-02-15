@@ -50,7 +50,7 @@ class ApisController extends AppController
 		$user_id   = $this->getUserID();
 		
 		// ログインチェック
-		if($user_id=='')
+		if($user_id == '')
 		{
 			$this->flashError(101);
 			return;
@@ -85,9 +85,11 @@ class ApisController extends AppController
 		$this->autoRender = FALSE;
 		
 		$user_id = $this->getUserID();
+		$note_id = $this->_getParamData('note_id');
+		$note_id = $this->_getParamData('note_id');
 		
 		// ログインチェック
-		if($user_id=='')
+		if($user_id == '')
 		{
 			$this->flashError(101);
 			return;
@@ -99,17 +101,17 @@ class ApisController extends AppController
 		$this->loadModel('Note');
 		
 		$conditions = [
-			'Note.note_id' => @$this->data['note_id'],
+			'Note.note_id' => $note_id,
 			'Note.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
 		];
-			
+		
 		$data = $this->Note->find()
 			->where($conditions)
 			->first();
 		
 		if(
-			($cmd=='add')||
-			($cmd=='update')
+			($cmd == 'add')||
+			($cmd == 'update')
 		)
 		{
 			if(mb_strlen($this->data['note_title']) > 20)
@@ -261,13 +263,13 @@ class ApisController extends AppController
 		$user_id = $this->getUserID();
 		
 		// ログインチェック
-		if($user_id=='')
+		if($user_id == '')
 		{
 			$this->flashError(101);
 			return;
 		}
 		
-		$note_id = $this->getParamData('note_id');
+		$note_id = $this->_getParamData('note_id');
 		
 		$conditions = [
 			'Note.note_id' => $note_id,
@@ -322,20 +324,21 @@ class ApisController extends AppController
 		$this->autoRender = FALSE;
 		
 		$user_id = $this->getUserID();
+		$note_id = $this->_getParamData('note_id');
+		$page_id = $this->_getParamData('page_id');
+		$cmd = $this->_getParamData('cmd');
 
 		// ログインチェック
-		if($user_id=='')
+		if($user_id == '')
 		{
 			$this->flashError(101);
 			return;
 		}
 		
-		$cmd = $this->data['cmd'];
-		
 		$this->loadModel('Page');
 		
 		$conditions = [
-			'Page.page_id' => $this->data['page_id'],
+			'Page.page_id' => $page_id,
 			'Page.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
 		];
 		
@@ -386,14 +389,14 @@ class ApisController extends AppController
 		$user_id = $this->getUserID();
 		
 		// ログインチェック
-		if($user_id=='')
+		if($user_id == '')
 		{
 			$this->flashError(101);
 			return;
 		}
 		
-		$page_id = $this->getParamData('page_id');
-		$note_id = $this->getParamData('note_id');
+		$page_id = $this->_getParamData('page_id');
+		$note_id = $this->_getParamData('note_id');
 		
 		//debug($note_id);
 		//debug($this->getUserIDList($note_id));
@@ -433,9 +436,10 @@ class ApisController extends AppController
 		$this->autoRender = FALSE;
 		
 		$user_id = $this->getUserID();
+		$leaf_id = $this->_getParamData('note_id');
 		
 		// ログインチェック
-		if($user_id=='')
+		if($user_id == '')
 		{
 			$this->flashError(101);
 			return;
@@ -449,7 +453,7 @@ class ApisController extends AppController
 		$leaf_id = $this->data['leaf_id'];
 		
 		$data = $this->Leaf->find()
-			->where(['Leaf.leaf_id' => $this->data['leaf_id']])
+			->where(['Leaf.leaf_id' => $leaf_id])
 			->first();
 		
 		switch($cmd)
@@ -522,7 +526,7 @@ class ApisController extends AppController
 		$this->layout = '';
 		$this->autoRender = FALSE;
 		
-		$page_id = $this->getParamData('page_id');
+		$page_id = $this->_getParamData('page_id');
 		
 		$this->loadModel('Link');
 		$links = $this->Link->find()
@@ -551,7 +555,7 @@ class ApisController extends AppController
 		$user_id = $this->getUserID();
 		
 		// ログインチェック
-		if($user_id=='')
+		if($user_id == '')
 		{
 			$this->flashError(101);
 			return;
@@ -560,6 +564,7 @@ class ApisController extends AppController
 		$cmd = $this->data['cmd'];
 		
 		$this->loadModel('Link');
+		
 		switch($cmd)
 		{
 			case 'add':
@@ -601,20 +606,23 @@ class ApisController extends AppController
 		//$user_id = 'admin';
 		
 		// ログインチェック
-		if($user_id=='')
+		if($user_id == '')
 		{
 			$this->flashError(101);
 			return;
 		}
-		$keyword = $this->getParamData('keyword');
-		$note_id = $this->getParamData('note_id');
+		$keyword = $this->_getParamData('keyword');
+		$note_id = $this->_getParamData('note_id');
+		
+		// ログインユーザがアクセス可能なノートIDリスト
+		$note_id_list  = $this->getNoteIDList($user_id);
 		
 		$conditions = [
 			'OR' => [
 				['Leaf.leaf_title like' 	=> '%'.$keyword.'%'],
 				['Leaf.leaf_content like'=> '%'.$keyword.'%'],
 			],
-			'Leaf.user_id' => $user_id,
+			'Note.id' => $note_id_list
 		];
 		
 		// ノートが指定されている場合、ノート内を検索
@@ -666,7 +674,7 @@ class ApisController extends AppController
 		//$user_id = 'admin';
 		
 		// ログインチェック
-		if($user_id=='')
+		if($user_id == '')
 		{
 			$this->flashError(101);
 			return;
@@ -677,7 +685,7 @@ class ApisController extends AppController
 		$this->loadModel('Leaf');
 		$this->loadModel('Link');
 		
-		$note_id = $this->getParamData('note_id');
+		$note_id = $this->_getParamData('note_id');
 
 		$conditions = [
 			'Note.note_id' => $note_id,
@@ -750,7 +758,7 @@ class ApisController extends AppController
 		$user_id = $this->getUserID();
 		
 		// ログインチェック
-		if($user_id=='')
+		if($user_id == '')
 		{
 			$this->flashError(101);
 			return;
@@ -833,7 +841,7 @@ class ApisController extends AppController
 	/**
 	 * パラメータを取得
 	 */
-	private function getParamData($key)
+	private function _getParamData($key)
 	{
 		$val = '';
 		
@@ -890,7 +898,7 @@ class ApisController extends AppController
 	{
 		$user_id = '';
 		
-		if((Configure::read('api_auth_type'))=='wordpress')
+		if((Configure::read('api_auth_type')) == 'wordpress')
 		{
 			$user = wp_get_current_user();
 			$user_id = $user->get('user_login');
@@ -942,16 +950,16 @@ class ApisController extends AppController
 	 */
 	private function isAdminRole()
 	{
-		if((Configure::read('api_auth_type'))=='wordpress')
+		if((Configure::read('api_auth_type')) == 'wordpress')
 		{
 			$user    = wp_get_current_user();
 			$user_id = $user->get('user_login');
 			
-			return (($user_id=='admin')||($user_id=='miura'));
+			return (($user_id == 'admin')||($user_id == 'miura'));
 		}
 		else
 		{
-			return ($this->readAuthUser('role')=='admin');
+			return ($this->readAuthUser('role') == 'admin');
 		}
 	}
 
@@ -961,12 +969,12 @@ class ApisController extends AppController
 	//--------------------------------------//
 	private function getAccessTokenFromBearer()
 	{
-		$access_token = "";
+		$access_token = '';
 		
 		foreach(getallheaders() as $name => $value)
 		{
-			if($name=="Authorization")
-				$access_token = str_replace("Bearer ", "", $value);
+			if($name == "Authorization")
+				$access_token = str_replace("Bearer ", '', $value);
 		}
 		
 		return $access_token;

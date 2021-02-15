@@ -82,16 +82,16 @@ class AppController extends Controller
 			}
 		}
 		
-		if($this->getParam('admin'))
+		if($this->isAdminPage())
 		{
 			// role が admin, manager, editor, teacher以外の場合、強制ログアウトする
 			if($this->readAuthUser())
 			{
 				if(
-					($this->readAuthUser('role')!='admin')&&
-					($this->readAuthUser('role')!='manager')&&
-					($this->readAuthUser('role')!='editor')&&
-					($this->readAuthUser('role')!='teacher')
+					($this->readAuthUser('role') != 'admin')&&
+					($this->readAuthUser('role') != 'manager')&&
+					($this->readAuthUser('role') != 'editor')&&
+					($this->readAuthUser('role') != 'teacher')
 				)
 				{
 					if($this->Cookie)
@@ -204,6 +204,17 @@ class AppController extends Controller
 	}
 
 	/**
+	 * ログイン確認
+	 * @return bool true : ログイン済み, false : ログインしていない
+	 */
+	protected function isLogined()
+	{
+		$val =  $this->Auth->user();
+		
+		return  ($val != null);
+	}
+
+	/**
 	 * クエリストリングの取得
 	 * @param string $key キー
 	 */
@@ -214,7 +225,7 @@ class AppController extends Controller
 		
 		$val = $this->request->query[$key];
 		
-		if($val==null)
+		if($val == null)
 			return '';
 		
 		return $val;
@@ -240,7 +251,7 @@ class AppController extends Controller
 		
 		$val = $this->request->params[$key];
 		
-		if($val==null)
+		if($val == null)
 			return '';
 		
 		return $val;
@@ -278,6 +289,34 @@ class AppController extends Controller
 		{
 			$this->request->data = $value;
 		}
+	}
+
+	/**
+	 * 管理画面のアクセスか確認
+	 * @return bool true : 管理画面, false : 受講者画面
+	 */
+	protected function isAdminPage()
+	{
+		return (isset($this->request->params['admin']));
+	}
+
+	protected function addCondition($where, $key, $field)
+	{
+		$val = $this->getQuery($key);
+		
+		if(!$val)
+			return $where;
+		
+		if(strpos(strtolower($field), 'like') > 0)
+		{
+			$where[$field] = '%'.$val.'%';
+		}
+		else
+		{
+			$where[$field] = $val;
+		}
+		
+		return $where;
 	}
 
 	protected function writeLog($log_type, $log_content, $controller = '', $action = '', $params = '', $sec = 0)
