@@ -8,22 +8,23 @@
  * @license       https://www.gnu.org/licenses/gpl-3.0.en.html GPL License
  */
 
+// アプリケーション名の設定
+if (!defined('APP_NAME')) {
+	define('APP_NAME', 'iroha Compass');
+}
+
 // PHPのバージョンチェック
 if (version_compare(PHP_VERSION, '5.4.0') <= 0)
 {
 	header('Content-Type: text/html; charset=UTF-8');
-	echo "ERROR-001 : iroha Compass の動作には 5.4.0 以上が必要です。現在のバージョンは " . PHP_VERSION . " です。\n";
+	echo 'ERROR-001 : '.APP_NAME.' の動作には 5.4.0 以上が必要です。現在のバージョンは ' . PHP_VERSION . ' です。\n';
 	exit;
 }
-
-// タイムゾーンの設定
-date_default_timezone_set('Asia/Tokyo');
 
 /**
  * Use the DS to separate the directories in other defines
  */
-if (!defined('DS'))
-{
+if (!defined('DS')) {
 	define('DS', DIRECTORY_SEPARATOR);
 }
 

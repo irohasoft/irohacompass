@@ -1,7 +1,7 @@
 <div class="install-error">
 	<div class="panel panel-danger">
 		<div class="panel-heading">
-			iroha Compass Installer
+			<?= APP_NAME; ?> Installer
 		</div>
 		<div class="panel-body">
 			<p class="msg">
