@@ -166,7 +166,7 @@ table tr td
 	<?php }?>
 	
 	<div class="panel panel-default">
-		<div class="panel-heading"><span data-localize='learning_theme'>アイデアボックス</span></div>
+		<div class="panel-heading"><span data-localize='ideabox'>アイデアボックス</span></div>
 		<div class="panel-body">
 			<?php
 				echo $this->Form->create('Idea', ['class' => 'idea-form']);
