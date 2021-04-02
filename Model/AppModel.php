@@ -1,11 +1,7 @@
 <?php
 /**
- * iroha Compass Project
- *
  * @author        Kotaro Miura
  * @copyright     2015-2021 iroha Soft, Inc. (https://irohasoft.jp)
- * @link          https://irohacompass.irohasoft.jp
- * @license       https://www.gnu.org/licenses/gpl-3.0.en.html GPL License
  */
 
 App::uses('Model', 'Model');
@@ -20,7 +16,7 @@ App::uses('Model', 'Model');
  */
 class AppModel extends Model
 {
-	private $params = []; // メソッドチェーン を使用した場合に find() で使用するパラメータ
+	private $options = []; // メソッドチェーン を使用した場合に find() で使用するパラメータ
 	private $is_object = false; // 連想配列をオブジェクトに変換するかどうか（実験的実装）
 	
 	/**
@@ -49,18 +45,18 @@ class AppModel extends Model
 	 * 既存の find() メソッドを上書き
 	 * 
 	 * @param string $type 取得形式（指定した場合は、通常の動きとなる。省略した場合はメソッドチェーンを利用し、最後に all(), fisrt() をつけてデータを取得）
-	 * @param array $params 各種条件（$type を指定した場合のみ指定可能）
+	 * @param array $options 各種条件（$type を指定した場合のみ指定可能）
 	 * @return array type を指定した場合は取得結果、省略した場合はメソッドチェーン用にインスタンスを返す
 	 */
-	public function find($type = null, $params = [])
+	public function find($type = null, $options = [])
 	{
 		if($type == null)
 		{
-			$this->params = [];
+			$this->options = [];
 			return $this;
 		}
 		
-		return parent::find($type, $params);
+		return parent::find($type, $options);
 	}
 
 	/**
@@ -68,7 +64,7 @@ class AppModel extends Model
 	 */
 	public function select($value)
 	{
-		$this->params['fields'] = $value;
+		$this->options['fields'] = $value;
 		return $this;
 	}
 
@@ -77,7 +73,7 @@ class AppModel extends Model
 	 */
 	public function where($value)
 	{
-		$this->params['conditions'] = $value;
+		$this->options['conditions'] = $value;
 		return $this;
 	}
 
@@ -86,7 +82,7 @@ class AppModel extends Model
 	 */
 	public function order($value)
 	{
-		$this->params['order'] = $value;
+		$this->options['order'] = $value;
 		return $this;
 	}
 
@@ -95,7 +91,7 @@ class AppModel extends Model
 	 */
 	public function group($value)
 	{
-		$this->params['group'] = $value;
+		$this->options['group'] = $value;
 		return $this;
 	}
 
@@ -104,7 +100,7 @@ class AppModel extends Model
 	 */
 	public function limit($value)
 	{
-		$this->params['limit'] = $value;
+		$this->options['limit'] = $value;
 		return $this;
 	}
 
@@ -113,7 +109,7 @@ class AppModel extends Model
 	 */
 	public function page($value)
 	{
-		$this->params['page'] = $value;
+		$this->options['page'] = $value;
 		return $this;
 	}
 
@@ -124,7 +120,7 @@ class AppModel extends Model
 	{
 		if($this->is_object)
 		{
-			$data = parent::find('all', $this->params);
+			$data = parent::find('all', $this->options);
 			
 			// 連想配列[Model][field] を [field] に変更
 			foreach($data as &$row)
@@ -135,12 +131,12 @@ class AppModel extends Model
 			
 			// [Model][field] を 削除
 			$object= new stdClass();
-			$data = $this->_array_to_object($data, $object);
+			$data = $this->_arrayToObject($data, $object);
 			
 			return $data;
 		}
 		
-		return parent::find('all', $this->params);
+		return parent::find('all', $this->options);
 	}
 
 	/**
@@ -150,7 +146,7 @@ class AppModel extends Model
 	{
 		if($this->is_object)
 		{
-			$data = parent::find('first', $this->params);
+			$data = parent::find('first', $this->options);
 			
 			// 連想配列[Model][field] を [field] に変更
 			$data = array_merge($data, $data[$this->name]);
@@ -159,12 +155,20 @@ class AppModel extends Model
 			unset($data[$this->name]);
 			
 			$object= new stdClass();
-			$data = $this->_array_to_object($data, $object);
+			$data = $this->_arrayToObject($data, $object);
 			
 			return $data;
 		}
 		
-		return parent::find('first', $this->params);
+		return parent::find('first', $this->options);
+	}
+
+	/**
+	 * find('list')の結果を返す
+	 */
+	public function toList()
+	{
+		return parent::find('list', $this->options);
 	}
 
 	/**
@@ -172,13 +176,37 @@ class AppModel extends Model
 	 */
 	public function count()
 	{
-		return parent::find('count', $this->params);
+		return parent::find('count', $this->options);
 	}
-	
+
+	/**
+	 * クエリの結果を配列で返す
+	 * 
+	 * @param string $sql SQL
+	 * @param array $params SQL用パラメータ
+	 * @param string $table_name テーブル名
+	 * @param string $field_name フィールド名
+	 * @return array クエリの結果
+	 */
+	public function queryList($sql, $params, $table_name, $field_name)
+	{
+		$data = $this->query($sql, $params);
+		
+		$list = [];
+		
+		for($i=0; $i< count($data); $i++)
+		{
+			$list[$i] = $data[$i][$table_name][$field_name];
+		}
+		
+		return $list;
+	}
+
+
 	/**
 	 * 取得形式をオブジェクトに指定
 	 */
-	public function object()
+	public function convert()
 	{
 		$this->is_object = true;
 		return $this;
@@ -187,7 +215,7 @@ class AppModel extends Model
 	/**
 	 * 配列をオブジェクトに変換
 	 */
-	private function _array_to_object($array, &$obj)
+	private function _arrayToObject($array, &$obj)
 	{
 		foreach($array as $key => $value)
 		{
@@ -198,7 +226,7 @@ class AppModel extends Model
 					$key .= 's';
 				
 				$obj->{strtolower($key)} = new stdClass();
-				$this->_array_to_object($value, $obj->{strtolower($key)});
+				$this->_arrayToObject($value, $obj->{strtolower($key)});
 			}
 			else
 			{
