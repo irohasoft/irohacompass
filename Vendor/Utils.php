@@ -11,13 +11,6 @@
 // ユーティリティクラス
 class Utils
 {
-	//------------------------------//
-	//	コンストラクタ				//
-	//------------------------------//
-	public function Utils()
-	{
-	}
-	
 	public static function getYMD($str)
 	{
 		return substr($str, 0, 10);
