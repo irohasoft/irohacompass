@@ -300,9 +300,15 @@
 				
 				echo $this->Form->postLink(__('削除'), 
 						['action' => 'delete', $progress['Progress']['id']], 
-						['class'=>'btn btn-danger','data-localize' => 'delete'], 
+						['class'=>'btn btn-danger btn-delete','data-localize' => 'delete'], 
 						__('[%s] を削除してもよろしいですか?', $progress['Progress']['title'])
 				); 
+				
+				echo $this->Form->button('<span data-localize="move">移動</span>', [
+					'class'		=> 'btn btn-warning btn-move',
+					'onclick'	=> "location.href='".Router::url(['action' => 'move', $progress['Progress']['id']])."'",
+				]);
+				
 				echo $this->Form->hidden('id', ['id'=>'', 'class'=>'target_id', 'value'=>$progress['Progress']['id']]);
 			}
 			

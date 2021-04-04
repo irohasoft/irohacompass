@@ -336,7 +336,8 @@ form .required .control-label:after
 	font-size		: 12px;
 }
 
-.progresses-index .btn-edit
+.progresses-index .btn-edit,
+.progresses-index .btn-delete
 {
 	margin-right	: 10px;
 }

@@ -148,7 +148,46 @@ class ProgressesController extends AppController
 		
 		$this->set(compact('content', 'progresses', 'mail_list', 'is_record', 'is_admin', 'is_add', 'is_user', 'users'));
 	}
-	
+
+	/**
+	 * 進捗の移動
+	 */
+	public function move($progress_id)
+	{
+		if(!$this->Progress->exists($progress_id))
+		{
+			throw new NotFoundException(__('Invalid progress'));
+		}
+		
+		if($this->request->is(['post', 'put']))
+		{
+			if(Configure::read('demo_mode'))
+				return;
+			
+			if($this->Progress->save($this->request->data))
+			{
+				$this->Flash->success(__('進捗を移動しました'));
+				return $this->redirect(['action' => 'index', $this->request->data['Progress']['task_id']]);
+			}
+			else
+			{
+				$this->Flash->error(__('The progress could not be saved. Please, try again.'));
+			}
+		}
+		else
+		{
+			$this->request->data = $this->Progress->get($progress_id);
+		}
+		
+		$theme_id = $this->request->data['Task']['theme_id'];
+		$task_id = $this->request->data['Task']['id'];
+		
+		$this->loadModel('Task');
+		$tasks = $this->Task->find()->where(['theme_id' => $theme_id])->toList();
+
+		$this->set(compact('task_id', 'tasks'));
+	}
+
 	private function __save_record($task_id, $progress_id)
 	{
 		$is_add			= ($progress_id==null);
