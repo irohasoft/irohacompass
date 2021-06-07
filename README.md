@@ -1,57 +1,51 @@
 # iroha Compass
-iroha Compass is a Self-directed Learning Support System.  [[Japanese / 日本語]](/README.jp.md)
 
-## Project website
+iroha Compass とは自律学習支援システムです。[[English]](/README.en.md)
+学習者一人ひとりの主体的で深い学びを支援します。
+
+## 公式サイト
 https://irohacompass.irohasoft.jp/
 
-## Demo
-http://demoic.irohasoft.com/
+## デモサイト
+https://demoic.irohasoft.com/
 
-## System Requirements
-* PHP : 5.4 or later
-* MySQL : 5.1 or later
-* CakePHP : 2.10.x
+## 動作環境
+* PHP : 5.4以上
+* MySQL : 5.1以上
+* CakePHP : 2.10
 
-## Installation
-1. Download the source of iroha Compass.
+## インストール方法
+1. CakePHP のソースをダウンロードし、解凍します。
+https://github.com/cakephp/cakephp/releases/tag/2.10.24
+2. iroha Compass のソースをダウンロードし、解凍します。
 https://github.com/irohasoft/irohacompass/releases
-* Download the source of CakePHP.
-https://github.com/cakephp/cakephp/releases/tag/2.10.13
-* Make [cake] directory on your web server and upload the source of CakePHP.
-* Upload the source of iroha Compass to public direcotry on your web server.  
-/cake  
-┗ /lib  
-/public_html  
-┣ /Config  
-┣ /Controller  
-┣ /Model  
-┣ ・・・  
-┣ /View  
-┗ /webroot  
-* Modify the database configuration on Config/database.php file.
-Make sure you have created an empty database on you MySQL server.
-6. Open http://(your-domain-name)/install on your web browser.
+3. CakePHP の app ディレクトリ内のソースを iroha Compass のソースに差し替えます。
+4. データベース(app/Config/database.php)の設定を行います。
+   ※事前に空のデータベースを作成しておく必要があります。(推奨文字コード : UTF-8)
+5. 公開ディレクトリに全ソースをアップロードします。
+6. ブラウザを開き、http://(your-domain-name)/install にてインストールを実行します。
 
-## Features
+## 主な機能
+### 学習者側
+* 学習テーマ／学習目標の設定
+* 課題の管理
+* 進捗の登録
+* 最近の進捗状況の表示
+* お知らせの表示
+* メール通知機能
 
-### For students.
+### 管理者側
+* ユーザ管理
+* グループ管理
+* お知らせ管理
+* 学習者の学習テーマの管理
+* 学習者の課題の管理
+* 学習者の学習進捗の検索
+* コメントの追加
+* 学習者の最近の進捗の表示
+* メール通知機能
+* システム設定
 
-- Set learning theme and objective.
-- Show recent progress.
-- Show information.
-- Manage learning tasks.
-- Manage learning progress.
-
-### For teachers.
-- Manage users.
-- Manage user's group.
-- Manage information.
-- Manage student's learning theme.
-- Manage student's learning tasks.
-- Manage student's learning progress.
-
-### For administrators.
-- System setting
 
 ## License
 GPLv3
