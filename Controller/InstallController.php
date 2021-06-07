@@ -1,11 +1,7 @@
 <?php
 /**
- * iroha Compass Project
- *
  * @author        Kotaro Miura
  * @copyright     2015-2021 iroha Soft, Inc. (https://irohasoft.jp)
- * @link          https://irohacompass.irohasoft.jp
- * @license       https://www.gnu.org/licenses/gpl-3.0.en.html GPL License
  */
 
 App::uses('AppController', 'Controller');
@@ -42,19 +38,10 @@ class InstallController extends AppController
 	/**
 	 * インストール
 	 */
-	public function index()
+	public function index($mode = null)
 	{
 		try
 		{
-			App::import('Model','ConnectionManager');
-			
-			$this->db   = ConnectionManager::getDataSource('default');
-			$cdd = new DATABASE_CONFIG();
-			
-			//debug($db);
-			$sql = "SHOW TABLES FROM `".$cdd->default['database']."` LIKE 'ib_users'";
-			$data = $this->db->query($sql);
-			
 			// apache_get_modules が存在する場合のみ、Apache のモジュールチェックを行う
 			if(function_exists('apache_get_modules'))
 			{
@@ -98,6 +85,34 @@ class InstallController extends AppController
 				$this->render('error');
 				return;
 			}
+		}
+		catch(Exception $e)
+		{
+			$this->err_msg = '各種モジュール（mod_rewrite, mod_headers, mbstring, pdo_mysql）チェック中にエラーが発生いたしました。';
+			$this->error();
+			$this->render('error');
+			return;
+		}
+		
+		try
+		{
+			App::import('Model','ConnectionManager');
+			
+			// テストモードの場合、テスト用のデータベースを参照
+			if($mode == 'test')
+			{
+				$this->db   = ConnectionManager::getDataSource('test');
+				$cdd = new DATABASE_CONFIG();
+				$sql = "SHOW TABLES FROM `".$cdd->test['database']."` LIKE 'ib_users'";
+			}
+			else
+			{
+				$this->db   = ConnectionManager::getDataSource('default');
+				$cdd = new DATABASE_CONFIG();
+				$sql = "SHOW TABLES FROM `".$cdd->default['database']."` LIKE 'ib_users'";
+			}
+			
+			$data = $this->db->query($sql);
 			
 			// ユーザテーブルが存在する場合、インストール済みと判断
 			if(count($data) > 0)
@@ -118,7 +133,7 @@ class InstallController extends AppController
 						return;
 					}
 					
-					if($password!=$password2)
+					if($password != $password2)
 					{
 						// エラー出力
 						$this->Flash->error('パスワードと確認用パスワードが一致しません');
@@ -225,15 +240,15 @@ class InstallController extends AppController
 				catch(Exception $e)
 				{
 					// カラム重複追加エラー
-					if($e->errorInfo[0]=='42S21')
+					if($e->errorInfo[0] == '42S21')
 						continue;
 					
 					// ビュー重複追加エラー
-					if($e->errorInfo[0]=='42S01')
+					if($e->errorInfo[0] == '42S01')
 						continue;
 					
 					$error_msg = sprintf("%s\n[Error Code]%s\n[Error Code2]%s\n[SQL]%s", $e->errorInfo[2], $e->errorInfo[0], $e->errorInfo[1], $statement);
-					$err_statements[count($err_statements)] = $error_msg;
+					$err_statements[] = $error_msg;
 				}
 			}
 		}

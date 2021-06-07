@@ -1,11 +1,7 @@
 <?php
 /**
- * iroha Compass Project
- *
  * @author        Kotaro Miura
  * @copyright     2015-2021 iroha Soft, Inc. (https://irohasoft.jp)
- * @link          https://irohacompass.irohasoft.jp
- * @license       https://www.gnu.org/licenses/gpl-3.0.en.html GPL License
  */
 
 App::uses('AppController', 'Controller');
@@ -32,13 +28,21 @@ class UpdateController extends AppController
 	/**
 	 * アップデート
 	 */
-	public function index()
+	public function index($mode = null)
 	{
 		try
 		{
 			App::import('Model','ConnectionManager');
 
+			// テストモードの場合、テスト用のデータベースを参照
+			if($mode == 'test')
+			{
+				$this->db   = ConnectionManager::getDataSource('test');
+			}
+			else
+			{
 			$this->db   = ConnectionManager::getDataSource('default');
+			}
 
 			// パッケージアップデート用クエリ
 			$this->path = APP.'Config'.DS.'Schema'.DS.'update.sql';
@@ -49,7 +53,6 @@ class UpdateController extends AppController
 			$err_custom = $this->__executeSQLScript();
 			
 			$err_statements = array_merge($err_update, $err_custom);
-			
 			
 			if(count($err_statements) > 0)
 			{
@@ -105,23 +108,23 @@ class UpdateController extends AppController
 				catch(Exception $e)
 				{
 					// レコード重複追加エラー
-					if($e->errorInfo[0]=='23000')
+					if($e->errorInfo[0] == '23000')
 						continue;
 					
 					// カラム重複追加エラー
-					if($e->errorInfo[0]=='42S21')
+					if($e->errorInfo[0] == '42S21')
 						continue;
 					
 					// ビュー重複追加エラー
-					if($e->errorInfo[0]=='42S01')
+					if($e->errorInfo[0] == '42S01')
 						continue;
 					
 					// インデックス重複追加エラー
-					if($e->errorInfo[0]=='42000')
+					if($e->errorInfo[0] == '42000')
 						continue;
 					
 					$error_msg = sprintf("%s\n[Error Code]%s\n[Error Code2]%s\n[SQL]%s", $e->errorInfo[2], $e->errorInfo[0], $e->errorInfo[1], $statement);
-					$err_statements[count($err_statements)] = $error_msg;
+					$err_statements[] = $error_msg;
 				}
 			}
 		}
