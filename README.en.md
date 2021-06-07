@@ -1,5 +1,5 @@
 # iroha Compass
-iroha Compass is a Self-directed Learning Support System.  [[Japanese / 日本語]](/README.jp.md)
+iroha Compass is a Self-directed Learning Support System.  [[Japanese / 日本語]](/README.md)
 
 ## Official Website (Japanese)
 https://irohacompass.irohasoft.jp/
