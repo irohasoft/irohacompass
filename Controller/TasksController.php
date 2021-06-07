@@ -215,53 +215,11 @@ class TasksController extends AppController
 		return $this->redirect(['action' => 'index', $task['Theme']['id']]);
 	}
 
-	public function admin_delete_enq($id)
-	{
-		if(Configure::read('demo_mode'))
-			return;
-		
-		$this->Task->id = $id;
-		
-		if(!$this->Task->exists())
-		{
-			throw new NotFoundException(__('Invalid task'));
-		}
-		
-		// コンテンツ情報を取得
-		$this->loadModel('Task');
-		$task = $this->Task->get($id);
-		
-		$this->request->allowMethod('post', 'delete');
-		
-		if($this->Task->delete())
-		{
-			$this->Flash->success(__('コンテンツが削除されました'));
-			return $this->redirect(['action' => 'index_enq']);
-		}
-		else
-		{
-			$this->Flash->error(__('The task could not be deleted. Please, try again.'));
-		}
-	}
-
 	public function admin_index($id)
 	{
 		//$id = intval($id);
 		$this->index($id);
 		$this->render('index');
-	}
-
-	public function admin_index_enq()
-	{
-		$this->Paginator->settings = [
-			'limit' => 20,
-			'order' => 'Task.modified desc',
-			'conditions' => ['theme_id' => 0],
-		];
-		
-		$tasks = $this->paginate();
-		
-		$this->set(compact('tasks'));
 	}
 
 	public function admin_add($theme_id)
@@ -536,37 +494,5 @@ class TasksController extends AppController
 	{
 		$this->index($theme_id, $user_id);
 		$this->render('index');
-	}
-
-	public function admin_add_enq()
-	{
-		$this->admin_edit_enq();
-		$this->render('admin_edit_enq');
-	}
-
-	public function admin_edit_enq($task_id = null)
-	{
-		if($this->isEditPage() && !$this->Task->exists($id))
-		{
-			throw new NotFoundException(__('Invalid user'));
-		}
-		
-		if($this->request->is(['post', 'put']))
-		{
-			if($this->Task->save($this->request->data))
-			{
-				$this->Flash->success(__('アンケートが保存されました'));
-
-				return $this->redirect(['action' => 'index_enq']);
-			}
-			else
-			{
-				$this->Flash->error(__('The user could not be saved. Please, try again.'));
-			}
-		}
-		else
-		{
-			$this->request->data = $this->Task->get($task_id);
-		}
 	}
 }
