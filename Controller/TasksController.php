@@ -41,7 +41,7 @@ class TasksController extends AppController
 	public function index($theme_id, $user_id = null)
 	{
 		$theme_id	= intval($theme_id);
-		$is_user	= ($this->action == 'index');
+		$is_user	= $this->isIndexPage() && !$this->isAdminPage();
 		$keyword	= $this->getQuery('keyword');
 		$status		= $this->getQuery('status');
 		
@@ -290,10 +290,9 @@ class TasksController extends AppController
 	public function edit($theme_id, $task_id = null)
 	{
 		$theme_id = intval($theme_id);
-		$is_add  = (($this->action == 'admin_add')||($this->action == 'add'));
-		$is_user = (($this->action == 'add')||($this->action == 'edit'));
+		$is_user  = $this->isIndexPage() && !$this->isAdminPage();
 		
-		if($this->action == 'edit' && !$this->Task->exists($task_id))
+		if($this->isEditPage() && !$this->Task->exists($task_id))
 		{
 			throw new NotFoundException(__('Invalid task'));
 		}
@@ -303,7 +302,7 @@ class TasksController extends AppController
 			if(Configure::read('demo_mode'))
 				return;
 			
-			if($is_add)
+			if(!$this->isEditPage())
 			{
 				$this->request->data['Task']['user_id'] = $this->readAuthUser('id');
 				$this->request->data['Task']['theme_id'] = $theme_id;
@@ -312,7 +311,7 @@ class TasksController extends AppController
 			if($this->Task->save($this->request->data))
 			{
 				// 学習履歴を追加
-				$record_type = $is_add ? 'task_add' : 'task_update';
+				$record_type = $this->isEditPage() ? 'task_update' : 'task_add';
 				$id = ($task_id == null) ? $this->Task->getLastInsertID() : $task_id;
 				$this->loadModel('Record');
 				/*
@@ -357,9 +356,9 @@ class TasksController extends AppController
 		$themes = $this->Task->Theme->find('list');
 		$users = $this->Task->User->find('list');
 		
-		$status = $is_add ? '1' : $this->request->data['Task']['status'];
-		$priority = $is_add ? '2' : $this->request->data['Task']['priority'];
-		$deadline = $is_add ? date("Y-m-d",strtotime("+1 week")) : $this->request->data['Task']['deadline'];
+		$status   = $this->isEditPage() ? $this->request->data['Task']['status']   : '1';
+		$priority = $this->isEditPage() ? $this->request->data['Task']['priority'] : '2';
+		$deadline = $this->isEditPage() ? $this->request->data['Task']['deadline'] : date("Y-m-d",strtotime("+1 week"));
 		
 		$this->set(compact('groups', 'themes', 'users', 'theme', 'priority', 'status', 'is_user', 'deadline'));
 	}
@@ -547,7 +546,7 @@ class TasksController extends AppController
 
 	public function admin_edit_enq($task_id = null)
 	{
-		if($this->action == 'admin_edit' && !$this->Task->exists($id))
+		if($this->isEditPage() && !$this->Task->exists($id))
 		{
 			throw new NotFoundException(__('Invalid user'));
 		}

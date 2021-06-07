@@ -93,7 +93,7 @@ $rate_list = [
 	?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<?= (($this->action == 'admin_edit')||($this->action == 'edit')) ? '<span data-localize="edit">編集</span>' :  '<span data-localize="add">新規課題</span>'; ?>
+			<?= ($this->isEditPage()) ? '<span data-localize="edit">編集</span>' :  '<span data-localize="add">新規課題</span>'; ?>
 		</div>
 		<div class="panel-body">
 			<?php

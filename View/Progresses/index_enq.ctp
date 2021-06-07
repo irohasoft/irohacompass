@@ -1,7 +1,7 @@
 <div class="progresses form">
 	<ol class="breadcrumb">
 <?php
-	if($this->action!='admin_record')
+	if(!$this->isAdminPage() && $this->isRcordPage())
 	{
 		$theme_url = ['controller' => 'tasks', 'action' => 'index', $content['Theme']['id']];
 		

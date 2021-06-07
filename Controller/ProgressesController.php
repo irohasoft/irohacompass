@@ -65,9 +65,9 @@ class ProgressesController extends AppController
 		$this->loadModel('Task');
 		$content = $this->Task->get($task_id);
 		
-		$is_record = (($this->action == 'record') || ($this->action == 'admin_record'));
-		$is_admin  = ($this->action == 'admin_record');
-		$is_user   = ($this->action == 'index');
+		$is_record = $this->isRecordPage();
+		$is_admin  = $this->isAdminPage();
+		$is_user   = $this->isIndexPage() && !$this->isAdminPage();
 		
 		$this->loadModel('User');
 		

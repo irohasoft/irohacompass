@@ -63,15 +63,15 @@ class ThemesController extends AppController
 
 	public function edit($id = null)
 	{
-		if($this->action == 'edit' && !$this->Theme->exists($id))
+		if($this->isEditPage() && !$this->Theme->exists($id))
 		{
 			throw new NotFoundException(__('Invalid theme'));
 		}
 		
 		// 追加フラグ
-		$is_add  = (($this->action == 'admin_add')||($this->action == 'add'));
+		$is_add  = !$this->isEditPage();
 		// ユーザフラグ
-		$is_user = (($this->action == 'add')||($this->action == 'edit'));
+		$is_user = !$this->isAdminPage();
 		
 		if($this->request->is(['post', 'put']))
 		{

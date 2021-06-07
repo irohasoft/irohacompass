@@ -301,6 +301,46 @@ class AppController extends Controller
 		return (isset($this->request->params['admin']));
 	}
 
+	/**
+	 * 編集画面へのアクセスかを確認
+	 */
+	protected function isEditPage()
+	{
+		return (($this->action == 'edit') || ($this->action == 'admin_edit'));
+	}
+
+	/**
+	 * 学習履歴画面へのアクセスかを確認
+	 */
+	protected function isRecordPage()
+	{
+		return (($this->action == 'record') || ($this->action == 'admin_record'));
+	}
+
+	/**
+	 * ログイン画面へのアクセスかを確認
+	 */
+	protected function isLoginPage()
+	{
+		return (($this->action == 'login') || ($this->action == 'admin_login'));
+	}
+
+	/**
+	 * 一覧ページかどうかを確認
+	 */
+	protected function isIndexPage()
+	{
+		return (($this->action == 'index') || ($this->action == 'admin_index'));
+	}
+
+	/**
+	 * 管理者かどうかを確認
+	 */
+	protected function isAdminRole()
+	{
+		return ($this->readAuthUser('role') == 'admin');
+	}
+
 	protected function addCondition($where, $key, $field)
 	{
 		$val = $this->getQuery($key);

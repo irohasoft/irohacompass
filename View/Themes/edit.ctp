@@ -54,7 +54,7 @@
 	<?= $this->Html->link(__('<< 戻る'), ['controller' => $controller, 'action' => 'index', @$this->params['pass'][0]])?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<?= (($this->action == 'admin_edit')||($this->action == 'edit')) ? "<span data-localize='edit'>編集</span>" :  __('新規学習テーマ'); ?>
+			<?= ($this->isEditPage()) ? "<span data-localize='edit'>編集</span>" :  __('新規学習テーマ'); ?>
 		</div>
 		<div class="panel-body">
 			<?php

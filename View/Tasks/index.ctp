@@ -2,7 +2,7 @@
 <?php $this->start('css-embedded'); ?>
 <!--[if !IE]><!-->
 <style>
-<?php if($this->action=='admin_record') {?>
+<?php if($this->isRecordPage()) {?>
 .ib-navi-item
 {
 	display: none;
