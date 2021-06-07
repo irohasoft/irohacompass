@@ -945,24 +945,6 @@ class ApisController extends AppController
 		return $note_id_list;
 	}
 
-	/**
-	 * 管理者かどうかを判定
-	 */
-	private function isAdminRole()
-	{
-		if((Configure::read('api_auth_type')) == 'wordpress')
-		{
-			$user    = wp_get_current_user();
-			$user_id = $user->get('user_login');
-			
-			return (($user_id == 'admin')||($user_id == 'miura'));
-		}
-		else
-		{
-			return ($this->readAuthUser('role') == 'admin');
-		}
-	}
-
 	//--------------------------------------//
 	//	Bearerからアクセストークンを取得	//
 	//	iroha Note 2 用						//
