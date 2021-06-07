@@ -42,6 +42,7 @@ class AppController extends Controller
 		'Paginator' => ['className' => 'BoostCake.BoostCakePaginator'],
 	];
 	
+	public $uses = ['Setting', 'Group'];
 	public $viewClass = 'App'; // 独自のビュークラスを指定
 	
 	/**
@@ -49,12 +50,12 @@ class AppController extends Controller
 	 */
 	public function beforeFilter()
 	{
-		$this->set('loginedUser', $this->readAuthUser());
+		$this->set('loginedUser', $this->readAuthUser()); // ログインユーザ情報（旧バージョン用）
 		
 		// 他のサイトの設定が存在する場合、設定情報及びログイン情報をクリア
 		if($this->hasSession('Setting'))
 		{
-			if($this->readSession('Setting.app_dir')!=APP_DIR)
+			if($this->readSession('Setting.app_dir') != APP_DIR)
 			{
 				// セッション内の設定情報を削除
 				$this->deleteSession('Setting');
@@ -106,9 +107,6 @@ class AppController extends Controller
 			$this->Auth->loginAction = ['controller' => 'users','action' => 'login','admin' => true];
 			$this->Auth->loginRedirect = ['controller' => 'users','action' => 'index','admin' => true];
 			$this->Auth->logoutRedirect = ['controller' => 'users','action' => 'login','admin' => true];
-			
-			// グループモデルを共通で保持する
-			$this->loadModel('Group');
 		}
 		else
 		{
@@ -217,16 +215,17 @@ class AppController extends Controller
 	/**
 	 * クエリストリングの取得
 	 * @param string $key キー
+	 * @param string $default キーが存在しない場合に返す値
 	 */
-	protected function getQuery($key)
+	protected function getQuery($key, $default = '')
 	{
 		if(!isset($this->request->query[$key]))
-			return '';
+			return $default;
 		
 		$val = $this->request->query[$key];
 		
 		if($val == null)
-			return '';
+			return $default;
 		
 		return $val;
 	}
@@ -243,16 +242,17 @@ class AppController extends Controller
 	/**
 	 * ルート要素とリクエストパラメータを取得
 	 * @param string $key キー
+	 * @param string $default キーが存在しない場合に返す値
 	 */
-	protected function getParam($key)
+	protected function getParam($key, $default = '')
 	{
 		if(!isset($this->request->params[$key]))
-			return '';
+			return $default;
 		
 		$val = $this->request->params[$key];
 		
 		if($val == null)
-			return '';
+			return $default;
 		
 		return $val;
 	}
@@ -260,16 +260,17 @@ class AppController extends Controller
 	/**
 	 * POSTデータの取得
 	 * @param string $key キー
+	 * @param string $default キーが存在しない場合に返す値
 	 */
-	protected function getData($key = null)
+	protected function getData($key = null, $default = null)
 	{
 		$val = $this->request->data;
 		
 		if(!$val)
-			return null;
+			return $default;
 		
 		if($key)
-			$val = empty($val[$key]) ? null :$val[$key];
+			$val = empty($val[$key]) ? $default :$val[$key];
 		
 		return $val;
 	}
@@ -292,7 +293,7 @@ class AppController extends Controller
 	}
 
 	/**
-	 * 管理画面のアクセスか確認
+	 * 管理画面へのアクセスかを確認
 	 * @return bool true : 管理画面, false : 受講者画面
 	 */
 	protected function isAdminPage()
