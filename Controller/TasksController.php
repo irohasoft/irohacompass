@@ -290,7 +290,7 @@ class TasksController extends AppController
 	public function edit($theme_id, $task_id = null)
 	{
 		$theme_id = intval($theme_id);
-		$is_user  = $this->isIndexPage() && !$this->isAdminPage();
+		$is_user  = !$this->isAdminPage();
 		
 		if($this->isEditPage() && !$this->Task->exists($task_id))
 		{

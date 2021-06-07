@@ -44,7 +44,7 @@
 	<?php
 	$controller = ($is_user) ? 'users_themes' : 'themes';
 	
-	if($this->action!='admin_record')
+	if(!$this->isRecordPage())
 	{
 		$this->Html->addCrumb('<< '.__('学習テーマ一覧'), [
 			'controller' => $controller,
