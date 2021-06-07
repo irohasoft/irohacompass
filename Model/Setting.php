@@ -13,61 +13,22 @@ App::uses('AppModel', 'Model');
  * Setting Model
  *
  */
-class Setting extends AppModel {
-
-/**
- * Validation rules
- *
+class Setting extends AppModel
+{
+	/**
+	 * バリデーションルール
+	 * https://book.cakephp.org/2/ja/models/data-validation.html
  * @var array
  */
 	public $validate = [
-		'setting_key' => [
-			'notBlank' => [
-				'rule' => ['notBlank'],
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			],
-		],
-		'setting_value' => [
-			'notBlank' => [
-				'rule' => ['notBlank'],
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			],
-		],
-	];
-	
-	public function getSettingValue($setting_key)
-	{
-		$setting_value = "";
-		
-		$sql = <<<EOF
-SELECT setting_value
-  FROM ib_settings
- WHERE setting_key = :setting_key
-EOF;
-		$params = [
-				'setting_key' => $setting_key
+		'setting_key'   => ['notBlank' => ['rule' => ['notBlank']]],
+		'setting_value' => ['notBlank' => ['rule' => ['notBlank']]]
 		];
 		
-		$data = $this->query($sql, $params);
-		
-		
-		//debug($data);
-		/*
-		if(count($data) > 0)
-			$setting_value = $data['Setting'][0]['setting_value'];
+	/**
+	 * システム設定の値のリストを取得
+	 * @return array 設定値リスト（連想配列）
 		*/
-		
-		return $setting_value;
-	}
-	
 	public function getSettings()
 	{
 		$result = [];
@@ -79,11 +40,13 @@ EOF;
 			$result[$setting['ib_settings']['setting_key']] = $setting['ib_settings']['setting_value'];
 		}
 		
-		//debug($result);
-		
 		return $result;
 	}
 	
+	/**
+	 * システム設定を保存
+	 * @param array 保存する設定値リスト（連想配列）
+	 */
 	public function setSettings($settings)
 	{
 		foreach ($settings as $key => $value)

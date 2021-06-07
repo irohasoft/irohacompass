@@ -6,7 +6,7 @@
 			'action' => 'index'
 	]);
 
-	$this->Html->addCrumb('お知らせ一覧', [
+	$this->Html->addCrumb(__('お知らせ一覧'), [
 		'controller' => 'infos',
 		'action' => 'index'
 	]);

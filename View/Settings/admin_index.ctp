@@ -1,4 +1,17 @@
 <?= $this->element('admin_menu');?>
+<?php $this->start('script-embedded'); ?>
+<script>
+	$(document).ready(function()
+	{
+		$('option').each(function(){
+			console.log($(this).val());
+			$(this).css('color',		'white');
+			$(this).css('background',	$(this).val());
+			$(this).css('font-weight',	'bold');
+		});
+	});
+</script>
+<?php $this->end(); ?>
 <div class="admin-settings-index">
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -7,15 +20,10 @@
 		<div class="panel-body">
 			<?php
 				echo $this->Form->create('Setting', Configure::read('form_defaults'));
-				echo $this->Form->input('title',		['label' => 'システム名',					'value'=>$settings['title']]);
-				echo $this->Form->input('copyright',	['label' => 'コピーライト',				'value'=>$settings['copyright']]);
-				echo $this->Form->input('color',		['label' => 'テーマカラー',				'options'=>$colors, 'selected'=>$settings['color']]);
-				echo $this->Form->input('information',	['label' => '全体のお知らせ',				'value'=>$settings['information'], 'type' => 'textarea']);
-				/*
-				echo $this->Form->input('mail_title',	array('label' => '進捗の更新メールのタイトル',	'value'=>$settings['mail_title']));
-				echo $this->Form->input('admin_name',	array('label' => '送信者名',					'value'=>$settings['admin_name']));
-				echo $this->Form->input('admin_from',	array('label' => '送信者メールアドレス',		'value'=>$settings['admin_from']));
-				*/
+			echo $this->Form->input('title',		['label' => __('システム名'),		'value'=>$settings['title']]);
+			echo $this->Form->input('copyright',	['label' => __('コピーライト'),		'value'=>$settings['copyright']]);
+			echo $this->Form->input('color',		['label' => __('テーマカラー'),		'options'=>$colors, 'selected'=>$settings['color']]);
+			echo $this->Form->input('information',	['label' => __('全体のお知らせ'),	'value'=>$settings['information'], 'type' => 'textarea']);
 				echo Configure::read('form_submit_before')
 					.$this->Form->submit(__('保存'), Configure::read('form_submit_defaults'))
 					.Configure::read('form_submit_after');
@@ -23,5 +31,4 @@
 			?>
 		</div>
 	</div>
-	
 </div>

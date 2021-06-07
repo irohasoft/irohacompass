@@ -9,8 +9,8 @@
 	<tr>
 		<th><?= $this->Paginator->sort('title',   __('タイトル')); ?></th>
 		<th nowrap><?= __('対象グループ'); ?></th>
-		<th class="ib-col-date"><?= $this->Paginator->sort('created', '作成日時'); ?></th>
-		<th class="ib-col-date"><?= $this->Paginator->sort('modified', '更新日時'); ?></th>
+		<th class="ib-col-date"><?= $this->Paginator->sort('created', __('作成日時')); ?></th>
+		<th class="ib-col-date"><?= $this->Paginator->sort('modified', __('更新日時')); ?></th>
 		<th class="ib-col-action"><?= __('Actions'); ?></th>
 	</tr>
 	</thead>
@@ -22,12 +22,9 @@
 		<td class="ib-col-date"><?= Utils::getYMDHN($info['Info']['created']); ?>&nbsp;</td>
 		<td class="ib-col-date"><?= Utils::getYMDHN($info['Info']['modified']); ?>&nbsp;</td>
 		<td class="ib-col-action">
-			<button type="button" class="btn btn-success" onclick="location.href='<?= Router::url(['action' => 'edit', $info['Info']['id']]) ?>'">編集</button>
-			<?= $this->Form->postLink(__('削除'), 
-					['action' => 'delete', $info['Info']['id']], 
-					['class'=>'btn btn-danger'], 
-					__('[%s] を削除してもよろしいですか?', $info['Info']['title'])
-			); ?>
+			<button type="button" class="btn btn-success" onclick="location.href='<?= Router::url(['action' => 'edit', $info['Info']['id']]) ?>'"><?= __('編集')?></button>
+			<?= $this->Form->postLink(__('削除'), ['action' => 'delete', $info['Info']['id']], ['class'=>'btn btn-danger'], 
+					__('[%s] を削除してもよろしいですか?', $info['Info']['title']));?>
 		</td>
 	</tr>
 	<?php endforeach; ?>
