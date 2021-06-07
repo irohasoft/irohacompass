@@ -42,7 +42,7 @@ class AppController extends Controller
 		'Paginator' => ['className' => 'BoostCake.BoostCakePaginator'],
 	];
 	
-	public $uses = ['Setting'];
+	public $viewClass = 'App'; // 独自のビュークラスを指定
 	
 	/**
 	 * コールバック（コントローラのアクションロジック実行前に実行）
