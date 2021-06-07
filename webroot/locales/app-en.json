@@ -41,6 +41,7 @@
   "add": "Add",
   "save": "Save",
   "delete": "Delete",
+  "move": "Move",
   "confirm": "Confirm",
   "attachment": "Attachment",
   "content_type": "Content Type",
