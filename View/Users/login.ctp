@@ -4,7 +4,9 @@
 			学習者ログイン
 		</div>
 		<div class="panel-body">
-			<div class="text-right"><a href="../admin/users/login">管理者ログインへ</a></div>
+			<?php if(Configure::read('show_admin_link')) {?>
+			<div class="text-right"><a href="<?= Router::url(['action' => 'login', 'admin' => true]) ?>"><?= __('管理者ログインへ')?></a></div>
+			<?php }?>
 			<?= $this->Flash->render('auth'); ?>
 			<?= $this->Form->create('User'); ?>
 			
