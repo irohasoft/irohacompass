@@ -1,6 +1,6 @@
 # iroha Compass
 
-iroha Compass とは自律学習支援システムです。[[English]](/README.en.md)
+iroha Compass とは知識創造型学習支援システムです。[[English]](/README.en.md)
 
 学習者一人ひとりの主体的で深い学びを支援します。
 
