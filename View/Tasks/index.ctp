@@ -36,8 +36,7 @@
 				
 				$(target).before(html);
 			}
-			}
-		});
+		}
 		
 		function openNote(page_id)
 		{
