@@ -15,10 +15,9 @@
 	
 	$title = h($info['Info']['title']);
 	$date  = h(Utils::getYMD($info['Info']['created']));
+	
 	$body  = $info['Info']['body'];
-	//$body  = $this->Text->autoLinkUrls($body);
-	// 暫定対応
-	$body  = $this->Text->autoLinkUrls($body, ['escape' => false]);
+	$body  = $this->Text->autoLinkUrls($body, ['target' => '_blank']);
 	$body  = nl2br($body);
 	?>
 	</div>
