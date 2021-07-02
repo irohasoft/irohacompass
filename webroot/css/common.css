@@ -288,6 +288,45 @@ form .required .control-label:after
 	font-weight			: bold;
 }
 
+/* ホーム画面用 */
+
+.users-themes-index .btn-rest
+{
+	float: right;
+}
+
+.users-themes-index .chart-container
+{
+	height			: 150px;
+}
+
+.users-themes-index table tr td
+{
+	padding			: 2px;
+	max-width		: 300px;
+}
+
+.users-themes-index .reader
+{
+	overflow		: hidden;
+	text-overflow	: ellipsis;
+	white-space		: nowrap;
+}
+
+.users-themes-index .idea-form
+{
+	width			: calc(100% - 100px);
+	float			: left;
+}
+
+.users-themes-index .idea-body
+{
+	width			: calc(100% - 100px);
+	float			: left;
+	margin-right	: 10px;
+}
+
+
 /* 進捗一覧用 */
 .progresses-index .td-reader
 {
@@ -483,6 +522,35 @@ form .required .control-label:after
 	.list-group-item-text span
 	{
 		display				: block;
+	}
+
+	/* ホーム画面 */
+	.users-themes-index a
+	{
+		display: block;
+	}
+	
+	.users-themes-index .list-group-item-text span
+	{
+		display: block;
+	}
+	
+	.users-themes-index table tr td
+	{
+		padding: 2px;
+		font-size: 12px;
+	}
+	
+	.users-themes-index .col-theme,
+	.users-themes-index .col-task
+	{
+		width:30%;
+	}
+	
+	.users-themes-index .progress-container
+	{
+		max-width	: 100%;
+		overflow-x: scroll;
 	}
 
 	/* 課題一覧 */

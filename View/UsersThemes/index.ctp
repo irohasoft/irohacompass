@@ -1,76 +1,5 @@
-<?php //echo $this->element('menu');?>
 <?= $this->Html->script( 'Chart.bundle.js');?>
 <?= $this->Html->script( 'Chart.utils.js');?>
-<?php $this->start('css-embedded'); ?>
-<style>
-.btn-rest
-{
-	float: right;
-}
-
-.chart-container
-{
-	height			: 150px;
-}
-
-table tr td
-{
-	padding			: 2px;
-	max-width		: 300px;
-}
-
-.reader
-{
-	overflow		: hidden;
-	text-overflow	: ellipsis;
-	white-space		: nowrap;
-}
-
-.idea-form
-{
-	width			: calc(100% - 100px);
-	float			: left;
-}
-
-.idea-body
-{
-	width			: calc(100% - 100px);
-	float			: left;
-	margin-right	: 10px;
-}
-
-@media only screen and (max-width:800px)
-{
-	a
-	{
-		display: block;
-	}
-	
-	.list-group-item-text span
-	{
-		display: block;
-	}
-	
-	table tr td
-	{
-		padding: 2px;
-		font-size: 12px;
-	}
-	
-	.col-theme,
-	.col-task
-	{
-		width:30%;
-	}
-	
-	.progress-container
-	{
-		max-width	: 100%;
-		overflow-x: scroll;
-	}
-}
-</style>
-<?php $this->end(); ?>
 <?php $this->start('script-embedded'); ?>
 <script>
 	var labels			= <?= json_encode($labels);?>;
@@ -83,7 +12,7 @@ table tr td
 	});
 </script>
 <?php $this->end(); ?>
-<div class="themes index">
+<div class="users-themes-index">
 	<div class="panel panel-success">
 		<div class="panel-heading"><span data-localize='information'><?= __('お知らせ'); ?></span></div>
 		<div class="panel-body">
@@ -187,6 +116,7 @@ table tr td
 			<button class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['controller' => 'themes', 'action' => 'add']) ?>'"><span data-localize='add_learning_theme'>+ 学習テーマを追加</span></button>
 		</div>
 		<div class="panel-body">
+			<?php if($themes) {?>
 			<div class="theme-list" data-localize='my_learning_themes'>所有しているテーマ</div>
 			<ul class="list-group">
 			<?php foreach($themes as $theme): ?>
@@ -222,6 +152,8 @@ table tr td
 				<?php endif;?>
 			<?php endforeach;?>
 			</ul>
+			<?php }?>
+			
 			<?= $no_record;?>
 		</div>
 	</div>
