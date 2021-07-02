@@ -20,16 +20,22 @@
 	<script>
 		//var _markedRenderer = new marked.Renderer;
 		$(function(){
-			if($("#learning_target"))
+			markedText('#learning_target');
+		});
+
+		function markedText(target)
+		{
+			if($(target))
 			{
-				var html = marked($('#learning_target').val(),
+				var html = marked($(target).val(),
 				{
 	//				renderer: _markedRenderer,
 					breaks: true,
 					sanitize: true
 				});
 				
-				$("#learning_target").before(html);
+				$(target).before(html);
+			}
 			}
 		});
 		
