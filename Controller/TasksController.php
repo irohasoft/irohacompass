@@ -86,16 +86,25 @@ class TasksController extends AppController
 		{
 			$this->loadModel('Progress');
 			
+			$conditions_progress = $conditions;
+			
+			$conditions_progress['OR'] = [
+				'Progress.title like' => '%'.$keyword.'%',
+				'Progress.body like' => '%'.$keyword.'%'
+			];
+			
 			// キーワードを含む進捗を検索
 			$progress_list = $this->Progress->find()
-				->where($conditions)
+				->select(['Task.id'])
+				->where($conditions_progress)
 				->all();
 			
+			// ヒットした課題のIDリストを作成
 			$task_id_list = [];
 			
 			foreach ($progress_list as $item)
 			{
-				$task_id_list[count($task_id_list)] = $item['Task']['id'];
+				$task_id_list[] = $item['Task']['id'];
 			}
 			
 			// キーワードを含むカードを検索
