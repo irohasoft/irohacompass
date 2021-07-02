@@ -260,7 +260,11 @@
 				switch($content_type)
 				{
 					case 'text':
-						echo h($progress['Progress']['body']);
+						$body  = $progress['Progress']['body'];
+						//$body  = $this->Text->autoLinkUrls($body, ['escape' => false, 'target' => '_blank']);
+						$body  = $this->Text->autoLinkUrls($body, ['target' => '_blank']);
+						$body  = nl2br($body);
+						echo $body;
 						break;
 					case '':
 					case 'markdown':
