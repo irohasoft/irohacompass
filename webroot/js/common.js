@@ -153,6 +153,9 @@ CommonUtility.prototype.createProgressChart = function (labels, access_data, pro
 		}]
 	};
 	
+	if(!document.getElementById('chart'))
+		return;
+	
 	var ctx = document.getElementById('chart').getContext('2d');
 	
 	ctx.canvas.height = height + '.px';
