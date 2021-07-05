@@ -340,6 +340,9 @@ class AppController extends Controller
 		return $where;
 	}
 
+	/**
+	 * ログを記録
+	 */
 	protected function writeLog($log_type, $log_content, $controller = '', $action = '', $params = '', $sec = 0)
 	{
 		$data = [
@@ -359,7 +362,9 @@ class AppController extends Controller
 		$this->Log->save($data);
 	}
 
-	// 日本語と英語の対応表をロード
+	/**
+	 * 日本語と英語の対応表をロード
+	 */
 	private function loadTranslateMessages($lang = 'en')
 	{
 		$this->replaceConfigure('progress_type');
@@ -371,6 +376,9 @@ class AppController extends Controller
 		$file_path = APP.'Config'.DS.'message-'.$lang.'.csv';
 		
 		if(!file_exists($file_path))
+			return;
+		
+		if($this->isAdminPage())
 			return;
 		
 		$csv = file($file_path);
@@ -389,7 +397,10 @@ class AppController extends Controller
 		Configure::write('messages', $messages);
 		//debug(Configure::read('messages'));
 	}
-	
+
+	/**
+	 * 既存の設定を上書き
+	 */
 	private function replaceConfigure($key, $lang = 'en')
 	{
 		Configure::delete($key);
