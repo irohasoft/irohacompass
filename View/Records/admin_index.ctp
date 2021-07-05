@@ -38,51 +38,27 @@
 <div class="admin-records-index">
 	<div class="ib-page-title"><?= __('進捗一覧'); ?></div>
 	<div class="ib-horizontal">
-		<?php
-			echo $this->Form->create('Record');
-			echo '<div class="ib-search-buttons">';
-			echo $this->Form->submit(__('検索'),	['class' => 'btn btn-info', 'div' => false]);
-			echo $this->Form->hidden('cmd');
-			echo '<button type="button" class="btn btn-default" onclick="downloadCSV()">'.__('CSV出力').'</button>';
-			echo '</div>';
-			
-			echo '<div class="ib-row">';
-			echo $this->Form->input('theme_id',		['label' => __('学習テーマ').' :', 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
-			echo $this->Form->input('task_title',	['label' => __('課題名').' :', 'value'=>$task_title, 'class'=>'form-control']);
-			echo $this->Form->input('group_id',		['label' => __('グループ').' :', 'options'=>$groups, 'selected'=>$group_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
-			echo $this->Form->input('user_id',		['label' => __('ユーザ').' :', 'options'=>$users, 'selected'=>$user_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control']);
-			echo '</div>';
-			
-			echo '<div class="ib-search-date-container">';
-			echo $this->Form->input('from_date', [
-				'type' => 'date',
-				'dateFormat' => 'YMD',
-				'monthNames' => false,
-				'timeFormat' => '24',
-				'minYear' => date('Y') - 5,
-				'maxYear' => date('Y'),
-				'separator' => ' / ',
-				'label'=> '対象日時 : ',
-				'class'=>'form-control',
-				'style' => 'display: inline;',
-				'value' => $from_date
-			]);
-			echo $this->Form->input('to_date', [
-				'type' => 'date',
-				'dateFormat' => 'YMD',
-				'monthNames' => false,
-				'timeFormat' => '24',
-				'minYear' => date('Y') - 5,
-				'maxYear' => date('Y'),
-				'separator' => ' / ',
-				'label'=> '～',
-				'class'=>'form-control',
-				'style' => 'display: inline;',
-				'value' => $to_date
-			]);
-			echo '</div>';
-			echo $this->Form->end();
-		?>
+	<?php
+		echo $this->Form->create('Record');
+		echo '<div class="ib-search-buttons">';
+		echo $this->Form->submit(__('検索'),	['class' => 'btn btn-info', 'div' => false]);
+		echo $this->Form->hidden('cmd');
+		echo '<button type="button" class="btn btn-default" onclick="downloadCSV()">'.__('CSV出力').'</button>';
+		echo '</div>';
+		
+		echo '<div class="ib-row">';
+		echo $this->Form->searchField('theme_id',	['label' => __('学習テーマ'), 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て']);
+		echo $this->Form->searchField('task_title',	['label' => __('課題名'), 'value'=>$task_title, 'class'=>'form-control']);
+		echo $this->Form->searchField('group_id',	['label' => __('グループ'), 'options'=>$groups, 'selected'=>$group_id, 'empty' => '全て']);
+		echo $this->Form->searchField('user_id',	['label' => __('ユーザ'), 'options'=>$users, 'selected'=>$user_id, 'empty' => '全て']);
+		echo '</div>';
+		
+		echo '<div class="ib-search-date-container">';
+		echo $this->Form->searchDate('from_date', ['label'=> __('対象日時'), 'value' => $from_date]);
+		echo $this->Form->searchDate('to_date',   ['label'=> __('～'), 'value' => $to_date]);
+		echo '</div>';
+		echo $this->Form->end();
+	?>
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<thead>

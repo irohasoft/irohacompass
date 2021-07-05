@@ -88,11 +88,16 @@ function _addSec()
 function CommonUtility() {}
 
 // リッチテキストエディタの設定
-CommonUtility.prototype.setRichTextEditor = function (selector, use_upload_image, base_url)
+CommonUtility.prototype.setRichTextEditor = function (selector, upload_image_maxsize, base_url)
 {
+	// 旧パラメータ（use_upload_image）の対応
+	if((upload_image_maxsize===true)||(upload_image_maxsize===false))
+		upload_image_maxsize = (1024 * 1024 * 2);
+	
 	$(selector).summernote({
 		lang: "ja-JP",
-		maximumImageFileSize: (1024 * 500),
+//		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New']
+		maximumImageFileSize: upload_image_maxsize,
 		callbacks: {
 			onImageUpload: function(files)
 			{

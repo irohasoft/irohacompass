@@ -20,6 +20,7 @@ $(function (event)
 	$('.btn-primary').prop('disabled', true);
 	$('.btn-score').prop('disabled', false);
 	$('.btn-danger').attr("onclick", 'alert("デモモードの為、削除できません");');
+	$('.admin-users-edit .btn-default').attr("onclick", 'alert("デモモードの為、削除できません");');
 	
 	$('.btn-primary[value="+ 追加"]').prop('disabled', false);
 	$('.btn-primary[value="追加"]').prop('disabled', false);

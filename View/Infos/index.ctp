@@ -1,21 +1,21 @@
 <div class="infos-index">
 	<div class="breadcrumb">
-<?php
+	<?php
 	$this->Html->addCrumb('HOME', [
 		'controller' => 'users_themes',
 		'action' => 'index'
 	]);
 	echo $this->Html->getCrumbs(' / ');
-?>
+	?>
 	</div>
 	<div class="panel panel-success">
-		<div class="panel-heading"><span data-localize='information'><?= __('お知らせ一覧'); ?></span></div>
+		<div class="panel-heading"><?= __('お知らせ一覧'); ?></div>
 		<div class="panel-body">
 			<table cellpadding="0" cellspacing="0">
 			<thead>
 			<tr>
-				<th><span data-localize='date'><?= $this->Paginator->sort('opend',   __('日付')); ?></span></th>
-				<th><span data-localize='title'><?= $this->Paginator->sort('title',   __('タイトル')); ?></span></th>
+				<th><?= $this->Paginator->sort('opend',   __('日付')); ?></th>
+				<th><?= $this->Paginator->sort('title',   __('タイトル')); ?></th>
 			</tr>
 			</thead>
 			<tbody>

@@ -1,8 +1,8 @@
 <?php
- App::uses('FormHelper', 'View/Helper');
+App::uses('FormHelper', 'View/Helper');
   
- class AppFormHelper extends FormHelper
- {
+class AppFormHelper extends FormHelper
+{
 	 /**
 	  * ここに記述したキーが $options にあった場合、
 	  * コールバックを実行
@@ -34,7 +34,6 @@
 			 }
 		 }
 		 
-  
 		 return parent::input($fieldName, $options);
 	 }
 
@@ -45,7 +44,6 @@
 		return parent::input($fieldName, $options);
 	}
 	
-
 	 /**
 	  * ヘルプの出力
 	  *
@@ -65,9 +63,9 @@
 			 $options = $this->helpText($options);
 		 }
 		 unset($options['help']);
-  
 		 return $options;
 	 }
+
 	 /**
 	  * 入力についての注意事項
 	  *
@@ -86,7 +84,6 @@
 			 $options['after'] = $helptext;
 		 }
 		 unset($options['helpText']);
-  
 		 return $options;
 	 }
   
@@ -101,16 +98,13 @@
 	  */
 	 protected function helpList(Array $options)
 	 {
-  
 		 $ul = $this->Html->nestedList($options['helpList'], ['class' => 'help-list']);
-  
 		 if (array_key_exists('after', $options)) {
 			 $options['after'] .= $ul;
 		 } else {
 			 $options['after'] = $ul;
 		 }
 		 unset($options['helpList']);
-  
 		 return $options;
 	 }
   
@@ -133,8 +127,7 @@
 			 $options['after'] = $text;
 		 }
 		 unset($options['example']);
-  
 		 return $options;
 	 }
- }
- ?>
+}
+?>

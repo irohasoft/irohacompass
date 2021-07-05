@@ -1,7 +1,7 @@
 <div class="users-login">
 	<div class="panel panel-info form-signin">
 		<div class="panel-heading">
-			学習者ログイン
+			<?= __('学習者ログイン')?>
 		</div>
 		<div class="panel-body">
 			<?php if(Configure::read('show_admin_link')) {?>
@@ -18,7 +18,7 @@
 				<input type="checkbox" name="data[User][remember_me]" checked="checked" value="1" id="remember_me"><?= __('ログイン状態を保持 / Remeber me')?>
 				<?= $this->Form->unlockField('remember_me'); ?>
 			</div>
-			<?= $this->Form->end(['label' => 'ログイン / Login', 'class'=>'btn btn-lg btn-primary btn-block']); ?>
+			<?= $this->Form->end(['label' => __('ログイン / Login'), 'class'=>'btn btn-lg btn-primary btn-block']); ?>
 		</div>
 	</div>
 </div>
