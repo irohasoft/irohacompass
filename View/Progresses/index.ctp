@@ -206,7 +206,7 @@
 			</div>
 			<div>
 				<br>
-				<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?= Router::url(['controller' => 'tasks', 'action' => 'edit', $content['Theme']['id'], $content['Task']['id']]) ?>'"><?= __('編集')?></button>
+				<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?= Router::url(['controller' => 'tasks', 'action' => 'edit', $content['Theme']['id'], $content['Task']['id'], 'progresses']) ?>'"><?= __('編集')?></button>
 			</div>
 		</div>
 	</div>

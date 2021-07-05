@@ -248,13 +248,13 @@ class TasksController extends AppController
 		$this->render('edit');
 	}
 
-	public function admin_edit($theme_id, $task_id = null)
+	public function admin_edit($theme_id, $task_id = null, $from = null)
 	{
-		$this->edit($theme_id, $task_id);
+		$this->edit($theme_id, $task_id, $from);
 		$this->render('edit');
 	}
 
-	public function edit($theme_id, $task_id = null)
+	public function edit($theme_id, $task_id = null, $from = null)
 	{
 		$theme_id = intval($theme_id);
 		$is_user  = !$this->isAdminPage();
@@ -303,9 +303,16 @@ class TasksController extends AppController
 				
 				$this->Flash->success(__('課題内容が保存されました'));
 				
-				return $this->redirect( [
-					'action' => 'index/' . $theme_id
-				]);
+				if($from == 'progresses')
+				{
+					// 編集の場合、進捗一覧画面に遷移
+					return $this->redirect(['controller' => 'progresses', 'action' => 'index', $task_id]);
+				}
+				else
+				{
+					// 追加の場合、課題一覧画面に遷移
+					return $this->redirect(['action' => 'index', $theme_id]);
+				}
 			}
 			else
 			{
