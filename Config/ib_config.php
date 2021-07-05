@@ -11,7 +11,7 @@
 $config['group_status']		= ['1' => '公開', '0' => '非公開'];
 $config['theme_status']		= ['1' => '有効', '0' => '無効'];
 
-$config['progress_type']			= [
+$config['progress_type'] = [
 	'progress'	=> '進捗',
 	'comment'	=> 'コメント',
 	'idea'		=> 'アイデア・メモ',
@@ -19,18 +19,32 @@ $config['progress_type']			= [
 	'answer'	=> '回答',
 ];
 
-$config['content_type']	= [
+$config['progress_type_en'] = [
+	'progress'	=> 'Progress',
+	'comment'	=> 'Comment',
+	'idea'		=> 'Idea / Memo',
+	'question'	=> 'Question',
+	'answer'	=> 'Answer',
+];
+
+$config['content_type'] = [
 	'text'		=> 'テキスト',
 	'markdown'	=> 'Markdown',
 	'irohanote'	=> 'アイデアマップ',
 ];
 
-$config['progress_type_enq']	= [
+$config['content_type_en'] = [
+	'text'		=> 'Text',
+	'markdown'	=> 'Markdown',
+	'irohanote'	=> 'Idea Map',
+];
+
+$config['progress_type_enq'] = [
 	'single'	=> '選択形式',
 	'text'		=> '記述式'
 ];
 
-$config['lang']	= [
+$config['lang'] = [
 	'jp'		=> '日本語',
 	'en'		=> '英語'
 ];
@@ -53,10 +67,31 @@ $config['record_type'] = [
 	'answer_update'		=> '回答更新',
 ];
 
+$config['record_type_en'] = [
+	'0'					=> '',
+	'theme_add'			=> 'Theme Added',
+	'theme_update'		=> 'Theme Updated',
+	'task_add'			=> 'Task Added',
+	'task_update'		=> 'Task Updated',
+	'progress'			=> 'Progress',
+	'comment'			=> 'Comment',
+	'idea'				=> 'Idea / Memo',
+	'question'			=> 'Question',
+	'answer'			=> 'Answer',
+	'progress_update'	=> 'Progress Updated',
+	'comment_update'	=> 'Comment Updated',
+	'idea_update'		=> 'Idea Updated',
+	'question_update'	=> 'Question Updated',
+	'answer_update'		=> 'Answer Updated',
+];
+
 $config['user_role'] = ['admin' => '管理者', 'user' => '学習者'];
 
 $config['task_priority'] = ['1' => '高', '2' => '中', '3' => '低'];
 $config['task_status'] = ['1' => '未対応', '2' => '実施中', '3' => '完了'];
+
+$config['task_priority_en'] = ['1' => 'High', '2' => 'Middle', '3' => 'Low'];
+$config['task_status_en'] = ['1' => 'Waiting', '2' => 'Working', '3' => 'Completed'];
 
 $config['upload_extensions'] = [
 	'.png',

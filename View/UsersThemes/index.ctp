@@ -14,7 +14,7 @@
 <?php $this->end(); ?>
 <div class="users-themes-index">
 	<div class="panel panel-success">
-		<div class="panel-heading"><span data-localize='information'><?= __('お知らせ'); ?></span></div>
+		<div class="panel-heading"><?= __('お知らせ'); ?></div>
 		<div class="panel-body">
 			<?php if($info!=""){?>
 			<div class="well">
@@ -37,7 +37,7 @@
 			<?php endforeach; ?>
 			</tbody>
 			</table>
-			<div class="text-right"><a href="<?= Router::url(['controller' => 'infos', 'action' => 'index']);?>"><span data-localize='view_list'>一覧を表示</span></a></div>
+			<div class="text-right"><a href="<?= Router::url(['controller' => 'infos', 'action' => 'index']);?>"><?= __('一覧を表示')?></a></div>
 			<?php }?>
 			
 			<?= $no_info;?>
@@ -47,7 +47,7 @@
 	</p>
 	<?php if(count($records) > 0){?>
 	<div class="panel panel-default">
-		<div class="panel-heading"><span data-localize='recent_progresses'><?= __('最近の進捗'); ?></span></div>
+		<div class="panel-heading"><?= __('最近の進捗'); ?></div>
 		<div class="panel-body">
 			<div class="chart-container">
 				<canvas id="chart"></canvas>
@@ -58,16 +58,16 @@
 			<table cellpadding="0" cellspacing="0">
 			<thead>
 			<tr>
-				<th nowrap class="col-theme"><span data-localize='learning_theme'><?= __('学習テーマ')?></span></th>
-				<th nowrap class="col-task"><span data-localize='task'><?= __('課題')?></span></th>
-				<th nowrap><span data-localize='name'><?= __('氏名')?></name></th>
+				<th nowrap class="col-theme"><?= __('学習テーマ')?></th>
+				<th nowrap class="col-task"><?= __('課題')?></th>
+				<th nowrap><?= __('氏名')?></th>
 				<!--
 				<th nowrap class="ib-col-center">進捗率</th>
 				<th nowrap class="ib-col-center">進捗率(全体)</th>
 				<th nowrap class="ib-col-center">完了</th>
 				-->
-				<th class="ib-col-center" nowrap><span data-localize='kind'><?= __('種別')?></span></th>
-				<th class="ib-col-datetime"><span data-localize='updated_date'><?= __('更新日時')?></span></th>
+				<th class="ib-col-center" nowrap><?= __('種別')?></th>
+				<th class="ib-col-datetime"><?= __('更新日時')?></th>
 			</tr>
 			</thead>
 			<tbody>
@@ -89,35 +89,35 @@
 			</table>
 			</div>
 			
-			<div class="text-right"><a href="<?= Router::url(['controller' => 'records', 'action' => 'progress']);?>"><span data-localize='view_list'>一覧を表示</span></a></div>
+			<div class="text-right"><a href="<?= Router::url(['controller' => 'records', 'action' => 'progress']);?>"><?= __('一覧を表示')?></a></div>
 		</div>
 	</div>
 	<?php }?>
 	
 	<div class="panel panel-default">
-		<div class="panel-heading"><span data-localize='ideabox'>アイデアボックス</span></div>
+		<div class="panel-heading">アイデアボックス</div>
 		<div class="panel-body">
 			<?php
 				echo $this->Form->create('Idea', ['class' => 'idea-form']);
-				echo $this->Form->textarea('body', ['class' => 'idea-body', 'placeholder' => '新しいアイデア・メモ等を書き込んでください']);
+				echo $this->Form->textarea('body', ['class' => 'idea-body', 'placeholder' => __('新しいアイデア・メモ等を書き込んでください')]);
 				echo $this->Form->submit(__('追加'), ['class' => 'btn btn-primary idea-submit']);
 				echo $this->Form->end();
 			?>
 			<div class="text-right">
-				<?= $idea_count?>件登録済み<br>
-				<a href="<?= Router::url(['controller' => 'ideas', 'action' => 'index']);?>"><span data-localize='view_list'>一覧を表示</span></a>
+				<?= $idea_count?><?= __('件登録済み')?><br>
+				<a href="<?= Router::url(['controller' => 'ideas', 'action' => 'index']);?>"><?= __('一覧を表示')?></a>
 			</div>
 		</div>
 	</div>
 	
 	<div class="panel panel-info">
-		<div class="panel-heading"><span data-localize='learning_theme'><?= __('学習テーマ一覧')?></span></div>
+		<div class="panel-heading"><?= __('学習テーマ一覧')?></div>
 		<div class="buttons_container">
-			<button class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['controller' => 'themes', 'action' => 'add']) ?>'"><span data-localize='add_learning_theme'>+ 学習テーマを追加</span></button>
+			<button class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['controller' => 'themes', 'action' => 'add']) ?>'">+ <?= __('学習テーマを追加')?></button>
 		</div>
 		<div class="panel-body">
 			<?php if($themes) {?>
-			<div class="theme-list" data-localize='my_learning_themes'>所有しているテーマ</div>
+			<div class="theme-list"><?= __('所有しているテーマ')?></div>
 			<ul class="list-group">
 			<?php foreach($themes as $theme): ?>
 				<?php if($theme['Theme']['user_id']==$loginedUser['id']): ?>
@@ -135,7 +135,7 @@
 			<?php endforeach;?>
 			</ul>
 			
-			<div class="theme-list" data-localize='other_learning_themes'>それ以外のテーマ</div>
+			<div class="theme-list"><?= __('それ以外のテーマ')?></div>
 			<ul class="list-group">
 			<?php foreach($themes as $theme): ?>
 				<?php if($theme['Theme']['user_id']!=$loginedUser['id']): ?>

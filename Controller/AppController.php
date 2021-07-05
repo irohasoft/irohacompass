@@ -117,30 +117,10 @@ class AppController extends Controller
 		
 		$user = $this->readAuthUser();
 		
-		if($user['lang']=='en')
+		// ユーザの言語が英語の場合、翻訳ファイルをロード
+		if($user['lang'] == 'en')
 		{
-			Configure::write('progress_type', [
-				'progress'	=> 'Progress',
-				'comment'	=> 'Comment',
-				'idea'		=> 'Idea, Memo',
-				'question'	=> 'Question',
-				'answer'	=> 'Answer',
-			]);
-			Configure::write('task_status', [
-				'1' => 'Waiting',
-				'2' => 'Working',
-				'3' => 'Completed'
-			]);
-			Configure::write('task_priority', [
-				'1' => 'High',
-				'2' => 'Middle',
-				'3' => 'Low'
-			]);
-			Configure::write('content_type', [
-				'text'		=> 'Text',
-				'markdown'	=> 'Markdown',
-				'irohanote'	=> 'Idea Map',
-			]);
+			$this->loadTranslateMessages('en');
 		}
 	}
 
@@ -379,4 +359,40 @@ class AppController extends Controller
 		$this->Log->save($data);
 	}
 
+	// 日本語と英語の対応表をロード
+	private function loadTranslateMessages($lang = 'en')
+	{
+		$this->replaceConfigure('progress_type');
+		$this->replaceConfigure('content_type');
+		$this->replaceConfigure('record_type');
+		$this->replaceConfigure('task_priority');
+		$this->replaceConfigure('task_status');
+		
+		$file_path = APP.'Config'.DS.'message-'.$lang.'.csv';
+		
+		if(!file_exists($file_path))
+			return;
+		
+		$csv = file($file_path);
+		$csv_body = array_splice($csv, 0);
+		
+		//debug(I18n::$messages);
+		
+		$messages = [];
+		
+		foreach ($csv_body as $row)
+		{
+			$row_array = explode(',', $row);
+			$messages[] = explode("\t", $row);
+		}
+		
+		Configure::write('messages', $messages);
+		//debug(Configure::read('messages'));
+	}
+	
+	private function replaceConfigure($key, $lang = 'en')
+	{
+		Configure::delete($key);
+		Configure::write($key, Configure::read($key.'_'.$lang));
+	}
 }

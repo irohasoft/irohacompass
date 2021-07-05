@@ -47,10 +47,10 @@
 		echo '</div>';
 		
 		echo '<div class="ib-row">';
-		echo $this->Form->searchField('theme_id',	['label' => __('学習テーマ'), 'options'=>$themes, 'selected'=>$theme_id, 'empty' => '全て']);
-		echo $this->Form->searchField('task_title',	['label' => __('課題名'), 'value'=>$task_title, 'class'=>'form-control']);
-		echo $this->Form->searchField('group_id',	['label' => __('グループ'), 'options'=>$groups, 'selected'=>$group_id, 'empty' => '全て']);
-		echo $this->Form->searchField('user_id',	['label' => __('ユーザ'), 'options'=>$users, 'selected'=>$user_id, 'empty' => '全て']);
+		echo $this->Form->searchField('theme_id',	['label' => __('学習テーマ'), 'options' => $themes, 'selected' => $theme_id, 'empty' => '全て']);
+		echo $this->Form->searchField('task_title',	['label' => __('課題名'), 'value' => $task_title]);
+		echo $this->Form->searchField('group_id',	['label' => __('グループ'), 'options' => $groups, 'selected'=>$group_id, 'empty' => '全て']);
+		echo $this->Form->searchField('user_id',	['label' => __('ユーザ'), 'options' => $users, 'selected'=>$user_id, 'empty' => '全て']);
 		echo '</div>';
 		
 		echo '<div class="ib-search-date-container">';

@@ -64,7 +64,7 @@
 </script>
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<span data-localize="upload">ファイルのアップロード</span>
+		<?= __('ファイルのアップロード')?>
 	</div>
 	<div class="panel-body">
 		<div class="form-group">
@@ -84,8 +84,8 @@
 					<p>ファイルが複数ある場合には、ZIP形式で圧縮してアップロードを行ってください。</p>
 					<input type="file" name="data[Task][file]" multiple="multiple" id="TaskFile" class="form-control">
 				</div>
-				<button type="submit" id="btnUpload" class="btn btn-primary"><span data-localize="upload">アップロード</span></button>
-				<button class="btn" onclick="parent.closeDialog();"><span data-localize="close"> 閉じる </span></button>
+				<button type="submit" id="btnUpload" class="btn btn-primary"><?= __('アップロード')?></span></button>
+				<button class="btn" onclick="parent.closeDialog();"> <?= __('閉じる')?> </button>
 			<?= $this->Form->end(); ?>
 		</div>
 	</div>

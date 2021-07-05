@@ -167,7 +167,9 @@ form .required label:after {
 	display:inline;
 }
 label {
+/*
 	display: block;
+*/
 	font-size: 110%;
 	margin-bottom:3px;
 }

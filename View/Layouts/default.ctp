@@ -93,13 +93,13 @@
 			<a href="<?= $this->Html->url('/')?>"><?= h($this->Session->read('Setting.title')); ?></a>
 		</div>
 		<?php if(isset($loginedUser)) {?>
-		<div class="ib-navi-item ib-right"><?= $this->Html->link(__('ログアウト'), ['controller' => 'users', 'action' => 'logout']); ?></div>
-		<div class="ib-navi-sepa ib-right"></div>
-		<div class="ib-navi-item ib-right"><?= $this->Html->link('<span data-localize="setting">設定</span>', ['controller' => 'users', 'action' => 'setting'], ['escape' => false]); ?></div>
-		<div class="ib-navi-sepa ib-right"></div>
-		<div class="ib-navi-item ib-right navi-item-idea"><?= $this->Html->link('<span data-localize="idea">アイデア</span>', ['controller' => 'ideas'], ['escape' => false]); ?></div>
-		<div class="ib-navi-sepa ib-right"></div>
-		<div class="ib-navi-item ib-right"><?= __('ようこそ ').h($loginedUser["name"]); ?> さん </div>
+		<div class="ib-navi-item ib-right ib-navi-logout"><?= $this->Html->link(__('ログアウト'), ['controller' => 'users', 'action' => 'logout']); ?></div>
+		<div class="ib-navi-sepa ib-right ib-navi-sepa-1 "></div>
+		<div class="ib-navi-item ib-right ib-navi-setting"><?= $this->Html->link(__('設定'), ['controller' => 'users', 'action' => 'setting']); ?></div>
+		<div class="ib-navi-sepa ib-right ib-navi-sepa-2 "></div>
+		<div class="ib-navi-item ib-right navi-item-idea"><?= $this->Html->link(__('アイデア'), ['controller' => 'ideas']); ?></div>
+		<div class="ib-navi-sepa ib-right ib-navi-sepa-3"></div>
+		<div class="ib-navi-item ib-right ib-navi-welcome"><?= __('ようこそ').' '.h($loginedUser['name']).' '.__('さん'); ?></div>
 		<?php }?>
 	</div>
 	

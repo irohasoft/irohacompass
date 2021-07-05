@@ -140,9 +140,20 @@ CakeLog::config('error', [
 // iroha Board 設定ファイルをロード
 Configure::load("ib_config");
 
+
 // カスタマイズ用設定ファイルをロード
 if(file_exists(APP.'Custom'.DS.'Config'.DS.'config.php'))
 {
 	Configure::config('default', new PhpReader(APP.'Custom'.DS.'Config'.DS));
 	Configure::load("config");
+}
+
+// カスタマイズ用の I18n.php が存在しない場合のみロード
+if(file_exists(APP.'Custom'.DS.'Config'.DS.'I18n.php'))
+{
+	include(APP.'Custom'.DS.'Config'.DS.'I18n.php');
+}
+else
+{
+	include('I18n.php');
 }

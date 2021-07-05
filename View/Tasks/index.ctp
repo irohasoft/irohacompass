@@ -58,8 +58,6 @@
 	}
 	
 	echo $this->Html->getCrumbs(' / ');
-	//debug($tasks);
-
 	?>
 	</div>
 
@@ -74,31 +72,22 @@
 			<?= Utils::getNoteLink($theme['Theme']['page_id'], $this->Html);?>
 		</div>
 		<div>
-			<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?= Router::url(['controller' => 'themes', 'action' => 'edit', $theme['Theme']['id']]) ?>'"><span data-localize='edit'>編集</span></button>
+			<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?= Router::url(['controller' => 'themes', 'action' => 'edit', $theme['Theme']['id']]) ?>'"><?= __('編集')?></button>
 		</div>
 	</div>
 	<div class="buttons_container">
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['action' => 'add', $theme['Theme']['id']]) ?>'"><span data-localize='add_task'>+ 課題を追加</span></button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['action' => 'add', $theme['Theme']['id']]) ?>'">+ <?= __('課題を追加')?></button>
 	</div>
 	<div class="ib-horizontal">
 		<?php
-			$status_list = Configure::read('task_status');
-			$status_list[99] = '完了以外';
-			
-			echo $this->Form->create('Task');
-			echo $this->Form->input('status', [
-				'label'		=> '<span data-localize="status">ステータス</span> : ', 
-				'options'	=> $status_list, 
-				'selected'	=> $status, 
-				'empty'		=> '全て', 
-				'required'	=> false, 
-				'class'		=> 'form-control',
-				'onchange'	=> 'submit(this.form);'
-			]);
-			
-			echo $this->Form->input('keyword',		['label' => '<span data-localize="keyword">キーワード</span> : ', 'value' => $keyword, 'required' => false]);
+		$status_list = Configure::read('task_status');
+		$status_list[99] = '完了以外';
+		
+		echo $this->Form->create('Task');
+		echo $this->Form->searchField('status',	['label' => __('ステータス'), 'options' => $status_list, 'selected' => $status, 'empty' => '全て', 'onchange'	=> 'submit(this.form);']);
+		echo $this->Form->searchField('keyword',['label' => __('キーワード'), 'value' => $keyword]);
 		?>
-		<button class="btn btn-info btn-add"><span data-localize="search">検索</span></button>
+		<button class="btn btn-info btn-add"><?= __('検索')?></button>
 		<?php
 			echo $this->Form->end();
 		?>
@@ -106,13 +95,14 @@
 	<table class="responsive-table">
 		<thead>
 			<tr>
-				<th nowrap><span data-localize='task'><?= $this->Paginator->sort('title',			'課題名'); ?></span></th>
-				<th class="text-center" nowrap><span data-localize='status'><?= $this->Paginator->sort('status',			'状態'); ?></span></th>
-				<th class="text-center" nowrap><span data-localize='progress_rate'><?= $this->Paginator->sort('rate',	'進捗率'); ?></span></th>
-				<th class="text-center" nowrap><span data-localize='priority'><?= $this->Paginator->sort('priority',		'優先度'); ?></span></th>
-				<th class="text-center" nowrap><span data-localize='deadline'><?= $this->Paginator->sort('deadline',		'期日'); ?></span></th>
-				<th class="ib-col-date" nowrap><span data-localize='created_date'><?= $this->Paginator->sort('created',	'作成日時'); ?></span></th>
-				<th class="ib-col-date" nowrap><span data-localize='updated_date'><?= $this->Paginator->sort('modified',	'更新日時'); ?></span></th>
+				<th nowrap><?= $this->Paginator->sort('title',								__('課題名')); ?></th>
+				<th class="text-center" nowrap><?= $this->Paginator->sort('status',		__('状態')); ?></th>
+				<th class="text-center" nowrap><?= $this->Paginator->sort('rate',	__('進捗率')); ?></th>
+				
+				<th class="text-center" nowrap><?= $this->Paginator->sort('priority',	__('優先度')); ?></th>
+				<th class="text-center" nowrap><?= $this->Paginator->sort('deadline',	__('期日')); ?></th>
+				<th class="ib-col-date" nowrap><?= $this->Paginator->sort('created',	__('作成日時')); ?></th>
+				<th class="ib-col-date" nowrap><?= $this->Paginator->sort('modified',__('更新日時')); ?></th>
 				<th class="actions text-center" nowrap><?= __('Actions'); ?></th>
 			</tr>
 		</thead>
@@ -132,11 +122,11 @@
 				<td class="ib-col-date" nowrap><?= Utils::getYMDHN($task['Task']['created']); ?>&nbsp;</td>
 				<td class="ib-col-date" nowrap><?= Utils::getYMDHN($task['Task']['modified']); ?>&nbsp;</td>
 				<td class="ib-col-action">
-					<button type="button" class="btn btn-success" onclick="location.href='<?= Router::url(['action' => 'edit', $theme['Theme']['id'], $task['Task']['id']]) ?>'"><span data-localize='edit'>編集</span></button>
+					<button type="button" class="btn btn-success" onclick="location.href='<?= Router::url(['action' => 'edit', $theme['Theme']['id'], $task['Task']['id']]) ?>'"><?= __('編集')?></button>
 					<?php
 						echo $this->Form->postLink(__('削除'),
 							['action' => 'delete', $task['Task']['id']],
-							['class'=>'btn btn-danger', 'data-localize' => 'delete'],
+							['class'=>'btn btn-danger'],
 							__('[%s] を削除してもよろしいですか?', $task['Task']['title'])
 						);
 					?>
