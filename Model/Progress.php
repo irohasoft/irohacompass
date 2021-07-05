@@ -11,140 +11,61 @@
 App::uses('AppModel', 'Model');
 
 /**
- * TasksQuestion Model
+ * Progress Model
  *
- * @property Group $Group
  * @property Task $Task
+ * @property User $User
  */
 class Progress extends AppModel
 {
-
 	/**
-	 * Validation rules
-	 *
+	 * バリデーションルール
+	 * https://book.cakephp.org/2/ja/models/data-validation.html
 	 * @var array
 	 */
 	public $validate = [
-			'task_id' => [
-					'numeric' => [
-							'rule' => [
-									'numeric'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			],
-			'progress_type' => [
-					'notBlank' => [
-							'rule' => [
-									'notBlank'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			],
-			'body' => [
-					'notBlank' => [
-							'rule' => [
-									'notBlank'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			],
-			'rate' => [
-					'notBlank' => [
-							'rule' => [
-									'notBlank'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			],
-			'emotion_icon' => [
-					'notBlank' => [
-							'rule' => [
-									'notBlank'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			]
+		'task_id' 		=> ['numeric'  => ['rule' => ['numeric']]],
+		'progress_type'	=> ['notBlank' => ['rule' => ['notBlank']]],
+		'body'			=> ['notBlank' => ['rule' => ['notBlank']]],
+		'rate'			=> ['notBlank' => ['rule' => ['notBlank']]],
+		'emotion_icon'	=> ['notBlank' => ['rule' => ['notBlank']]],
 	];
-	
-	// The Associations below have been created with all possible keys, those
-	// that are not needed can be removed
-	
+
 	/**
-	 * belongsTo associations
-	 *
+	 * アソシエーションの設定
+	 * https://book.cakephp.org/2/ja/models/associations-linking-models-together.html
 	 * @var array
 	 */
 	public $belongsTo = [
-			'Task' => [
-					'className' => 'Task',
-					'foreignKey' => 'task_id',
-					'conditions' => '',
-					'fields' => '',
-					'order' => ''
-			],
-			'User' => [
-				'className' => 'User',
-				'foreignKey' => 'user_id',
-				'conditions' => '',
-				'fields' => '',
-				'order' => ''
-			]
+		'Task' => [
+			'className' => 'Task',
+			'foreignKey' => 'task_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		],
+		'User' => [
+			'className' => 'User',
+			'foreignKey' => 'user_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		]
 	];
 
 	public $hasMany = [
-			'Smile' => [
-					'className' => 'Smile',
-					'foreignKey' => 'progress_id',
-					'dependent' => false,
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'exclusive' => '',
-					'finderQuery' => '',
-					'counterQuery' => ''
-			]
+		'Smile' => [
+			'className' => 'Smile',
+			'foreignKey' => 'progress_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		]
 	];
-
-	public function setOrder($id_list)
-	{
-		for($i=0; $i< count($id_list); $i++)
-		{
-			$sql = "UPDATE ib_progress SET sort_no = :sort_no WHERE id= :id";
-
-			$params = [
-					'sort_no' => ($i+1),
-					'id' => $id_list[$i]
-			];
-
-			$this->query($sql, $params);
-		}
-	}
 }

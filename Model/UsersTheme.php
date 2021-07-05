@@ -18,41 +18,41 @@ App::uses('AppModel', 'Model');
  */
 class UsersTheme extends AppModel
 {
-
 	/**
-	 * Validation rules
-	 *
+	 * バリデーションルール
+	 * https://book.cakephp.org/2/ja/models/data-validation.html
 	 * @var array
 	 */
 	public $validate = [
-			'user_id' => [
-					'numeric' => [
-							'rule' => [
-									'numeric'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
+		'user_id'  => ['numeric' => ['rule' => ['numeric']]],
+		'theme_id' => ['numeric' => ['rule' => ['numeric']]]
+	];
+
+	/**
+	 * アソシエーションの設定
+	 * https://book.cakephp.org/2/ja/models/associations-linking-models-together.html
+	 * @var array
+	 */
+	public $belongsTo = [
+			'User' => [
+					'className' => 'User',
+					'foreignKey' => 'user_id',
+					'conditions' => '',
+					'fields' => '',
+					'order' => ''
 			],
-			'theme_id' => [
-					'numeric' => [
-							'rule' => [
-									'numeric'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
+			'Theme' => [
+					'className' => 'Theme',
+					'foreignKey' => 'theme_id',
+					'conditions' => '',
+					'fields' => '',
+					'order' => ''
 			]
 	];
 
+	/**
+	 * 指定したユーザがアクセス可能な学習テーマ一覧を取得
+	 */
 	public function getThemeRecord($user_id)
 	{
 		$sql = <<<EOF
@@ -87,7 +87,9 @@ EOF;
 		return $data;
 	}
 
-
+	/**
+	 * 学習テーマにアクセス可能なユーザのメールアドレスを取得
+	 */
 	public function getMailList($theme_id)
 	{
 		$sql = <<<EOF
@@ -122,28 +124,4 @@ EOF;
 		return $list;
 	}
 
-	// The Associations below have been created with all possible keys, those
-	// that are not needed can be removed
-
-	/**
-	 * belongsTo associations
-	 *
-	 * @var array
-	 */
-	public $belongsTo = [
-			'User' => [
-					'className' => 'User',
-					'foreignKey' => 'user_id',
-					'conditions' => '',
-					'fields' => '',
-					'order' => ''
-			],
-			'Theme' => [
-					'className' => 'Theme',
-					'foreignKey' => 'theme_id',
-					'conditions' => '',
-					'fields' => '',
-					'order' => ''
-			]
-	];
 }

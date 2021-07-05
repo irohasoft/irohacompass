@@ -12,99 +12,58 @@ App::uses('AppModel', 'Model');
 
 /**
  * Group Model
+ *
+ * @property Theme $Theme
+ * @property User $User
  */
 class Group extends AppModel
 {
-	public $order = "Group.title";  
+	public $order = "Group.title"; // デフォルトのソート条件
 
 	/**
-	 * Validation rules
-	 *
+	 * バリデーションルール
+	 * https://book.cakephp.org/2/ja/models/data-validation.html
 	 * @var array
 	 */
 	public $validate = [
-			'title' => [
-					'notBlank' => [
-							'rule' => [
-									'notBlank'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			],
-			'status' => [
-					'numeric' => [
-							'rule' => [
-									'numeric'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			]
+		'title'  => ['notBlank' => ['rule' => ['notBlank']]],
+		'status' => ['numeric'  => ['rule' => ['numeric']]]
 	];
-	
-	// The Associations below have been created with all possible keys, those
-	// that are not needed can be removed
-	
+
 	/**
-	 * hasMany associations
-	 *
+	 * アソシエーションの設定
+	 * https://book.cakephp.org/2/ja/models/associations-linking-models-together.html
 	 * @var array
 	 */
-	/*
-	public $hasMany = array(
-			'User' => array(
-					'className' => 'User',
-					'foreignKey' => 'group_id',
-					'dependent' => false,
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'exclusive' => '',
-					'finderQuery' => '',
-					'counterQuery' => ''
-			)
-	);
-	*/
 	public $hasAndBelongsToMany = [
-			'Theme' => [
-					'className' => 'Theme',
-					'joinTable' => 'groups_themes',
-					'foreignKey' => 'group_id',
-					'associationForeignKey' => 'theme_id',
-					'unique' => 'keepExisting',
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'finderQuery' => ''
-			],
-			'User' => [
-					'className' => 'User',
-					'joinTable' => 'users_groups',
-					'foreignKey' => 'group_id',
-					'associationForeignKey' => 'user_id',
-					'unique' => 'keepExisting',
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'finderQuery' => ''
-			],
+		'Theme' => [
+			'className' => 'Theme',
+			'joinTable' => 'groups_themes',
+			'foreignKey' => 'group_id',
+			'associationForeignKey' => 'theme_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => ''
+		],
+		'User' => [
+			'className' => 'User',
+			'joinTable' => 'users_groups',
+			'foreignKey' => 'group_id',
+			'associationForeignKey' => 'user_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => ''
+		],
 	];
-	
+
 	/**
 	 * 指定したグループに所属するユーザIDリストを取得
 	 * 
@@ -114,21 +73,13 @@ class Group extends AppModel
 	public function getUserIdByGroupID($group_id)
 	{
 		$sql = "SELECT user_id FROM ib_users_groups WHERE group_id = :group_id";
-		
 		$params = ['group_id' => $group_id];
 		
-		$data = $this->query($sql, $params);
-		
-		$list = [];
-		
-		for($i=0; $i< count($data); $i++)
-		{
-			$list[$i] = $data[$i]['ib_users_groups']['user_id'];
-		}
+		$list = $this->queryList($sql, $params, 'ib_users_groups', 'user_id');
 		
 		return $list;
 	}
-	
+
 	/**
 	 * グループ一覧を取得
 	 * 

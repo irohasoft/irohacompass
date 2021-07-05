@@ -12,27 +12,20 @@ App::uses('AppModel', 'Model');
 
 /**
  * InfosGroup Model
- *
- * @property Info $Info
- * @property Group $Group
  */
 class InfosGroup extends AppModel
 {
-
 	/**
-	 * Validation rules
-	 *
+	 * バリデーションルール
+	 * https://book.cakephp.org/2/ja/models/data-validation.html
 	 * @var array
 	 */
 	public $validate = [
 	];
 
-	// The Associations below have been created with all possible keys, those
-	// that are not needed can be removed
-
 	/**
-	 * belongsTo associations
-	 *
+	 * アソシエーションの設定
+	 * https://book.cakephp.org/2/ja/models/associations-linking-models-together.html
 	 * @var array
 	 */
 	public $belongsTo = [

@@ -12,68 +12,22 @@ App::uses('AppModel', 'Model');
 
 /**
  * Theme Model
- *
- * @property Group $Group
- * @property Task $Task
- * @property Record $Record
- * @property User $User
  */
 class Theme extends AppModel
 {
-
 	/**
-	 * Validation rules
-	 *
+	 * バリデーションルール
+	 * https://book.cakephp.org/2/ja/models/data-validation.html
 	 * @var array
 	 */
 	public $validate = [
-			'title' => [
-					'notBlank' => [
-							'rule' => [
-									'notBlank'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			],
-			'learning_target' => [
-					'notBlank' => [
-							'rule' => [
-									'notBlank'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			],
-			'sort_no' => [
-					'numeric' => [
-							'rule' => [
-									'numeric'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			]
+		'title'				=> ['notBlank' => ['rule' => ['notBlank']]],
+		'learning_target'	=> ['notBlank' => ['rule' => ['notBlank']]],
 	];
-	
-	// The Associations below have been created with all possible keys, those
-	// that are not needed can be removed
-	
+
 	/**
-	 * belongsTo associations
-	 *
+	 * アソシエーションの設定
+	 * https://book.cakephp.org/2/ja/models/associations-linking-models-together.html
 	 * @var array
 	 */
 	public $belongsTo = [
@@ -86,51 +40,11 @@ class Theme extends AppModel
 		],
 	];
 
-	/**
-	 * hasMany associations
-	 *
-	 * @var array
-	 */
 	public $hasMany = [
-	/*
-		'Task' => array(
-			'className' => 'Task',
-			'foreignKey' => 'theme_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	*/
 	];
 
-	/**
-	 * hasAndBelongsToMany associations
-	 *
-	 * @var array
-	 */
-	 /*
-	public $hasAndBelongsToMany = array(
-			'User' => array(
-					'className' => 'User',
-					'joinTable' => 'users_themes',
-					'foreignKey' => 'theme_id',
-					'associationForeignKey' => 'user_id',
-					'unique' => 'keepExisting',
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'finderQuery' => ''
-			)
-	);
-	*/
+	public $hasAndBelongsToMany = [
+	];
 
 	public function setOrder($id_list)
 	{
@@ -146,8 +60,11 @@ class Theme extends AppModel
 			$this->query($sql, $params);
 		}
 	}
-	
-	// コースへのアクセス権限チェック
+
+	/**
+	 * 学習テーマへのアクセス権限チェック
+	 * 
+	 */
 	public function hasRight($user_id, $theme_id)
 	{
 		$has_right = false;
@@ -182,6 +99,9 @@ EOF;
 		return $has_right;
 	}
 
+	/**
+	 * アクセス可能な学習テーマ一覧を取得
+	 */
 	public function getUserTheme($user_id)
 	{
 		$sql = <<<EOF
@@ -236,6 +156,9 @@ EOF;
 		return $data;
 	}
 
+	/**
+	 * 学習テーマとユーザの紐づけを追加
+	 */
 	public function addUserTheme($user_id, $theme_id)
 	{
 		$sql = "SELECT COUNT(*) as cnt FROM ib_users_themes WHERE user_id = :user_id AND theme_id = :theme_id";

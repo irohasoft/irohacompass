@@ -13,7 +13,6 @@ App::uses('AppModel', 'Model');
 /**
  * Info Model
  *
- * @property User $User
  * @property Group $Group
  */
 class Info extends AppModel
@@ -27,28 +26,28 @@ class Info extends AppModel
 		'title'   => ['notBlank' => ['rule' => ['notBlank']]],
 		'user_id' => ['numeric'  => ['rule' => ['numeric']]],
 	];
-	
+
 	/**
 	 * アソシエーションの設定
 	 * https://book.cakephp.org/2/ja/models/associations-linking-models-together.html
 	 * @var array
 	 */
 	public $hasAndBelongsToMany = [
-			'Group' => [
-					'className' => 'Group',
-					'joinTable' => 'infos_groups',
-					'foreignKey' => 'info_id',
-					'associationForeignKey' => 'group_id',
-					'unique' => 'keepExisting',
-					'conditions' => '',
-					'fields' => '',
-					'order' => '',
-					'limit' => '',
-					'offset' => '',
-					'finderQuery' => ''
-	 		]
+		'Group' => [
+			'className' => 'Group',
+			'joinTable' => 'infos_groups',
+			'foreignKey' => 'info_id',
+			'associationForeignKey' => 'group_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => ''
+	 	]
 	];
-	
+
 	/**
 	 * お知らせ一覧を取得（エイリアス）
 	 * 
@@ -61,7 +60,7 @@ class Info extends AppModel
 		$infos = $this->find('all', $this->getInfoOption($user_id, $limit));
 		return $infos;
 	}
-	
+
 	/**
 	 * お知らせ一覧を取得
 	 * 
@@ -73,7 +72,7 @@ class Info extends AppModel
 	{
 		// 閲覧可能なお知らせを取得
 		$info_id_list = $this->getInfoIdList($user_id, $limit);
-		
+
 		$option = [
 			'fields' => ['Info.id', 'Info.title', 'Info.created'],
 			'conditions' => ['Info.id IN' => $info_id_list],
@@ -99,7 +98,7 @@ class Info extends AppModel
 		
 		return in_array($info_id, $info_id_list);
 	}
-	
+
 	/**
 	 * 閲覧可能なお知らせのIDリストを取得
 	 * @param int $user_id ユーザID

@@ -14,46 +14,38 @@ App::uses('AppModel', 'Model');
  * Leaf Model
  *
  * @property User $User
- * @property Group $Group
  */
 class Leaf extends AppModel
 {
-
 	/**
-	 * Validation rules
-	 *
+	 * バリデーションルール
+	 * https://book.cakephp.org/2/ja/models/data-validation.html
 	 * @var array
 	 */
 	public $validate = [
 	];
-	
-	// The Associations below have been created with all possible keys, those
-	// that are not needed can be removed
-	
+
 	/**
-	 * belongsTo associations
-	 *
+	 * アソシエーションの設定
+	 * https://book.cakephp.org/2/ja/models/associations-linking-models-together.html
 	 * @var array
 	 */
 	public $hasAndBelongsToMany = [
 	];
 
-	/**
-	 * belongsTo associations
-	 *
-	 * @var array
-	 */
 	public $belongsTo = [
-			'User' => [
-					'className' => 'User',
-					'foreignKey' => 'user_id',
-					'conditions' => '',
-					'fields' => '',
-					'order' => ''
-			],
+		'User' => [
+			'className' => 'User',
+			'foreignKey' => 'user_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		],
 	];
 
-
+	/**
+	 * リーフを削除
+	 */
 	public function deleteLeaf($user_id, $leaf_id)
 	{
 		// リーフの削除
@@ -77,7 +69,9 @@ class Leaf extends AppModel
 		$this->query($sql, $params);
 	}
 
-	// 指定したキーワードを含むカードが所属する課題ID一覧を取得（キーワード検索用）
+	/**
+	 * 指定したキーワードを含むカードが所属する課題ID一覧を取得（キーワード検索用）
+	 */
 	public function getTaskIdByKeyword($keyword, $theme_id)
 	{
 		$sql = <<<EOF

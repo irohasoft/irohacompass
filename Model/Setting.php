@@ -18,17 +18,17 @@ class Setting extends AppModel
 	/**
 	 * バリデーションルール
 	 * https://book.cakephp.org/2/ja/models/data-validation.html
- * @var array
- */
+	 * @var array
+	 */
 	public $validate = [
 		'setting_key'   => ['notBlank' => ['rule' => ['notBlank']]],
 		'setting_value' => ['notBlank' => ['rule' => ['notBlank']]]
-		];
-		
+	];
+
 	/**
 	 * システム設定の値のリストを取得
 	 * @return array 設定値リスト（連想配列）
-		*/
+	 */
 	public function getSettings()
 	{
 		$result = [];
@@ -42,7 +42,7 @@ class Setting extends AppModel
 		
 		return $result;
 	}
-	
+
 	/**
 	 * システム設定を保存
 	 * @param array 保存する設定値リスト（連想配列）

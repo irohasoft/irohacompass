@@ -13,109 +13,75 @@ App::uses('AppModel', 'Model');
 /**
  * Record Model
  *
- * @property Group $Group
  * @property Theme $Theme
  * @property User $User
  * @property Task $Task
  */
 class Record extends AppModel
 {
-
 	/**
-	 * Validation rules
-	 *
+	 * バリデーションルール
+	 * https://book.cakephp.org/2/ja/models/data-validation.html
 	 * @var array
 	 */
 	public $validate = [
-			'theme_id' => [
-					'numeric' => [
-							'rule' => [
-									'numeric'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			],
-			'user_id' => [
-					'numeric' => [
-							'rule' => [
-									'numeric'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			],
-			'task_id' => [
-					'numeric' => [
-							'rule' => [
-									'numeric'
-							]
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										]
-			]
-	];
-	
-	// The Associations below have been created with all possible keys, those
-	// that are not needed can be removed
-	public $hasMany = [
+		'theme_id'  => ['numeric' => ['rule' => ['numeric']]],
+		'user_id'    => ['numeric' => ['rule' => ['numeric']]],
+		'task_id' => ['numeric' => ['rule' => ['numeric']]]
 	];
 
 	/**
-	 * belongsTo associations
-	 *
+	 * アソシエーションの設定
+	 * https://book.cakephp.org/2/ja/models/associations-linking-models-together.html
 	 * @var array
 	 */
-	public $belongsTo = [
-			'Theme' => [
-					'className' => 'Theme',
-					'foreignKey' => 'theme_id',
-					'conditions' => '',
-					'fields' => '',
-					'order' => ''
-			],
-			'User' => [
-					'className' => 'User',
-					'foreignKey' => 'user_id',
-					'conditions' => '',
-					'fields' => '',
-					'order' => ''
-			],
-			'Task' => [
-					'className' => 'Task',
-					'foreignKey' => 'task_id',
-					'conditions' => '',
-					'fields' => '',
-					'order' => ''
-			]
-	];
-	
-	// 検索用
-	public $actsAs = [
-			'Search.Searchable'
+	public $hasMany = [
 	];
 
+	public $belongsTo = [
+		'Theme' => [
+			'className' => 'Theme',
+			'foreignKey' => 'theme_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		],
+		'User' => [
+			'className' => 'User',
+			'foreignKey' => 'user_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		],
+		'Task' => [
+			'className' => 'Task',
+			'foreignKey' => 'task_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		]
+	];
+
+	/**
+	 * 検索用
+	 */
+	public $actsAs = [
+		'Search.Searchable'
+	];
+
+	/**
+	 * 検索条件
+	 * https://github.com/CakeDC/search/blob/master/Docs/Home.md
+	 */
 	public $filterArgs = [
-			'username' => [
-					'type' => 'like',
-					'field' => 'User.username'
-			],
-			'name' => [
-					'type' => 'like',
-					'field' => 'User.name'
-			]
+		'username' => [
+			'type' => 'like',
+			'field' => 'User.username'
+		],
+		'name' => [
+			'type' => 'like',
+			'field' => 'User.name'
+		]
 	];
 
 	/**
@@ -170,6 +136,9 @@ class Record extends AppModel
 		return $this->save($data);
 	}
 
+	/**
+	 * ログイン回数情報を取得
+	 */
 	public function getLoginData($user_id, $date_list)
 	{
 		$sql = <<<EOF
@@ -213,6 +182,9 @@ EOF;
 		return $ret_data;
 	}
 
+	/**
+	 * 進捗更新回数情報を取得
+	 */
 	public function getProgressData($user_id, $date_list)
 	{
 		$sql = <<<EOF
@@ -255,6 +227,9 @@ EOF;
 		return $ret_data;
 	}
 
+	/**
+	 * 日付ラベルリストを取得
+	 */
 	public function getDateLabels()
 	{
 		$labels		= [];
