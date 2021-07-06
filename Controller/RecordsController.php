@@ -9,11 +9,6 @@
  */
 
 App::uses('AppController',		'Controller');
-App::uses('RecordsQuestion',	'RecordsQuestion');
-App::uses('UsersGroup',			'UsersGroup');
-App::uses('Theme', 'Theme');
-App::uses('User',   'User');
-App::uses('Group',  'Group');
 
 /**
  * Records Controller
@@ -29,33 +24,8 @@ class RecordsController extends AppController
 			'Search.Prg'
 	];
 
-	//public $presetVars = true;
-
-	public $paginate = [];
-	
-	public $presetVars = [
-		[
-			'name' => 'name', 
-			'type' => 'value',
-			'field' => 'User.name'
-		], 
-		[
-			'name' => 'username',
-			'type' => 'like',
-			'field' => 'User.username'
-		], 
-		[
-			'name' => 'contenttitle', 'type' => 'like',
-			'field' => 'Task.title'
-		]
-	];
-	
-	// 検索対象のフィルタ設定
-	/*
-	 * public $filterArgs = array( array('name' => 'name', 'type' => 'value',
-	 * 'field' => 'User.name'), array('name' => 'username', 'type' => 'like',
-	 * 'field' => 'User.username'), array('name' => 'title', 'type' => 'like',
-	 * 'field' => 'Task.title') );
+	/**
+	 * 進捗一覧を表示
 	 */
 	public function progress($user_id = null)
 	{
@@ -268,21 +238,19 @@ class RecordsController extends AppController
 			
 			try
 			{
-				$result = $this->paginate();
+				$records = $this->paginate();
 			}
-			catch (Exception $e)
+			catch(Exception $e)
 			{
-				$this->request->params['named']['page'] = 1;
-				$result = $this->paginate();
+				$this->request->params['named']['page']=1;
+				$records = $this->paginate();
 			}
-			
-			$this->set('records', $result);
 			
 			$groups = $this->Record->User->Group->find('list');
 			$themes = $this->Record->Theme->find('list');
 			$users  = $this->Record->User->find('list');
 			
-			$this->set(compact('groups', 'themes', 'users', 'group_id', 'theme_id', 'user_id', 'task_title', 'from_date', 'to_date'));
+			$this->set(compact('records', 'groups', 'themes', 'users', 'group_id', 'theme_id', 'user_id', 'task_title', 'from_date', 'to_date'));
 		}
 	}
 
@@ -343,59 +311,5 @@ class RecordsController extends AppController
 				$this->RecordsQuestion->save($detail);
 			}
 		}
-	}
-
-	public function edit($id = null)
-	{
-		if(!$this->Record->exists($id))
-		{
-			throw new NotFoundException(__('Invalid record'));
-		}
-		
-		if($this->request->is(['post', 'put']))
-		{
-			if($this->Record->save($this->request->data))
-			{
-				$this->Flash->success(__('The record has been saved.'));
-				return $this->redirect(['action' => 'index']);
-			}
-			else
-			{
-				$this->Flash->error(__('The record could not be saved. Please, try again.'));
-			}
-		}
-		else
-		{
-			$this->request->data = $this->Record->get($id);
-		}
-		
-		$groups = $this->Record->Group->find('list');
-		$themes = $this->Record->Theme->find('list');
-		$users = $this->Record->User->find('list');
-		$tasks = $this->Record->Task->find('list');
-		$this->set(compact('groups', 'themes', 'users', 'tasks'));
-	}
-
-	public function admin_delete($id = null)
-	{
-		$this->Record->id = $id;
-		
-		if(!$this->Record->exists())
-		{
-			throw new NotFoundException(__('Invalid record'));
-		}
-		
-		$this->request->allowMethod('post', 'delete');
-		
-		if($this->Record->delete())
-		{
-			$this->Flash->success(__('The record has been deleted.'));
-		}
-		else
-		{
-			$this->Flash->error(__('The record could not be deleted. Please, try again.'));
-		}
-		
-		return $this->redirect(['action' => 'index']);
 	}
 }
