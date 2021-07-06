@@ -95,14 +95,14 @@
 	<table class="responsive-table">
 		<thead>
 			<tr>
-				<th nowrap><?= $this->Paginator->sort('title',								__('課題名')); ?></th>
-				<th class="text-center" nowrap><?= $this->Paginator->sort('status',		__('状態')); ?></th>
+				<th nowrap><?= $this->Paginator->sort('title',						__('課題名')); ?></th>
+				<th class="text-center" nowrap><?= $this->Paginator->sort('status',	__('状態')); ?></th>
 				<th class="text-center" nowrap><?= $this->Paginator->sort('rate',	__('進捗率')); ?></th>
 				
 				<th class="text-center" nowrap><?= $this->Paginator->sort('priority',	__('優先度')); ?></th>
 				<th class="text-center" nowrap><?= $this->Paginator->sort('deadline',	__('期日')); ?></th>
 				<th class="ib-col-date" nowrap><?= $this->Paginator->sort('created',	__('作成日時')); ?></th>
-				<th class="ib-col-date" nowrap><?= $this->Paginator->sort('modified',__('更新日時')); ?></th>
+				<th class="ib-col-date" nowrap><?= $this->Paginator->sort('modified',	__('更新日時')); ?></th>
 				<th class="actions text-center" nowrap><?= __('Actions'); ?></th>
 			</tr>
 		</thead>

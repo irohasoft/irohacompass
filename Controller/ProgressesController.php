@@ -63,7 +63,7 @@ class ProgressesController extends AppController
 		
 		// コンテンツ情報を取得
 		$this->loadModel('Task');
-		$content = $this->Task->get($task_id);
+		$task = $this->Task->get($task_id);
 		
 		$is_record = $this->isRecordPage();
 		$is_admin  = $this->isAdminPage();
@@ -82,7 +82,7 @@ class ProgressesController extends AppController
 			for($j=0; $j < count($smiles); $j++)
 			{
 				// 自分自身がスマイルしたかどうか
-				if($smiles[$j]['user_id']==$this->readAuthUser('id'))
+				if($smiles[$j]['user_id'] == $this->readAuthUser('id'))
 				{
 					$is_smiled = true;
 				}
@@ -137,16 +137,10 @@ class ProgressesController extends AppController
 			$this->request->data = $this->Progress->get($progress_id);
 		}
 		
-		
-		// 学習テーマに紐づくユーザを取得
-		$this->loadModel('UsersTheme');
-		//$mail_list = $this->UsersTheme->getMailList($content['Theme']['id']);
-		//debug($list);
-		
 		// メール通知用
 		$users = $this->User->find('list');
 		
-		$this->set(compact('content', 'progresses', 'mail_list', 'is_record', 'is_admin', 'is_add', 'is_user', 'users'));
+		$this->set(compact('task', 'progresses', 'mail_list', 'is_record', 'is_admin', 'is_add', 'is_user', 'users'));
 	}
 
 	/**
@@ -197,7 +191,7 @@ class ProgressesController extends AppController
 		$emotion_icon	= @$this->request->data['Progress']['emotion_icon'];
 		
 		// 課題の進捗率を更新（種別が進捗の場合のみ）
-		if($progress_type=='progress')
+		if($progress_type == 'progress')
 		{
 			$this->loadModel('Task');
 			$this->Task->updateRate($task_id);
@@ -233,13 +227,8 @@ class ProgressesController extends AppController
 		
 
 		// メール通知がオンの場合
-		if(@$this->request->data['is_mail']=='on')
+		if(@$this->request->data['is_mail'] == 'on')
 		{
-			$this->loadModel('UsersTheme');
-			
-			// 学習テーマに紐づくユーザのメールアドレスを取得
-			//$list = $this->UsersTheme->getMailList($task['Theme']['id']);
-			
 			// メール通知リスト
 			$users = $this->User->find()
 				->where(['User.id' => $this->request->data['Progress']['User']])
@@ -254,7 +243,7 @@ class ProgressesController extends AppController
 					continue;
 				
 				// 管理者か学習者かによってURLを変更
-				$url = Router::url(['controller' => 'progresses', 'action' => 'index', $task_id, 'admin' => ($user['User']['role']=='admin')], true);
+				$url = Router::url(['controller' => 'progresses', 'action' => 'index', $task_id, 'admin' => ($user['User']['role'] == 'admin')], true);
 				
 				$params = [
 					'name'			=> $user['User']['name'],

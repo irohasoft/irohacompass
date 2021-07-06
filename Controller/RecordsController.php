@@ -200,35 +200,55 @@ class RecordsController extends AppController
 		];
 		
 		// CSV出力モードの場合
-		if($this->getQuery('cmd')=='csv')
+		if($this->getQuery('cmd') == 'csv')
 		{
 			$this->autoRender = false;
 
-			//Task-Typeを指定
+			// メモリサイズ、タイムアウト時間を設定
+			ini_set('memory_limit', '512M');
+			ini_set('max_execution_time', (60 * 10));
+
+			// Content-Typeを指定
 			$this->response->type('csv');
 
-			header('Task-Type: text/csv');
-			header('Task-Disposition: attachment; filename="user_records.csv"');
+			header('Content-Type: text/csv');
+			header('Content-Disposition: attachment; filename="user_progresses.csv"');
 			
 			$fp = fopen('php://output','w');
 			
+			$this->Record->recursive = 0;
+			
 			$rows = $this->Record->find()
 				->where($conditions)
+				->order('Record.created desc')
 				->all();
 			
-			$header = ["学習テーマ", "コンテンツ", "氏名", "得点", "合格点", "結果", "理解度", "学習時間", "学習日時"];
+			$header = [
+				__('学習テーマ'),
+				__('課題'),
+				__('氏名'),
+				__('進捗率'),
+				__('進捗率(全体)'),
+				__('滞留時間'),
+				__('結果'),
+				__('理解度'),
+				__('滞留時間'),
+				__('更新日時')
+			];
 			
-			mb_convert_variables("SJIS-WIN", "UTF-8", $header);
+			mb_convert_variables('SJIS-WIN', 'UTF-8', $header);
 			fputcsv($fp, $header);
 			
 			foreach($rows as $row)
 			{
 				$row = [
-					$row['Theme']['title'], 
-					$row['Task']['title'], 
-					$row['User']['name'], 
-					$row['Record']['rate'], 
-					$row['Record']['theme_rate'], 
+					$row['Theme']['title'],
+					$row['Task']['title'],
+					$row['User']['name'],
+					$row['Record']['rate'],
+					$row['Record']['theme_rate'],
+					Configure::read('content_status.'.$row['Record']['is_complete']),
+					Configure::read('record_type.'.$row['Record']['record_type']),
 					Utils::getHNSBySec($row['Record']['study_sec']), 
 					Utils::getYMDHN($row['Record']['created']),
 				];

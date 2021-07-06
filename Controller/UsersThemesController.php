@@ -39,7 +39,7 @@ class UsersThemesController extends AppController
 		$no_info = '';
 		
 		// 全体のお知らせもお知らせも存在しない場合
-		if(($info=='') && count($infos)==0)
+		if(($info == '') && count($infos)==0)
 			$no_info = "お知らせはありません";
 		
 		// 受講学習テーマ情報の取得

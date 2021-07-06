@@ -5,7 +5,7 @@
 <script>
 	var URL_UPLOAD	= '<?= Router::url(['controller' => 'tasks', 'action' => 'upload', 'admin' => false])?>/file';
 	var URL_NOTE	= '<?= Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/';
-	var LS_KEY_EMAIL_USER = 'ic-email-user-<?= $content['Theme']['id']; ?>';
+	var LS_KEY_EMAIL_USER = 'ic-email-user-<?= $task['Theme']['id']; ?>';
 	
 	/* 進捗一覧用 */
 	$(function(){
@@ -178,8 +178,8 @@
 		$controller = ($is_user) ? 'users_themes' : 'themes';
 		
 		$this->Html->addCrumb(__('学習テーマ一覧'), ['controller' => $controller, 'action' => 'index']);
-		$this->Html->addCrumb($content['Theme']['title'], ['controller' => 'tasks', 'action' => 'index', $content['Theme']['id']]);
-		$this->Html->addCrumb(h($content['Task']['title']));
+		$this->Html->addCrumb($task['Theme']['title'], ['controller' => 'tasks', 'action' => 'index', $task['Theme']['id']]);
+		$this->Html->addCrumb(h($task['Task']['title']));
 		
 		echo $this->Html->getCrumbs(' / ');
 	?>
@@ -188,25 +188,25 @@
 		<div class="panel-heading"><b><?= __('課題')?></b></div>
 		<div class="panel-body">
 			<big>
-			<?= $this->Form->hidden('content_body', ['value' => $content['Task']['body']]);?>
+			<?= $this->Form->hidden('content_body', ['value' => $task['Task']['body']]);?>
 			</big>
 			<div>
 				<?php 
 				if(Configure::read('demo_mode'))
 				{
-					echo Utils::getDownloadLink('javascript:alert(\'デモモードの為、ダウンロードできません。\');', $content['Task']['file_name'], $this->Html);
+					echo Utils::getDownloadLink('javascript:alert(\'デモモードの為、ダウンロードできません。\');', $task['Task']['file_name'], $this->Html);
 				}
 				else
 				{
-					echo Utils::getDownloadLink($content['Task']['file'], $content['Task']['file_name'], $this->Html);
+					echo Utils::getDownloadLink($task['Task']['file'], $task['Task']['file_name'], $this->Html);
 				}
 				
-				echo Utils::getNoteLink($content['Task']['page_id'], $this->Html);
+				echo Utils::getNoteLink($task['Task']['page_id'], $this->Html);
 				?>
 			</div>
 			<div>
 				<br>
-				<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?= Router::url(['controller' => 'tasks', 'action' => 'edit', $content['Theme']['id'], $content['Task']['id'], 'progresses']) ?>'"><?= __('編集')?></button>
+				<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?= Router::url(['controller' => 'tasks', 'action' => 'edit', $task['Theme']['id'], $task['Task']['id'], 'progresses']) ?>'"><?= __('編集')?></button>
 			</div>
 		</div>
 	</div>
@@ -217,7 +217,7 @@
 		<?php if($is_add) {?>
 		<button type="button" class="btn btn-primary btn-add" onclick="$('html, body').animate({scrollTop: ($(document).height()-1050)},800);">+ <?= __('追加')?></button>
 		<?php } else {?>
-		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['action' => 'index', $content['Task']['id']]);?>#edit'">+ <?= __('追加')?></button>
+		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['action' => 'index', $task['Task']['id']]);?>#edit'">+ <?= __('追加')?></button>
 		<?php }?>
 	</div>
 	
@@ -384,7 +384,7 @@
 					'100' => '100%',
 				];
 				
-				echo $this->Form->input('rate', ['label' => __('進捗率'), 'options'=>$rate_list]);
+				echo $this->Form->input('rate', ['label' => __('進捗率'), 'options'=>$rate_list, 'default' => $task['Task']['rate']]);
 				
 				Configure::read('emotion_icons');
 				$emotion_icons = [];
