@@ -113,14 +113,12 @@ class AppController extends Controller
 			$this->Auth->loginAction = ['controller' => 'users', 'action' => 'login', 'admin' => false];
 			$this->Auth->loginRedirect = ['controller' => 'users', 'action' => 'index', 'admin' => false];
 			$this->Auth->logoutRedirect = ['controller' => 'users', 'action' => 'login', 'admin' => false];
-		}
-		
-		$user = $this->readAuthUser();
-		
-		// ユーザの言語が英語の場合、翻訳ファイルをロード
-		if($user['lang'] == 'en')
-		{
-			$this->loadTranslateMessages('en');
+			
+			// ユーザの言語が英語の場合、翻訳ファイルをロード
+			if($this->readAuthUser('lang') == 'en')
+			{
+				$this->loadTranslateMessages('en');
+			}
 		}
 	}
 
@@ -378,13 +376,8 @@ class AppController extends Controller
 		if(!file_exists($file_path))
 			return;
 		
-		if($this->isAdminPage())
-			return;
-		
 		$csv = file($file_path);
 		$csv_body = array_splice($csv, 0);
-		
-		//debug(I18n::$messages);
 		
 		$messages = [];
 		
