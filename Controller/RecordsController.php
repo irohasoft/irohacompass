@@ -18,14 +18,13 @@ App::uses('AppController',		'Controller');
  */
 class RecordsController extends AppController
 {
-
 	public $components = [
 			'Paginator',
 			'Search.Prg'
 	];
 
 	/**
-	 * 進捗一覧を表示
+	 * 進捗一覧を表示（学習者側）
 	 */
 	public function progress($user_id = null)
 	{
@@ -104,7 +103,6 @@ class RecordsController extends AppController
 			$user_id = $this->readAuthUser('id');
 		}
 		
-		
 		// 進捗チャート用の情報を取得
 		$labels			= $this->Record->getDateLabels();
 		$login_data		= $this->Record->getLoginData($user_id, $labels);
@@ -120,12 +118,8 @@ class RecordsController extends AppController
 		$this->render('progress');
 	}
 	
-	// 検索対象のフィルタ設定
-	/*
-	 * public $filterArgs = array( array('name' => 'name', 'type' => 'value',
-	 * 'field' => 'User.name'), array('name' => 'username', 'type' => 'like',
-	 * 'field' => 'User.username'), array('name' => 'title', 'type' => 'like',
-	 * 'field' => 'Task.title') );
+	/**
+	 * 進捗一覧を表示
 	 */
 	public function admin_index()
 	{
@@ -223,7 +217,7 @@ class RecordsController extends AppController
 					Utils::getYMDHN($row['Record']['created']),
 				];
 				
-				mb_convert_variables("SJIS-WIN", "UTF-8", $row);
+				mb_convert_variables('SJIS-WIN', 'UTF-8', $row);
 				
 				fputcsv($fp, $row);
 			}
@@ -254,6 +248,14 @@ class RecordsController extends AppController
 		}
 	}
 
+	/**
+	 * 学習履歴を追加
+	 * 
+	 * @param int $content_id    課題ID
+	 * @param int $is_complete   完了フラグ
+	 * @param int $study_sec     学習時間
+	 * @param int $kind 更新種別
+	 */
 	public function add($task_id, $is_complete, $study_sec, $kind)
 	{
 		// コンテンツ情報を取得
@@ -277,39 +279,6 @@ class RecordsController extends AppController
 		else
 		{
 			$this->Flash->error(__('The record could not be saved. Please, try again.'));
-		}
-	}
-
-	public function record($task_id, $record, $details)
-	{
-		// コンテンツ情報を取得
-		$this->loadModel('Task');
-		$content = $this->Task->get($task_id);
-		
-		$this->Record->create();
-		
-		$data = [
-			'user_id'		=> $this->readAuthUser('id'),
-			'theme_id'		=> $content['Theme']['id'],
-			'task_id'		=> $task_id,
-			'theme_rate'	=> $record['theme_rate'],
-			'rate'			=> $record['rate'],
-			'emotion_icon'	=> $record['emotion_icon'],
-			'is_passed'		=> $record['is_passed'],
-			'study_sec'		=> $record['study_sec'],
-			'is_complete'	=> 1
-		];
-		
-		if($this->Record->save($data))
-		{
-			$this->RecordsQuestion = new RecordsQuestion();
-			
-			foreach ($details as $detail)
-			{
-				$this->RecordsQuestion->create();
-				$detail['record_id'] = $this->Record->getLastInsertID();
-				$this->RecordsQuestion->save($detail);
-			}
 		}
 	}
 }

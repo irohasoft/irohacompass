@@ -18,19 +18,19 @@ App::uses('AppController', 'Controller');
  */
 class UsersThemesController extends AppController
 {
-	public $components = [
-		'Paginator'
-	];
-
+	/**
+	 * 学習テーマ一覧（ホーム画面）を表示
+	 */
 	public function index()
 	{
 		$user_id = $this->readAuthUser('id');
 		
 		// 全体のお知らせの取得
-		$this->loadModel('Setting');
-		$data = $this->Setting->findAllBySettingKey('information');
+		$data = $this->Setting->find()
+			->where(['Setting.setting_key' => 'information'])
+			->first();
 		
-		$info = $data[0]['Setting']['setting_value'];
+		$info = $data['Setting']['setting_value'];
 		
 		// お知らせ一覧を取得
 		$this->loadModel('Info');
@@ -39,8 +39,8 @@ class UsersThemesController extends AppController
 		$no_info = '';
 		
 		// 全体のお知らせもお知らせも存在しない場合
-		if(($info == '') && count($infos)==0)
-			$no_info = "お知らせはありません";
+		if(($info == '') && (count($infos) == 0))
+			$no_info = __('お知らせはありません');
 		
 		// 受講学習テーマ情報の取得
 		$themes = $this->UsersTheme->getThemeRecord($user_id);

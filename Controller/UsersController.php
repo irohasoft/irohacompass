@@ -9,7 +9,6 @@
  */
 
 App::uses('AppController', 'Controller');
-App::uses('Group', 'Group');
 
 /**
  * Users Controller
@@ -19,7 +18,6 @@ App::uses('Group', 'Group');
  */
 class UsersController extends AppController
 {
-
 	public $components = [
 		'Session',
 		'Paginator',
@@ -47,60 +45,6 @@ class UsersController extends AppController
 	}
 
 	/**
-	 * ユーザの削除
-	 *
-	 * @param int $user_id 削除するユーザのID
-	 */
-	public function admin_delete($user_id = null)
-	{
-		if(Configure::read('demo_mode'))
-			return;
-		
-		$this->User->id = $user_id;
-		
-		if(!$this->User->exists())
-		{
-			throw new NotFoundException(__('Invalid user'));
-		}
-		
-		$this->request->allowMethod('post', 'delete');
-		
-		if($this->User->delete())
-		{
-			$this->Flash->success(__('ユーザが削除されました'));
-		}
-		else
-		{
-			$this->Flash->error(__('ユーザを削除できませんでした'));
-		}
-		
-		return $this->redirect(['action' => 'index']);
-	}
-
-	/**
-	 * ユーザの学習履歴のクリア
-	 *
-	 * @param int $user_id 学習履歴をクリアするユーザのID
-	 */
-	public function admin_clear($user_id)
-	{
-		$this->request->allowMethod('post', 'delete');
-		$this->User->deleteUserRecords($user_id);
-		$this->Flash->success(__('学習履歴を削除しました'));
-		
-		return $this->redirect(['action' => 'edit', $user_id]);
-	}
-
-	/**
-	 * ログアウト
-	 */
-	public function logout()
-	{
-		$this->Cookie->delete('Auth');
-		$this->redirect($this->Auth->logout());
-	}
-
-	/**
 	 * ログイン
 	 */
 	public function login()
@@ -115,7 +59,7 @@ class UsersController extends AppController
 			// クッキー上のアカウントでログイン
 			$this->request->data = $this->Cookie->read('Auth');
 			
-			if($this->Auth->login())
+			if($this->_login())
 			{
 				// 最終ログイン日時を保存
 				$this->User->id = $this->readAuthUser('id');
@@ -132,7 +76,7 @@ class UsersController extends AppController
 		// 通常ログイン処理
 		if($this->request->is('post'))
 		{
-			if($this->Auth->login())
+			if($this->_login())
 			{
 				if(isset($this->data['User']['remember_me']))
 				{
@@ -171,12 +115,46 @@ class UsersController extends AppController
 	}
 
 	/**
-	 * ユーザを追加（編集画面へ）
+	 * bcrypt パスワード対応ログイン
 	 */
-	public function admin_add()
+	private function _login()
 	{
-		$this->admin_edit();
-		$this->render('admin_edit');
+		$username = $this->request->data['User']['username'];
+		$user = $this->User->findByUsername($username);
+		
+		// 指定したユーザが存在しない場合、認証失敗とする
+		if(!$user)
+			return false;
+		
+		$hash = $user['User']['password'];
+		
+		// 先頭文字列で bcrypt によるハッシュ値かどうか判定
+		if(substr($hash, 0, 1) == '$')
+		{
+			// bcrypt パスワードの認証
+			$password = $this->request->data['User']['password'];
+			
+			if(password_verify($password, $hash))
+			{
+				return $this->Auth->login($user['User']);
+			}
+		}
+		else
+		{
+			// 通常(SHA-1)パスワードの認証
+			return $this->Auth->login();
+		}
+		
+		return false;
+	}
+
+	/**
+	 * ログアウト
+	 */
+	public function logout()
+	{
+		$this->Cookie->delete('Auth');
+		$this->redirect($this->Auth->logout());
 	}
 
 	/**
@@ -201,11 +179,7 @@ class UsersController extends AppController
 		if($group_id != '')
 			$conditions['User.id'] = $this->Group->getUserIdByGroupID($group_id);
 		
-		//$this->User->virtualFields['group_title']  = 'group_title';		// 外部結合テーブルのフィールドによるソート用
-		//$this->User->virtualFields['course_title'] = 'course_title';		// 外部結合テーブルのフィールドによるソート用
-		
 		$this->paginate = [
-			'User' => [
 				'fields' => ['*',
 					// 所属グループ一覧 ※パフォーマンス改善
 					'(SELECT group_concat(g.title order by g.id SEPARATOR \', \') as group_title  FROM ib_users_groups  ug INNER JOIN ib_groups  g ON g.id = ug.group_id  WHERE ug.user_id = User.id) as group_title',
@@ -215,19 +189,7 @@ class UsersController extends AppController
 				'conditions' => $conditions,
 				'limit' => 20,
 				'order' => 'created desc',
-/*
-				'joins' => array(
-					// 受講コースをカンマ区切りで取得
-					array('type' => 'LEFT OUTER', 'alias' => 'UserCourse',
-							'table' => '(SELECT uc.user_id, group_concat(c.title order by c.id SEPARATOR \', \') as course_title FROM ib_users_courses uc INNER JOIN ib_courses c ON c.id = uc.course_id  GROUP BY uc.user_id)',
-							'conditions' => 'User.id = UserCourse.user_id'),
-					// 所属グループをカンマ区切りで取得
-					array('type' => 'LEFT OUTER', 'alias' => 'UserGroup',
-							'table' => '(SELECT ug.user_id, group_concat(g.title order by g.id SEPARATOR \', \') as group_title FROM ib_users_groups ug INNER JOIN ib_groups g ON g.id = ug.group_id GROUP BY ug.user_id)',
-							'conditions' => 'User.id = UserGroup.user_id')
-				)
-*/
-		]];
+		];
 
 		// ユーザ一覧を取得
 		try
@@ -245,6 +207,15 @@ class UsersController extends AppController
 		$groups = $this->Group->find('list');
 
 		$this->set(compact('groups', 'users', 'group_id'));
+	}
+
+	/**
+	 * ユーザを追加（編集画面へ）
+	 */
+	public function admin_add()
+	{
+		$this->admin_edit();
+		$this->render('admin_edit');
 	}
 
 	/**
@@ -294,6 +265,50 @@ class UsersController extends AppController
 	}
 
 	/**
+	 * ユーザの削除
+	 *
+	 * @param int $user_id 削除するユーザのID
+	 */
+	public function admin_delete($user_id = null)
+	{
+		if(Configure::read('demo_mode'))
+			return;
+		
+		$this->User->id = $user_id;
+		
+		if(!$this->User->exists())
+		{
+			throw new NotFoundException(__('Invalid user'));
+		}
+		
+		$this->request->allowMethod('post', 'delete');
+		
+		if($this->User->delete())
+		{
+			$this->Flash->success(__('ユーザが削除されました'));
+		}
+		else
+		{
+			$this->Flash->error(__('ユーザを削除できませんでした'));
+		}
+		
+		return $this->redirect(['action' => 'index']);
+	}
+
+	/**
+	 * ユーザの学習履歴のクリア
+	 *
+	 * @param int $user_id 学習履歴をクリアするユーザのID
+	 */
+	public function admin_clear($user_id)
+	{
+		$this->request->allowMethod('post', 'delete');
+		$this->User->deleteUserRecords($user_id);
+		$this->Flash->success(__('学習履歴を削除しました'));
+		return $this->redirect(['action' => 'edit', $user_id]);
+	}
+
+	/**
 	 * パスワード変更
 	 */
 	public function setting()
@@ -321,7 +336,7 @@ class UsersController extends AppController
 				}
 				else
 				{
-					$this->Flash->error(__('The user could not be saved. Please, try again.'));
+					$this->Flash->error(__('パスワードが保存できませんでした'));
 				}
 			}
 			else

@@ -196,14 +196,5 @@ class Utils
 		
 		return $tag;
 	}
-
-	public static function writeFormGroup($label, $value, $is_bold = false, $block_class = '')
-	{
-		$value = $is_bold ? '<h5>'.$value.'</h5>' : $value;
-		echo '<div class="form-group '.$block_class.'">';
-		echo '  <label for="UserRegistNo" class="col col-sm-3 control-label">'.$label.'</label>';
-		echo '  <div class="col col-sm-9">'.$value.'</div>';
-		echo '</div>';
-	}
 }
 

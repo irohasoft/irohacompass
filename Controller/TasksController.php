@@ -9,8 +9,6 @@
  */
 
 App::uses('AppController', 'Controller');
-App::uses('Theme', 'Theme');
-App::uses('Record', 'Record');
 
 /**
  * Tasks Controller
@@ -144,71 +142,42 @@ class TasksController extends AppController
 		$this->set(compact('theme', 'tasks', 'is_user', 'status', 'keyword'));
 	}
 
-	public function view($id = null)
+	public function admin_index($id)
 	{
-		$id = intval($id);
-		
-		if(!$this->Task->exists($id))
-		{
-			throw new NotFoundException(__('Invalid task'));
-		}
-
-		$this->layout = '';
-
-		$task = $this->Task->get($id);
-		
-		// コンテンツの閲覧権限の確認
-		$this->loadModel('Theme');
-		
-		if(!$this->Theme->hasRight($this->readAuthUser('id'), $task['Task']['theme_id']))
-		{
-			throw new NotFoundException(__('Invalid access'));
-		}
-		
-		$this->set(compact('task'));
+		//$id = intval($id);
+		$this->index($id);
+		$this->render('index');
 	}
 
-	public function admin_preview()
+	public function admin_add($theme_id)
 	{
-		$this->autoRender = FALSE;
-		if($this->request->is('ajax'))
-		{
-			$data = [
-				'Task' => [
-					'id'     => 0,
-					'title'  => $this->data['task_title'],
-					'kind'   => $this->data['task_kind'],
-					'url'    => $this->data['task_url'],
-					'body'  => $this->data['task_body']
-				]
-			];
-			
-			$this->writeSession("Iroha.preview_task", $data);
-		}
+		$this->edit($theme_id);
+		$this->render('edit');
 	}
 
-	public function preview()
+	/**
+	 * 課題の削除
+	 *
+	 * @param int $task_id 削除する課題のID
+	 */
+	public function admin_delete($task_id)
 	{
-		$this->layout = '';
-		$this->set('task', $this->readSession('Iroha.preview_task'));
-		$this->render('view');
+		$this->delete($task_id);
 	}
 
-	public function delete($id)
+	public function delete($task_id)
 	{
 		if(Configure::read('demo_mode'))
 			return;
 		
-		$this->Task->id = $id;
+		$this->Task->id = $task_id;
 		
 		if(!$this->Task->exists())
 		{
 			throw new NotFoundException(__('Invalid task'));
 		}
 		
-		// コンテンツ情報を取得
-		$this->loadModel('Task');
-		$task = $this->Task->get($id);
+		$task = $this->Task->get($task_id);
 		
 		$this->request->allowMethod('post', 'delete');
 		
@@ -224,24 +193,6 @@ class TasksController extends AppController
 		return $this->redirect(['action' => 'index', $task['Theme']['id']]);
 	}
 
-	public function admin_index($id)
-	{
-		//$id = intval($id);
-		$this->index($id);
-		$this->render('index');
-	}
-
-	public function admin_add($theme_id)
-	{
-		$this->edit($theme_id);
-		$this->render('edit');
-	}
-
-	public function admin_delete($id)
-	{
-		$this->delete($id);
-	}
-	
 	public function add($theme_id)
 	{
 		$this->edit($theme_id);
@@ -337,6 +288,11 @@ class TasksController extends AppController
 		$this->set(compact('groups', 'themes', 'users', 'theme', 'priority', 'status', 'is_user', 'deadline'));
 	}
 
+	/**
+	 * ファイル（配布資料、動画）のアップロード
+	 *
+	 * @param int $file_type ファイルの種類
+	 */
 	public function admin_upload($file_type)
 	{
 		$this->upload($file_type);
@@ -353,7 +309,8 @@ class TasksController extends AppController
 		$mode = '';
 		$file_url = '';
 		
-		switch ($file_type)
+		// ファイルの種類によって、アップロード可能な拡張子とファイルサイズを指定
+		switch($file_type)
 		{
 			case 'file' :
 				$upload_extensions = (array)Configure::read('upload_extensions');
@@ -367,11 +324,13 @@ class TasksController extends AppController
 				$upload_extensions = (array)Configure::read('upload_movie_extensions');
 				$upload_maxsize = Configure::read('upload_movie_maxsize');
 				break;
+			default :
+				throw new NotFoundException(__('Invalid access'));
 		}
 		
-		$fileUpload->setExtension($upload_extensions);
-		$fileUpload->setMaxSize($upload_maxsize);
-		
+		// php.ini の upload_max_filesize, post_max_size の値を確認（互換性維持のためメソッドが存在する場合のみ）
+		if(method_exists($fileUpload, 'getBytes'))
+		{
 		$upload_max_filesize = $fileUpload->getBytes(ini_get('upload_max_filesize'));
 		$post_max_size		 = $fileUpload->getBytes(ini_get('post_max_size'));
 		
@@ -382,20 +341,20 @@ class TasksController extends AppController
 		// post_max_size が設定サイズより小さい場合、post_max_size を優先する
 		if($post_max_size < $upload_maxsize)
 			$upload_maxsize	= $post_max_size;
+		}
 		
 		$fileUpload->setExtension($upload_extensions);
 		$fileUpload->setMaxSize($upload_maxsize);
 		
 		$original_file_name = '';
 		
-		if($this->request->is('post') || $this->request->is('put'))
+		if($this->request->is(['post', 'put']))
 		{
 			if(Configure::read('demo_mode'))
 				return;
 			
-			//debug($this->request->data);
 			// ファイルの読み込み
-			$fileUpload->readFile( $this->request->data['Task']['file'] );
+			$fileUpload->readFile( $this->getData('Task')['file'] );
 
 			$error_code = 0;
 			
@@ -407,40 +366,36 @@ class TasksController extends AppController
 			{
 				$mode = 'error';
 				
-				// 拡張子エラー
-				if($error_code == 1001)
-					$this->Flash->error('アップロードされたファイルの形式は許可されていません');
-				
-				// ファイルサイズエラー
-				if(($error_code == 1002)||($error_code == 1003))
+				switch($error_code)
 				{
-					$size = $this->request->data['Task']['file']['size'];
-					$this->Flash->error('アップデートされたファイルサイズ（'.$size.'）は許可されていません');
+					case 1001 : // 拡張子エラー
+					$this->Flash->error('アップロードされたファイルの形式は許可されていません');
+						break;
+					case 1002 : // ファイルサイズが0
+					case 1003 : // ファイルサイズオバー
+						$size = $this->getData('Task')['file']['size'];
+						$this->Flash->error('アップロードされたファイルのサイズ（'.$size.'）は許可されていません');
+						break;
+					default :
+						$this->Flash->error('アップロード中にエラーが発生しました ('.$error_code.')');
 				}
 			}
 			else
 			{
-				$original_file_name = $this->request->data['Task']['file']['name'];
+				$original_file_name = $this->getData('Task')['file']['name'];
 				
-				$new_name = date("YmdHis").$fileUpload->getExtension( $fileUpload->get_file_name() );	//	ファイル名：YYYYMMDDHHNNSS形式＋"既存の拡張子"
+				//	ファイル名：YYYYMMDDHHNNSS形式＋"既存の拡張子"
+				$new_name = date("YmdHis").$fileUpload->getExtension( $fileUpload->getFileName() );
 				
-				$user_id    = intval($this->readAuthUser('id'));
-				$upload_dir = WWW_ROOT.DS."uploads".DS.$user_id;
-				
-				if(!file_exists($upload_dir))
-					mkdir($upload_dir, 0755);
+				$file_name = WWW_ROOT."uploads".DS.$new_name;										//	ファイルのパス
+				$file_url = $this->webroot.'uploads/'.$new_name;									//	ファイルのURL
 
-				$file_path = $upload_dir.DS.$new_name;													//	ファイル格納フォルダ
-				$file_url = $this->webroot.'uploads/'.$user_id.'/'.$new_name;
-
-				$result = $fileUpload->saveFile( $file_path );											//	ファイルの保存
+				$result = $fileUpload->saveFile( $file_name );										//	ファイルの保存
 
 				if($result)																				//	結果によってメッセージを設定
 				{
-					$this->Flash->success('ファイルのアップロードが完了いたしました');
+					//$this->Flash->success('ファイルのアップロードが完了いたしました');
 					$mode = 'complete';
-
-					//$url = G_ROOT_URL."/../uploads/".$new_name;										//	アップロードしたファイルのURL
 				}
 				else
 				{
@@ -450,18 +405,22 @@ class TasksController extends AppController
 			}
 		}
 
-		$this->set('mode',					$mode);
-		$this->set('file_url',				$file_url);
-		$this->set('file_name',				$original_file_name);
-		$this->set('upload_extensions',		join(', ', $upload_extensions));
-		$this->set('upload_maxsize',		$upload_maxsize);
+		$file_name = $original_file_name;
+		$upload_extensions = join(', ', $upload_extensions);
+		
+		$this->set(compact('mode', 'file_url', 'file_name', 'upload_extensions', 'upload_maxsize'));
 	}
 	
+	/**
+	 * リッチテキストエディタ(Summernote) からPOSTされた画像を保存
+	 *
+	 * @return string アップロードした画像のURL(JSON形式)
+	 */
 	public function admin_upload_image()
 	{
 		$this->autoRender = FALSE;
 		
-		if($this->request->is('post') || $this->request->is('put'))
+		if($this->request->is(['post', 'put']))
 		{
 			App::import ( "Vendor", "FileUpload" );
 			$fileUpload = new FileUpload();
@@ -471,41 +430,21 @@ class TasksController extends AppController
 			
 			$fileUpload->setExtension($upload_extensions);
 			$fileUpload->setMaxSize($upload_maxsize);
-			//debug($this->request->params['form']['file']);
+			$fileUpload->readFile( $this->getParam('form')['file'] );								//	ファイルの読み込み
 			
-			$fileUpload->readFile( $this->request->params['form']['file'] );						//	ファイルの読み込み
+			$new_name = date("YmdHis").$fileUpload->getExtension( $fileUpload->getFileName() );		//	ファイル名：YYYYMMDDHHNNSS形式＋"既存の拡張子"
 			
-			$new_name = date("YmdHis").$fileUpload->getExtension( $fileUpload->get_file_name() );	//	ファイル名：YYYYMMDDHHNNSS形式＋"既存の拡張子"
+			$file_name = WWW_ROOT."uploads".DS.$new_name;											//	ファイルのパス
+			$file_url = $this->webroot.'uploads/'.$new_name;										//	ファイルのURL
 
-			$user_id    = intval($this->readAuthUser('id'));
-			$upload_dir = WWW_ROOT.DS."uploads".DS.$user_id;
-			
-			if(!file_exists($upload_dir))
-				mkdir($upload_dir, 0755);
-			
-			$file_path = $upload_dir.DS.$new_name;													//	ファイルのパス
-			$file_url = $this->webroot.'uploads/'.$user_id.'/'.$new_name;
-
-			$result = $fileUpload->saveFile( $file_path );											//	ファイルの保存
+			$result = $fileUpload->saveFile( $file_name );											//	ファイルの保存
 			
 			//debug($result);
-			
-			$response = ($result) ? [$file_url] : [false];
+			$response = $result ? [$file_url] : [false];
 			echo json_encode($response);
 		}
 	}
 	
-	public function admin_order()
-	{
-		$this->autoRender = FALSE;
-		
-		if($this->request->is('ajax'))
-		{
-			$this->Task->setOrder($this->data['id_list']);
-			return "OK";
-		}
-	}
-
 	public function admin_record($theme_id, $user_id)
 	{
 		$this->index($theme_id, $user_id);
