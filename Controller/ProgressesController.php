@@ -140,12 +140,19 @@ class ProgressesController extends AppController
 		// メール通知用
 		$users = $this->User->find('list');
 		
-		$this->set(compact('task', 'progresses', 'mail_list', 'is_record', 'is_admin', 'is_add', 'is_user', 'users'));
+		$this->set(compact('task', 'progresses', 'is_record', 'is_admin', 'is_add', 'is_user', 'users'));
+		
 	}
 
 	/**
 	 * 進捗の移動
 	 */
+	public function admin_move($progress_id)
+	{
+		$this->move($progress_id);
+		$this->render('move');
+	}
+
 	public function move($progress_id)
 	{
 		if(!$this->Progress->exists($progress_id))
