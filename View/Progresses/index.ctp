@@ -384,7 +384,7 @@
 					'100' => '100%',
 				];
 				
-				echo $this->Form->input('rate', ['label' => __('進捗率'), 'options'=>$rate_list, 'default' => $task['Task']['rate']]);
+				echo $this->Form->input('rate', ['label' => __('進捗率'), 'options'=>$rate_list, 'default' => $task['Task']['rate'], 'div' => 'form-group row-progress']);
 				
 				Configure::read('emotion_icons');
 				$emotion_icons = [];
