@@ -68,7 +68,6 @@
 		<th nowrap><?= $this->Paginator->sort('User.name', __('氏名')); ?></th>
 		<th nowrap class="ib-col-center"><?= $this->Paginator->sort('rate', __('進捗率')); ?></th>
 		<th nowrap class="ib-col-center"><?= $this->Paginator->sort('theme_rate', __('進捗率(全体)')); ?></th>
-		<th nowrap class="ib-col-center"><?= $this->Paginator->sort('is_complete', __('完了')); ?></th>
 		<th class="ib-col-center" nowrap><?= $this->Paginator->sort('record_type', __('種別')); ?></th>
 		<th class="ib-col-center"><?= $this->Paginator->sort('study_sec', __('滞留時間')); ?></th>
 		<th class="ib-col-datetime"><?= $this->Paginator->sort('created', __('更新日時')); ?></th>
@@ -82,7 +81,6 @@
 		<td><a href="javascript:openProgress('<?= h($record['User']['id']); ?>', '<?= h($record['User']['name']); ?>');"><?= h($record['User']['name']); ?></a></td>
 		<td class="ib-col-center"><?= h($record['Record']['rate']); ?>&nbsp;</td>
 		<td class="ib-col-center"><?= h($record['Record']['theme_rate']); ?>&nbsp;</td>
-		<td nowrap class="ib-col-center"><?= h(Configure::read('content_status.'.$record['Record']['is_complete'])); ?>&nbsp;</td>
 		<td nowrap class="ib-col-center"><?= h(Configure::read('record_type.'.$record['Record']['record_type'])); ?>&nbsp;</td>
 		<td class="ib-col-center"><?= h(Utils::getHNSBySec($record['Record']['study_sec'])); ?>&nbsp;</td>
 		<td class="ib-col-date"><?= h(Utils::getYMDHN($record['Record']['created'])); ?>&nbsp;</td>

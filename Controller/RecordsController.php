@@ -193,9 +193,7 @@ class RecordsController extends AppController
 				__('氏名'),
 				__('進捗率'),
 				__('進捗率(全体)'),
-				__('滞留時間'),
-				__('結果'),
-				__('理解度'),
+				__('種別'),
 				__('滞留時間'),
 				__('更新日時')
 			];
@@ -211,7 +209,6 @@ class RecordsController extends AppController
 					$row['User']['name'],
 					$row['Record']['rate'],
 					$row['Record']['theme_rate'],
-					Configure::read('content_status.'.$row['Record']['is_complete']),
 					Configure::read('record_type.'.$row['Record']['record_type']),
 					Utils::getHNSBySec($row['Record']['study_sec']), 
 					Utils::getYMDHN($row['Record']['created']),
