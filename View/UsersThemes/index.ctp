@@ -95,7 +95,7 @@
 	<?php }?>
 	
 	<div class="panel panel-default">
-		<div class="panel-heading">アイデアボックス</div>
+		<div class="panel-heading"><?= __('アイデアボックス')?></div>
 		<div class="panel-body">
 			<?php
 				echo $this->Form->create('Idea', ['class' => 'idea-form']);
