@@ -33,27 +33,3 @@ $config['content_type']	= array(
 	'irohanote'	=> 'iroha Note',
 );
 */
-
-/*
-class I18n {
-	public static function translate($singular) {
-		return $singular;
-	}
-	
-	public static function insertArgs($translated, array $args) {
-		$translated = str_replace('学習',	'研究',		$translated);
-
-		$len = count($args);
-		if ($len === 0 || ($len === 1 && $args[0] === null)) {
-			return $translated;
-		}
-
-		if (is_array($args[0])) {
-			$args = $args[0];
-		}
-
-		$translated = preg_replace('/(?<!%)%(?![%\'\-+bcdeEfFgGosuxX\d\.])/', '%%', $translated);
-		return vsprintf($translated, $args);
-	}
-}
-*/
