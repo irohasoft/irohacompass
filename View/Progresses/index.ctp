@@ -367,8 +367,8 @@
 				echo $this->Form->hidden('page_id', ['class' => 'form-group row-page-id']);
 				
 				echo $this->Form->input('file',		['label' => __('添付ファイル'), 'class' => 'form-control form-control-upload']);
-
-				echo $this->Form->inputRadio('status',	['label' => __('課題のステータス'), 'options' => Configure::read('task_status'), 'default' => 1]);
+				
+				echo $this->Form->inputRadio('status',	['label' => __('課題のステータス'), 'options' => Configure::read('task_status'), 'value' => $task['Task']['status'],'default' => 1]);
 				
 				$rate_list = [
 					'0'  => '0%',
