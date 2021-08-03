@@ -285,7 +285,7 @@ class TasksController extends AppController
 		$priority = $this->isEditPage() ? $this->request->data['Task']['priority'] : '2';
 		$deadline = $this->isEditPage() ? $this->request->data['Task']['deadline'] : date("Y-m-d",strtotime("+1 week"));
 		
-		$this->set(compact('groups', 'themes', 'users', 'theme', 'priority', 'status', 'is_user', 'deadline'));
+		$this->set(compact('themes', 'users', 'theme', 'priority', 'status', 'is_user', 'deadline'));
 	}
 
 	/**
