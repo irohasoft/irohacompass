@@ -227,6 +227,7 @@ $config['mail_title']	= '[iroha Compass] 進捗の更新';
 $config['admin_from']	= ['sendmail@irohasoft.com' => 'iroha Compass'];
 
 $config['show_admin_link'] = false;
+$config['open_link_same_window'] = false;
 
 // webroot/index.php でアプリケーション名が設定されていない場合、ここで設定
 if (!defined('APP_NAME')) {

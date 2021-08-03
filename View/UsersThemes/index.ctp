@@ -18,11 +18,12 @@
 		<div class="panel-body">
 			<?php if($info!=""){?>
 			<div class="well">
-				<?php
-				$info = $this->Text->autoLinkUrls($info, [ 'target' => '_blank']);
+			<?php
+				$target = Configure::read('open_link_same_window') ? [] : ['target' => '_blank'];
+				$info = $this->Text->autoLinkUrls($info, $target);
 				$info = nl2br($info);
 				echo $info;
-				?>
+			?>
 			</div>
 			<?php }?>
 			
