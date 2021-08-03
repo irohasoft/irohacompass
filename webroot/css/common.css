@@ -736,17 +736,17 @@ form .required .control-label:after
 /* start メニューの自動ボタン化を抑止 */
 .nav>li
 {
-	float: left;
-	display: inline-block;
+	float				: left;
+	display				: inline-block;
 }
 .navbar-nav
 {
-	margin: 0;
+	margin				: 0;
 }
 .navbar-nav>li>a
 {
-	padding-top: 14.5px;
-	padding-bottom: 14.5px;
+	padding-top			: 14.5px;
+	padding-bottom		: 14.5px;
 }
 /* end */
 
