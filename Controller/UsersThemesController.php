@@ -61,8 +61,14 @@ class UsersThemesController extends AppController
 			array_push($theme_ids, $theme['Theme']['id']);
 		}
 		
+		$where = ['Theme.id' => $theme_ids];
+		
+		// 自分が所有しているテーマの履歴のみを表示
+		if(Configure::read('show_my_record'))
+			$where = ['Theme.id' => $theme_ids, 'Theme.user_id' => $user_id];
+		
 		$records = $this->Record->find()
-			->where(['Theme.id' => $theme_ids])
+			->where($where)
 			->order(['Record.created desc'])
 			->limit(5)
 			->all();
