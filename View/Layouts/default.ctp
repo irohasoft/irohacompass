@@ -114,9 +114,11 @@
 		<?= h($this->Session->read('Setting.copyright')); ?>
 	</div>
 	
+	<?php if(isset($loginedUser)) {?>
 	<div class="irohasoft">
 		Powered by <a href="https://irohacompass.irohasoft.jp/"><?= APP_NAME; ?></a>
 	</div>
+	<?php }?>
 	
 	<?= $this->element('sql_dump'); ?>
 </body>
