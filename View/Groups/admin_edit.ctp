@@ -18,8 +18,8 @@
 				echo $this->Form->create('Group', Configure::read('form_defaults'));
 				echo $this->Form->input('id');
 				echo $this->Form->input('title',	['label' => __('グループ名')]);
-				echo $this->Form->input('User',		['label' => __('所属ユーザ'),		'size' => 20]);
-				echo $this->Form->input('Theme',	['label' => __('学習テーマ'),		'size' => 20]);
+				echo $this->Form->input('User',		['label' => __('所属ユーザ')]);
+				echo $this->Form->input('Theme',	['label' => __('学習テーマ')]);
 				echo $this->Form->input('comment',	['label' => __('備考')]);
 				echo Configure::read('form_submit_before')
 					.$this->Form->submit(__('保存'), Configure::read('form_submit_defaults'))
