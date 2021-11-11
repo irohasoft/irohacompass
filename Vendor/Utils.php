@@ -229,7 +229,7 @@ class Utils
 		$url = FULL_BASE_URL.'/notes/page/'.$page_id;
 		
 		$tag = 
-			"<iframe id='irohanote-frame-%s' width='100%%' height='400' src='%s/%s'></iframe>";
+			"<iframe id='irohanote-frame-%s' width='100%' height='400' src='%s/%s'></iframe>";
 		
 		$tag = sprintf(
 			$tag,
