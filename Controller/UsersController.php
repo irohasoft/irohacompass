@@ -12,21 +12,22 @@ App::uses('AppController', 'Controller');
 
 /**
  * Users Controller
- *
- * @property User $User
- * @property PaginatorComponent $Paginator
+ * https://book.cakephp.org/2/ja/controllers.html
  */
 class UsersController extends AppController
 {
+	/**
+	 * 使用するコンポーネント
+	 * https://book.cakephp.org/2/ja/core-libraries/toc-components.html
+	 */
 	public $components = [
-		'Session',
 		'Paginator',
 		'Security' => [
 			'csrfUseOnce' => false,
 			'unlockedActions' => ['login', 'admin_login'],
+			'unlockedFields' => ['cmd', 'csvfile.full_path'],
 		],
 		'Search.Prg',
-		'Cookie',
 		'Auth' => [
 			'allowedActions' => [
 				'index',
@@ -54,22 +55,23 @@ class UsersController extends AppController
 		
 		// 自動ログイン処理
 		// Check cookie's login info.
-		if($this->Cookie->check('Auth'))
+		if($this->hasCookie('Auth'))
 		{
 			// クッキー上のアカウントでログイン
-			$this->request->data = $this->Cookie->read('Auth');
+			$this->request->data = $this->readCookie('Auth');
 			
 			if($this->Auth->login())
 			{
 				// 最終ログイン日時を保存
 				$this->User->id = $this->readAuthUser('id');
 				$this->User->saveField('last_logined', date(date('Y-m-d H:i:s')));
+				$this->writeCookie('LoginStatus', 'logined');
 				return $this->redirect( $this->Auth->redirect());
 			}
 			else
 			{
 				// ログインに失敗した場合、クッキーを削除
-				$this->Cookie->delete('Auth');
+				$this->deleteCookie('Auth');
 			}
 		}
 		
@@ -85,13 +87,14 @@ class UsersController extends AppController
 					
 					// Save login info to cookie.
 					$cookie = $this->request->data;
-					$this->Cookie->write( 'Auth', $cookie, true, '+2 weeks');
+					$this->writeCookie('Auth', $cookie, true, '+2 weeks');
 				}
 				
 				// 最終ログイン日時を保存
 				$this->User->id = $this->readAuthUser('id');
 				$this->User->saveField('last_logined', date(date('Y-m-d H:i:s')));
 				$this->writeLog('user_logined', '');
+				$this->writeCookie('LoginStatus', 'logined');
 				$this->deleteSession('Auth.redirect');
 				$this->redirect($this->Auth->redirect());
 			}
@@ -157,7 +160,8 @@ class UsersController extends AppController
 	 */
 	public function logout()
 	{
-		$this->Cookie->delete('Auth');
+		$this->deleteCookie('Auth');
+		$this->deleteCookie('LoginStatus');
 		$this->redirect($this->Auth->logout());
 	}
 

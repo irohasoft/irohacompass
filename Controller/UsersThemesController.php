@@ -102,6 +102,9 @@ class UsersThemesController extends AppController
 			}
 		}
 		
+		// アップロードファイル参照用
+		$this->writeCookie('LoginStatus', 'logined');
+		
 		$this->set(compact('themes', 'no_record', 'info', 'infos', 'no_info', 'records', 'labels', 'login_data', 'progress_data', 'idea_count'));
 	}
 }

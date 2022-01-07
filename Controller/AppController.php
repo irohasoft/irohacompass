@@ -14,18 +14,18 @@ App::import('Vendor', 'Utils');
 
 /**
  * Application Controller
- *
- * Add your application-wide methods in the class below, your controllers
- * will inherit them.
- *
- * @package app.Controller
- * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
+ * https://book.cakephp.org/2/ja/controllers.html
  */
 class AppController extends Controller
 {
+	/**
+	 * 使用するコンポーネント
+	 * https://book.cakephp.org/2/ja/core-libraries/toc-components.html
+	 */
 	public $components = [
 			'DebugKit.Toolbar',
 			'Session',
+		'Cookie',
 			'Flash',
 			'Auth' => [
 			'loginRedirect' => ['controller' => 'users_themes', 'action' => 'index'],
@@ -34,7 +34,10 @@ class AppController extends Controller
 			]
 	];
 	
-	//public $helpers = array('Session');
+	/**
+	 * 使用するヘルパー
+	 * https://book.cakephp.org/2/ja/core-libraries/toc-helpers.html
+	 */
 	public $helpers = [
 		'Session',
 		'Html' => ['className' => 'BoostCake.BoostCakeHtml'],
@@ -165,6 +168,43 @@ class AppController extends Controller
 	protected function writeSession($key, $value)
 	{
 		$this->Session->write($key, $value);
+	}
+
+	/**
+	 * クッキーの取得
+	 * @param string $key キー
+	 */
+	protected function readCookie($key)
+	{
+		return $this->Cookie->read($key);
+	}
+
+	/**
+	 * クッキーの削除
+	 * @param string $key キー
+	 */
+	protected function deleteCookie($key)
+	{
+		$this->Cookie->delete($key);
+	}
+
+	/**
+	 * クッキーの存在確認
+	 * @param string $key キー
+	 */
+	protected function hasCookie($key)
+	{
+		return $this->Cookie->check($key);
+	}
+
+	/**
+	 * クッキーの保存
+	 * @param string $key キー
+	 * @param string $value 値
+	 */
+	protected function writeCookie($key, $value, $secure = true, $expires = '+2 weeks')
+	{
+		$this->Cookie->write($key, $value, $secure, $expires);
 	}
 
 	/**
