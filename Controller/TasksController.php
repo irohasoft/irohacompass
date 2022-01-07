@@ -130,6 +130,16 @@ class TasksController extends AppController
 			//debug($conditions);
 		}
 		
+		$page_id = $theme['Theme']['page_id'];
+		
+		if($page_id)
+		{
+			$this->loadModel('Leaf');
+			$leaf_count = $this->Leaf->find()->where(['page_id' => $page_id])->count();
+			
+			if($leaf_count == 0)
+				$page_id = null;
+		}
 
 		$this->Paginator->settings = [
 			'limit' => 20,
@@ -139,7 +149,7 @@ class TasksController extends AppController
 		
 		$tasks = $this->paginate();
 		
-		$this->set(compact('theme', 'tasks', 'is_user', 'status', 'keyword'));
+		$this->set(compact('theme', 'tasks', 'is_user', 'status', 'keyword', 'page_id'));
 	}
 
 	public function admin_index($id)
