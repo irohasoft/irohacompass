@@ -123,29 +123,19 @@ class RecordsController extends AppController
 	 */
 	public function admin_index()
 	{
-		// 検索条件設定
+		// SearchPluginの呼び出し
 		$this->Prg->commonProcess();
 		
-		$conditions = [];
+		// モデルの filterArgs で定義した内容にしたがって検索条件を作成
+		// ただし独自の検索条件は別途追加する必要がある
+		$conditions = $this->Record->parseCriteria($this->Prg->parsedParams());
 		
 		$group_id	= $this->getQuery('group_id');
-		$theme_id	= $this->getQuery('theme_id');
-		$user_id	= $this->getQuery('user_id');
-		$task_title	= $this->getQuery('task_title');
 		$from_date	= $this->getQuery('from_date');
 		$to_date	= $this->getQuery('to_date');
 		
 		if($group_id != '')
 			$conditions['User.id'] = $this->Group->getUserIdByGroupID($group_id);
-		
-		if($theme_id != '')
-			$conditions['Theme.id'] = $theme_id;
-		
-		if($user_id != '')
-			$conditions['User.id'] = $user_id;
-		
-		if($task_title != '')
-			$conditions['Task.title like'] = '%'.$task_title.'%';
 		
 		if(!$from_date)
 			$from_date = [
@@ -241,7 +231,7 @@ class RecordsController extends AppController
 			$themes = $this->Record->Theme->find('list');
 			$users  = $this->Record->User->find('list');
 			
-			$this->set(compact('records', 'groups', 'themes', 'users', 'group_id', 'theme_id', 'user_id', 'task_title', 'from_date', 'to_date'));
+			$this->set(compact('records', 'groups', 'themes', 'users', 'group_id', 'from_date', 'to_date'));
 		}
 	}
 

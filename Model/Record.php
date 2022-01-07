@@ -74,6 +74,18 @@ class Record extends AppModel
 	 * https://github.com/CakeDC/search/blob/master/Docs/Home.md
 	 */
 	public $filterArgs = [
+		'theme_id' => [
+			'type' => 'value',
+			'field' => 'Record.theme_id'
+		],
+		'task_title' => [
+			'type' => 'like',
+			'field' => 'Task.title'
+		],
+		'user_id' => [
+			'type' => 'value',
+			'field' => 'Record.user_id'
+		],
 		'username' => [
 			'type' => 'like',
 			'field' => 'User.username'

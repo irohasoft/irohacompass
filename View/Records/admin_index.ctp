@@ -47,12 +47,16 @@
 		echo '</div>';
 		
 		echo '<div class="ib-row">';
-		echo $this->Form->searchField('theme_id',	['label' => __('学習テーマ'), 'options' => $themes, 'selected' => $theme_id, 'empty' => '全て']);
-		echo $this->Form->searchField('task_title',	['label' => __('課題名'), 'value' => $task_title]);
-		echo $this->Form->searchField('group_id',	['label' => __('グループ'), 'options' => $groups, 'selected'=>$group_id, 'empty' => '全て']);
-		echo $this->Form->searchField('user_id',	['label' => __('ユーザ'), 'options' => $users, 'selected'=>$user_id, 'empty' => '全て']);
+		echo $this->Form->searchField('theme_id',	['label' => __('学習テーマ'), 'options' => $themes, 'empty' => '全て']);
+		echo $this->Form->searchField('task_title',	['label' => __('課題名')]);
 		echo '</div>';
 		
+		echo '<div class="ib-row">';
+		echo $this->Form->searchField('group_id',	['label' => __('グループ'), 'options' => $groups, 'empty' => '全て', 'selected' => $group_id]);
+		echo $this->Form->searchField('user_id',	['label' => __('ユーザ'), 'options' => $users, 'empty' => '全て']);
+		echo $this->Form->searchField('username',	['label' => __('ログインID')]);
+		echo '</div>';
+
 		echo '<div class="ib-search-date-container">';
 		echo $this->Form->searchDate('from_date', ['label'=> __('対象日時'), 'value' => $from_date]);
 		echo $this->Form->searchDate('to_date',   ['label'=> __('～'), 'value' => $to_date]);
