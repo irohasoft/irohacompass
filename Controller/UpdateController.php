@@ -6,6 +6,10 @@
 
 App::uses('AppController', 'Controller');
 
+/**
+ * Update Controller
+ * https://book.cakephp.org/2/ja/controllers.html
+ */
 class UpdateController extends AppController
 {
 	var $name = 'Update';
@@ -15,8 +19,11 @@ class UpdateController extends AppController
 	var $db   = null;
 	var $path = '';
 	
+	/**
+	 * 使用するコンポーネント
+	 * https://book.cakephp.org/2/ja/core-libraries/toc-components.html
+	 */
 	public $components = [
-		'Session',
 		'Auth' => [
 			'allowedActions' => [
 				'index',
@@ -28,21 +35,13 @@ class UpdateController extends AppController
 	/**
 	 * アップデート
 	 */
-	public function index($mode = null)
+	public function index()
 	{
 		try
 		{
 			App::import('Model','ConnectionManager');
 
-			// テストモードの場合、テスト用のデータベースを参照
-			if($mode == 'test')
-			{
-				$this->db   = ConnectionManager::getDataSource('test');
-			}
-			else
-			{
 			$this->db   = ConnectionManager::getDataSource('default');
-			}
 
 			// パッケージアップデート用クエリ
 			$this->path = APP.'Config'.DS.'Schema'.DS.'update.sql';
@@ -54,8 +53,8 @@ class UpdateController extends AppController
 			// カスタマイズ用クエリが存在する場合
 			if(file_exists($this->path))
 			{
-			$err_custom = $this->__executeSQLScript();
-			$err_statements = array_merge($err_update, $err_custom);
+				$err_custom = $this->__executeSQLScript();
+				$err_statements = array_merge($err_update, $err_custom);
 			}
 			else
 			{
@@ -107,33 +106,37 @@ class UpdateController extends AppController
 		
 		foreach($statements as $statement)
 		{
-			if(trim($statement) != '')
+			// クエリが空の場合、実行しない
+			if(trim($statement) == '')
+				continue;
+			
+			// %salt% を置換（パスワード更新用）
+			$statement = str_replace('%salt%', Configure::read('Security.salt'), $statement);
+			
+			try
 			{
-				try
-				{
-					$this->db->query($statement);
-				}
-				catch(Exception $e)
-				{
-					// レコード重複追加エラー
-					if($e->errorInfo[0] == '23000')
-						continue;
-					
-					// カラム重複追加エラー
-					if($e->errorInfo[0] == '42S21')
-						continue;
-					
-					// ビュー重複追加エラー
-					if($e->errorInfo[0] == '42S01')
-						continue;
-					
-					// インデックス重複追加エラー
-					if($e->errorInfo[0] == '42000')
-						continue;
-					
-					$error_msg = sprintf("%s\n[Error Code]%s\n[Error Code2]%s\n[SQL]%s", $e->errorInfo[2], $e->errorInfo[0], $e->errorInfo[1], $statement);
-					$err_statements[] = $error_msg;
-				}
+				$this->db->query($statement);
+			}
+			catch(Exception $e)
+			{
+				// レコード重複追加エラー
+				if($e->errorInfo[0] == '23000')
+					continue;
+				
+				// カラム重複追加エラー
+				if($e->errorInfo[0] == '42S21')
+					continue;
+				
+				// ビュー重複追加エラー
+				if($e->errorInfo[0] == '42S01')
+					continue;
+				
+				// インデックス重複追加エラー
+				if($e->errorInfo[0] == '42000')
+					continue;
+				
+				$error_msg = sprintf("%s\n[Error Code]%s\n[Error Code2]%s\n[SQL]%s", $e->errorInfo[2], $e->errorInfo[0], $e->errorInfo[1], $statement);
+				$err_statements[] = $error_msg;
 			}
 		}
 		
