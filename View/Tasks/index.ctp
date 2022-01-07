@@ -69,7 +69,7 @@
 		<?= $this->Form->hidden('learning_target', ['value' => $theme['Theme']['learning_target'], 'id' => 'learning_target']);?>
 		<?php }?>
 		<div>
-			<?= Utils::getNoteLink($theme['Theme']['page_id'], $this->Html);?>
+			<?= Utils::getNoteLink($page_id, $this->Html);?>
 		</div>
 		<div>
 			<button type="button" class="btn btn-primary btn-success" onclick="location.href='<?= Router::url(['controller' => 'themes', 'action' => 'edit', $theme['Theme']['id']]) ?>'"><?= __('編集')?></button>

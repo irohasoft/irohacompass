@@ -6,6 +6,10 @@
 
 App::uses('AppController', 'Controller');
 
+/**
+ * Install Controller
+ * https://book.cakephp.org/2/ja/controllers.html
+ */
 class InstallController extends AppController
 {
 	var $name = 'Install';
@@ -15,17 +19,20 @@ class InstallController extends AppController
 	var $db   = null;
 	var $path = '';
 	
+	/**
+	 * 使用するコンポーネント
+	 * https://book.cakephp.org/2/ja/core-libraries/toc-components.html
+	 */
 	public $components = [
-			'Session',
-			'Auth' => [
-					'allowedActions' => [
-							'index',
-							'installed',
-							'complete',
-							'error',
-							'add'
-					]
+		'Auth' => [
+			'allowedActions' => [
+				'index',
+				'installed',
+				'complete',
+				'error',
+				'add'
 			]
+		]
 	];
 	
 	/**
@@ -38,7 +45,7 @@ class InstallController extends AppController
 	/**
 	 * インストール
 	 */
-	public function index($mode = null)
+	public function index()
 	{
 		try
 		{
@@ -98,21 +105,13 @@ class InstallController extends AppController
 		{
 			App::import('Model','ConnectionManager');
 			
-			// テストモードの場合、テスト用のデータベースを参照
-			if($mode == 'test')
-			{
-				$this->db   = ConnectionManager::getDataSource('test');
-				$cdd = new DATABASE_CONFIG();
-				$sql = "SHOW TABLES FROM `".$cdd->test['database']."` LIKE 'ib_users'";
-			}
-			else
-			{
-				$this->db   = ConnectionManager::getDataSource('default');
-				$cdd = new DATABASE_CONFIG();
-				$sql = "SHOW TABLES FROM `".$cdd->default['database']."` LIKE 'ib_users'";
-			}
+			$this->db   = ConnectionManager::getDataSource('default');
+			$cdd = new DATABASE_CONFIG();
+			$sql = "SHOW TABLES FROM `".$cdd->default['database']."` LIKE 'ib_users'";
 			
 			$data = $this->db->query($sql);
+			
+			$this->set('username', '');
 			
 			// ユーザテーブルが存在する場合、インストール済みと判断
 			if(count($data) > 0)
@@ -123,8 +122,23 @@ class InstallController extends AppController
 			{
 				if($this->request->data)
 				{
+					$username	= $this->request->data['User']['username'];
 					$password	= $this->request->data['User']['password'];
 					$password2	= $this->request->data['User']['password2'];
+					
+					$this->set('username', $username);
+					
+					if((strlen($username) < 4)||(strlen($username) > 32))
+					{
+						$this->Flash->error('ログインIDは4文字以上32文字以内で入力して下さい');
+						return;
+					}
+					
+					if(!preg_match("/^[a-zA-Z0-9]+$/", $username))
+					{
+						$this->Flash->error('ログインIDは英数字で入力して下さい');
+						return;
+					}
 					
 					if((strlen($password) < 4)||(strlen($password) > 32))
 					{
@@ -150,7 +164,7 @@ class InstallController extends AppController
 					$this->__install();
 					
 					// 初期管理者アカウントの存在確認および作成
-					$this->__createRootAccount($password);
+					$this->__createRootAccount($username, $password);
 				}
 			}
 		}
@@ -257,9 +271,9 @@ class InstallController extends AppController
 	}
 	
 	/**
-	 * rootアカウントの作成
+	 * 管理者アカウントの作成
 	 */
-	private function __createRootAccount($password)
+	private function __createRootAccount($username, $password)
 	{
 		// 管理者アカウントの存在確認
 		$this->loadModel('User');
@@ -268,19 +282,21 @@ class InstallController extends AppController
 		//debug($data);
 		if(!$data)
 		{
-			// 管理者アカウントが１つも存在しない場合、初期管理者アカウント root を作成
+			// 管理者アカウントが存在しない場合のみ、初期管理者アカウントを作成
 			$data = [
-				'username' => 'root',
+				'username' => $username,
 				'password' => $password,
-				'name' => 'root',
+				'name' => $username,
 				'role' => 'admin',
-				'email' => 'info@example.com'
 			];
 
 			$this->User->save($data);
 		}
 	}
 	
+	/**
+	 * Apache のモジュールのロードをチェック
+	 */
 	private function __apache_module_loaded($module_name)
 	{
 		$modules = apache_get_modules();
