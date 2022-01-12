@@ -394,12 +394,18 @@ class TasksController extends AppController
 			{
 				$original_file_name = $this->getData('Task')['file']['name'];
 				$str = substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 4);
-
+				
+				$user_id    = intval($this->readAuthUser('id'));
+				$upload_dir = WWW_ROOT.DS."uploads".DS.$user_id;
+				
+				if(!file_exists($upload_dir))
+					mkdir($upload_dir, 0755);
+				
 				// ファイル名：YYYYMMDDHHNNSS形式＋ランダムな4桁の文字列＋"既存の拡張子"
 				$new_name = date('YmdHis').$str.$fileUpload->getExtension( $fileUpload->getFileName() );
 				
-				$file_name = WWW_ROOT."uploads".DS.$new_name;										//	ファイルのパス
-				$file_url = $this->webroot.'uploads/'.$new_name;									//	ファイルのURL
+				$file_name = $upload_dir.DS.$new_name;
+				$file_url = $this->webroot.'uploads/'.$user_id.'/'.$new_name;
 
 				$result = $fileUpload->saveFile( $file_name );										//	ファイルの保存
 
