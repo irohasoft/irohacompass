@@ -228,7 +228,9 @@
  * the cake shell command: cake schema create Sessions
  */
 	Configure::write('Session', [
-		'defaults' => 'php'
+		'defaults' => 'php',
+		'cookie' => 'AppSession', // セッション用のクッキー名
+		'cookieTimeout' => 1440, // 1 day
 	]);
 
 /**
