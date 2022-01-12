@@ -193,7 +193,7 @@ class TasksController extends AppController
 		
 		if($this->Task->delete())
 		{
-			$this->Flash->success(__('コンテンツが削除されました'));
+			$this->Flash->success(__('課題が削除されました'));
 		}
 		else
 		{
