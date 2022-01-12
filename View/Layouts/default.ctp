@@ -13,7 +13,7 @@
 <head>
 	<?= $this->Html->charset(); ?>
 	
-	<title><?= h($this->Session->read('Setting.title')); ?></title>
+	<title><?= h($this->readSession('Setting.title')); ?></title>
 	<meta name="application-name" content="<?= APP_NAME; ?>">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<?php
@@ -76,7 +76,7 @@
 	<style>
 		.ib-theme-color
 		{
-			background-color	: <?= h($this->Session->read('Setting.color')); ?>;
+			background-color	: <?= h($this->readSession('Setting.color')); ?>;
 			color				: white;
 		}
 		
@@ -90,7 +90,7 @@
 <body>
 	<div class="header ib-theme-color">
 		<div class="ib-logo ib-left">
-			<a href="<?= $this->Html->url('/')?>"><?= h($this->Session->read('Setting.title')); ?></a>
+			<a href="<?= $this->Html->url('/')?>"><?= h($this->readSession('Setting.title')); ?></a>
 		</div>
 		<?php if(isset($loginedUser)) {?>
 		<div class="ib-navi-item ib-right ib-navi-logout"><?= $this->Html->link(__('ログアウト'), ['controller' => 'users', 'action' => 'logout']); ?></div>
@@ -110,8 +110,8 @@
 		</div>
 	</div>
 	
-	<div class="ib-theme-color text-center">
-		<?= h($this->Session->read('Setting.copyright')); ?>
+	<div class="footer ib-theme-color text-center">
+		<?= h($this->readSession('Setting.copyright')); ?>
 	</div>
 	
 	<?php if(isset($loginedUser)) {?>

@@ -22,34 +22,34 @@
 
 .navbar-toggle
 {
-	display: none;
+	display			: none;
 }
 
 .collapse
 {
-	display: block;
-	border-color:transparent;
+	display			: block;
+	border-color	: transparent;
 }
 
 .navbar-right
 {
-	float: right;
+	float			: right;
 }
 
 .navbar-header
 {
-	float: left;
+	float			: left;
 }
 
 .navbar-nav
 {
-	margin:0 -15px 0 0;
+	margin			: 0 -15px 0 0;
 }
 
 .navbar-nav>li>a
 {
-	padding-top: 15px;
-	padding-bottom: 15px;
+	padding-top		: 15px;
+	padding-bottom	: 15px;
 }
 
 .admin-users-index p
