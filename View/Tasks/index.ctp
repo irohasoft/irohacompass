@@ -27,7 +27,7 @@
 		{
 			if($(target))
 			{
-				var html = marked($(target).val(),
+				var html = marked.parse($(target).val(),
 				{
 	//				renderer: _markedRenderer,
 					breaks: true,

@@ -9,7 +9,7 @@
 	
 	/* 進捗一覧用 */
 	$(function(){
-		var html = marked($('#content_body').val(),
+		var html = marked.parse($('#content_body').val(),
 		{
 			breaks: true,
 			sanitize: true
@@ -19,7 +19,7 @@
 		
 		$('.progress').each(function(index)
 		{
-			var html = marked($(this).val(),
+			var html = marked.parse($(this).val(),
 			{
 				breaks: true,
 				sanitize: true
