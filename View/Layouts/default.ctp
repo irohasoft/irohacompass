@@ -42,7 +42,6 @@
 		echo $this->Html->script('jquery-ui-1.9.2.min.js');
 		echo $this->Html->script('jquery.localize.min.js');
 		echo $this->Html->script('bootstrap.min.js');
-		echo $this->Html->script('moment.js');
 		echo $this->Html->script('marked.min.js');
 		echo $this->Html->script('common.js?20200622');
 		
