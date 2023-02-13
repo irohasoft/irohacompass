@@ -36,8 +36,7 @@ class RecordsController extends AppController
 		$this->Prg->commonProcess();
 		
 		// アクセス可能な学習テーマ一覧を取得
-		$this->loadModel('UsersTheme');
-		$themes = $this->UsersTheme->getThemeRecord( $this->readAuthUser('id') );
+		$themes = $this->fetchTable('UsersTheme')->getThemeRecord( $this->readAuthUser('id') );
 		$theme_ids = [];
 		
 		foreach ($themes as $theme)
@@ -248,8 +247,7 @@ class RecordsController extends AppController
 	public function add($task_id, $is_complete, $study_sec, $kind)
 	{
 		// コンテンツ情報を取得
-		$this->loadModel('Task');
-		$content = $this->Task->get($task_id);
+		$content = $this->fetchTable('Task')->get($task_id);
 		
 		$this->Record->create();
 		$data = [

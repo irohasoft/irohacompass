@@ -44,14 +44,13 @@ class TasksController extends AppController
 		$status		= $this->getQuery('status');
 		
 		// 学習テーマの情報を取得
-		$this->loadModel('Theme');
-		$theme = $this->Theme->get($theme_id);
+		$theme = $this->fetchTable('Theme')->get($theme_id);
 		
 		// ユーザの場合、
 		if($is_user)
 		{
 			// 学習テーマの閲覧権限の確認
-			if(!$this->Theme->hasRight($this->readAuthUser('id'), $theme_id))
+			if(!$this->fetchTable('Theme')->hasRight($this->readAuthUser('id'), $theme_id))
 			{
 				throw new NotFoundException(__('Invalid access'));
 			}
@@ -82,8 +81,6 @@ class TasksController extends AppController
 		
 		if($keyword != '')
 		{
-			$this->loadModel('Progress');
-			
 			$conditions_progress = $conditions;
 			
 			$conditions_progress['OR'] = [
@@ -92,7 +89,7 @@ class TasksController extends AppController
 			];
 			
 			// キーワードを含む進捗を検索
-			$progress_list = $this->Progress->find()
+			$progress_list = $this->fetchTable('Progress')->find()
 				->select(['Task.id'])
 				->where($conditions_progress)
 				->all();
@@ -106,8 +103,7 @@ class TasksController extends AppController
 			}
 			
 			// キーワードを含むカードを検索
-			$this->loadModel('Leaf');
-			$list = $this->Leaf->getTaskIdByKeyword($keyword, $theme_id);
+			$list = $this->fetchTable('Leaf')->getTaskIdByKeyword($keyword, $theme_id);
 			
 			$task_id_list = array_merge($task_id_list, $list);
 			
@@ -134,8 +130,7 @@ class TasksController extends AppController
 		
 		if($page_id)
 		{
-			$this->loadModel('Leaf');
-			$leaf_count = $this->Leaf->find()->where(['page_id' => $page_id])->count();
+			$leaf_count = $this->fetchTable('Leaf')->find()->where(['page_id' => $page_id])->count();
 			
 			if($leaf_count == 0)
 				$page_id = null;
@@ -241,9 +236,8 @@ class TasksController extends AppController
 				// 学習履歴を追加
 				$record_type = $this->isEditPage() ? 'task_update' : 'task_add';
 				$id = ($task_id == null) ? $this->Task->getLastInsertID() : $task_id;
-				$this->loadModel('Record');
 				/*
-				$this->Record->addRecord(
+				$this->fetchTable('Record')->addRecord(
 					$this->readAuthUser('id'),
 					$theme_id,
 					$id, // task_id
@@ -251,7 +245,7 @@ class TasksController extends AppController
 					$this->request->data['study_sec'] //study_sec
 				);
 				*/
-				$this->Record->addRecord([
+				$this->fetchTable('Record')->addRecord([
 					'user_id'		=> $this->readAuthUser('id'),
 					'theme_id'		=> $theme_id,
 					'task_id'		=> $id,
@@ -259,8 +253,8 @@ class TasksController extends AppController
 					'record_type'	=> $record_type,
 				]);
 				// 学習テーマの更新日時を更新
-				$this->Task->Theme->id = $theme_id;
-				$this->Task->Theme->saveField('modified', date(date('Y-m-d H:i:s')));
+				$this->fetchTable('Theme')->id = $theme_id;
+				$this->fetchTable('Theme')->saveField('modified', date(date('Y-m-d H:i:s')));
 				
 				$this->Flash->success(__('課題内容が保存されました'));
 				
@@ -286,10 +280,10 @@ class TasksController extends AppController
 		}
 		
 		// コース情報を取得
-		$theme = $this->Task->Theme->get($theme_id);
+		$theme = $this->fetchTable('Theme')->get($theme_id);
 		
-		$themes = $this->Task->Theme->find('list');
-		$users = $this->Task->User->find('list');
+		$themes = $this->fetchTable('Theme')->find('list');
+		$users = $this->fetchTable('User')->find('list');
 		
 		$status   = $this->isEditPage() ? $this->request->data['Task']['status']   : '1';
 		$priority = $this->isEditPage() ? $this->request->data['Task']['priority'] : '2';

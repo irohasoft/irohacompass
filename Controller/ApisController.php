@@ -37,7 +37,7 @@ class ApisController extends AppController
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow();
-	 }
+	}
 
 	/**
 	 * ノート一覧
@@ -59,8 +59,7 @@ class ApisController extends AppController
 		// ログインユーザがアクセス可能なノートIDリスト
 		$note_id_list  = $this->getNoteIDList($user_id);
 		
-		$this->loadModel('Note');
-		$notes = $this->Note->find()
+		$notes = $this->fetchTable('Note')->find()
 			->where(['Note.id' => $note_id_list])
 			->order(['Note.note_order'])
 			->all();
@@ -98,14 +97,12 @@ class ApisController extends AppController
 		//debug($this->data);
 		$cmd = $this->data['cmd'];
 		
-		$this->loadModel('Note');
-		
 		$conditions = [
 			'Note.note_id' => $note_id,
 			'Note.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
 		];
 		
-		$data = $this->Note->find()
+		$data = $this->fetchTable('Note')->find()
 			->where($conditions)
 			->first();
 		
@@ -130,30 +127,29 @@ class ApisController extends AppController
 				$data['Note']['note_title']		= $this->data['note_title'];
 				$data['Note']['note_order']		= time();
 				$data['Note']['user_id']		= $user_id;
-				$this->Note->save($data);
+				$this->fetchTable('Note')->save($data);
 				
-				$this->loadModel('Page');
 				$data['Page']['note_id']		= $this->data['note_id'];
 				$data['Page']['page_id']		= time();
 				$data['Page']['page_title']		= '(non title)';
 				$data['Page']['page_fold']		= 0;
 				$data['Page']['page_order']		= time();
 				$data['Page']['user_id']		= $user_id;
-				$this->Page->save($data);
+				$this->fetchTable('Page')->save($data);
 				break;
 			case 'update':
 				$data['Note']['note_title']		= $this->data['note_title'];
-				$this->Note->save($data);
+				$this->fetchTable('Note')->save($data);
 				break;
 			case 'color':
 				$data['Note']['note_color']		= $this->data['note_color'];
-				$this->Note->save($data);
+				$this->fetchTable('Note')->save($data);
 				break;
 			case 'order':
-				$this->Note->updateOrder($user_id, $this->data);
+				$this->fetchTable('Note')->updateOrder($user_id, $this->data);
 				break;
 			case 'delete':
-				$this->Note->deleteNote($user_id, $this->data['note_id']);
+				$this->fetchTable('Note')->deleteNote($user_id, $this->data['note_id']);
 				break;
 			case 'import':
 				$note		= json_decode(str_replace ('\"','"', $this->data["note"]), true);
@@ -170,11 +166,7 @@ class ApisController extends AppController
 				$data['Note']['note_order']		= time();
 				$data['Note']['user_id']		= $user_id;
 				//debug($data);
-				$this->Note->save($data);
-				
-				$this->loadModel('Page');
-				$this->loadModel('Leaf');
-				$this->loadModel('Link');
+				$this->fetchTable('Note')->save($data);
 				
 				// ページの保存
 				foreach($page_list as $page)
@@ -196,7 +188,7 @@ class ApisController extends AppController
 					$data['Page']['user_id']		= $user_id;
 		
 					//debug($data);
-					$this->Page->save($data);
+					$this->fetchTable('Page')->save($data);
 				}
 		
 				// リーフの保存
@@ -216,7 +208,7 @@ class ApisController extends AppController
 					$data['Leaf']['user_id']		= $user_id;
 					//debug($data);
 					
-					$this->Leaf->save($data);
+					$this->fetchTable('Leaf')->save($data);
 				}
 		
 				// リンクの保存
@@ -239,7 +231,7 @@ class ApisController extends AppController
 					$data['Link']['user_id']		= $user_id;
 					//debug($data);
 		
-					$this->Link->save($data);
+					$this->fetchTable('Link')->save($data);
 				}
 		
 				break;
@@ -282,8 +274,7 @@ class ApisController extends AppController
 		
 		//debug($options);
 		
-		$this->loadModel('Note');
-		$note = $this->Note->find()
+		$note = $this->fetchTable('Note')->find()
 			->where($conditions)
 			->first();
 		
@@ -296,8 +287,7 @@ class ApisController extends AppController
 		if($this->isAdminRole())
 			unset($conditions['Page.user_id']);
 		
-		$this->loadModel('Page');
-		$pages = $this->Page->find()
+		$pages = $this->fetchTable('Page')->find()
 			->where($conditions)
 			->order(['Page.page_order'])
 			->all();
@@ -335,14 +325,12 @@ class ApisController extends AppController
 			return;
 		}
 		
-		$this->loadModel('Page');
-		
 		$conditions = [
 			'Page.page_id' => $page_id,
 			'Page.user_id' => $this->getUserIDList($note_id) // ノートにアクセス可能なユーザIDリスト
 		];
 		
-		$data = $this->Page->find()
+		$data = $this->fetchTable('Page')->find()
 			->where($conditions)
 			->first();
 		
@@ -355,21 +343,21 @@ class ApisController extends AppController
 				$data['Page']['page_fold']		= 0;
 				$data['Page']['page_order']		= time();
 				$data['Page']['user_id']		= $user_id;
-				$this->Page->save($data);
+				$this->fetchTable('Page')->save($data);
 				break;
 			case 'update':
 				$data['Page']['page_title']		= $this->data['page_title'];
-				$this->Page->save($data);
+				$this->fetchTable('Page')->save($data);
 				break;
 			case 'order':
-				$this->Page->updateOrder($user_id, $this->data);
+				$this->fetchTable('Page')->updateOrder($user_id, $this->data);
 				break;
 			case 'delete':
-				$this->Page->deletePage($user_id, $this->data['page_id']);
+				$this->fetchTable('Page')->deletePage($user_id, $this->data['page_id']);
 				break;
 		}
 		
-		$page_id = $this->Page->getLastInsertID();
+		$page_id = $this->fetchTable('Page')->getLastInsertID();
 		
 		$xmlArray = ['root' => ['result' => [], 'page_id' => $page_id, 'page_title' => @$this->data['page_title']]];
 		$xmlArray['root']['result'] = ['error_code' => '0'];
@@ -410,8 +398,7 @@ class ApisController extends AppController
 		if($this->isAdminRole())
 			unset($conditions['Leaf.user_id']);
 		
-		$this->loadModel('Leaf');
-		$leafs = $this->Leaf->find()
+		$leafs = $this->fetchTable('Leaf')->find()
 			->where($conditions)
 			->order(['Leaf.leaf_zorder asc'])
 			->all();
@@ -448,11 +435,9 @@ class ApisController extends AppController
 		//debug($this->data);
 		$cmd = $this->data['cmd'];
 		
-		$this->loadModel('Leaf');
-		
 		$leaf_id = $this->data['leaf_id'];
 		
-		$data = $this->Leaf->find()
+		$data = $this->fetchTable('Leaf')->find()
 			->where(['Leaf.leaf_id' => $leaf_id])
 			->first();
 		
@@ -473,41 +458,41 @@ class ApisController extends AppController
 				$data['Leaf']['leaf_fold']		= 0;
 				$data['Leaf']['leaf_zorder']	= time();
 				$data['Leaf']['user_id']		= $user_id;
-				$this->Leaf->save($data);
+				$this->fetchTable('Leaf')->save($data);
 				break;
 			case 'update':
 				$data['Leaf']['leaf_title']		= $this->data['leaf_title'];
 				$data['Leaf']['leaf_content']	= $this->data['leaf_content'];
-				$this->Leaf->save($data);
+				$this->fetchTable('Leaf')->save($data);
 				break;
 			case 'move':
 				$data['Leaf']['leaf_top']		= $this->data['leaf_top'];
 				$data['Leaf']['leaf_left']		= $this->data['leaf_left'];
 				$data['Leaf']['leaf_zorder']	= time();
-				$this->Leaf->save($data);
+				$this->fetchTable('Leaf')->save($data);
 				break;
 			case 'size':
 				$data['Leaf']['leaf_width']		= $this->data['leaf_width'];
 				$data['Leaf']['leaf_height']	= $this->data['leaf_height'];
 				$data['Leaf']['leaf_zorder']	= time();
-				$this->Leaf->save($data);
+				$this->fetchTable('Leaf')->save($data);
 			case 'zorder':
 				$data['Leaf']['leaf_zorder']	= time();
-				$this->Leaf->save($data);
+				$this->fetchTable('Leaf')->save($data);
 				break;
 			case 'color':
 				$data['Leaf']['leaf_color']		= $this->data['leaf_color'];
-				$this->Leaf->save($data);
+				$this->fetchTable('Leaf')->save($data);
 			case 'fold':
 				$data['Leaf']['leaf_fold']		= $this->data['fold'];
-				$this->Leaf->save($data);
+				$this->fetchTable('Leaf')->save($data);
 				break;
 			case 'change_page':
 				$data['Leaf']['page_id']		= $this->data['page_id'];
-			$this->Leaf->save($data);
+			$this->fetchTable('Leaf')->save($data);
 				break;
 			case 'delete':
-				$this->Leaf->deleteLeaf($user_id, $leaf_id);
+				$this->fetchTable('Leaf')->deleteLeaf($user_id, $leaf_id);
 				break;
 		}
 		
@@ -528,8 +513,7 @@ class ApisController extends AppController
 		
 		$page_id = $this->_getParamData('page_id');
 		
-		$this->loadModel('Link');
-		$links = $this->Link->find()
+		$links = $this->fetchTable('Link')->find()
 			->where(['Link.page_id' => $page_id])
 			->all();
 		
@@ -563,8 +547,6 @@ class ApisController extends AppController
 		//debug($this->data);
 		$cmd = $this->data['cmd'];
 		
-		$this->loadModel('Link');
-		
 		switch($cmd)
 		{
 			case 'add':
@@ -574,15 +556,15 @@ class ApisController extends AppController
 				$data['Link']['page_id']		= $this->data['page_id'];
 				$data['Link']['note_id']		= $this->data['note_id'];
 				$data['Link']['user_id']		= $user_id;
-				$this->Link->save($data);
+				$this->fetchTable('Link')->save($data);
 				break;
 			case 'delete':
-				$this->Link->deleteAll(['Link.link_id' => $this->data['link_id']]);
-				$this->Link->delete();
+				$this->fetchTable('Link')->deleteAll(['Link.link_id' => $this->data['link_id']]);
+				$this->fetchTable('Link')->delete();
 				break;
 			case 'delete_by_leaf_id':
-				$this->Link->deleteAll(['Link.leaf_id' => $this->data['leaf_id']]);
-				$this->Link->deleteAll(['Link.leaf_id2' => $this->data['leaf_id']]);
+				$this->fetchTable('Link')->deleteAll(['Link.leaf_id' => $this->data['leaf_id']]);
+				$this->fetchTable('Link')->deleteAll(['Link.leaf_id2' => $this->data['leaf_id']]);
 				break;
 		}
 		
@@ -629,8 +611,7 @@ class ApisController extends AppController
 		if($note_id!='')
 			$conditions['Leaf.note_id'] = $note_id;
 		
-		$this->loadModel('Leaf');
-		$leafs = $this->Leaf->find()
+		$leafs = $this->fetchTable('Leaf')->find()
 			->where($conditions)
 			->all();
 		
@@ -680,11 +661,6 @@ class ApisController extends AppController
 			return;
 		}
 
-		$this->loadModel('Note');
-		$this->loadModel('Page');
-		$this->loadModel('Leaf');
-		$this->loadModel('Link');
-		
 		$note_id = $this->_getParamData('note_id');
 
 		$conditions = [
@@ -692,7 +668,7 @@ class ApisController extends AppController
 			'Note.user_id' => $user_id
 		];
 		
-		$note = $this->Note->find()
+		$note = $this->fetchTable('Note')->find()
 			->where($conditions)
 			->first();
 		
@@ -701,7 +677,7 @@ class ApisController extends AppController
 			'Page.user_id' => $user_id
 		];
 		
-		$pages = $this->Page->find()
+		$pages = $this->fetchTable('Page')->find()
 			->where($conditions)
 			->all();
 		
@@ -711,7 +687,7 @@ class ApisController extends AppController
 		];
 		
 		//debug($options);
-		$leafs = $this->Leaf->find()
+		$leafs = $this->fetchTable('Leaf')->find()
 			->where($conditions)
 			->all();
 		
@@ -720,7 +696,7 @@ class ApisController extends AppController
 			'Link.user_id' => $user_id
 		];
 		
-		$links = $this->Link->find()
+		$links = $this->fetchTable('Link')->find()
 			->where($conditions)
 			->all();
 		
@@ -764,9 +740,8 @@ class ApisController extends AppController
 			return;
 		}
 		
-		$this->loadModel('UsersPlan');
-		$customer_id = $this->UsersPlan->getCustomerID($user_id);
-		$sub = $this->UsersPlan->getActiveSub($customer_id);
+		$customer_id = $this->fetchTable('UsersPlan')->getCustomerID($user_id);
+		$sub = $this->fetchTable('UsersPlan')->getActiveSub($customer_id);
 		
 		$xmlArray = ['root' => ['result' => []]];
 		$xmlArray['root']['result'] = ['error_code' => '0'];
@@ -909,8 +884,7 @@ class ApisController extends AppController
 			// アクセストークンからユーザIDを取得
 			if($access_token!='')
 			{
-				$this->loadModel('User');
-				$user_id = $this->User->getUserIdByAccessToken($access_token);
+				$user_id = $this->fetchTable('User')->getUserIdByAccessToken($access_token);
 			}
 		}
 		else
@@ -926,9 +900,7 @@ class ApisController extends AppController
 	 */
 	private function getUserIDList($note_id)
 	{
-		$this->loadModel('Note');
-		
-		$user_id_list  = $this->Note->getUserIDList($note_id);
+		$user_id_list  = $this->fetchTable('Note')->getUserIDList($note_id);
 		
 		return $user_id_list;
 	}
@@ -938,9 +910,7 @@ class ApisController extends AppController
 	 */
 	private function getNoteIDList($user_id)
 	{
-			$this->loadModel('Note');
-			
-			$note_id_list  = $this->Note->getNoteIDList($user_id);
+		$note_id_list  = $this->fetchTable('Note')->getNoteIDList($user_id);
 		
 		return $note_id_list;
 	}

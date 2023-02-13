@@ -52,9 +52,8 @@ class LogsController extends AppController {
 			// 最終アクセス日時を保存
 			if($this->readAuthUser('id'))
 			{
-				$this->loadModel('User');
-				$this->User->id = $this->readAuthUser('id');
-				$this->User->saveField('last_accessed', date(date('Y-m-d H:i:s')));
+				$this->fetchTable('User')->id = $this->readAuthUser('id');
+				$this->fetchTable('User')->saveField('last_accessed', date(date('Y-m-d H:i:s')));
 			}
 			
 			return "OK";

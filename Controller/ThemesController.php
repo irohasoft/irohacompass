@@ -88,8 +88,7 @@ class ThemesController extends AppController
 				$record_type = $is_add ? 'theme_add' : 'theme_update';
 				$id = ($id == null) ? $this->Theme->getLastInsertID() : $id;
 				
-				$this->loadModel('Record');
-				$this->Record->addRecord([
+				$this->fetchTable('Record')->addRecord([
 					'user_id'		=> $this->readAuthUser('id'),
 					'theme_id'		=> $id,
 					'task_id'		=> 0,

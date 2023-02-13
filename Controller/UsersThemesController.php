@@ -33,8 +33,7 @@ class UsersThemesController extends AppController
 		$info = $data['Setting']['setting_value'];
 		
 		// お知らせ一覧を取得
-		$this->loadModel('Info');
-		$infos = $this->Info->getInfos($user_id, 2);
+		$infos = $this->fetchTable('Info')->getInfos($user_id, 2);
 		
 		$no_info = '';
 		
@@ -52,8 +51,6 @@ class UsersThemesController extends AppController
 		
 
 		// 最近の学習履歴一覧を取得
-		$this->loadModel('Record');
-		
 		$theme_ids = [];
 		
 		foreach ($themes as $theme)
@@ -67,19 +64,18 @@ class UsersThemesController extends AppController
 		if(Configure::read('show_my_record'))
 			$where = ['Theme.id' => $theme_ids, 'Theme.user_id' => $user_id];
 		
-		$records = $this->Record->find()
+		$records = $this->fetchTable('Record')->find()
 			->where($where)
 			->order(['Record.created desc'])
 			->limit(5)
 			->all();
 		
 		// 進捗チャート用の情報を取得
-		$labels			= $this->Record->getDateLabels();
-		$login_data		= $this->Record->getLoginData($user_id, $labels);
-		$progress_data	= $this->Record->getProgressData($user_id, $labels);
+		$labels			= $this->fetchTable('Record')->getDateLabels();
+		$login_data		= $this->fetchTable('Record')->getLoginData($user_id, $labels);
+		$progress_data	= $this->fetchTable('Record')->getProgressData($user_id, $labels);
 		
-		$this->loadModel('Idea');
-		$idea_count = $this->Idea->find()->where(['User.id' => $user_id])->count();
+		$idea_count = $this->fetchTable('Idea')->find()->where(['User.id' => $user_id])->count();
 		
 		if($this->request->is(['post','put']))
 		{
@@ -88,10 +84,10 @@ class UsersThemesController extends AppController
 
 			$this->request->data['Idea']['user_id'] = $user_id;
 			
-			if(!$this->Idea->validates())
+			if(!$this->fetchTable('Idea')->validates())
 				return;
 			
-			if($this->Idea->save($this->request->data))
+			if($this->fetchTable('Idea')->save($this->request->data))
 			{
 				$this->Flash->success(__('アイデア・メモを追加しました'));
 				$this->redirect(['action' => 'index']);

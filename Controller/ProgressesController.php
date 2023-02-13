@@ -44,8 +44,6 @@ class ProgressesController extends AppController
 		
 		//debug($this->request->params);
 		
-		$this->loadModel('Theme');
-		
 		$progresses = $this->paginate();
 		
 		// 管理者以外の場合、コンテンツの閲覧権限の確認
@@ -54,7 +52,7 @@ class ProgressesController extends AppController
 			
 			if(count($progresses) > 0)
 			{
-				if(!$this->Theme->hasRight($this->readAuthUser('id'), $progresses[0]['Task']['theme_id']))
+				if(!$this->fetchTable('Theme')->hasRight($this->readAuthUser('id'), $progresses[0]['Task']['theme_id']))
 				{
 					throw new NotFoundException(__('Invalid access'));
 				}
@@ -62,14 +60,11 @@ class ProgressesController extends AppController
 		}
 		
 		// コンテンツ情報を取得
-		$this->loadModel('Task');
-		$task = $this->Task->get($task_id);
+		$task = $this->fetchTable('Task')->get($task_id);
 		
 		$is_record = $this->isRecordPage();
 		$is_admin  = $this->isAdminPage();
 		$is_user   = $this->isIndexPage() && !$this->isAdminPage();
-		
-		$this->loadModel('User');
 		
 		for($i=0; $i < count($progresses); $i++)
 		{
@@ -92,8 +87,8 @@ class ProgressesController extends AppController
 				}
 			}
 			
-			$this->User->recursive = 0;
-			$user = $this->User->find()
+			$this->fetchTable('User')->recursive = 0;
+			$user = $this->fetchTable('User')->find()
 				->select(["GROUP_CONCAT(User.name SEPARATOR ', ') as name_display"])
 				->where(['User.id'	=> $smiled_ids])
 				->group(['User.id'])
@@ -138,7 +133,7 @@ class ProgressesController extends AppController
 		}
 		
 		// メール通知用
-		$users = $this->User->find('list');
+		$users = $this->fetchTable('User')->find('list');
 		
 		$this->set(compact('task', 'progresses', 'is_record', 'is_admin', 'is_add', 'is_user', 'users'));
 		
@@ -183,8 +178,7 @@ class ProgressesController extends AppController
 		$theme_id = $this->request->data['Task']['theme_id'];
 		$task_id = $this->request->data['Task']['id'];
 		
-		$this->loadModel('Task');
-		$tasks = $this->Task->find()->where(['theme_id' => $theme_id])->toList();
+		$tasks = $this->fetchTable('Task')->find()->where(['theme_id' => $theme_id])->toList();
 
 		$this->set(compact('task_id', 'tasks'));
 	}
@@ -200,21 +194,18 @@ class ProgressesController extends AppController
 		// 課題の進捗率を更新（種別が進捗の場合のみ）
 		if($progress_type == 'progress')
 		{
-			$this->loadModel('Task');
-			$this->Task->updateRate($task_id);
+			$this->fetchTable('Task')->updateRate($task_id);
 		}
 		
 		// 課題のステータスを更新
-		$this->Task->id = $task_id;
-		$this->Task->saveField('status', $task_status);
+		$this->fetchTable('Task')->id = $task_id;
+		$this->fetchTable('Task')->saveField('status', $task_status);
 		
 		// 課題情報を取得
-		$task = $this->Task->get($task_id);
+		$task = $this->fetchTable('Task')->get($task_id);
 		
 		// 学習履歴を追加
-		$this->loadModel('Record');
-		
-		$this->Record->addRecord([
+		$this->fetchTable('Record')->addRecord([
 			'user_id'		=> $this->readAuthUser('id'),
 			'theme_id'		=> $task['Theme']['id'],
 			'task_id'		=> $task_id,
@@ -224,20 +215,18 @@ class ProgressesController extends AppController
 		]);
 		
 		// 課題の更新日時を更新
-		$this->Task->id = $task_id;
-		$this->Task->saveField('modified', date(date('Y-m-d H:i:s')));
+		$this->fetchTable('Task')->id = $task_id;
+		$this->fetchTable('Task')->saveField('modified', date(date('Y-m-d H:i:s')));
 		
 		// 学習テーマの更新日時を更新
-		$this->Task->Theme->id = $task['Theme']['id'];
-		$this->Task->Theme->saveField('modified', date(date('Y-m-d H:i:s')));
+		$this->fetchTable('Theme')->id = $task['Theme']['id'];
+		$this->fetchTable('Theme')->saveField('modified', date(date('Y-m-d H:i:s')));
 		
-		
-
 		// メール通知がオンの場合
 		if(@$this->request->data['is_mail'] == 'on')
 		{
 			// メール通知リスト
-			$users = $this->User->find()
+			$users = $this->fetchTable('User')->find()
 				->where(['User.id' => $this->request->data['Progress']['User']])
 				->all();
 			
@@ -350,25 +339,23 @@ class ProgressesController extends AppController
 		
 		if($this->request->is('ajax'))
 		{
-			$this->loadModel('Smile');
-			
 			$conditions = [
 				'progress_id'	=> $this->data['progress_id'],
 				'user_id'		=> $this->readAuthUser('id'),
 			];
 			
-			$smile = $this->Smile->find()
+			$smile = $this->fetchTable('Smile')->find()
 				->where($conditions)
 				->first();
 			
 			if($smile)
 			{
-				$this->Smile->delete($smile['Smile']['id']);
+				$this->fetchTable('Smile')->delete($smile['Smile']['id']);
 			}
 			else
 			{
-				$this->Smile->create();
-				$this->Smile->save($data);
+				$this->fetchTable('Smile')->create();
+				$this->fetchTable('Smile')->save($data);
 			}
 			
 			return "OK";
