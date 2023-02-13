@@ -52,7 +52,7 @@
 			{
 				echo '<br>';
 				
-				echo $this->Form->button(__('編集'), array('class' => 'btn btn-success btn-edit','onclick'	=> 'location.href="'.Router::url(array('action' => 'index', $idea['Idea']['id'])).'#edit"'));
+				echo $this->Form->button(__('編集'), array('class' => 'btn btn-success btn-edit','onclick'	=> 'location.href=\''.Router::url(array('action' => 'index', $idea['Idea']['id'])).'#edit\''));
 				
 				echo ' ';
 				
