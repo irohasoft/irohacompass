@@ -198,8 +198,8 @@ function LeafLink(link_id, link_from, link_to)
 		return null;
 	
 	if(
-		($("#"+link_from).size()==0)||
-		($("#"+link_to).size()==0)
+		($("#"+link_from).length == 0)||
+		($("#"+link_to).length == 0)
 	)
 		return null;
 	

@@ -23,8 +23,8 @@
 	var _isReadOnly = <?= ($mode=='edit') ? 'false' : 'true';?>;
 	</script>
 	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/irohanote/common.js?20190210"></script>
-	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/jquery-ui-1.9.2.min.js"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/jquery-3.6.4.min.js"></script>
+	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/jquery-ui-1.13.2.min.js"></script>
 	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/jquery.localize.min.js"></script>
 	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/irohanote/jquery.jsPlumb-1.5.2-min.js"></script>
 	<script type="text/javascript" src="<?= $this->Html->webroot;?>js/irohanote/spectrum.js"></script>

@@ -27,7 +27,7 @@
 		echo $this->Html->meta('icon');
 
 		//echo $this->Html->css('cake.generic');
-		echo $this->Html->css('jquery-ui');
+		echo $this->Html->css('jquery-ui.min');
 		echo $this->Html->css('bootstrap.min');
 		echo $this->Html->css('common.css?20210701');
 		
@@ -38,8 +38,8 @@
 		// カスタマイズ用CSS
 		echo $this->Html->css('custom.css?20190401');
 		
-		echo $this->Html->script('jquery-1.9.1.min.js');
-		echo $this->Html->script('jquery-ui-1.9.2.min.js');
+		echo $this->Html->script('jquery-3.6.4.min.js');
+		echo $this->Html->script('jquery-ui-1.13.2.min.js');
 		echo $this->Html->script('jquery.localize.min.js');
 		echo $this->Html->script('bootstrap.min.js');
 		echo $this->Html->script('marked.min.js');
