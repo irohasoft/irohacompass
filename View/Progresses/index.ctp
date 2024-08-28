@@ -370,21 +370,7 @@
 				
 				echo $this->Form->inputRadio('status',	['label' => __('課題のステータス'), 'options' => Configure::read('task_status'), 'value' => $task['Task']['status'],'default' => 1]);
 				
-				$rate_list = [
-					'0'  => '0%',
-					'10' => '10%',
-					'20' => '20%',
-					'30' => '30%',
-					'40' => '40%',
-					'50' => '50%',
-					'60' => '60%',
-					'70' => '70%',
-					'80' => '80%',
-					'90' => '90%',
-					'100' => '100%',
-				];
-				
-				echo $this->Form->input('rate', ['label' => __('進捗率'), 'options'=>$rate_list, 'default' => $task['Task']['rate'], 'div' => 'form-group row-progress']);
+				echo $this->Form->input('rate', ['label' => __('進捗率'), 'options' => Configure::read('rate_list'), 'default' => $task['Task']['rate'], 'div' => 'form-group row-progress']);
 				
 				Configure::read('emotion_icons');
 				$emotion_icons = [];

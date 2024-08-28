@@ -68,21 +68,6 @@
 	}
 </script>
 <?php $this->end(); ?>
-<?php
-$rate_list = [
-	'0'  => '0%',
-	'10' => '10%',
-	'20' => '20%',
-	'30' => '30%',
-	'40' => '40%',
-	'50' => '50%',
-	'60' => '60%',
-	'70' => '70%',
-	'80' => '80%',
-	'90' => '90%',
-	'100' => '100%',
-];
-?>
 <div class="tasks-edit">
 	<?php
 		$controller = ($is_user) ? 'users_themes' : 'themes';
@@ -126,7 +111,7 @@ $rate_list = [
 				echo $this->Form->hidden('page_id', ['class' => 'form-group row-page-id']);
 				
 				echo $this->Form->input('file',		['label' => __('添付ファイル'), 'class' => 'form-control form-control-upload']);
-				echo $this->Form->input('rate',		['label' => __('進捗率'), 'options' => $rate_list]);
+				echo $this->Form->input('rate',		['label' => __('進捗率'), 'options' => Configure::read('rate_list')]);
 				
 				echo $this->Form->hidden('file_name', ['class' => 'form-control-filename']);
 				echo '<input name="study_sec" type="hidden" value="0">';
