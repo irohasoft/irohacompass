@@ -103,12 +103,11 @@
 					'value' => $deadline,
 				]);
 				
-				if(Configure::read('use_irohanote'))
+				if(Configure::read('use_irohanote_task'))
 				{
 					echo $this->Form->block(__('アイデアマップ'), '<iframe id="fraIrohaNote" width="100%" height="400"></iframe>'. false, 'row-irohanote');
+					echo $this->Form->hidden('page_id', ['class' => 'form-group row-page-id']);
 				}
-				
-				echo $this->Form->hidden('page_id', ['class' => 'form-group row-page-id']);
 				
 				echo $this->Form->input('file',		['label' => __('添付ファイル'), 'class' => 'form-control form-control-upload']);
 				echo $this->Form->input('rate',		['label' => __('進捗率'), 'options' => Configure::read('rate_list')]);

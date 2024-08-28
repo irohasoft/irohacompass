@@ -72,12 +72,11 @@
 			
 			echo $this->Form->block('', '※ <a href="https://ja.wikipedia.org/wiki/Markdown" target="_blank">Markdown 形式</a> で記述可能です。', false, 'row-markdown');
 			
-			if(Configure::read('use_irohanote'))
+			if(Configure::read('use_irohanote_theme'))
 			{
 				echo $this->Form->block(__('アイデアマップ'), '<iframe id="fraIrohaNote" width="100%" height="400"></iframe>', false, 'row-irohanote');
+				echo $this->Form->hidden('page_id', ['class' => 'form-group row-page-id']);
 			}
-			
-			echo $this->Form->hidden('page_id', ['class' => 'form-group row-page-id']);
 			
 			//echo $this->Form->input('comment',			array('label' => __('備考')));
 			echo '<input name="study_sec" type="hidden" value="0">';

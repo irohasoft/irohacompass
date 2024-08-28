@@ -155,8 +155,14 @@ $config['close_on_select'] = true;
 // リッチテキストエディタの画像アップロード機能の設定 (true ; 使用する, false : 使用しない)
 $config['use_upload_image'] = true;
 
-// iroha Note を使用する
+// iroha Note を使用する（進捗）
 $config['use_irohanote']	= true;
+
+// iroha Note を使用する（テーマ編集画面）
+$config['use_irohanote_theme']	= false;
+
+// iroha Note を使用する（課題編集画面）
+$config['use_irohanote_task']	= false;
 
 // iroha Note を使用しない場合、選択肢からも削除
 if(!$config['use_irohanote'])
