@@ -95,22 +95,6 @@
 	</div>
 	<?php }?>
 	
-	<div class="panel panel-default">
-		<div class="panel-heading"><?= __('アイデアボックス')?></div>
-		<div class="panel-body">
-			<?php
-				echo $this->Form->create('Idea', ['class' => 'idea-form']);
-				echo $this->Form->textarea('body', ['class' => 'idea-body', 'placeholder' => __('新しいアイデア・メモ等を書き込んでください')]);
-				echo $this->Form->submit(__('追加'), ['class' => 'btn btn-primary idea-submit']);
-				echo $this->Form->end();
-			?>
-			<div class="text-right">
-				<?= $idea_count?><?= __('件登録済み')?><br>
-				<a href="<?= Router::url(['controller' => 'ideas', 'action' => 'index']);?>"><?= __('一覧を表示')?></a>
-			</div>
-		</div>
-	</div>
-	
 	<div class="panel panel-info">
 		<div class="panel-heading"><?= __('学習テーマ一覧')?></div>
 		<div class="buttons_container">

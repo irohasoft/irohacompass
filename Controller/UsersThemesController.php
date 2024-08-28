@@ -75,32 +75,9 @@ class UsersThemesController extends AppController
 		$login_data		= $this->fetchTable('Record')->getLoginData($user_id, $labels);
 		$progress_data	= $this->fetchTable('Record')->getProgressData($user_id, $labels);
 		
-		$idea_count = $this->fetchTable('Idea')->find()->where(['User.id' => $user_id])->count();
-		
-		if($this->request->is(['post','put']))
-		{
-			if(Configure::read('demo_mode'))
-				return;
-
-			$this->request->data['Idea']['user_id'] = $user_id;
-			
-			if(!$this->fetchTable('Idea')->validates())
-				return;
-			
-			if($this->fetchTable('Idea')->save($this->request->data))
-			{
-				$this->Flash->success(__('アイデア・メモを追加しました'));
-				$this->redirect(['action' => 'index']);
-			}
-			else
-			{
-				$this->Flash->error(__('The tasks idea could not be saved. Please, try again.'));
-			}
-		}
-		
 		// アップロードファイル参照用
 		$this->writeCookie('LoginStatus', 'logined');
 		
-		$this->set(compact('themes', 'no_record', 'info', 'infos', 'no_info', 'records', 'labels', 'login_data', 'progress_data', 'idea_count'));
+		$this->set(compact('themes', 'no_record', 'info', 'infos', 'no_info', 'records', 'labels', 'login_data', 'progress_data'));
 	}
 }
