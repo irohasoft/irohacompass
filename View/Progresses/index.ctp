@@ -6,6 +6,7 @@
 	var URL_UPLOAD	= '<?= Router::url(['controller' => 'tasks', 'action' => 'upload', 'admin' => false])?>/file';
 	var URL_NOTE	= '<?= Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/';
 	var LS_KEY_EMAIL_USER = 'ic-email-user-<?= $task['Theme']['id']; ?>';
+	var UPLOAD_LABEL = '<?= __('アップロード')?>';
 	
 	/* 進捗一覧用 */
 	$(function(){
@@ -32,7 +33,7 @@
 		
 		// 添付ファイルアップロードボタンを追加
 		$url = $('.form-control-upload');
-		$url.after('<button id="btnUpload">Upload</button>');
+		$url.after('<button id="btnUpload">' + UPLOAD_LABEL + '</button>');
 		
 		// アップロード画面の呼び出し
 		$("#btnUpload").click(function(){

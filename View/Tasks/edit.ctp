@@ -10,12 +10,13 @@
 	var _editor;
 	var URL_UPLOAD	= '<?= Router::url(['controller' => 'tasks', 'action' => 'upload', 'admin' => false])?>/file';
 	var URL_NOTE	= '<?= Router::url(['controller' => 'notes', 'action' => 'page', 'admin' => false])?>/';
+	var UPLOAD_LABEL = '<?= __('アップロード')?>';
 	
 	$(document).ready(function()
 	{
 		$url = $('.form-control-upload');
 
-		$url.after('<button id="btnUpload">Upload</button>');
+		$url.after('<button id="btnUpload">' + UPLOAD_LABEL + '</button>');
 
 		$("#btnUpload").click(function(){
 			//window.open(URL_UPLOAD, '_upload', 'width=650,height=500,resizable=no');

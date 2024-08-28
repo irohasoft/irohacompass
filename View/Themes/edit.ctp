@@ -70,11 +70,7 @@
 			echo $this->Form->create('Theme', Configure::read('form_defaults'));
 			echo $this->Form->input('id');
 			echo $this->Form->input('title', ['label' => __('学習テーマ名')]);
-			echo $this->Form->input('learning_target',	[
-				'label' => __('学習目標'),
-				'div' => 'form-group row-body',
-				]
-			);
+			echo $this->Form->input('learning_target',	['label' => __('学習テーマの内容')]);
 			
 			if(!$is_user)
 				echo $this->Form->input('user_id', ['label' => '所有者',]);
