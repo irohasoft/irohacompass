@@ -49,9 +49,9 @@ class ThemesController extends AppController
 		$this->render('edit');
 	}
 
-	public function admin_edit($id = null)
+	public function admin_edit($theme_id = null)
 	{
-		$this->edit($id);
+		$this->edit($theme_id);
 		$this->render('edit');
 	}
 
@@ -61,9 +61,9 @@ class ThemesController extends AppController
 		$this->render('edit');
 	}
 
-	public function edit($id = null)
+	public function edit($theme_id = null)
 	{
-		if($this->isEditPage() && !$this->Theme->exists($id))
+		if($this->isEditPage() && !$this->Theme->exists($theme_id))
 		{
 			throw new NotFoundException(__('Invalid theme'));
 		}
@@ -86,11 +86,11 @@ class ThemesController extends AppController
 			{
 				// 学習履歴を追加
 				$record_type = $is_add ? 'theme_add' : 'theme_update';
-				$id = ($id == null) ? $this->Theme->getLastInsertID() : $id;
+				$theme_id = ($theme_id == null) ? $this->Theme->getLastInsertID() : $theme_id;
 				
 				$this->fetchTable('Record')->addRecord([
 					'user_id'		=> $this->readAuthUser('id'),
-					'theme_id'		=> $id,
+					'theme_id'		=> $theme_id,
 					'task_id'		=> 0,
 					'study_sec'		=> $this->request->data['study_sec'],
 					'record_type'	=> $record_type,
@@ -107,7 +107,7 @@ class ThemesController extends AppController
 				// ユーザの場合、課題一覧へ遷移
 				if($is_user)
 				{
-					return $this->redirect(['controller' => 'tasks', 'action' => 'index', $id]);
+					return $this->redirect(['controller' => 'tasks', 'action' => 'index', $theme_id]);
 				}
 				else
 				{
@@ -121,19 +121,19 @@ class ThemesController extends AppController
 		}
 		else
 		{
-			$this->request->data = $this->Theme->get($id);
+			$this->request->data = $this->Theme->get($theme_id);
 		}
 		
 		$users = $this->Theme->User->find('list');
-		$this->set(compact('is_user', 'users'));
+		$this->set(compact('is_user', 'users', 'theme_id'));
 	}
 
-	public function admin_delete($id = null)
+	public function admin_delete($theme_id = null)
 	{
 		if(Configure::read('demo_mode'))
 			return;
 		
-		$this->Theme->id = $id;
+		$this->Theme->id = $theme_id;
 		
 		if(!$this->Theme->exists())
 		{

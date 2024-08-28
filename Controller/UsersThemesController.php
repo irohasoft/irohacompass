@@ -46,7 +46,7 @@ class UsersThemesController extends AppController
 		
 		$no_record = '';
 		
-		if(count($themes)==0)
+		if(count($themes) == 0)
 			$no_record = "選択可能な学習テーマはありません";
 		
 

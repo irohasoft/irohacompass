@@ -264,15 +264,15 @@ class ProgressesController extends AppController
 		}
 	}
 
-	public function record($id, $record_id)
+	public function record($task_id, $record_id)
 	{
-		$this->index($id, $record_id);
+		$this->index($task_id, $record_id);
 		$this->render('index');
 	}
 
-	public function admin_record($id, $record_id)
+	public function admin_record($task_id, $record_id)
 	{
-		$this->index($id, $record_id);
+		$this->index($task_id, $record_id);
 		$this->render('index');
 	}
 
@@ -286,17 +286,17 @@ class ProgressesController extends AppController
 	 * delete method
 	 *
 	 * @throws NotFoundException
-	 * @param string $id        	
+	 * @param string $progress_id        	
 	 * @return void
 	 */
-	public function admin_delete($id)
+	public function admin_delete($progress_id)
 	{
-		$this->delete($id);
+		$this->delete($progress_id);
 	}
 	
-	public function delete($id)
+	public function delete($progress_id)
 	{
-		$this->Progress->id = $id;
+		$this->Progress->id = $progress_id;
 		if(!$this->Progress->exists())
 		{
 			throw new NotFoundException(__('Invalid tasks progress'));
@@ -305,7 +305,7 @@ class ProgressesController extends AppController
 		$this->request->allowMethod('post', 'delete');
 		
 		// 進捗情報を取得
-		$progress = $this->Progress->get($id);
+		$progress = $this->Progress->get($progress_id);
 		
 		if($this->Progress->delete())
 		{

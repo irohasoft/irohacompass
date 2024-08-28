@@ -49,10 +49,10 @@
 		// メール通知する場合、メール通知先の入力をチェック
 		$('#ProgressIndexForm').submit(function()
 		{
-			if($('input[name="is_mail"]:checked').length==0)
+			if($('input[name="is_mail"]:checked').length == 0)
 				return true;
 			
-			if($('#ProgressUser').val()==null)
+			if($('#ProgressUser').val() == null)
 			{
 				alert('メール通知するユーザを選択してください\n次回以降は自動で選択されます');
 				return false;
@@ -136,7 +136,7 @@
 		
 		$('.panel-body').addClass('content-type-' + $(element).val());
 		
-		if($(element).val()=='irohanote')
+		if($(element).val() == 'irohanote')
 		{
 			// ページ番号が設定されていない場合、ページ番号を生成
 			var page_id = $('.row-page-id').val();
@@ -157,7 +157,7 @@
 		else
 		{
 			// ダミーの文字列をクリア
-			if($('.row-body textarea').val()=='dummy')
+			if($('.row-body textarea').val() == 'dummy')
 				$('.row-body textarea').val('');
 		}
 	}
@@ -231,7 +231,7 @@
 	<?php }?>
 	
 	<?php foreach ($progresses as $progress): ?>
-	<?php if($progress['Progress']['progress_type']=='progress') { ?>
+	<?php if($progress['Progress']['progress_type'] == 'progress') { ?>
 	<div class="panel panel-success">
 	<?php }else {?>
 	<div class="panel panel-default">
@@ -246,7 +246,7 @@
 		</div>
 		<div class="panel-body">
 			<div class="text-left">
-			<?php if($progress['Progress']['progress_type']=='progress') { ?>
+			<?php if($progress['Progress']['progress_type'] == 'progress') { ?>
 				<?= __('進捗率')?> : <?= h($progress['Progress']['rate']); ?>% &nbsp;&nbsp;
 			<?php }?>
 			<?php if(Configure::read('use_emotion_icon')) { ?>
@@ -293,7 +293,7 @@
 			
 			<?php
 			// 自分の進捗のみ編集、削除可能とする
-			if($progress['User']['id']==$loginedUser['id'])
+			if($progress['User']['id'] == $loginedUser['id'])
 			{
 				$sort_key	= ($this->request->params['named']) ? 'sort:'.$this->request->params['named']['sort'] : '';
 				$direction	= ($this->request->params['named']) ? 'direction:'.$this->request->params['named']['direction'] : '';

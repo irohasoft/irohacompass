@@ -113,9 +113,9 @@ class RecordsController extends AppController
 		$this->set(compact('labels', 'login_data', 'progress_data', 'themes', 'theme_id', 'contenttitle', 'from_date', 'to_date', 'is_popup'));
 	}
 	
-	public function admin_progress($id)
+	public function admin_progress($user_id)
 	{
-		$this->progress($id);
+		$this->progress($user_id);
 		$this->render('progress');
 	}
 	
