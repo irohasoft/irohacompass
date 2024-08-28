@@ -49,9 +49,18 @@
 <?php $this->end(); ?>
 <div class="groups form">
 <?php
-	$controller = ($is_user) ? 'users_themes' : 'themes';
+	// 学習者：新規作成の場合はホーム画面へ、編集の場合は課題一覧画面へ戻る
+	// 管理者：学習テーマ一覧画面に戻る
+	if($is_user)
+	{
+		$controller = ($theme_id) ? 'tasks' : 'users_themes';
+	}
+	else
+	{
+		$controller = 'themes';
+	}
 ?>
-	<?= $this->Html->link(__('<< 戻る'), ['controller' => $controller, 'action' => 'index', @$this->params['pass'][0]])?>
+	<?= $this->Html->link(__('<< 戻る'), ['controller' => $controller, 'action' => 'index', $theme_id])?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<?= ($this->isEditPage()) ? __('編集') :  __('新規作成'); ?>
