@@ -348,7 +348,7 @@ CREATE TABLE `ib_cake_sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `ib_settings` VALUES ('1', 'title', 'システム名', 'iroha Compass');
-INSERT INTO `ib_settings` VALUES ('2', 'copyright', 'コピーライト', 'Copyright (C) 2018 iroha Soft Co.,Ltd. All rights reserved.');
+INSERT INTO `ib_settings` VALUES ('2', 'copyright', 'コピーライト', 'Copyright (C) 2018-2024 iroha Soft Co.,Ltd. All rights reserved.');
 INSERT INTO `ib_settings` VALUES ('3', 'color', 'テーマカラー', '#337ab7');
 INSERT INTO `ib_settings` VALUES ('4', 'information', 'お知らせ', '全体のお知らせを表示します。\r\nこのお知らせは管理機能の「システム設定」にて変更可能です。');
 INSERT INTO `ib_settings` VALUES ('5', 'mail_title', '進捗の更新メールのタイトル', '[iroha Compass] 進捗の更新');
