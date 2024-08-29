@@ -73,8 +73,8 @@
 	<?php
 		$controller = ($is_user) ? 'users_themes' : 'themes';
 		
-		$this->Html->addCrumb('学習テーマ一覧', ['controller' => $controller, 'action' => 'index']);
-		$this->Html->addCrumb(h($theme['Theme']['title']), ['action' => 'index',$this->params['pass'][0]]);
+		$this->Html->addCrumb(__('学習テーマ一覧'), ['controller' => $controller, 'action' => 'index']);
+		$this->Html->addCrumb(h($theme['Theme']['title']), ['action' => 'index', $theme['Theme']['id']]);
 		echo $this->Html->getCrumbs(' / ');
 	?>
 	<div class="panel panel-default">

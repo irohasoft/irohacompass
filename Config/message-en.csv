@@ -16,6 +16,7 @@
 アクセス回数	Access Count
 進捗更新回数	Update Count
 完了以外	Not completed
+移動先の課題	Task
 アイデアボックス	Idea Box
 新しいアイデア・メモ	New Idea / Memo
 新しいアイデア・メモ等を書き込んでください	Please enter ideas or memo.
@@ -77,3 +78,4 @@
 ファイルのアップロード	File Upload
 アップロード	Upload
 閉じる	Close
+<< 戻る	<< Back
