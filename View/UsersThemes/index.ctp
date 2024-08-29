@@ -95,17 +95,20 @@
 	</div>
 	<?php }?>
 	
+	<?php
+	$no_my_themes    = true;
+	$no_other_themes = true;
+	?>
 	<div class="panel panel-info">
 		<div class="panel-heading"><?= __('学習テーマ一覧')?></div>
 		<div class="buttons_container">
 			<button class="btn btn-primary btn-add" onclick="location.href='<?= Router::url(['controller' => 'themes', 'action' => 'add']) ?>'">+ <?= __('学習テーマを追加')?></button>
 		</div>
 		<div class="panel-body">
-			<?php if($themes) {?>
-			<div class="theme-list"><?= __('所有しているテーマ')?></div>
+			<span class="label label-warning"><?= __('所有しているテーマ')?></span>
 			<ul class="list-group">
 			<?php foreach($themes as $theme): ?>
-				<?php if($theme['Theme']['user_id']==$loginedUser['id']): ?>
+				<?php if($theme['Theme']['user_id'] == $loginedUser['id']): ?>
 				<a href="<?= Router::url(['controller' => 'tasks', 'action' => 'index', $theme['Theme']['id']]);?>" class="list-group-item">
 					<?php if($theme[0]['left_cnt']!=0){?>
 					<button type="button" class="btn btn-danger btn-rest">残り <span class="badge"><?= h($theme[0]['left_cnt']); ?></span></button>
@@ -116,30 +119,38 @@
 						<span><?= __('最終学習日')?>: <?= h($theme[0]['last_date']); ?></span>
 					</p>
 				</a>
+				<?php $no_my_themes = false;?>
 				<?php endif;?>
 			<?php endforeach;?>
-			</ul>
 			
-			<div class="theme-list"><?= __('それ以外のテーマ')?></div>
-			<ul class="list-group">
-			<?php foreach($themes as $theme): ?>
-				<?php if($theme['Theme']['user_id']!=$loginedUser['id']): ?>
-				<a href="<?= Router::url(['controller' => 'tasks', 'action' => 'index', $theme['Theme']['id']]);?>" class="list-group-item">
-					<?php if($theme[0]['left_cnt']!=0){?>
-					<button type="button" class="btn btn-danger btn-rest">残り <span class="badge"><?= h($theme[0]['left_cnt']); ?></span></button>
-					<?php }?>
-					<h4 class="list-group-item-heading"><?= h($theme['Theme']['title']);?></h4>
-					<p class="list-group-item-text">
-						<span><?= __('学習開始日')?>: <?= h($theme[0]['first_date']); ?></span>
-						<span><?= __('最終学習日')?>: <?= h($theme[0]['last_date']); ?></span>
-					</p>
-				</a>
-				<?php endif;?>
-			<?php endforeach;?>
-			</ul>
+			<?php if($no_my_themes) {?>
+			<div class="well"><?= __('該当するテーマは存在しません');?></div>
 			<?php }?>
+			</ul>
 			
-			<?= $no_record;?>
+			
+			<span class="label label-default" style="width:200px;"><?= __('それ以外のテーマ')?></span>
+			<ul class="list-group">
+			<?php foreach($themes as $theme): ?>
+				<?php if($theme['Theme']['user_id'] != $loginedUser['id']): ?>
+				<a href="<?= Router::url(['controller' => 'tasks', 'action' => 'index', $theme['Theme']['id']]);?>" class="list-group-item">
+					<?php if($theme[0]['left_cnt']!=0){?>
+					<button type="button" class="btn btn-danger btn-rest">残り <span class="badge"><?= h($theme[0]['left_cnt']); ?></span></button>
+					<?php }?>
+					<h4 class="list-group-item-heading"><?= h($theme['Theme']['title']);?></h4>
+					<p class="list-group-item-text">
+						<span><?= __('学習開始日')?>: <?= h($theme[0]['first_date']); ?></span>
+						<span><?= __('最終学習日')?>: <?= h($theme[0]['last_date']); ?></span>
+					</p>
+				</a>
+				<?php $no_other_themes = false;?>
+				<?php endif;?>
+			<?php endforeach;?>
+			
+			<?php if($no_other_themes) {?>
+			<div class="well"><?= __('該当するテーマは存在しません');?></div>
+			<?php }?>
+			</ul>
 		</div>
 	</div>
 </div>
