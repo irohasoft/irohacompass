@@ -197,8 +197,8 @@ CommonUtility.prototype.createProgressChart = function (labels, access_data, pro
 		            position: "right",
 		            ticks: {
 						min:0,
-						max: 10,
-		                stepSize: 2
+//						max: 10,
+//		                stepSize: 2
 		            },
 		            gridLines: {
 		                drawOnChartArea: false, 
