@@ -13,6 +13,9 @@
 種別	Type
 氏名	Name
 更新日時	Date
+アクセス回数	Access Count
+進捗更新回数	Update Count
+完了以外	Not completed
 アイデアボックス	Idea Box
 新しいアイデア・メモ	New Idea / Memo
 新しいアイデア・メモ等を書き込んでください	Please enter ideas or memo.
@@ -23,6 +26,7 @@
 学習目標	Learning Goal
 所有しているテーマ	My Themes
 それ以外のテーマ	Other Themes
+該当するテーマは存在しません	There are no applicable themes
 編集	Edit
 削除	Delete
 移動	Move

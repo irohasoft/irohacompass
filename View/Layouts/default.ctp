@@ -71,6 +71,10 @@
 	var G_LANG			= '<?= isset($loginedUser) ? $loginedUser['lang'] : 'jp';?>';
 	var URL_LOGS_ADD	= '<?= Router::url(['controller' => 'logs', 'action' => 'add']) ?>';
 	
+	var URL_LOGS_ADD	= '<?= Router::url(['controller' => 'logs', 'action' => 'add']) ?>';
+	var ACCESS_COUNT_LABEL = '<?= __('アクセス回数') ?>';
+	var UPDATE_COUNT_LABEL = '<?= __('進捗更新回数') ?>';
+	
 	</script>
 	<style>
 		.ib-theme-color

@@ -146,7 +146,7 @@ CommonUtility.prototype.createProgressChart = function (labels, access_data, pro
 		labels: labels,
 		datasets: [{
 			type: 'line',
-			label: 'アクセス回数 / Access Count',
+			label: ACCESS_COUNT_LABEL,
 			borderColor: window.chartColors.blue,
 			borderWidth: 2,
 			fill: false,
@@ -154,7 +154,7 @@ CommonUtility.prototype.createProgressChart = function (labels, access_data, pro
 				yAxisID: "y-axis-1",
 		}, {
 			type: 'bar',
-			label: '進捗更新回数 / Update Count',
+			label: UPDATE_COUNT_LABEL,
 			backgroundColor: window.chartColors.green,
 			data: progress_data,
 				yAxisID: "y-axis-2",

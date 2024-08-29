@@ -81,7 +81,7 @@
 	<div class="ib-horizontal">
 		<?php
 		$status_list = Configure::read('task_status');
-		$status_list[99] = '完了以外';
+		$status_list[99] = __('完了以外');
 		
 		echo $this->Form->create('Task');
 		echo $this->Form->searchField('status',	['label' => __('ステータス'), 'options' => $status_list, 'selected' => $status, 'empty' => '全て', 'onchange'	=> 'submit(this.form);']);
