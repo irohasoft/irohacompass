@@ -147,10 +147,9 @@ class TasksController extends AppController
 		$this->set(compact('theme', 'tasks', 'is_user', 'status', 'keyword', 'page_id'));
 	}
 
-	public function admin_index($id)
+	public function admin_index($theme_id)
 	{
-		//$id = intval($id);
-		$this->index($id);
+		$this->index($theme_id);
 		$this->render('index');
 	}
 
@@ -231,16 +230,21 @@ class TasksController extends AppController
 				$this->request->data['Task']['theme_id'] = $theme_id;
 			}
 			
+			/*
+			debug($this->request->data);
+			exit;
+			*/
+			
 			if($this->Task->save($this->request->data))
 			{
 				// 学習履歴を追加
 				$record_type = $this->isEditPage() ? 'task_update' : 'task_add';
-				$id = ($task_id == null) ? $this->Task->getLastInsertID() : $task_id;
+				$task_id = ($task_id == null) ? $this->Task->getLastInsertID() : $task_id;
 				/*
 				$this->fetchTable('Record')->addRecord(
 					$this->readAuthUser('id'),
 					$theme_id,
-					$id, // task_id
+					$task_id, // task_id
 					$record_type, 
 					$this->request->data['study_sec'] //study_sec
 				);
@@ -248,7 +252,7 @@ class TasksController extends AppController
 				$this->fetchTable('Record')->addRecord([
 					'user_id'		=> $this->readAuthUser('id'),
 					'theme_id'		=> $theme_id,
-					'task_id'		=> $id,
+					'task_id'		=> $task_id,
 					'study_sec'		=> $this->request->data['study_sec'],
 					'record_type'	=> $record_type,
 				]);
